@@ -639,6 +639,24 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IBase derived pointer
     \ingroup GenApi_PublicImpl
     */
+    @Name("GenApi::CReferenceT<GenApi::IInteger,GenApi::IInteger>") @NoOffset public static class CReferenceTInteger extends IInteger {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public CReferenceTInteger() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CReferenceTInteger(Pointer p) { super(p); }
+        public IReference asIReference() { return asIReference(this); }
+        @Namespace public static native @Name("static_cast<GenApi::IReference*>") IReference asIReference(CReferenceTInteger pointer);
+    
+        // Constructor
+
+        /*--------------------------------------------------------*/
+        // IReference
+        /*--------------------------------------------------------*/
+
+        /** sets the implementation to the reference */
+        public native void SetReference( IBase ptr );
+    }
 
 
 
@@ -715,6 +733,21 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IBase pointer
     \ingroup GenApi_PublicImpl
     */
+    @Name("GenApi::CBaseRefT<GenApi::IInteger,GenApi::IInteger>") public static class CBaseRefTInteger extends CReferenceTInteger {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public CBaseRefTInteger() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaseRefTInteger(Pointer p) { super(p); }
+    
+        /*--------------------------------------------------------*/
+        // IBase
+        /*--------------------------------------------------------*/
+
+        /** Get the access mode of the node */
+        public native @Cast("GenApi::EAccessMode") int GetAccessMode();
+
+    }
 
     /** Reference to an IBase pointer
      *  \ingroup GenApi_PublicImpl */
@@ -807,6 +840,31 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IValue pointer
     \ingroup GenApi_PublicImpl
     */
+    @Name("GenApi::CValueRefT<GenApi::IInteger,GenApi::IInteger>") public static class CValueRefTInteger extends CBaseRefTInteger {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public CValueRefTInteger() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CValueRefTInteger(Pointer p) { super(p); }
+    
+        /*--------------------------------------------------------*/
+        // IValue
+        /*--------------------------------------------------------*/
+
+        /** Get the INode interface of the node */
+        public native INode GetNode();
+
+        /** Get content of the node as string */
+        public native @ByVal gcstring ToString(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @ByVal gcstring ToString();
+
+        /** Set content of the node as string */
+        public native void FromString(@Const @ByRef gcstring ValueStr, @Cast("bool") boolean Verify/*=true*/);
+        public native void FromString(@Const @ByRef gcstring ValueStr);
+
+        /** Checks if the value comes from cache or is requested from another node */
+        public native @Cast("bool") boolean IsValueCacheValid();
+    }
 
     /** Reference to an IValue pointer
      *  \ingroup GenApi_PublicImpl */
@@ -991,18 +1049,71 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 
 // #ifndef DOXYGEN_IGNORE
 
-    @Namespace("GenApi") @Opaque public static class IFloat extends Pointer {
-        /** Empty constructor. */
-        public IFloat() { }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public IFloat(Pointer p) { super(p); }
-    }
-
     /**
     \internal
     \brief Reference to an IInteger pointer
     \ingroup GenApi_PublicImpl
     */
+    @Name("GenApi::CIntegerRefT<GenApi::IInteger,GenApi::IInteger>") public static class CIntegerRef extends CValueRefTInteger {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CIntegerRef() { allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CIntegerRef(int size) { allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CIntegerRef(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CIntegerRef position(int position) {
+            return (CIntegerRef)super.position(position);
+        }
+    
+        /*--------------------------------------------------------*/
+        // IInteger
+        /*--------------------------------------------------------*/
+
+        /** Set node value */
+        public native void SetValue(@Cast("int64_t") long Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("int64_t") long Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IInteger put(@Cast("int64_t") long Value);
+
+        /** Get node value */
+        public native @Cast("int64_t") long GetValue( @Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/ );
+        public native @Cast("int64_t") long GetValue( );
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator ()") long apply();
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator *") long multiply();
+
+        /** Get minimum value allowed */
+        public native @Cast("int64_t") long GetMin();
+
+        /** Get maximum value allowed */
+        public native @Cast("int64_t") long GetMax();
+
+        /** Get increment */
+        public native @Cast("int64_t") long GetInc();
+
+        /** Get recommended representation */
+        public native @Cast("GenApi::ERepresentation") int GetRepresentation();
+
+        /** Get the physical unit name */
+        public native @ByVal gcstring GetUnit();
+
+        /** gets the interface of an alias node. */
+        public native IFloat GetFloatAlias();
+
+        /** Restric minimum value */
+        public native void ImposeMin(@Cast("int64_t") long Value);
+
+        /** Restric maximum value */
+        public native void ImposeMax(@Cast("int64_t") long Value);
+
+    }
 
     /** Reference to an IInteger pointer
      *  \ingroup GenApi_PublicImpl */
@@ -1014,6 +1125,94 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 // #pragma warning ( pop )
 
 // #endif // ifndef GENAPI_IIINTEGER_H
+
+
+// Parsed from <GenApi/IFloat.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of the IFloat interface
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IFLOAT_H
+// #define GENAPI_IFLOAT_H
+
+// #include "GenApiDll.h"
+// #include "Types.h"
+// #include "IValue.h"
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IFloat interface
+    //*************************************************************
+
+    /**
+    \brief Interface for float properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi") public static class IFloat extends IValue {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public IFloat() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IFloat(Pointer p) { super(p); }
+    
+    }
+
+    //*************************************************************
+    // CFloatRef class
+    //*************************************************************
+    @Namespace("GenApi") @Opaque public static class IEnumeration extends Pointer {
+        /** Empty constructor. */
+        public IEnumeration() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumeration(Pointer p) { super(p); }
+    }
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IEnumEntry pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IFloat pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IFLOAT_H
 
 
 }

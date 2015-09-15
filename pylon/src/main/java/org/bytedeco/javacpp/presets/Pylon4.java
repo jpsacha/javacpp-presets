@@ -48,6 +48,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/DeviceInfo.h>",
                         "<pylon/InterfaceInfo.h>",
                         "<pylon/Container.h>",
+                        // DeviceAccessMode Excluded due to linker problems with bitset
 //                        "<pylon/DeviceAccessMode.h>",
                         "<pylon/DeviceFactory.h>",
                         "<pylon/TransportLayer.h>",
@@ -108,6 +109,12 @@ public class Pylon4 implements InfoMapper {
 //                .put(new Info("std::bitset<Pylon::_NumModes>").pointerTypes("ModeBitSet").define())
                 /* ignore to avoid problem with "std::bitset<Pylon::_NumModes>" */
                 .put(new Info("Pylon::CTlFactory::IsDeviceAccessible").skip())
+
+                /* Workaround for not being able to parse <pylon/DeviceAccessMode.h>*/
+                .put(new Info("Pylon::AccessModeSet").cast().pointerTypes("Pointer"))
+                .put(new Info("Pylon::Control").cast().valueTypes("int").cppText("0x1"))
+//                .put(new Info("Pylon::IDeviceFactory::IsDeviceAccessible").skip())
+
                 /* "<pylon/WaitObject.h>" */
                 .put(new Info("defined (PYLON_LINUX_BUILD)").define(false))
                 /* typedef void *HANDLE */

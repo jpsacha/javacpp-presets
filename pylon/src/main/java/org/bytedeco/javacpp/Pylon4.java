@@ -529,6 +529,18 @@ public static final int PYLON_PACKING = 8;
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IProperties(Pointer p) { super(p); }
     
+        /** Retrieves a list of property names */
+        public native int GetPropertyNames( @Cast("Pylon::StringList_t*") @ByRef gcstring_vector arg0 );
+        /** Returns true if a property with the provided name is available */
+        public native @Cast("bool") boolean GetPropertyAvailable( @Cast("const Pylon::String_t*") @ByRef gcstring Name);
+        /** Retrieves a property value */
+        public native @Cast("bool") boolean GetPropertyValue( @Cast("const Pylon::String_t*") @ByRef gcstring Name, @Cast("Pylon::String_t*") @ByRef gcstring Value );
+        /** Modifies a property value */
+        public native @ByRef IProperties SetPropertyValue( @Cast("const Pylon::String_t*") @ByRef gcstring Name, @Cast("const Pylon::String_t*") @ByRef gcstring Value);
+        /** Returns true if all properties of the subset can be found and the values are equal
+         *  The implementing container may use special knowledge on how to compare the values
+         *  For instance for IP adresses, 192.2.3.45 == 192.2.3.0x2D */
+        public native @Cast("bool") boolean IsSubset( @Const @ByRef IProperties Subset);
 
     }
         ///Identifies the human readable name of the device.
@@ -1486,6 +1498,101 @@ the IDeviceFactory interface.
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IDeviceFactory(Pointer p) { super(p); }
 
+    /** Retrieves a list of available devices.
+    /**
+    The list contains Pylon::CDeviceInfo objects used for the device creation.
+
+    By default, the list passed in will be cleared before the device discovery is started. 
+
+    \param list List to be filled with device info objects.
+    \param addToList If true, the found devices will be added to the list instead of deleting the list.
+    \return Number of devices found.
+    */
+    public native int EnumerateDevices( @Cast("Pylon::DeviceInfoList_t*") @ByRef DeviceInfoList list, @Cast("bool") boolean addToList/*=false*/ );
+    public native int EnumerateDevices( @Cast("Pylon::DeviceInfoList_t*") @ByRef DeviceInfoList list );
+
+    /** Retrieves a list of available devices filtered by given properties, usable for looking for specific devices.
+    /**
+    The list contains Pylon::CDeviceInfo objects used for the device creation.
+    By default, the list passed in will be cleared before the device discovery is started. 
+    The filter list can contain a list of device info objects containing properties a device must have, e.g.
+    the user-provided name or the serial number. A device is returned, if it matches the properties of any of the
+    device info objects in the filter list.
+    When the device class property is set in the filter device info objects, the search is
+    limited to the required transport layers.
+
+    \param list List to be filled with device info objects.
+    \param filter A list of device info objects with user-provided properties that a device can match.
+    \param addToList If true, found devices will be added to the list instead of deleting the list.
+    \return Number of devices found.
+    */
+    public native int EnumerateDevices( @Cast("Pylon::DeviceInfoList_t*") @ByRef DeviceInfoList list, @Cast("const Pylon::DeviceInfoList_t*") @ByRef DeviceInfoList filter, @Cast("bool") boolean addToList/*=false*/ );
+    public native int EnumerateDevices( @Cast("Pylon::DeviceInfoList_t*") @ByRef DeviceInfoList list, @Cast("const Pylon::DeviceInfoList_t*") @ByRef DeviceInfoList filter );
+
+    /** Creates a camera object from a device info object.
+    /**
+        This method accepts either a device info object from a device enumeration or a user-provided device info object.
+        User-provided device info objects can be preset with properties required for a device, e.g.
+        the user-provided name or the serial number. The implementation tries to find a matching camera by using device
+        enumeration.
+        When the device class property is set, the search is limited to the required transport layer.
+
+        If the device creation fails, a GenApi::GenericException will be thrown.
+        \param di Device info object containing all information needed to identify exactly one device.
+    */
+    public native IPylonDevice CreateDevice( @Const @ByRef CDeviceInfo di );
+
+    /** If multiple devices match the provided properties, the first device found is created.
+     *  The order in which the devices are found can vary from call to call. */
+    public native IPylonDevice CreateFirstDevice( @Const @ByRef(nullValue = "Pylon::CDeviceInfo()") CDeviceInfo di/*=Pylon::CDeviceInfo()*/);
+    public native IPylonDevice CreateFirstDevice();
+
+    /** Creates a camera object from a device info object, injecting additional GenICam XML definition strings.
+     *  Currently only one injected xml string is supported. */
+    public native IPylonDevice CreateDevice( @Const @ByRef CDeviceInfo di, @Cast("const Pylon::StringList_t*") @ByRef gcstring_vector InjectedXmlStrings );
+
+    /** Creates the first found camera device matching the provided properties, injecting additional GenICam XML definition strings.
+     *  Currently only one injected xml string is supported. */
+    public native IPylonDevice CreateFirstDevice( @Const @ByRef CDeviceInfo di, @Cast("const Pylon::StringList_t*") @ByRef gcstring_vector InjectedXmlStrings );
+
+    /** This method is deprecated. Use CreateDevice receiving a CDeviceInfo object that contains the full name as property.
+     *  Example: IPylonDevice* device = TlFactory.CreateDevice( CDeviceInfo().SetFullName( fullname));
+     *  Creates a device by its unique name (i.e. fullname as returned by CDeviceInfo::GetFullName ). */
+    public native IPylonDevice CreateDevice( @Cast("const Pylon::String_t*") @ByRef gcstring arg0 );
+
+    /** Destroys a device.
+    /** \note: Never try to delete a pointer to a camera device by calling free or delete. 
+        Always use the DestroyDevice method.
+    */
+    public native void DestroyDevice( IPylonDevice arg0 );
+
+    /**
+    \brief This method can be used to check if a camera device can be created and opened.
+
+    This method accepts either a device info object from a device enumeration or a user-provided device info object.
+    User-provided device info objects can be preset with properties required for a device, e.g.
+    the user-provided name or the serial number. The implementation tries to find a matching camera by using device
+    enumeration.
+    When the device class property is set, the search is limited to the required transport layer.
+
+    \param[in]  deviceInfo         Properties of the camera device.
+    \param[in]  mode               Used for defining how a device is accessed.
+                                   The use of the mode information is transport layer-specific.
+                                   For IIDC 1394 devices the mode information is ignored.
+                                   For GigE devices the \c Exclusive and \c Control flags are used for defining how a device is accessed.
+    \param[in]  pAccessibilityInfo Optionally provides more information about why a device is not accessible.
+    \return True if device can be opened with provided access mode.
+
+    \pre The \c deviceInfo object properties specify exactly one device.
+         This is the case when the device info object has been obtained using device enumeration.
+
+    \error
+         Throws a C++ exception, if the preconditions are not met.
+    */
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntPointer pAccessibilityInfo/*=NULL*/);
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo);
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntBuffer pAccessibilityInfo/*=NULL*/);
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") int[] pAccessibilityInfo/*=NULL*/);
 }
 
 
@@ -1557,6 +1664,44 @@ the IDeviceFactory interface.
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public ITransportLayer(Pointer p) { super(p); }
     
+        public native @ByVal CTlInfo GetTlInfo();
+
+        /** \brief Creates and returns an 'empty' Device Info object appropriate
+        for the transport layer.
+
+        Device Info objects returned by the CreateDeviceInfo() method are used to create
+        devices from device info objects that are not the result of a device enumeration process but are
+        provided by the user. The user is responsible for
+        filling in the fields of the Device Info object that are needed to identify and create a device.
+
+        Example: To open a GigE device for which the IP address is known, the user lets the Transport Layer object
+        create a Device Info object, specifies the IP address and passes the device info object to the
+        CreateDevice() method.
+
+        */
+        public native @ByVal CDeviceInfo CreateDeviceInfo();
+
+        /** \brief Returns the GenApi node map used for accessing parameters provided by the transport layer.
+
+        \return NULL, if the transport layer doesn't provide parameters, a pointer to the parameter node map otherwise.
+        */
+        public native INodeMap GetNodeMap();
+
+        /** \brief Retrieves a list of available interfaces.
+
+        The concept of interfaces is not supported by all transport layers. 
+        Depending on the transport layer, an interface may represent a frame grabber board, a network card, etc. 
+
+        By default, the list passed in will be cleared.
+
+        If the transport layer doesn't support the interface concept, EnumerateInterfaces() always returns 0. 
+
+        \param list The list to be filled with interface info objects
+        \param addToList If true, found devices will be added to the list instead of deleting the list
+        \return Number of interfaces provided by the transport layer. 
+        */
+        public native int EnumerateInterfaces( @Cast("Pylon::InterfaceInfoList_t*") @ByRef InterfaceInfoList list, @Cast("bool") boolean addToList/*=false*/ );
+        public native int EnumerateInterfaces( @Cast("Pylon::InterfaceInfoList_t*") @ByRef InterfaceInfoList list );
 
 
     }
@@ -1735,6 +1880,10 @@ the IDeviceFactory interface.
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IEventAdapter(Pointer p) { super(p); }
     
+        /** Deliver message */
+        public native void DeliverMessage( @Cast("const uint8_t*") BytePointer msg, @Cast("uint32_t") int numBytes );
+        public native void DeliverMessage( @Cast("const uint8_t*") ByteBuffer msg, @Cast("uint32_t") int numBytes );
+        public native void DeliverMessage( @Cast("const uint8_t*") byte[] msg, @Cast("uint32_t") int numBytes );
     }
 
 

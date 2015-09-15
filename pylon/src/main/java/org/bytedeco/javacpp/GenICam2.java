@@ -612,6 +612,8 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IReference(Pointer p) { super(p); }
     
+        /** sets the implementation to a reference */
+        public native void SetReference( IBase pBase );
     }
 
     //*************************************************************
@@ -629,6 +631,11 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IEnumReference(Pointer p) { super(p); }
     
+        /** sets the Enum value corresponding to a value */
+        public native void SetEnumReference( int Index, @ByVal gcstring Name);
+
+        /** sets the number of enum vallues */
+        public native void SetNumEnums( int NumEnums );
     }
 
     //*************************************************************
@@ -720,6 +727,8 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IBase(Pointer p) { super(p); }
     
+        /** Get the access mode of the node */
+        public native @Cast("GenApi::EAccessMode") int GetAccessMode();
     }
 
     //*************************************************************
@@ -804,12 +813,6 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 
 // #pragma warning ( push )
 // #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-    @Namespace("GenApi") @Opaque public static class INode extends Pointer {
-        /** Empty constructor. */
-        public INode() { }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public INode(Pointer p) { super(p); }
-    }
 
     //*************************************************************
     // IValue interface
@@ -826,6 +829,28 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IValue(Pointer p) { super(p); }
     
+        /** Get the INode interface of the node */
+        public native INode GetNode();
+
+        /** Get content of the node as string
+        /**
+        \param Verify Enables Range verification (default = false). The AccessMode is always checked
+        \param IgnoreCache If true the value is read ignoring any caches (default = false)
+        \return The value read
+        */
+        public native @ByVal gcstring ToString(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @ByVal gcstring ToString();
+
+        /** Set content of the node as string
+        /**
+        \param ValueStr The value to set
+        \param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void FromString(@Const @ByRef gcstring ValueStr, @Cast("bool") boolean Verify/*=true*/);
+        public native void FromString(@Const @ByRef gcstring ValueStr);
+
+        /** Checks if the value comes from cache or is requested from another node */
+        public native @Cast("bool") boolean IsValueCacheValid();
     }
 
 
@@ -1040,6 +1065,52 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IInteger(Pointer p) { super(p); }
     
+        /** Set node value
+        /**
+        \param Value The value to set
+        \param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("int64_t") long Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("int64_t") long Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IInteger put(@Cast("int64_t") long Value);
+
+        /** Get node value
+        /**
+        \param Verify Enables Range verification (default = false). The AccessMode is always checked
+        \param IgnoreCache If true the value is read ignoring any caches (default = false)
+        \return The value read
+        */
+        public native @Cast("int64_t") long GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/ );
+        public native @Cast("int64_t") long GetValue( );
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator ()") long apply();
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator *") long multiply();
+
+        /** Get minimum value allowed */
+        public native @Cast("int64_t") long GetMin();
+
+        /** Get maximum value allowed */
+        public native @Cast("int64_t") long GetMax();
+
+        /** Get increment */
+        public native @Cast("int64_t") long GetInc();
+
+        /** Get recommended representation */
+        public native @Cast("GenApi::ERepresentation") int GetRepresentation();
+
+        /** Get the physical unit name */
+        public native @ByVal gcstring GetUnit();
+
+        /** Restric minimum value */
+        public native void ImposeMin(@Cast("int64_t") long Value);
+
+        /** Restric maximum value */
+        public native void ImposeMax(@Cast("int64_t") long Value);
     }
 
 
@@ -1183,6 +1254,61 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IFloat(Pointer p) { super(p); }
     
+        /** Set node value
+        /**
+        \param Value The value to set
+        \param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(double Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(double Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IFloat put(double Value);
+
+        /** Get node value
+        /**
+        \param Verify Enables Range verification (default = false). The AccessMode is always checked
+        \param IgnoreCache If true the value is read ignoring any caches (default = false)
+        \return The value read
+        */
+        public native double GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native double GetValue();
+
+        /** Get node value */
+        public native @Name("operator ()") double apply();
+
+        /** Get node value */
+        public native @Name("operator *") double multiply();
+
+        /** Get minimum value allowed */
+        public native double GetMin();
+
+        /** Get maximum value allowed */
+        public native double GetMax();
+
+        /** True if the float has a constant increment */
+        public native @Cast("bool") boolean HasInc();
+
+        /** Get the constant increment if there is any */
+        public native double GetInc();
+
+        /** Get recommended representation */
+        public native @Cast("GenApi::ERepresentation") int GetRepresentation();
+
+        /** Get the physical unit name */
+        public native @ByVal gcstring GetUnit();
+
+        /** Get the way the float should be converted to a string */
+        public native @Cast("GenApi::EDisplayNotation") int GetDisplayNotation();
+
+        /** Get the precision to be used when converting the float to a string */
+        public native @Cast("int64_t") long GetDisplayPrecision();
+
+        /** Restric minimum value */
+        public native void ImposeMin(double Value);
+
+        /** Restric maximum value */
+        public native void ImposeMax(double Value);
     }
 
     //*************************************************************
@@ -1213,6 +1339,480 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 // #pragma warning ( pop )
 
 // #endif // ifndef GENAPI_IFLOAT_H
+
+
+// Parsed from <GenApi/IPort.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of interface IPort
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IPORT_H
+// #define GENAPI_IPORT_H
+
+// #include "../Base/GCException.h"
+// #include "GenApiDll.h"
+// #include "Types.h"
+// #include "IBase.h"
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IPort interface
+    //*************************************************************
+
+    /**
+    \brief Interface for ports
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi") public static class IPort extends IBase {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public IPort() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IPort(Pointer p) { super(p); }
+    
+        /** Reads a chunk of bytes from the port */
+        public native void Read(Pointer pBuffer, @Cast("int64_t") long Address, @Cast("int64_t") long Length);
+
+        /** Writes a chunk of bytes to the port */
+        public native void Write(@Const Pointer pBuffer, @Cast("int64_t") long Address, @Cast("int64_t") long Length);
+    }
+
+    //*************************************************************
+    // CPortRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IPort pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IEnumEntry pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IPORT_H
+
+
+// Parsed from <GenApi/INode.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief  Definition of interface INode and types NodeList_t and CallbackHandleType:
+\ingroup GenApi_PublicInterface
+*/
+
+
+// #ifndef GENAPI_INODE_H
+// #define GENAPI_INODE_H
+
+// #include "GenApiDll.h"
+// #include "Types.h"
+// #include "IBase.h"
+// #include "Base/GCString.h"
+// #include "Container.h"
+
+// #include <assert.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    @Namespace("GenApi") @Opaque public static class INodeMap extends Pointer {
+        /** Empty constructor. */
+        public INodeMap() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public INodeMap(Pointer p) { super(p); }
+    }
+
+    /** a list of node references */
+
+    /** the callback handle for nodes */
+
+    @Namespace("GenApi") @Opaque public static class CNodeCallback extends Pointer {
+        /** Empty constructor. */
+        public CNodeCallback() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CNodeCallback(Pointer p) { super(p); }
+    }
+
+    //*************************************************************
+    // INode interface
+    //*************************************************************
+
+    /**
+    \brief Interface common to all nodes
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi") public static class INode extends IBase {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public INode() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public INode(Pointer p) { super(p); }
+    
+        /** Get node name */
+        public native @ByVal gcstring GetName(@Cast("bool") boolean FullQualified/*=false*/);
+        public native @ByVal gcstring GetName();
+
+        /** Get name space */
+        public native @Cast("GenApi::ENameSpace") int GetNameSpace();
+
+        /** Get the recommended visibility of the node */
+        public native @Cast("GenApi::EVisibility") int GetVisibility();
+
+        /** Indicates that the node's value may have changed.
+        /** Fires the callback on this and all dependent nodes */
+        public native void InvalidateNode();
+
+        /** Is the node value cachable */
+        public native @Cast("bool") boolean IsCachable();
+
+        /** True if the AccessMode can be cached */
+        public native @Cast("GenApi::EYesNo") int IsAccessModeCacheable();
+
+        /** Get Caching Mode */
+        public native @Cast("GenApi::ECachingMode") int GetCachingMode();
+
+        /** recommended polling time (for not cachable nodes) */
+        public native @Cast("int64_t") long GetPollingTime();
+
+        /** Get a short description of the node */
+        public native @ByVal gcstring GetToolTip();
+
+        /** Get a long description of the node */
+        public native @ByVal gcstring GetDescription();
+
+        /** Get a name string for display */
+        public native @ByVal gcstring GetDisplayName();
+
+        /** Get a name of the device */
+        public native @ByVal gcstring GetDeviceName();
+
+        /**
+        \brief Get all nodes this node directly depends on.
+        \param[out] Children List of children nodes
+        \param LinkType The link type
+        */
+        public native void GetChildren(@Cast("GenApi::NodeList_t*") @ByRef Pointer Children, @Cast("GenApi::ELinkType") int LinkType/*=ctReadingChildren*/);
+        public native void GetChildren(@Cast("GenApi::NodeList_t*") @ByRef Pointer Children);
+
+        /**
+        \brief Gets all nodes this node is directly depending on
+        \param[out] Parents List of parent nodes
+        */
+        public native void GetParents(@Cast("GenApi::NodeList_t*") @ByRef Pointer Parents);
+
+        /** Register change callback
+        /** Takes ownership of the CNodeCallback object */
+        public native @Cast("GenApi::CallbackHandleType") long RegisterCallback( CNodeCallback pCallback );
+
+        /** De register change callback
+        /** Destroys CNodeCallback object
+        \return true if the callback handle was valid
+        */
+        public native @Cast("bool") boolean DeregisterCallback( @Cast("GenApi::CallbackHandleType") long hCallback );
+
+        /** Retrieves the central node map */
+        public native INodeMap GetNodeMap();
+
+        /** Get the EventId of the node */
+        public native @ByVal gcstring GetEventID();
+
+        /** True if the node is streamable */
+        public native @Cast("bool") boolean IsStreamable();
+
+        /** Returns a list of the names all properties set during initialization */
+        public native void GetPropertyNames(@ByRef gcstring_vector PropertyNames);
+
+        /** Retrieves a property plus an additional attribute by name
+        /** If a property has multiple values/attribute they come with Tabs as delimiters */
+        public native @Cast("bool") boolean GetProperty(@Const @ByRef gcstring PropertyName, @ByRef gcstring ValueStr, @ByRef gcstring AttributeStr);
+
+        /** Imposes an access mode to the natural access mode of the node */
+        public native void ImposeAccessMode(@Cast("GenApi::EAccessMode") int ImposedAccessMode);
+
+        /** Imposes a visibility  to the natural visibility of the node */
+        public native void ImposeVisibility(@Cast("GenApi::EVisibility") int ImposedVisibility);
+
+        /** Retrieves the a node which describes the same feature in a different way */
+        public native INode GetAlias();
+
+        /** Retrieves the a node which describes the same feature so that it can be casted */
+        public native INode GetCastAlias();
+
+        /** Gets a URL pointing to the documentation of that feature */
+        public native @ByVal gcstring GetDocuURL();
+
+        /** True if the node should not be used any more */
+        public native @Cast("bool") boolean IsDeprecated();
+
+        /** Get the type of the main interface of a node */
+        public native @Cast("GenApi::EInterfaceType") int GetPrincipalInterfaceType();
+
+        /** True if the node can be reached via category nodes from a category node named "Root" */
+        public native @Cast("bool") boolean IsFeature();
+
+    }
+
+    /** \addtogroup GenApi_PublicInterface
+     *  \{
+
+     *  Tests if readable */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsReadable( @Cast("GenApi::EAccessMode") int AccessMode );
+
+    /** Checks if a node is readable */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsReadable( @Const IBase p);
+
+    /** Checks if a node is readable */
+
+    /** Tests if writable */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsWritable( @Cast("GenApi::EAccessMode") int AccessMode );
+
+    /** Checks if a node is writable */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsWritable( @Const IBase p);
+
+    /** Checks if a node is writable */
+
+    /** Tests if implemented */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsImplemented( @Cast("GenApi::EAccessMode") int AccessMode );
+
+    /** Checks if a node is implemented */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsImplemented( @Const IBase p);
+
+    /** Checks if a node is implemented */
+
+    /** Tests if available */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsAvailable( @Cast("GenApi::EAccessMode") int AccessMode );
+
+    /** Checks if a node is available */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsAvailable( @Const IBase p);
+    
+    /** Checks if a node is available */
+
+    /** Computes which access mode the two guards allow together */
+    @Namespace("GenApi") public static native @Cast("GenApi::EAccessMode") int Combine(@Cast("GenApi::EAccessMode") int Peter, @Cast("GenApi::EAccessMode") int Paul);
+
+
+    /** Tests Visibility
+    /** CAVE : this relys on the EVisibility enum's coding */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsVisible( @Cast("GenApi::EVisibility") int Visibility, @Cast("GenApi::EVisibility") int MaxVisiblity );
+
+
+    /** Computes which visibility the two guards allow together */
+
+
+    /** Tests Cacheability */
+    @Namespace("GenApi") public static native @Cast("bool") boolean IsCacheable( @Cast("GenApi::ECachingMode") int CachingMode );
+
+    /** Computes which CachingMode results from a combination */
+
+    /** \} */
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_INODE_H
+
+
+// Parsed from <GenApi/Synch.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Hartmut Nebelung
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of Lock classes
+\ingroup GenApi_PublicImpl
+*/
+
+// #ifndef GENAPI_SYNCH_H
+// #define GENAPI_SYNCH_H
+
+// #include "GenApiDll.h"
+// #include "../Base/GCException.h"
+
+// #if defined (_WIN32)
+// #   include <windows.h>
+// #   include <winbase.h>
+// #elif defined (__GNUC__) && (defined (__linux__) || defined (__APPLE__))
+// #   include <pthread.h>
+// #   include <errno.h>
+// #   include <list>
+// #else
+// #   error No/unknown platform thread support
+// #endif
+
+    //-----------------------------------------------------------------
+    // CLock
+    //-----------------------------------------------------------------
+
+    /**
+    \brief A lock class
+    \ingroup GenApi_PublicImpl
+    */
+    @Namespace("GenApi") @NoOffset public static class CLock extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CLock(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CLock(int size) { allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CLock position(int position) {
+            return (CLock)super.position(position);
+        }
+    
+        /** Constructor */
+        public CLock() { allocate(); }
+        private native void allocate();
+
+        /** Destructor */
+
+        /** tries to enter the critical section; returns true if sccessfull */
+        public native @Cast("bool") boolean TryLock();
+
+        /** enters the critical section (may block) */
+        public native void Lock();
+
+        /** leaves the critical section */
+        public native void Unlock();
+
+    }
+
+
+    /** This class is for testing purposes only. It should not be used for
+     *  client code because it exists only for Windows but not for Linux
+     *  since it uses internal data structures of a Win32 object */
+    @Namespace("GenApi") public static class CLockEx extends CLock {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public CLockEx() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CLockEx(Pointer p) { super(p); }
+    
+
+// #       if defined (_WIN32)
+
+            /** Gives access to internal data member for test and purposes */
+            public native @Cast("int64_t") long GetLockCount();
+
+            /** Gives access to internal data member for test and purposes */
+            public native @Cast("int64_t") long GetRecursionCount();
+
+// #       elif defined (__GNUC__) && (defined (__linux__) || defined (__APPLE__))
+            // nothing implemented for Unix
+// #       else
+// #           error No/unknown platform support
+
+    }
+
+
+    //-----------------------------------------------------------------
+    // AutoLock
+    //-----------------------------------------------------------------
+    @Namespace("GenApi") @NoOffset public static class AutoLock extends Pointer {
+        static { Loader.load(); }
+        /** Empty constructor. */
+        public AutoLock() { }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public AutoLock(Pointer p) { super(p); }
+    
+        public AutoLock(@ByRef CLock lock) { allocate(lock); }
+        private native void allocate(@ByRef CLock lock);
+    }
+
+
+    //-----------------------------------------------------------------
+    // template LockableObject<Object,ThreadingModel>
+    //-----------------------------------------------------------------
+
+    /**
+    \brief Instance-Lock for an object
+    \ingroup GenApi_PublicImpl
+    */
+
+ // namespace GenApi
+
+// #endif // GENAPI_SYNCH_H
 
 
 }

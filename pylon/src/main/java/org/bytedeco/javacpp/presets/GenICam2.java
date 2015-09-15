@@ -51,9 +51,9 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "<GenApi/IBoolean.h>",
                 "<GenApi/IInteger.h>",
                 "<GenApi/IFloat.h>",
-//                "<GenApi/IPort.h>",
-//                "<GenApi/INode.h>",
-//                "<GenApi/Synch.h>",
+                "<GenApi/IPort.h>",
+                "<GenApi/INode.h>",
+                "<GenApi/Synch.h>",
 //                "<GenApi/Container.h>",
 //                "<GenApi/INodeMap.h>",
         }),
@@ -91,16 +91,25 @@ public class GenICam2 implements InfoMapper {
                 /* "Base/GCString.h" prevent parsing of things related to inner class `gcwchar` **/
                 .put(new Info("defined(_MSC_VER) && !defined(PHARLAP_WIN32)").define(false))
                 /* Enums defined here since <GenApi/Types.h> cannot be parsed due to Long enums */
-                .put(new Info("GenApi::ECachingMode").cast().valueTypes("int"))
                 .put(new Info("GenApi::EAccessMode").cast().valueTypes("int"))
+                .put(new Info("GenApi::ECachingMode").cast().valueTypes("int"))
+                .put(new Info("GenApi::ECachingMode").cast().valueTypes("int"))
+                .put(new Info("GenApi::EDisplayNotation").cast().valueTypes("int"))
+                .put(new Info("GenApi::EInterfaceType").cast().valueTypes("int"))
+                .put(new Info("GenApi::ELinkType").cast().valueTypes("int"))
+                .put(new Info("GenApi::ENameSpace").cast().valueTypes("int"))
                 .put(new Info("GenApi::ERepresentation").cast().valueTypes("int"))
                 .put(new Info("GenApi::EVisibility").cast().valueTypes("int"))
+                .put(new Info("GenApi::EYesNo").cast().valueTypes("int"))
 
                 .put(new Info("GenApi::CReferenceT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CReferenceTInteger").purify())
                 .put(new Info("GenApi::CBaseRefT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CBaseRefTInteger").purify())
                 .put(new Info("GenApi::CValueRefT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CValueRefTInteger").purify())
                 .put(new Info("GenApi::CIntegerRefT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CIntegerRef"))
-//                .put(new Info("GenApi::INodeMap").virtualize())
+
+                /* Workaround for not be ing able to parse <GenApi/Container.h>*/
+                .put(new Info("GenApi::node_vector").cast().pointerTypes("Pointer"))
+
         ;
     }
 }

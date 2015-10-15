@@ -6,14 +6,18 @@
   <parent>
     <groupId>org.bytedeco</groupId>
     <artifactId>javacpp-presets</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.bytedeco.javacpp-presets</groupId>
   <artifactId>tesseract</artifactId>
-  <version>3.03-rc1-${project.parent.version}</version>
+  <version>3.04-${project.parent.version}</version>
   <packaging>jar</packaging>
   <name>JavaCPP Presets for Tesseract</name>
+
+  <properties>
+    <platform.oldcompiler>${platform.compiler}</platform.oldcompiler>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -39,6 +43,12 @@
         <groupId>org.bytedeco</groupId>
         <artifactId>javacpp</artifactId>
         <configuration>
+          <propertyKeysAndValues>
+            <property>
+              <name>platform.compiler</name>
+              <value>${platform.oldcompiler}</value>
+            </property>
+          </propertyKeysAndValues>
           <classPaths>
             <classPath>${basedir}/../leptonica/target/classes/</classPath>
             <classPath>${project.build.outputDirectory}</classPath>

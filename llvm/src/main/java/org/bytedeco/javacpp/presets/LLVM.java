@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Samuel Audet
+ * Copyright (C) 2014-2015 Samuel Audet
  *
  * Licensed either under the Apache License, Version 2.0, or (at your option)
  * under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@ package org.bytedeco.javacpp.presets;
 import org.bytedeco.javacpp.annotation.*;
 import org.bytedeco.javacpp.tools.*;
 
-@Properties(target="org.bytedeco.javacpp.LLVM", value={@Platform(not={"android", "windows"}, define={"__STDC_LIMIT_MACROS", "__STDC_CONSTANT_MACROS"},
-    include={ "<llvm-c/Support.h>", "<llvm-c/Core.h>", "<llvm-c/Analysis.h>", "<llvm-c/BitReader.h>", "<llvm-c/BitWriter.h>", "<llvm-c/Disassembler.h>",
-             "<llvm-c/Initialization.h>", "<llvm-c/IRReader.h>", "<llvm-c/Linker.h>", "<llvm-c/LinkTimeOptimizer.h>", "<llvm-c/lto.h>",
-             "<llvm-c/Object.h>", "<llvm-c/Target.h>", "<llvm-c/TargetMachine.h>", "<llvm-c/ExecutionEngine.h>",
-             "<llvm-c/Transforms/IPO.h>", "<llvm-c/Transforms/PassManagerBuilder.h>", "<llvm-c/Transforms/Scalar.h>", "<llvm-c/Transforms/Vectorize.h>"},
-    link={"LLVM-3.6", "LTO"}) })
+@Properties(target = "org.bytedeco.javacpp.LLVM", value = @Platform(not = {"android", "windows"}, define = {"__STDC_LIMIT_MACROS", "__STDC_CONSTANT_MACROS"},
+    include = {"<llvm-c/Support.h>", "<llvm-c/Core.h>", "<llvm-c/Analysis.h>", "<llvm-c/BitReader.h>", "<llvm-c/BitWriter.h>", "<llvm-c/Disassembler.h>",
+               "<llvm-c/Initialization.h>", "<llvm-c/IRReader.h>", "<llvm-c/Linker.h>", "<llvm-c/LinkTimeOptimizer.h>", "<llvm-c/lto.h>",
+               "<llvm-c/Object.h>", "<llvm-c/Target.h>", "<llvm-c/TargetMachine.h>", "<llvm-c/ExecutionEngine.h>",
+               "<llvm-c/Transforms/IPO.h>", "<llvm-c/Transforms/PassManagerBuilder.h>", "<llvm-c/Transforms/Scalar.h>", "<llvm-c/Transforms/Vectorize.h>"},
+    link = {"LLVM-3.7", "LTO"}))
 public class LLVM implements InfoMapper {
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("LLVMOpaqueContext").pointerTypes("LLVMContextRef"))

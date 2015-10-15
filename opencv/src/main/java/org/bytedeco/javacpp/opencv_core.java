@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.0
+// Targeted by JavaCPP version 1.1-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -15849,9 +15849,9 @@ notation of some operations:
     public native @Const SparseMat.Node node();
 
     /** moves iterator to the previous element */
-    public native @ByRef @Name("operator --") SparseMatConstIterator decrement();
+    
     /** moves iterator to the previous element */
-    public native @ByVal @Name("operator --") SparseMatConstIterator decrement(int arg0);
+    
     /** moves iterator to the next element */
     public native @ByRef @Name("operator ++") SparseMatConstIterator increment();
     /** moves iterator to the next element */
@@ -17349,9 +17349,9 @@ without any constraints.
             return (Function)super.position(position);
         }
     
-        @Virtual public native int getDims();
+        @Virtual(true) public native int getDims();
         @Virtual public native double getGradientEps();
-        @Virtual public native double calc(@Const DoublePointer x);
+        @Virtual(true) public native double calc(@Const DoublePointer x);
         @Virtual public native void getGradient(@Const DoublePointer x,DoublePointer grad);
     }
 

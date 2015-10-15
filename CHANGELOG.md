@@ -1,9 +1,16 @@
 
- * Upgrade presets for Caffe, CUDNN 3
- * Include `motion_vector.h` header file in the `avutil` module of FFmpeg
+ * Add the `clang` module to the presets for LLVM
+ * Propose for FFmpeg in the `cppbuild.sh` file a minimal configuration to support MPEG-4 streams with H.264 and AAC
+ * Switch the H.264 encoder used by default in FFmpeg from x264 to the non-GPL OpenH264
+ * Hack together `log_callback.h` to be able to redirect to Java log messages from FFmpeg
+ * Pick up `OLDCC`, `OLDCXX`, and `OLDFC` environment variables in `cppbuild.sh` and `platform.oldcompiler` system property in Maven to build with it libraries that can tolerate an older version of the C/C++ compiler on Linux
+ * Upgrade all Maven dependencies and plugins to latest versions, thus bumping minimum requirements to Java SE 7, Android 4.0, and Maven 3.0
+ * Provide `cppbuild.sh` script for Caffe that includes all dependencies ([pull #77](https://github.com/bytedeco/javacpp-presets/pull/77))
+ * Upgrade presets for Caffe, CUDA 7.5, cuDNN 3, FFmpeg 2.8, LLVM 3.7.0, Tesseract 3.04
+ * Include `motion_vector.h`, `fifo.h`, and `audio_fifo.h` header files in the `avutil` module of FFmpeg ([issue #79](https://github.com/bytedeco/javacpp-presets/issues/79))
  * Add presets for Chilitags, thanks to Chris Walters for the financial contribution
  * Let users choose the runtime type of `layer_by_name()` from `FloatNet` or `DoubleNet` in `caffe` ([issue bytedeco/javacpp#25](https://github.com/bytedeco/javacpp/issues/25))
- * Add presets for the `face` and `xfeatures2d` modules of OpenCV 3.0 ([issue bytedeco/javacv#196](https://github.com/bytedeco/javacv/issues/196)) ([issue #54](https://github.com/bytedeco/javacpp-presets/issues/54))
+ * Add presets for the `face`, `optflow`, and `xfeatures2d` modules of OpenCV 3.0 ([issue bytedeco/javacv#196](https://github.com/bytedeco/javacv/issues/196), [issue bytedeco/javacv#239](https://github.com/bytedeco/javacv/issues/239), [issue #54](https://github.com/bytedeco/javacpp-presets/issues/54))
  * Switch to GCC 4.9 by default on Android, probably dropping support for Android 2.2, because GCC 4.6 has issues with OpenMP ([issue bytedeco/javacv#179](https://github.com/bytedeco/javacv/issues/179))
  * Resolve missing dependency for GSL on `windows-x86` by linking statically whatever it needs from `libgcc_s_dw2-1.dll`
 

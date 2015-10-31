@@ -8,38 +8,38 @@ if [[ -z "$PLATFORM" ]]; then
 fi
 
 DISABLE="--disable-iconv --disable-libxcb --disable-opencl --disable-sdl"
-ENABLE="--enable-shared --enable-gpl --enable-version3 --enable-nonfree --enable-runtime-cpudetect --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-openssl --enable-libopenh264 --enable-libx265 --enable-libvpx"
+ENABLE="--enable-shared --enable-gpl --enable-version3 --enable-nonfree --enable-runtime-cpudetect --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-openssl --enable-libopenh264 --enable-libx264 --enable-libx265 --enable-libvpx"
 
 # minimal configuration to support MPEG-4 streams with H.264 and AAC
 # DISABLE="--disable-iconv --disable-libxcb --disable-opencl --disable-sdl --disable-zlib --disable-everything"
 # ENABLE="--enable-shared --enable-runtime-cpudetect --enable-libopenh264 --enable-encoder=libopenh264 --enable-encoder=aac --enable-decoder=h264 --enable-decoder=aac --enable-parser=h264 --enable-parser=aac --enable-muxer=mp4 --enable-muxer=rtsp --enable-demuxer=mov --enable-demuxer=rtsp --enable-protocol=file --enable-protocol=http --enable-protocol=rtp --enable-protocol=rtmp"
 
 if [[ $PLATFORM == windows* && !($DISABLE =~ "--disable-everything") ]]; then
-    FFMPEG_VERSION=20150909-git-2c1ec57
+    FFMPEG_VERSION=2.8.1
     [[ $PLATFORM == *64 ]] && BITS=64 || BITS=32
     download http://ffmpeg.zeranoe.com/builds/win$BITS/dev/ffmpeg-$FFMPEG_VERSION-win$BITS-dev.7z ffmpeg-$FFMPEG_VERSION-win$BITS-dev.7z
     download http://ffmpeg.zeranoe.com/builds/win$BITS/shared/ffmpeg-$FFMPEG_VERSION-win$BITS-shared.7z ffmpeg-$FFMPEG_VERSION-win$BITS-shared.7z
 
     mkdir -p $PLATFORM
     cd $PLATFORM
-     /C/Program\ Files/7-Zip/7z x -y ../ffmpeg-$FFMPEG_VERSION-win$BITS-dev.7z
-     /C/Program\ Files/7-Zip/7z x -y ../ffmpeg-$FFMPEG_VERSION-win$BITS-shared.7z
+    7z x -y ../ffmpeg-$FFMPEG_VERSION-win$BITS-dev.7z
+    7z x -y ../ffmpeg-$FFMPEG_VERSION-win$BITS-shared.7z
 else
     LAME=lame-3.99.5
-    SPEEX=speex-1.2rc1
+    SPEEX=speex-1.2rc2
     OPENCORE_AMR=opencore-amr-0.1.3
     OPENSSL=openssl-1.0.2d
     OPENH264_VERSION=1.4.0
-    X265=x265_1.7
+    X265=x265_1.8
     VPX_VERSION=v1.4.0
-    FFMPEG_VERSION=2.8
+    FFMPEG_VERSION=2.8.1
     download http://downloads.sourceforge.net/project/lame/lame/3.99/$LAME.tar.gz $LAME.tar.gz
     download http://downloads.xiph.org/releases/speex/$SPEEX.tar.gz $SPEEX.tar.gz
     download http://sourceforge.net/projects/opencore-amr/files/opencore-amr/$OPENCORE_AMR.tar.gz/download $OPENCORE_AMR.tar.gz
     download https://www.openssl.org/source/$OPENSSL.tar.gz $OPENSSL.tar.gz
     download https://github.com/cisco/openh264/archive/v$OPENH264_VERSION.tar.gz openh264-$OPENH264_VERSION.tar.gz
-#    download ftp://ftp.videolan.org/pub/videolan/x264/snapshots/last_stable_x264.tar.bz2 last_stable_x264.tar.bz2
-    download https://bitbucket.org/multicoreware/x265/downloads/$X265.tar.gz $X265.tar.gz
+    download ftp://ftp.videolan.org/pub/videolan/x264/snapshots/last_stable_x264.tar.bz2 last_stable_x264.tar.bz2
+    download https://ftp.videolan.org/pub/videolan/x265/$X265.tar.gz $X265.tar.gz
     download https://chromium.googlesource.com/webm/libvpx/+archive/$VPX_VERSION.tar.gz libvpx-$VPX_VERSION.tar.gz
     download http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 ffmpeg-$FFMPEG_VERSION.tar.bz2
 
@@ -51,12 +51,12 @@ else
     tar -xzvf ../$OPENCORE_AMR.tar.gz
     tar -xzvf ../$OPENSSL.tar.gz
     tar -xzvf ../openh264-$OPENH264_VERSION.tar.gz
-#    tar -xjvf ../last_stable_x264.tar.bz2
+    tar -xjvf ../last_stable_x264.tar.bz2
     tar -xzvf ../$X265.tar.gz
     mkdir -p libvpx-$VPX_VERSION
     tar -xzvf ../libvpx-$VPX_VERSION.tar.gz -C libvpx-$VPX_VERSION
     tar -xjvf ../ffmpeg-$FFMPEG_VERSION.tar.bz2
-#    X264=`echo x264-snapshot-*`
+    X264=`echo x264-snapshot-*`
 fi
 
 case $PLATFORM in
@@ -83,10 +83,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ PREFIX=$INSTALL_PATH OS=android ARCH=arm USE_ASM=No NDKROOT="$ANDROID_NDK" TARGET="$ANDROID_ROOT" libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-cli --cross-prefix="$ANDROID_BIN-" --sysroot="$ANDROID_ROOT" --host=arm-linux --extra-cflags="-DANDROID -fPIC -ffunction-sections -funwind-tables -fstack-protector -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -fomit-frame-pointer -fstrict-aliasing -funswitch-loops -finline-limit=300" --extra-ldflags="-nostdlib -Wl,--fix-cortex-a8 -lgcc -ldl -lz -lm -lc"
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-cli --cross-prefix="$ANDROID_BIN-" --sysroot="$ANDROID_ROOT" --host=arm-linux --extra-cflags="-DANDROID -fPIC -ffunction-sections -funwind-tables -fstack-protector -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -fomit-frame-pointer -fstrict-aliasing -funswitch-loops -finline-limit=300" --extra-ldflags="-nostdlib -Wl,--fix-cortex-a8 -lgcc -ldl -lz -lm -lc"
+        make -j $MAKEJ
+        make install
         cd ../$X265
         patch -Np1 < ../../../$X265-android.patch || true
         $CMAKE -DENABLE_CLI=OFF -DENABLE_SHARED=OFF -DCMAKE_TOOLCHAIN_FILE=android-arm.cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
@@ -126,10 +126,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ PREFIX=$INSTALL_PATH OS=android ARCH=x86 NDKROOT="$ANDROID_NDK" TARGET="$ANDROID_ROOT" libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-cli --cross-prefix="$ANDROID_BIN-" --sysroot="$ANDROID_ROOT" --host=i686-linux --extra-cflags="-DANDROID -fPIC -ffunction-sections -funwind-tables -mtune=atom -mssse3 -mfpmath=sse -fomit-frame-pointer -fstrict-aliasing -funswitch-loops -finline-limit=300" --extra-ldflags="-nostdlib -lgcc -ldl -lz -lm -lc"
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-cli --cross-prefix="$ANDROID_BIN-" --sysroot="$ANDROID_ROOT" --host=i686-linux --extra-cflags="-DANDROID -fPIC -ffunction-sections -funwind-tables -mtune=atom -mssse3 -mfpmath=sse -fomit-frame-pointer -fstrict-aliasing -funswitch-loops -finline-limit=300" --extra-ldflags="-nostdlib -lgcc -ldl -lz -lm -lc"
+        make -j $MAKEJ
+        make install
         cd ../$X265
         patch -Np1 < ../../../$X265-android.patch || true
         $CMAKE -DENABLE_CLI=OFF -DENABLE_SHARED=OFF -DCMAKE_TOOLCHAIN_FILE=android-x86.cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
@@ -165,10 +165,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=. PREFIX=.. AR=ar ARCH=x86 libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --host=i686-linux
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --host=i686-linux
+        make -j $MAKEJ
+        make install
         cd ../$X265
         CC="gcc -m32" CXX="g++ -m32" $CMAKE -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
         make -j $MAKEJ
@@ -203,10 +203,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=. PREFIX=.. AR=ar ARCH=x86_64 libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --host=x86_64-linux
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --host=x86_64-linux
+        make -j $MAKEJ
+        make install
         cd ../$X265
         CC="gcc -m64" CXX="g++ -m64" $CMAKE -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
         make -j $MAKEJ
@@ -241,10 +241,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=. PREFIX=.. AR=ar libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl
+        make -j $MAKEJ
+        make install
         cd ../$X265
         CC="clang" CXX="clang++" $CMAKE -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
         make -j $MAKEJ
@@ -287,10 +287,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=. PREFIX=.. AR=ar ARCH=x86 libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --build=i686-w64-mingw32
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --build=i686-w64-mingw32
+        make -j $MAKEJ
+        make install
         cd ../$X265
         CC="gcc -m32" CXX="g++ -m32" $CMAKE -G "MSYS Makefiles" -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
         make -j $MAKEJ
@@ -332,10 +332,10 @@ case $PLATFORM in
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=. PREFIX=.. AR=ar ARCH=x86_64 libraries install-static
-#        cd ../$X264
-#        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --build=x86_64-w64-mingw32
-#        make -j $MAKEJ
-#        make install
+        cd ../$X264
+        ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --build=x86_64-w64-mingw32
+        make -j $MAKEJ
+        make install
         cd ../$X265
         CC="gcc -m64" CXX="g++ -m64" $CMAKE -G "MSYS Makefiles" -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. source
         make -j $MAKEJ

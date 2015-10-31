@@ -34,12 +34,12 @@ We can use [Maven 3](http://maven.apache.org/) to download and install automatic
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bytedeco.javacpp-presets.caffe</groupId>
     <artifactId>caffe</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <dependencies>
         <dependency>
             <groupId>org.bytedeco.javacpp-presets</groupId>
             <artifactId>caffe</artifactId>
-            <version>master-1.0</version>
+            <version>master-1.1</version>
         </dependency>
     </dependencies>
 </project>
@@ -243,7 +243,7 @@ public class caffe {
             }
 
             logger.info("Starting Optimization");
-            FloatSolver solver = GetFloatSolver(solver_param);
+            FloatSolver solver = FloatSolverRegistry.CreateSolver(solver_param);
 
             if (snapshot.length() > 0) {
                 logger.info("Resuming from " + snapshot);

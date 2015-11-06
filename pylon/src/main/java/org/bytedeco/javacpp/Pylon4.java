@@ -5515,4 +5515,225 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #endif /* INCLUDED_INSTANTCAMERA_H_08725703 */
 
 
+// Parsed from <pylon/AcquireSingleFrameConfiguration.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2014 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief An instant camera configuration for single frame acquisition.
+    Use together with Pylon::CInstantCamera::GrabOne() only.
+    This  instant camera configuration is provided as header-only file. The code
+    can be copied and modified for creating own configuration classes.
+*/
+
+// #ifndef INCLUDED_ACQUIRESINGLEFRAMECONFIGURATION_H_6529309
+// #define INCLUDED_ACQUIRESINGLEFRAMECONFIGURATION_H_6529309
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/InstantCamera.h>
+    /** \addtogroup Pylon_InstantCameraApiGeneric
+     * @{
+     */
+
+    /**
+    \class  CAcquireSingleFrameConfiguration
+    \brief  An instant camera configuration for single frame acquisition, Use together with CInstantCamera::GrabOne() only.
+
+        The %CAcquireSingleFrameConfiguration is provided as header-only file.
+        The code can be copied and modified for creating own configuration classes.
+
+        \note Grabbing single images using Software Trigger (CSoftwareTriggerConfiguration) is recommended if you want to maximize frame rate.
+        This is because the overhead per grabbed image is reduced compared to Single Frame Acquisition.
+        The grabbing can be started using CInstantCamera::StartGrabbing().
+        Images are grabbed using the CInstantCamera::WaitForFrameTriggerReady(), CInstantCamera::ExecuteSoftwareTrigger() and CInstantCamera::RetrieveResult() methods instead of using CInstantCamera::GrabOne().
+        The grab can be stopped using CInstantCamera::StopGrabbing() when done.
+
+    */
+    @Namespace("Pylon") public static class CAcquireSingleFrameConfiguration extends CConfigurationEventHandler {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CAcquireSingleFrameConfiguration() { allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CAcquireSingleFrameConfiguration(int size) { allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CAcquireSingleFrameConfiguration(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CAcquireSingleFrameConfiguration position(int position) {
+            return (CAcquireSingleFrameConfiguration)super.position(position);
+        }
+    
+        /** Apply acquire single frame configuration. */
+        public static native void ApplyConfiguration( @ByRef INodeMap nodemap);
+
+        //Set basic camera settings
+        public native void OnOpened( @ByRef CInstantCamera camera);
+    }
+
+    /** 
+     * @}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_ACQUIRESINGLEFRAMECONFIGURATION_H_6529309 */
+
+
+// Parsed from <pylon/AcquireContinuousConfiguration.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2014 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief An instant camera configuration for free-running continuous acquisition.
+    This  instant camera configuration is provided as header-only file. The code
+    can be copied and modified for creating own configuration classes.
+*/
+
+// #ifndef INCLUDED_ACQUIRECONTINUOUSCONFIGURATION_H_7346765
+// #define INCLUDED_ACQUIRECONTINUOUSCONFIGURATION_H_7346765
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/InstantCamera.h>
+    /** \addtogroup Pylon_InstantCameraApiGeneric
+     * @{
+     */
+
+    /**
+    \class  CAcquireContinuousConfiguration
+    \brief Changes the configuration of the camera to free-running continuous acquisition.
+
+        The \c CAcquireContinuousConfiguration is the default configuration of the Instant Camera class.
+        The CAcquireContinuousConfiguration is automatically registered when an Instant Camera object is created.
+
+        This instant camera configuration is provided as header-only file. The code
+        can be copied and modified for creating own configuration classes.
+    */
+    @Namespace("Pylon") public static class CAcquireContinuousConfiguration extends CConfigurationEventHandler {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CAcquireContinuousConfiguration() { allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CAcquireContinuousConfiguration(int size) { allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CAcquireContinuousConfiguration(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CAcquireContinuousConfiguration position(int position) {
+            return (CAcquireContinuousConfiguration)super.position(position);
+        }
+        
+        /** Apply acquire continuous configuration. */
+        public static native void ApplyConfiguration( @ByRef INodeMap nodemap);
+
+
+        //Set basic camera settings.
+        public native void OnOpened( @ByRef CInstantCamera camera);
+    }
+
+    /** 
+     * @}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_ACQUIRECONTINUOUSCONFIGURATION_H_7346765 */
+
+
+// Parsed from <pylon/SoftwareTriggerConfiguration.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2014 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief An instant camera configuration for software trigger,
+       Use together with Pylon::CInstantCamera::WaitForFrameTriggerReady() and Pylon::CInstantCamera::ExecuteSoftwareTrigger().
+       This  instant camera configuration is provided as header-only file. The code
+       can be copied and modified for creating own configuration classes.
+*/
+
+// #ifndef INCLUDED_SOFTWARETRIGGERCONFIGURATION_H_4655834
+// #define INCLUDED_SOFTWARETRIGGERCONFIGURATION_H_4655834
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/InstantCamera.h>
+    /** \addtogroup Pylon_InstantCameraApiGeneric
+     * @{
+     */
+
+    /**
+    \class  CSoftwareTriggerConfiguration
+    \brief  Changes the configuration of the camera so that the acquisition of frames is triggered by software trigger.
+            Use together with CInstantCamera::WaitForFrameTriggerReady() and CInstantCamera::ExecuteSoftwareTrigger().
+
+        The %CSoftwareTriggerConfiguration is provided as header-only file.
+        The code can be copied and modified for creating own configuration classes.
+    */
+    @Namespace("Pylon") public static class CSoftwareTriggerConfiguration extends CConfigurationEventHandler {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CSoftwareTriggerConfiguration() { allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CSoftwareTriggerConfiguration(int size) { allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CSoftwareTriggerConfiguration(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CSoftwareTriggerConfiguration position(int position) {
+            return (CSoftwareTriggerConfiguration)super.position(position);
+        }
+    
+        /** Apply software trigger configuration. */
+        public static native void ApplyConfiguration( @ByRef INodeMap nodemap);
+
+        //Set basic camera settings.
+        public native void OnOpened( @ByRef CInstantCamera camera);
+    }
+
+    /** 
+     * @}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_SOFTWARETRIGGERCONFIGURATION_H_4655834 */
+
+
 }

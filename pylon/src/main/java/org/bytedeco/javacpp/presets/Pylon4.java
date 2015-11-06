@@ -68,6 +68,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/CameraEventHandler.h>",
                         "<pylon/BufferFactory.h>",
                         "<pylon/InstantCamera.h>",
+                        // Acquisition Configurations
+                        "<pylon/AcquireSingleFrameConfiguration.h>",
+                        "<pylon/AcquireContinuousConfiguration.h>",
+                        "<pylon/SoftwareTriggerConfiguration.h>",
+                        // "<pylon/gige/ActionTriggerConfiguration.h>",
+                        //
                 }),
                 @Platform(value = "linux", link = "pylon@.4", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",

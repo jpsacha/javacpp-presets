@@ -34,7 +34,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  *
  * @author Jarek Sacha
  */
-@Properties(inherit = GenICam2.class,
+@Properties(inherit = GenICam3.class,
         target = "org.bytedeco.javacpp.Pylon4",
         value = {
                 @Platform(value = {"linux", "windows"}, include = {
@@ -43,52 +43,52 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/PylonBase.h>",
                         "<pylon/PylonVersionInfo.h>",
                         "<pylon/Info.h>",
-                        "<pylon/TlInfo.h>",
-                        "<pylon/DeviceClass.h>",
-                        "<pylon/DeviceInfo.h>",
-                        "<pylon/InterfaceInfo.h>",
-                        "<pylon/Container.h>",
-                        // DeviceAccessMode Excluded due to linker problems with bitset
-//                        "<pylon/DeviceAccessMode.h>",
-                        "<pylon/DeviceFactory.h>",
-                        "<pylon/TransportLayer.h>",
-                        "<pylon/TlFactory.h>",
-                        "<pylon/EventAdapter.h>",
-
-                        "<pylon/PixelType.h>",
-                        "<pylon/PayloadType.h>",
-                        "<pylon/Image.h>",
-                        "<pylon/GrabResultData.h>",
-                        "<pylon/GrabResultPtr.h>",
-
-                        "<pylon/WaitObject.h>",
-                        "<pylon/_InstantCameraParams.h>",
-                        "<pylon/ConfigurationEventHandler.h>",
-                        "<pylon/ImageEventHandler.h>",
-                        "<pylon/CameraEventHandler.h>",
-                        "<pylon/BufferFactory.h>",
-                        "<pylon/InstantCamera.h>",
-                        // Acquisition Configurations
-                        "<pylon/AcquireSingleFrameConfiguration.h>",
-                        "<pylon/AcquireContinuousConfiguration.h>",
-                        "<pylon/SoftwareTriggerConfiguration.h>",
-                        // "<pylon/gige/ActionTriggerConfiguration.h>",
-                        //
+//                        "<pylon/TlInfo.h>",
+//                        "<pylon/DeviceClass.h>",
+//                        "<pylon/DeviceInfo.h>",
+//                        "<pylon/InterfaceInfo.h>",
+//                        "<pylon/Container.h>",
+//                        // DeviceAccessMode Excluded due to linker problems with bitset
+////                        "<pylon/DeviceAccessMode.h>",
+//                        "<pylon/DeviceFactory.h>",
+//                        "<pylon/TransportLayer.h>",
+//                        "<pylon/TlFactory.h>",
+//                        "<pylon/EventAdapter.h>",
+//
+//                        "<pylon/PixelType.h>",
+//                        "<pylon/PayloadType.h>",
+//                        "<pylon/Image.h>",
+//                        "<pylon/GrabResultData.h>",
+//                        "<pylon/GrabResultPtr.h>",
+//
+//                        "<pylon/WaitObject.h>",
+//                        "<pylon/_InstantCameraParams.h>",
+//                        "<pylon/ConfigurationEventHandler.h>",
+//                        "<pylon/ImageEventHandler.h>",
+//                        "<pylon/CameraEventHandler.h>",
+//                        "<pylon/BufferFactory.h>",
+//                        "<pylon/InstantCamera.h>",
+//                        // Acquisition Configurations
+//                        "<pylon/AcquireSingleFrameConfiguration.h>",
+//                        "<pylon/AcquireContinuousConfiguration.h>",
+//                        "<pylon/SoftwareTriggerConfiguration.h>",
+//                        // "<pylon/gige/ActionTriggerConfiguration.h>",
+//                        //
                 }),
-                @Platform(value = "linux", link = "pylon@.4", includepath = "/usr/include/pylon/"),
+                @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
-                        link = {"PylonBase_MD_VC100", "PylonUsb_MD_VC100_TL"},
-                        includepath = "C:/Program Files/Basler/pylon 4/pylon/include/"),
+                        link = {"PylonBase_MD_VC120_v5_0" /*, "PylonUsb_MD_VC100_TL"*/},
+                        includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
                 @Platform(
                         value = "windows-x86",
                         define = {"WIN32", "GC_W64 1"},
-                        linkpath = "C:/Program Files/Basler/pylon 4/pylon/lib/Win32/",
-                        preloadpath = "C:/Program Files/Basler/pylon 4/pylon/bin/Win32/"),
+                        linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/Win32/",
+                        preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
                 @Platform(
                         value = "windows-x86_64",
                         define = {"WIN64", "GC_W64 1"},
-                        linkpath = "C:/Program Files/Basler/pylon 4/pylon/lib/x64/",
-                        preloadpath = "C:/Program Files/Basler/pylon 4/pylon/bin/x64/"
+                        linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/x64/",
+                        preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/x64/"
                 )})
 public class Pylon4 implements InfoMapper {
     public void map(InfoMap infoMap) {

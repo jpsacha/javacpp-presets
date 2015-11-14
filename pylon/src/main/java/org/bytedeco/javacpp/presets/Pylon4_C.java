@@ -34,7 +34,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  *
  * @author Jarek Sacha
  */
-@Properties(inherit = GenICam2.class,
+@Properties(inherit = GenICam3.class,
         target = "org.bytedeco.javacpp.Pylon4_C",
         value = {
                 @Platform(value = {"linux", "windows"}, include = {
@@ -51,18 +51,18 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 }),
                 @Platform(value = "linux", link = "pylonc@.4", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
-                        link = "PylonC_MD_VC100",
-                        includepath = "C:/Program Files/Basler/pylon 4/pylonc/include/"),
+                        link = "PylonC_MD_VC120",
+                        includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
                 @Platform(
                         value = "windows-x86",
                         define = {"WIN32", "GC_W64 1"},
-                        linkpath = "C:/Program Files/Basler/pylon 4/pylonc/lib/Win32/",
-                        preloadpath = "C:/Program Files/Basler/pylon 4/pylonc/bin/Win32/"),
+                        linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/Win32/",
+                        preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
                 @Platform(
                         value = "windows-x86_64",
                         define = {"WIN64", "GC_W64 1"},
-                        linkpath = "C:/Program Files/Basler/pylon 4/pylonc/lib/x64/",
-                        preloadpath = "C:/Program Files/Basler/pylon 4/pylonc/bin/x64/"
+                        linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/x64/",
+                        preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/x64/"
                 )})
 public class Pylon4_C implements InfoMapper {
     public void map(InfoMap infoMap) {

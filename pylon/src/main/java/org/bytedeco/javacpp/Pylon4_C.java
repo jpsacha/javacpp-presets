@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.1
+// Targeted by JavaCPP version 1.2-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -6,7 +6,7 @@ import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
 
-import static org.bytedeco.javacpp.GenICam2.*;
+import static org.bytedeco.javacpp.GenICam3.*;
 
 public class Pylon4_C extends org.bytedeco.javacpp.presets.Pylon4_C {
     static { Loader.load(); }
@@ -14,7 +14,7 @@ public class Pylon4_C extends org.bytedeco.javacpp.presets.Pylon4_C {
 // Parsed from <genapic/GenApiCDefines.h>
 
 /**
-  \file     
+  \file
   \brief    Platform-dependent macro definitions.
  */
 // #ifndef GenApiCDefines_h__
@@ -71,9 +71,9 @@ public static final int GENAPIC_PACKING = 8;
  * Definitions of enumerated types used by GenApi C functions.
  */
 
-/** 
+/**
   * \addtogroup genapi GenApi Interface
- * @{
+ * \{
   */
 
 /**
@@ -188,8 +188,8 @@ public static final int
     /** \brief For specifying file write access on file open. */
     GenApiFileWriteAccess = 1;
 
-/** 
-  * @}
+/**
+  * \}
   */
 
 // #endif
@@ -214,7 +214,7 @@ public static final int
 
 /*-----------------------------------------------------------------------------
     Basler pylon C SDK
-    Copyright (c) 2009-2014 Basler AG
+    Copyright (c) 2009-2015 Basler AG
     http://www.baslerweb.com
     Author:  AH, TK
 -----------------------------------------------------------------------------*/
@@ -275,7 +275,7 @@ public static final int
 // #  if defined(_MSC_VER)
 // #  endif
 // #else
-/* for VC Version >= 1800 : bool is now a proper type and you can´t create identifiers with that name */
+/* for VC Version >= 1800 : bool is now a proper type and you canï¿½t create identifiers with that name */
 // #   if (defined(_MSC_VER) && _MSC_VER <= 1700) || defined(__BORLANDC__)
 // #   endif
 // #endif
@@ -289,39 +289,48 @@ public static final int
 
 
 // #ifndef INT64_MAX
-public static final long INT64_MAX =   0x7fffffffffffffffL;    /* Maximum signed int64 value. */
+public static native @MemberGetter long INT64_MAX();
+public static final long INT64_MAX = INT64_MAX();    /* Maximum signed int64 value. */
 // #endif
 
 // #ifndef INT64_MIN
-public static final long INT64_MIN =   0x8000000000000000L;    /* Minimum signed int64 value. */
+public static native @MemberGetter long INT64_MIN();
+public static final long INT64_MIN = INT64_MIN();    /* Minimum signed int64 value. */
 // #endif
 
 // #ifndef UINT64_MAX
-public static final long UINT64_MAX =  0xffffffffffffffffL;   /* Maximum unsigned int64 value. */
+public static native @MemberGetter long UINT64_MAX();
+public static final long UINT64_MAX = UINT64_MAX();   /* Maximum unsigned int64 value. */
 // #endif
 
 // #ifndef INT32_MAX
-public static final long INT32_MAX =   0x000000007fffffffL;    /* Maximum signed int32 value. */
+public static native @MemberGetter long INT32_MAX();
+public static final long INT32_MAX = INT32_MAX();    /* Maximum signed int32 value. */
 // #endif
 
 // #ifndef INT32_MIN
-public static final long INT32_MIN =   0xffffffff80000000L;    /* Minimum signed int32 value. */
+public static native @MemberGetter long INT32_MIN();
+public static final long INT32_MIN = INT32_MIN();    /* Minimum signed int32 value. */
 // #endif
 
 // #ifndef UINT32_MAX
-public static final long UINT32_MAX =  0x00000000ffffffffL;   /* Maximum unsigned int32 value. */
+public static native @MemberGetter long UINT32_MAX();
+public static final long UINT32_MAX = UINT32_MAX();   /* Maximum unsigned int32 value. */
 // #endif
 
 // #ifndef INT8_MAX
-public static final long INT8_MAX =    0x000000000000007fL;    /* Maximum signed int8 value. */
+public static native @MemberGetter long INT8_MAX();
+public static final long INT8_MAX = INT8_MAX();    /* Maximum signed int8 value. */
 // #endif
 
 // #ifndef INT8_MIN
-public static final long INT8_MIN =    0xffffffffffffff80L;    /* Minimum signed int8 value. */
+public static native @MemberGetter long INT8_MIN();
+public static final long INT8_MIN = INT8_MIN();    /* Minimum signed int8 value. */
 // #endif
 
 // #ifndef UINT8_MAX
-public static final long UINT8_MAX =   0x00000000000000ffL;   /* Maximum unsigned int8 value. */
+public static native @MemberGetter long UINT8_MAX();
+public static final long UINT8_MAX = UINT8_MAX();   /* Maximum unsigned int8 value. */
 // #endif
 
 // #ifdef PYLONC_BOOL_DEFINED
@@ -337,14 +346,14 @@ public static final long UINT8_MAX =   0x00000000000000ffL;   /* Maximum unsigne
 
 /*-----------------------------------------------------------------------------
     Basler pylon C SDK
-    Copyright (c) 2009-2014 Basler AG
+    Copyright (c) 2009-2015 Basler AG
     http://www.baslerweb.com
     Author:  AH, TK
 -----------------------------------------------------------------------------*/
 
 /**
   \file
-  \brief GenApi C bindings. 
+  \brief GenApi C bindings.
 */
 
 // #ifndef GENAPI_GENAPIC_H_
@@ -375,9 +384,9 @@ public static final long UINT8_MAX =   0x00000000000000ffL;   /* Maximum unsigne
 //         struct name##_; typedef struct name##_ *name
 // #endif
 
-/** 
+/**
   * \addtogroup genapi GenApi Interface
-  * @{
+  * \{
   */
 
 /** \brief A value for invalid / uninitialized handles. */
@@ -388,32 +397,32 @@ public static final int GENAPIC_INVALID_HANDLE = GENAPIC_INVALID_HANDLE();
 // #endif
 
 @Opaque public static class NODE_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public NODE_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public NODE_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public NODE_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class NODEMAP_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public NODEMAP_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public NODEMAP_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public NODEMAP_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class GENAPI_FILE_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public GENAPI_FILE_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public GENAPI_FILE_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public GENAPI_FILE_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class NODE_CALLBACK_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public NODE_CALLBACK_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public NODE_CALLBACK_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public NODE_CALLBACK_HANDLE__(Pointer p) { super(p); }
 }
 
-/** 
- * @}
+/**
+ * \}
  */
 
 
@@ -717,7 +726,7 @@ public static native @Cast("GENAPIC_RESULT") long GenApiSelectorGetSelectedFeatu
 
 /*-----------------------------------------------------------------------------
     Basler pylon C SDK
-    Copyright (c) 2009-2014 Basler AG
+    Copyright (c) 2009-2015 Basler AG
     http://www.baslerweb.com
     Author:  AH, TK
 -----------------------------------------------------------------------------*/
@@ -795,9 +804,9 @@ public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetIntegerFeatureIn
  * Definitions of enumerated types used by pylon C functions.
  */
 
-/** 
+/**
  * \addtogroup pylon pylon Interface
- * @{
+ * \{
  */
 
 /**
@@ -961,6 +970,15 @@ public static final int
     /** \brief Indicates the Bayer BG 12 Packed pixel format. The memory layout of PixelType_BayerBG12Packed and PixelType_BayerBG12p is different.*/
     PixelType_BayerBG12Packed =  PIXEL_MONO | ((12) << 16) | 0x002D,
 
+    /** \brief Indicates the BayerGR10p pixel format. */
+    PixelType_BayerGR10p      =  PIXEL_MONO | ((10) << 16) | 0x0056,
+    /** \brief Indicates the BayerRG10p pixel format. */
+    PixelType_BayerRG10p      =  PIXEL_MONO | ((10) << 16) | 0x0058,
+    /** \brief Indicates the BayerGB10p pixel format. */
+    PixelType_BayerGB10p      =  PIXEL_MONO | ((10) << 16) | 0x0054,
+    /** \brief Indicates the BayerBG10p pixel format. */
+    PixelType_BayerBG10p      =  PIXEL_MONO | ((10) << 16) | 0x0052,
+
     /** \brief Indicates the BayerGR12p pixel format. The memory layout of PixelType_BayerGR12Packed and PixelType_BayerGR12p is different.*/
     PixelType_BayerGR12p      =  PIXEL_MONO | ((12) << 16) | 0x0057,
     /** \brief Indicates the BayerRG12p pixel format. The memory layout of PixelType_BayerRG12Packed and PixelType_BayerRG12p is different.*/
@@ -1068,7 +1086,7 @@ public static final int
     */
     PylonGigEActionCommandStatus_NoRefTime = -519995373,
 
-    /** 
+    /**
     \brief Returned when the scheduled action commands queue is full and the device cannot accept the additional request.
     The action command has been discarded by the device.
     */
@@ -1085,8 +1103,8 @@ public static final int
 
 // #endif
 
-/** 
- * @}
+/**
+ * \}
  */
 
 // #endif /* PYLON_ENUMS_H */
@@ -1096,7 +1114,7 @@ public static final int
 
 /*-----------------------------------------------------------------------------
     Basler pylon C SDK
-    Copyright (c) 2009-2014 Basler AG
+    Copyright (c) 2009-2015 Basler AG
     http://www.baslerweb.com
     Author:  AH, TK
 -----------------------------------------------------------------------------*/
@@ -1113,7 +1131,7 @@ public static final int
 // #include <stdio.h>   /* for FILENAME_MAX */
 // #include <genapic/GenApiCDefines.h>
 // #ifdef GENAPIC_WIN_BUILD
-// #   ifndef RPC_NO_WINDOWS_H 
+// #   ifndef RPC_NO_WINDOWS_H
 // #       define RPC_NO_WINDOWS_H // otherwise <rpcasync.h> generates warnings on VC6
 // #       define RPC_NO_WINDOWS_H_DEFINED_BY_PYLONC
 // #   endif
@@ -1136,7 +1154,7 @@ public static final int
 // #endif /* __cplusplus */
 
 /** \addtogroup pylon pylon Interface
- * @{
+ * \{
  */
 
 /* pylon invalid handle type */
@@ -1151,80 +1169,80 @@ public static final int PYLONC_ACCESS_MODE_EXCLUSIVE =    (1 << 3);
 
 /* pylon handle types */
 @Opaque public static class PYLON_DEVICE_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_DEVICE_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_DEVICE_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_DEVICE_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_DEVICE_INFO_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_DEVICE_INFO_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_DEVICE_INFO_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_DEVICE_INFO_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_STREAMGRABBER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_STREAMGRABBER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_STREAMGRABBER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_STREAMGRABBER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_EVENTGRABBER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_EVENTGRABBER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_EVENTGRABBER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_EVENTGRABBER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_CHUNKPARSER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_CHUNKPARSER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_CHUNKPARSER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_CHUNKPARSER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_EVENTADAPTER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_EVENTADAPTER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_EVENTADAPTER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_EVENTADAPTER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_WAITOBJECT_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_WAITOBJECT_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_WAITOBJECT_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_WAITOBJECT_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_WAITOBJECTS_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_WAITOBJECTS_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_WAITOBJECTS_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_WAITOBJECTS_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_STREAMBUFFER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_STREAMBUFFER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_STREAMBUFFER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_STREAMBUFFER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_DEVICECALLBACK_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_DEVICECALLBACK_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_DEVICECALLBACK_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_DEVICECALLBACK_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_FORMAT_CONVERTER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_FORMAT_CONVERTER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_FORMAT_CONVERTER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_FORMAT_CONVERTER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_IMAGE_FORMAT_CONVERTER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_IMAGE_FORMAT_CONVERTER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_IMAGE_FORMAT_CONVERTER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_IMAGE_FORMAT_CONVERTER_HANDLE__(Pointer p) { super(p); }
 }
 @Opaque public static class PYLON_AVI_WRITER_HANDLE__ extends Pointer {
-    /** Empty constructor. */
-    public PYLON_AVI_WRITER_HANDLE__() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PYLON_AVI_WRITER_HANDLE__() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PYLON_AVI_WRITER_HANDLE__(Pointer p) { super(p); }
 }
@@ -1248,9 +1266,9 @@ public static class PylonDeviceRemCb_t extends FunctionPointer {
 public static class PylonGrabResult_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public PylonGrabResult_t() { allocate(); }
+    public PylonGrabResult_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PylonGrabResult_t(int size) { allocateArray(size); }
+    public PylonGrabResult_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PylonGrabResult_t(Pointer p) { super(p); }
     private native void allocate();
@@ -1294,15 +1312,15 @@ public static class PylonGrabResult_t extends Pointer {
     /** The block ID of the grabbed frame (camera device specific).
                                                 \par IEEE 1394 Camera Devices
                                                 The value of block ID is always UINT64_MAX.
-    
+                                                <p>
                                                 \par GigE Camera Devices
-                                                The sequence number starts with 1 and  
-                                                wraps at 65535. The value 0 has a special meaning and indicates 
+                                                The sequence number starts with 1 and
+                                                wraps at 65535. The value 0 has a special meaning and indicates
                                                 that this feature is not supported by the camera.
-    
+                                                <p>
                                                 \par USB Camera Devices
                                                 The sequence number starts with 0 and uses the full 64 Bit range.
-    
+                                                <p>
                                                 \attention A block ID of value UINT64_MAX indicates that the Block ID is invalid and must not be used. */
     public native @Cast("uint64_t") int BlockID(); public native PylonGrabResult_t BlockID(int BlockID);
 }
@@ -1313,9 +1331,9 @@ public static class PylonGrabResult_t extends Pointer {
 public static class PylonEventResult_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public PylonEventResult_t() { allocate(); }
+    public PylonEventResult_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PylonEventResult_t(int size) { allocateArray(size); }
+    public PylonEventResult_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PylonEventResult_t(Pointer p) { super(p); }
     private native void allocate();
@@ -1333,14 +1351,14 @@ public static class PylonEventResult_t extends Pointer {
 // #endif
 
 @Opaque public static class tag_PylonAviCompressionOptions_t extends Pointer {
-    /** Empty constructor. */
-    public tag_PylonAviCompressionOptions_t() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public tag_PylonAviCompressionOptions_t() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public tag_PylonAviCompressionOptions_t(Pointer p) { super(p); }
 }
 @Opaque public static class PylonAviCompressionOptions_t extends Pointer {
-    /** Empty constructor. */
-    public PylonAviCompressionOptions_t() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PylonAviCompressionOptions_t() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PylonAviCompressionOptions_t(Pointer p) { super(p); }
 }
@@ -1350,9 +1368,9 @@ public static class PylonEventResult_t extends Pointer {
 public static class PylonImagePersistenceOptions_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public PylonImagePersistenceOptions_t() { allocate(); }
+    public PylonImagePersistenceOptions_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PylonImagePersistenceOptions_t(int size) { allocateArray(size); }
+    public PylonImagePersistenceOptions_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PylonImagePersistenceOptions_t(Pointer p) { super(p); }
     private native void allocate();
@@ -1370,9 +1388,9 @@ public static class PylonImagePersistenceOptions_t extends Pointer {
 public static class PylonGigEActionCommandResult_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public PylonGigEActionCommandResult_t() { allocate(); }
+    public PylonGigEActionCommandResult_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PylonGigEActionCommandResult_t(int size) { allocateArray(size); }
+    public PylonGigEActionCommandResult_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PylonGigEActionCommandResult_t(Pointer p) { super(p); }
     private native void allocate();
@@ -1388,8 +1406,8 @@ public static class PylonGigEActionCommandResult_t extends Pointer {
     public native @Cast("int32_t") int Status(); public native PylonGigEActionCommandResult_t Status(int Status);
 }
 
-/** 
- * @}
+/**
+ * \}
  */
 
 /*
@@ -1409,7 +1427,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonTerminate();
 */
 
 /** \addtogroup pylon pylon Interface
- * @{
+ * \{
  */
 
 /** \brief Fixed string size for PylonDeviceInfo_t members. */
@@ -1422,9 +1440,9 @@ public static final int PYLON_MAX_DEVICEINFO_ENTRY_LENGTH = 64;
 public static class PylonDeviceInfo_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public PylonDeviceInfo_t() { allocate(); }
+    public PylonDeviceInfo_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PylonDeviceInfo_t(int size) { allocateArray(size); }
+    public PylonDeviceInfo_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PylonDeviceInfo_t(Pointer p) { super(p); }
     private native void allocate();
@@ -1444,7 +1462,7 @@ public static class PylonDeviceInfo_t extends Pointer {
     @MemberGetter public native @Cast("char*") BytePointer VendorName();
     /** Model name of the device*/
     public native @Cast("char") byte ModelName(int i); public native PylonDeviceInfo_t ModelName(int i, byte ModelName);
-    @MemberGetter public native @Cast("char*") BytePointer ModelName(); 
+    @MemberGetter public native @Cast("char*") BytePointer ModelName();
     /** Serial number of the device */
     public native @Cast("char") byte SerialNumber(int i); public native PylonDeviceInfo_t SerialNumber(int i, byte SerialNumber);
     @MemberGetter public native @Cast("char*") BytePointer SerialNumber();
@@ -1459,8 +1477,8 @@ public static class PylonDeviceInfo_t extends Pointer {
     @MemberGetter public native @Cast("char*") BytePointer UserDefinedName();
 }
 
-/** 
- * @}
+/**
+ * \}
  */
 
 /* Device enumeration / creation */
@@ -1500,25 +1518,25 @@ public static native @Cast("GENAPIC_RESULT") long PylonGigEGetPersistentIpAddres
 
 
 // #ifndef PYLON_TLB_ONLY
-public static native @Cast("GENAPIC_RESULT") long PylonGigEBroadcastIpConfiguration( 
-                                  @Cast("const char*") BytePointer pMacAddress, 
-                                  @Cast("_Bool") boolean EnablePersistentIp, 
-                                  @Cast("_Bool") boolean EnableDHCP, 
-                                  @Cast("const char*") BytePointer pIpAddress, 
+public static native @Cast("GENAPIC_RESULT") long PylonGigEBroadcastIpConfiguration(
+                                  @Cast("const char*") BytePointer pMacAddress,
+                                  @Cast("_Bool") boolean EnablePersistentIp,
+                                  @Cast("_Bool") boolean EnableDHCP,
+                                  @Cast("const char*") BytePointer pIpAddress,
                                   @Cast("const char*") BytePointer pSubnetMask,
-                                  @Cast("const char*") BytePointer pDefaultGateway, 
-                                  @Cast("const char*") BytePointer pUserdefinedName, 
-                                  @Cast("_Bool*") BoolPointer pRetval 
+                                  @Cast("const char*") BytePointer pDefaultGateway,
+                                  @Cast("const char*") BytePointer pUserdefinedName,
+                                  @Cast("_Bool*") BoolPointer pRetval
                                   );
-public static native @Cast("GENAPIC_RESULT") long PylonGigEBroadcastIpConfiguration( 
-                                  String pMacAddress, 
-                                  @Cast("_Bool") boolean EnablePersistentIp, 
-                                  @Cast("_Bool") boolean EnableDHCP, 
-                                  String pIpAddress, 
+public static native @Cast("GENAPIC_RESULT") long PylonGigEBroadcastIpConfiguration(
+                                  String pMacAddress,
+                                  @Cast("_Bool") boolean EnablePersistentIp,
+                                  @Cast("_Bool") boolean EnableDHCP,
+                                  String pIpAddress,
                                   String pSubnetMask,
-                                  String pDefaultGateway, 
-                                  String pUserdefinedName, 
-                                  @Cast("_Bool*") BoolPointer pRetval 
+                                  String pDefaultGateway,
+                                  String pUserdefinedName,
+                                  @Cast("_Bool*") BoolPointer pRetval
                                   );
 
 public static native @Cast("GENAPIC_RESULT") long PylonGigEIssueActionCommand( @Cast("uint32_t") int deviceKey, @Cast("uint32_t") int groupKey, @Cast("uint32_t") int groupMask, @Cast("const char*") BytePointer pBroadcastAddress, @Cast("uint32_t") int timeoutMs,  @Cast("uint32_t*") IntPointer pNumResults, PylonGigEActionCommandResult_t pResults );

@@ -34,61 +34,78 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  *
  * @author Jarek Sacha
  */
-@Properties(target = "org.bytedeco.javacpp.GenICam2", value = {
+@Properties(target = "org.bytedeco.javacpp.GenICam3", value = {
         @Platform(value = {"linux", "windows"}, include = {
+//                "<_GenICamVersion.h>",
+//                "<GenICamVersion.h>",
+//                "<Base/GCNamespace.h>",
                 "<Base/GCTypes.h>",
                 "<Base/GCString.h>",
                 "<Base/GCStringVector.h>",
-//                "<Base/GCException.h>",
-//                "<Base/GCUtilities.h>",
-//                "<Base/GCBase.h>",
-//                "<GenApi/GenApi.h>",
-                // <GenApi/Types.h> commented out due to issues with enums with Long values
-//                "<GenApi/Types.h>",
-                "<GenApi/Reference.h>",
-                "<GenApi/IBase.h>",
-                "<GenApi/IValue.h>",
-                "<GenApi/IBoolean.h>",
-                "<GenApi/IInteger.h>",
-                "<GenApi/IFloat.h>",
-                "<GenApi/IPort.h>",
-                "<GenApi/INode.h>",
-                "<GenApi/Synch.h>",
-//                "<GenApi/Container.h>",
-//                "<GenApi/INodeMap.h>",
+////                "<Base/GCException.h>",
+////                "<Base/GCUtilities.h>",
+////                "<Base/GCBase.h>",
+////                "<GenApi/GenApi.h>",
+//                // <GenApi/Types.h> commented out due to issues with enums with Long values
+////                "<GenApi/Types.h>",
+//                "<GenApi/Reference.h>",
+//                "<GenApi/IBase.h>",
+//                "<GenApi/IValue.h>",
+//                "<GenApi/IBoolean.h>",
+//                "<GenApi/IInteger.h>",
+//                "<GenApi/IFloat.h>",
+//                "<GenApi/IPort.h>",
+//                "<GenApi/INode.h>",
+//                "<GenApi/Synch.h>",
+////                "<GenApi/Container.h>",
+////                "<GenApi/INodeMap.h>",
         }),
         @Platform(value = "linux", link = "genicam@.2", includepath = "/usr/include/pylon/genicam"),
         @Platform(value = "windows",
                 link = {/* GeniCam */
-                        "CLAllSerial_MD_VC100_v2_3",
-                        "CLProtocol_MD_VC100_v2_3",
-                        "CLSerCOM",
-                        "GCBase_MD_VC100_v2_3",
-                        "GenApi_MD_VC100_v2_3"},
-                includepath = "C:/Program Files/Basler/pylon 4/genicam/library/cpp/include/"),
+//                        "CLAllSerial_MD_VC100_v2_3",
+//                        "CLProtocol_MD_VC100_v2_3",
+//                        "CLSerCOM",
+                        "GCBase_MD_VC120_v3_0_Basler_pylon_v5_0",
+//                        "GenApi_MD_VC100_v2_3"
+                },
+                includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
         @Platform(
                 value = "windows-x86",
-                linkpath = "C:/Program Files/Basler/pylon 4/genicam/library/cpp/lib/win32_i86/",
-                preloadpath = {
-                        "C:/Program Files/Basler/pylon 4/genicam/bin/win32_i86/",
-                        "C:/Program Files/Basler/pylon 4/genicam/bin/win32_i86/CLProtocol",
-                        "C:/Program Files/Basler/pylon 4/genicam/bin/win32_i86/GenApi/Generic"}),
+                linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/Win32/",
+                preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
         @Platform(
                 value = "windows-x86_64",
                 define = {"WIN32", "GC_W64 1"},
-                linkpath = "C:/Program Files/Basler/pylon 4/genicam/library/cpp/lib/win64_x64/",
-                preloadpath = {
-                        "C:/Program Files/Basler/pylon 4/genicam/bin/win64_x64/",
-                        "C:/Program Files/Basler/pylon 4/genicam/bin/win64_x64/CLProtocol",
-                        "C:/Program Files/Basler/pylon 4/genicam/bin/win64_x64/GenApi/Generic"}
+                linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/x64/",
+                preloadpath = "C:/Program Files/Basler/pylon 5/Runtime/x64/"
         )})
-public class GenICam2 implements InfoMapper {
+public class GenICam3 implements InfoMapper {
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("defined(WIN32) || defined(WIN64)").define())
-                .put(new Info("GCBASE_API").cppTypes().annotations().cppText(""))
+//                /* _GenICamVersion.h and GenICamVersion.h */
+                .put(new Info("GENICAM_MAIN_COMPILER").skip())
+                .put(new Info("GENICAM_COMPANY_SUFFIX").skip())
+                .put(new Info("GENICAM_COMPILER").skip())
+
+//                .put(new Info("GENICAM_NAMESPACE").annotations().cppText("GenICam"))
+
                 /* "Base/GCTypes.h" - Fix wrapping of > */
                 .put(new Info("GC_W64").define(true))
+                .put(new Info("INT64_MAX").define(false))
+                .put(new Info("INT64_MIN").define(false))
+                .put(new Info("UINT64_MAX").define(false))
+                .put(new Info("INT32_MAX").define(false))
+                .put(new Info("INT32_MIN").define(false))
+                .put(new Info("UINT32_MAX").define(false))
+                .put(new Info("INT8_MAX").define(false))
+                .put(new Info("INT8_MIN").define(false))
+                .put(new Info("UINT8_MAX").define(false))
+                .put(new Info("GCBASE_API").cppTypes().cppTypes().annotations().cppText(""))
+                .put(new Info("GCBASE_RTTI_CLASS_API").cppTypes().annotations().cppText(""))
+
                 /* "Base/GCString.h" prevent parsing of things related to inner class `gcwchar` **/
+
                 .put(new Info("defined(_MSC_VER) && !defined(PHARLAP_WIN32)").define(false))
                 /* Enums defined here since <GenApi/Types.h> cannot be parsed due to Long enums */
                 .put(new Info("GenApi::EAccessMode").cast().valueTypes("int"))

@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.1
+// Targeted by JavaCPP version 1.2-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -90,8 +90,8 @@ public static final int CUDNN_VERSION =    (CUDNN_MAJOR * 1000 + CUDNN_MINOR * 1
 // #endif
 
 @Opaque public static class cudnnContext extends Pointer {
-    /** Empty constructor. */
-    public cudnnContext() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public cudnnContext() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnContext(Pointer p) { super(p); }
 }
@@ -126,32 +126,32 @@ public static native @Cast("cudnnStatus_t") int cudnnGetStream(cudnnContext hand
 
 /* Data structures to represent Image/Filter and the Neural Network Layer */
 @Opaque public static class cudnnTensorStruct extends Pointer {
-    /** Empty constructor. */
-    public cudnnTensorStruct() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public cudnnTensorStruct() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnTensorStruct(Pointer p) { super(p); }
 }
 @Opaque public static class cudnnConvolutionStruct extends Pointer {
-    /** Empty constructor. */
-    public cudnnConvolutionStruct() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public cudnnConvolutionStruct() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnConvolutionStruct(Pointer p) { super(p); }
 }
 @Opaque public static class cudnnPoolingStruct extends Pointer {
-    /** Empty constructor. */
-    public cudnnPoolingStruct() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public cudnnPoolingStruct() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnPoolingStruct(Pointer p) { super(p); }
 }
 @Opaque public static class cudnnFilterStruct extends Pointer {
-    /** Empty constructor. */
-    public cudnnFilterStruct() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public cudnnFilterStruct() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnFilterStruct(Pointer p) { super(p); }
 }
 @Opaque public static class cudnnLRNStruct extends Pointer {
-    /** Empty constructor. */
-    public cudnnLRNStruct() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public cudnnLRNStruct() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnLRNStruct(Pointer p) { super(p); }
 }
@@ -635,9 +635,9 @@ public static final int
 public static class cudnnConvolutionFwdAlgoPerf_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public cudnnConvolutionFwdAlgoPerf_t() { allocate(); }
+    public cudnnConvolutionFwdAlgoPerf_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public cudnnConvolutionFwdAlgoPerf_t(int size) { allocateArray(size); }
+    public cudnnConvolutionFwdAlgoPerf_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnConvolutionFwdAlgoPerf_t(Pointer p) { super(p); }
     private native void allocate();
@@ -769,9 +769,9 @@ public static final int
 public static class cudnnConvolutionBwdFilterAlgoPerf_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public cudnnConvolutionBwdFilterAlgoPerf_t() { allocate(); }
+    public cudnnConvolutionBwdFilterAlgoPerf_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public cudnnConvolutionBwdFilterAlgoPerf_t(int size) { allocateArray(size); }
+    public cudnnConvolutionBwdFilterAlgoPerf_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnConvolutionBwdFilterAlgoPerf_t(Pointer p) { super(p); }
     private native void allocate();
@@ -900,9 +900,9 @@ public static final int
 public static class cudnnConvolutionBwdDataAlgoPerf_t extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public cudnnConvolutionBwdDataAlgoPerf_t() { allocate(); }
+    public cudnnConvolutionBwdDataAlgoPerf_t() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public cudnnConvolutionBwdDataAlgoPerf_t(int size) { allocateArray(size); }
+    public cudnnConvolutionBwdDataAlgoPerf_t(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public cudnnConvolutionBwdDataAlgoPerf_t(Pointer p) { super(p); }
     private native void allocate();

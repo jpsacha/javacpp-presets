@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.1
+// Targeted by JavaCPP version 1.2-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -37,14 +37,14 @@ public class postproc extends org.bytedeco.javacpp.presets.postproc {
 // #define POSTPROC_POSTPROCESS_H
 
 /**
- * @file
- * @ingroup lpp
+ * \file
+ * \ingroup lpp
  * external API header
  */
 
 /**
- * @defgroup lpp Libpostproc
- * @{
+ * \defgroup lpp Libpostproc
+ * \{
  */
 
 // #include "libpostproc/version.h"
@@ -73,14 +73,14 @@ public static final int PP_QUALITY_MAX = 6;
 // #include <inttypes.h>
 
 @Opaque public static class pp_context extends Pointer {
-    /** Empty constructor. */
-    public pp_context() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public pp_context() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public pp_context(Pointer p) { super(p); }
 }
 @Opaque public static class pp_mode extends Pointer {
-    /** Empty constructor. */
-    public pp_mode() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public pp_mode() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public pp_mode(Pointer p) { super(p); }
 }
@@ -144,7 +144,7 @@ public static final int PP_FORMAT_440 =    (0x00000010|PP_FORMAT);
 public static final int PP_PICT_TYPE_QP2 =  0x00000010;
 
 /**
- * @}
+ * \}
  */
 
 // #endif /* POSTPROC_POSTPROCESS_H */

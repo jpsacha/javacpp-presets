@@ -1,4 +1,9 @@
 
+ * Fix MinGW-w64 builds with recent versions of GCC 5.x and potential issue with using "w32threads" for FFmpeg
+ * Add missing `StatModel.loadXXX()` methods ([issue #109](https://github.com/bytedeco/javacpp-presets/issues/109))
+ * Define commonly used Caffe `std::vector` types (`DatumVector`, `FloatCallbackVector`, and `DoubleCallbackVector`) for ease of use and performance reasons
+ * Fix the `cppbuild.sh` script for FFmpeg, failing to build x264 and OpenH264 properly on Windows
+
 ### October 25, 2015 version 1.1
  * Build the Maven artifacts for Linux in a CentOS 6 Docker container, for maximum compatibility ([issue #22](https://github.com/bytedeco/javacpp-presets/issues/22))
  * Cache files downloaded by `cppbuild.sh` in the `downloads` subdirectory to prevent having to redownload everything after a clean

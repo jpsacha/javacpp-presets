@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.1
+// Targeted by JavaCPP version 1.2-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -66,21 +66,19 @@ public class opencv_superres extends org.bytedeco.javacpp.presets.opencv_superre
 // #include "opencv2/superres/optical_flow.hpp"
 
 /**
-  @defgroup superres Super Resolution
-
+  \defgroup superres Super Resolution
+<p>
 The Super Resolution module contains a set of functions and classes that can be used to solve the
 problem of resolution enhancement. There are a few methods implemented, most of them are descibed in
-the papers @cite Farsiu03 and @cite Mitzel09 .
-
+the papers \cite Farsiu03 and \cite Mitzel09 .
+ <p>
  */
 
-/** @addtogroup superres
- *  @{ */
+/** \addtogroup superres
+ *  \{ */
 
         @Namespace("cv::superres") public static class FrameSource extends Pointer {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public FrameSource() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public FrameSource(Pointer p) { super(p); }
         
@@ -99,106 +97,104 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
         @Namespace("cv::superres") public static native @Ptr FrameSource createFrameSource_Camera(int deviceId/*=0*/);
         @Namespace("cv::superres") public static native @Ptr FrameSource createFrameSource_Camera();
 
-        /** @brief Base class for Super Resolution algorithms.
-
+        /** \brief Base class for Super Resolution algorithms.
+        <p>
         The class is only used to define the common interface for the whole family of Super Resolution
         algorithms.
          */
         @Namespace("cv::superres") @NoOffset public static class SuperResolution extends Algorithm {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public SuperResolution() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public SuperResolution(Pointer p) { super(p); }
             public FrameSource asFrameSource() { return asFrameSource(this); }
             @Namespace public static native @Name("static_cast<cv::superres::FrameSource*>") FrameSource asFrameSource(SuperResolution pointer);
         
-            /** @brief Set input frame source for Super Resolution algorithm.
-
+            /** \brief Set input frame source for Super Resolution algorithm.
+            <p>
             @param frameSource Input frame source
              */
             public native void setInput(@Ptr FrameSource frameSource);
 
-            /** @brief Process next frame from input and return output result.
-
+            /** \brief Process next frame from input and return output result.
+            <p>
             @param frame Output result
              */
             public native void nextFrame(@ByVal Mat frame);
             public native void reset();
 
-            /** @brief Clear all inner buffers.
+            /** \brief Clear all inner buffers.
             */
             public native void collectGarbage();
 
-            /** @brief Scale factor
+            /** \brief Scale factor
             /** @see setScale */
             public native int getScale();
-            /** @copybrief getScale @see getScale */
+            /** \copybrief getScale @see getScale */
             public native void setScale(int val);
 
-            /** @brief Iterations count
+            /** \brief Iterations count
             /** @see setIterations */
             public native int getIterations();
-            /** @copybrief getIterations @see getIterations */
+            /** \copybrief getIterations @see getIterations */
             public native void setIterations(int val);
 
-            /** @brief Asymptotic value of steepest descent method
+            /** \brief Asymptotic value of steepest descent method
             /** @see setTau */
             public native double getTau();
-            /** @copybrief getTau @see getTau */
+            /** \copybrief getTau @see getTau */
             public native void setTau(double val);
 
-            /** @brief Weight parameter to balance data term and smoothness term
+            /** \brief Weight parameter to balance data term and smoothness term
             /** @see setLabmda */
             public native double getLabmda();
-            /** @copybrief getLabmda @see getLabmda */
+            /** \copybrief getLabmda @see getLabmda */
             public native void setLabmda(double val);
 
-            /** @brief Parameter of spacial distribution in Bilateral-TV
+            /** \brief Parameter of spacial distribution in Bilateral-TV
             /** @see setAlpha */
             public native double getAlpha();
-            /** @copybrief getAlpha @see getAlpha */
+            /** \copybrief getAlpha @see getAlpha */
             public native void setAlpha(double val);
 
-            /** @brief Kernel size of Bilateral-TV filter
+            /** \brief Kernel size of Bilateral-TV filter
             /** @see setKernelSize */
             public native int getKernelSize();
-            /** @copybrief getKernelSize @see getKernelSize */
+            /** \copybrief getKernelSize @see getKernelSize */
             public native void setKernelSize(int val);
 
-            /** @brief Gaussian blur kernel size
+            /** \brief Gaussian blur kernel size
             /** @see setBlurKernelSize */
             public native int getBlurKernelSize();
-            /** @copybrief getBlurKernelSize @see getBlurKernelSize */
+            /** \copybrief getBlurKernelSize @see getBlurKernelSize */
             public native void setBlurKernelSize(int val);
 
-            /** @brief Gaussian blur sigma
+            /** \brief Gaussian blur sigma
             /** @see setBlurSigma */
             public native double getBlurSigma();
-            /** @copybrief getBlurSigma @see getBlurSigma */
+            /** \copybrief getBlurSigma @see getBlurSigma */
             public native void setBlurSigma(double val);
 
-            /** @brief Radius of the temporal search area
+            /** \brief Radius of the temporal search area
             /** @see setTemporalAreaRadius */
             public native int getTemporalAreaRadius();
-            /** @copybrief getTemporalAreaRadius @see getTemporalAreaRadius */
+            /** \copybrief getTemporalAreaRadius @see getTemporalAreaRadius */
             public native void setTemporalAreaRadius(int val);
 
-            /** @brief Dense optical flow algorithm
+            /** \brief Dense optical flow algorithm
             /** @see setOpticalFlow */
             public native @Ptr DenseOpticalFlowExt getOpticalFlow();
-            /** @copybrief getOpticalFlow @see getOpticalFlow */
+            /** \copybrief getOpticalFlow @see getOpticalFlow */
             public native void setOpticalFlow(@Ptr DenseOpticalFlowExt val);
         }
 
-        /** @brief Create Bilateral TV-L1 Super Resolution.
-
-        This class implements Super Resolution algorithm described in the papers @cite Farsiu03 and
-        @cite Mitzel09 .
-
+        /** \brief Create Bilateral TV-L1 Super Resolution.
+        <p>
+        This class implements Super Resolution algorithm described in the papers \cite Farsiu03 and
+        \cite Mitzel09 .
+        <p>
         Here are important members of the class that control the algorithm, which you can set after
         constructing the class instance:
-
+        <p>
         -   **int scale** Scale factor.
         -   **int iterations** Iteration count.
         -   **double tau** Asymptotic value of steepest descent method.
@@ -213,7 +209,7 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
         @Namespace("cv::superres") public static native @Ptr SuperResolution createSuperResolution_BTVL1();
         @Namespace("cv::superres") public static native @Ptr SuperResolution createSuperResolution_BTVL1_CUDA();
 
-/** @} superres */
+/** \} superres */
 
     
 
@@ -270,13 +266,11 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
 
 // #include "opencv2/core.hpp"
 
-/** @addtogroup superres
- *  @{ */
+/** \addtogroup superres
+ *  \{ */
 
         @Namespace("cv::superres") public static class DenseOpticalFlowExt extends Algorithm {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public DenseOpticalFlowExt() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public DenseOpticalFlowExt(Pointer p) { super(p); }
         
@@ -288,38 +282,36 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
 
         @Namespace("cv::superres") public static class FarnebackOpticalFlow extends DenseOpticalFlowExt {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public FarnebackOpticalFlow() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public FarnebackOpticalFlow(Pointer p) { super(p); }
         
             /** @see setPyrScale */
             public native double getPyrScale();
-            /** @copybrief getPyrScale @see getPyrScale */
+            /** \copybrief getPyrScale @see getPyrScale */
             public native void setPyrScale(double val);
             /** @see setLevelsNumber */
             public native int getLevelsNumber();
-            /** @copybrief getLevelsNumber @see getLevelsNumber */
+            /** \copybrief getLevelsNumber @see getLevelsNumber */
             public native void setLevelsNumber(int val);
             /** @see setWindowSize */
             public native int getWindowSize();
-            /** @copybrief getWindowSize @see getWindowSize */
+            /** \copybrief getWindowSize @see getWindowSize */
             public native void setWindowSize(int val);
             /** @see setIterations */
             public native int getIterations();
-            /** @copybrief getIterations @see getIterations */
+            /** \copybrief getIterations @see getIterations */
             public native void setIterations(int val);
             /** @see setPolyN */
             public native int getPolyN();
-            /** @copybrief getPolyN @see getPolyN */
+            /** \copybrief getPolyN @see getPolyN */
             public native void setPolyN(int val);
             /** @see setPolySigma */
             public native double getPolySigma();
-            /** @copybrief getPolySigma @see getPolySigma */
+            /** \copybrief getPolySigma @see getPolySigma */
             public native void setPolySigma(double val);
             /** @see setFlags */
             public native int getFlags();
-            /** @copybrief getFlags @see getFlags */
+            /** \copybrief getFlags @see getFlags */
             public native void setFlags(int val);
         }
         @Namespace("cv::superres") public static native @Ptr FarnebackOpticalFlow createOptFlow_Farneback();
@@ -331,42 +323,40 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
 
         @Name("cv::superres::DualTVL1OpticalFlow") public static class SuperResDualTVL1OpticalFlow extends DenseOpticalFlowExt {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public SuperResDualTVL1OpticalFlow() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public SuperResDualTVL1OpticalFlow(Pointer p) { super(p); }
         
             /** @see setTau */
             public native double getTau();
-            /** @copybrief getTau @see getTau */
+            /** \copybrief getTau @see getTau */
             public native void setTau(double val);
             /** @see setLambda */
             public native double getLambda();
-            /** @copybrief getLambda @see getLambda */
+            /** \copybrief getLambda @see getLambda */
             public native void setLambda(double val);
             /** @see setTheta */
             public native double getTheta();
-            /** @copybrief getTheta @see getTheta */
+            /** \copybrief getTheta @see getTheta */
             public native void setTheta(double val);
             /** @see setScalesNumber */
             public native int getScalesNumber();
-            /** @copybrief getScalesNumber @see getScalesNumber */
+            /** \copybrief getScalesNumber @see getScalesNumber */
             public native void setScalesNumber(int val);
             /** @see setWarpingsNumber */
             public native int getWarpingsNumber();
-            /** @copybrief getWarpingsNumber @see getWarpingsNumber */
+            /** \copybrief getWarpingsNumber @see getWarpingsNumber */
             public native void setWarpingsNumber(int val);
             /** @see setEpsilon */
             public native double getEpsilon();
-            /** @copybrief getEpsilon @see getEpsilon */
+            /** \copybrief getEpsilon @see getEpsilon */
             public native void setEpsilon(double val);
             /** @see setIterations */
             public native int getIterations();
-            /** @copybrief getIterations @see getIterations */
+            /** \copybrief getIterations @see getIterations */
             public native void setIterations(int val);
             /** @see setUseInitialFlow */
             public native @Cast("bool") boolean getUseInitialFlow();
-            /** @copybrief getUseInitialFlow @see getUseInitialFlow */
+            /** \copybrief getUseInitialFlow @see getUseInitialFlow */
             public native void setUseInitialFlow(@Cast("bool") boolean val);
         }
         @Namespace("cv::superres") public static native @Ptr SuperResDualTVL1OpticalFlow createOptFlow_DualTVL1();
@@ -375,40 +365,38 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
 
         @Namespace("cv::superres") public static class BroxOpticalFlow extends DenseOpticalFlowExt {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public BroxOpticalFlow() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public BroxOpticalFlow(Pointer p) { super(p); }
         
-            /** @brief Flow smoothness
+            /** \brief Flow smoothness
             /** @see setAlpha */
             public native double getAlpha();
-            /** @copybrief getAlpha @see getAlpha */
+            /** \copybrief getAlpha @see getAlpha */
             public native void setAlpha(double val);
-            /** @brief Gradient constancy importance
+            /** \brief Gradient constancy importance
             /** @see setGamma */
             public native double getGamma();
-            /** @copybrief getGamma @see getGamma */
+            /** \copybrief getGamma @see getGamma */
             public native void setGamma(double val);
-            /** @brief Pyramid scale factor
+            /** \brief Pyramid scale factor
             /** @see setScaleFactor */
             public native double getScaleFactor();
-            /** @copybrief getScaleFactor @see getScaleFactor */
+            /** \copybrief getScaleFactor @see getScaleFactor */
             public native void setScaleFactor(double val);
-            /** @brief Number of lagged non-linearity iterations (inner loop)
+            /** \brief Number of lagged non-linearity iterations (inner loop)
             /** @see setInnerIterations */
             public native int getInnerIterations();
-            /** @copybrief getInnerIterations @see getInnerIterations */
+            /** \copybrief getInnerIterations @see getInnerIterations */
             public native void setInnerIterations(int val);
-            /** @brief Number of warping iterations (number of pyramid levels)
+            /** \brief Number of warping iterations (number of pyramid levels)
             /** @see setOuterIterations */
             public native int getOuterIterations();
-            /** @copybrief getOuterIterations @see getOuterIterations */
+            /** \copybrief getOuterIterations @see getOuterIterations */
             public native void setOuterIterations(int val);
-            /** @brief Number of linear system solver iterations
+            /** \brief Number of linear system solver iterations
             /** @see setSolverIterations */
             public native int getSolverIterations();
-            /** @copybrief getSolverIterations @see getSolverIterations */
+            /** \copybrief getSolverIterations @see getSolverIterations */
             public native void setSolverIterations(int val);
         }
         @Namespace("cv::superres") public static native @Ptr BroxOpticalFlow createOptFlow_Brox_CUDA();
@@ -416,27 +404,25 @@ the papers @cite Farsiu03 and @cite Mitzel09 .
 
         @Namespace("cv::superres") public static class PyrLKOpticalFlow extends DenseOpticalFlowExt {
             static { Loader.load(); }
-            /** Empty constructor. */
-            public PyrLKOpticalFlow() { }
             /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
             public PyrLKOpticalFlow(Pointer p) { super(p); }
         
             /** @see setWindowSize */
             public native int getWindowSize();
-            /** @copybrief getWindowSize @see getWindowSize */
+            /** \copybrief getWindowSize @see getWindowSize */
             public native void setWindowSize(int val);
             /** @see setMaxLevel */
             public native int getMaxLevel();
-            /** @copybrief getMaxLevel @see getMaxLevel */
+            /** \copybrief getMaxLevel @see getMaxLevel */
             public native void setMaxLevel(int val);
             /** @see setIterations */
             public native int getIterations();
-            /** @copybrief getIterations @see getIterations */
+            /** \copybrief getIterations @see getIterations */
             public native void setIterations(int val);
         }
         @Namespace("cv::superres") public static native @Ptr PyrLKOpticalFlow createOptFlow_PyrLK_CUDA();
 
-/** @} */
+/** \} */
 
     
 

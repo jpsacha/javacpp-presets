@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.bytedeco</groupId>
     <artifactId>javacpp-presets</artifactId>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
   </parent>
 
   <groupId>org.bytedeco.javacpp-presets</groupId>
@@ -89,6 +89,8 @@
                 <compilerOption>-static-libstdc++</compilerOption>
                 <compilerOption>-Wl,-Bstatic</compilerOption>
                 <compilerOption>-lstdc++</compilerOption>
+                <compilerOption>-lgcc</compilerOption>
+                <compilerOption>-lgcc_eh</compilerOption>
                 <compilerOption>-lpthread</compilerOption>
                 <compilerOption>-Wl,-Bdynamic</compilerOption>
               </compilerOptions>

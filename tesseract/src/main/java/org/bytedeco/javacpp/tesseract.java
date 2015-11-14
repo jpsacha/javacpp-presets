@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.1
+// Targeted by JavaCPP version 1.2-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -193,13 +193,13 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public UNICHAR(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public UNICHAR(int size) { allocateArray(size); }
+    public UNICHAR(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public UNICHAR position(int position) {
         return (UNICHAR)super.position(position);
     }
 
-  public UNICHAR() { allocate(); }
+  public UNICHAR() { super((Pointer)null); allocate(); }
   private native void allocate();
 
   // Construct from a utf8 string. If len<0 then the string is null terminated.
@@ -243,8 +243,6 @@ public static final int
   //   }
   @NoOffset public static class const_iterator extends Pointer {
       static { Loader.load(); }
-      /** Empty constructor. */
-      public const_iterator() { }
       /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
       public const_iterator(Pointer p) { super(p); }
   
@@ -467,9 +465,9 @@ public static final long NULL =            0L;
 public static class TessCallbackUtils_ extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public TessCallbackUtils_() { allocate(); }
+    public TessCallbackUtils_() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TessCallbackUtils_(int size) { allocateArray(size); }
+    public TessCallbackUtils_(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TessCallbackUtils_(Pointer p) { super(p); }
     private native void allocate();
@@ -484,8 +482,6 @@ public static class TessCallbackUtils_ extends Pointer {
 
 public static class TessClosure extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public TessClosure() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TessClosure(Pointer p) { super(p); }
 
@@ -586,9 +582,9 @@ public static class TessClosure extends Pointer {
 @Name("TessCallback1<char>") public static class CharClearCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public CharClearCallback() { allocate(); }
+    public CharClearCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public CharClearCallback(int size) { allocateArray(size); }
+    public CharClearCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CharClearCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -603,9 +599,9 @@ public static class TessClosure extends Pointer {
 @Name("TessCallback1<STRING>") public static class StringClearCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public StringClearCallback() { allocate(); }
+    public StringClearCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public StringClearCallback(int size) { allocateArray(size); }
+    public StringClearCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public StringClearCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -620,9 +616,9 @@ public static class TessClosure extends Pointer {
 @Name("TessCallback1<int>") public static class IntClearCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public IntClearCallback() { allocate(); }
+    public IntClearCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public IntClearCallback(int size) { allocateArray(size); }
+    public IntClearCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IntClearCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -637,9 +633,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback1<bool,int>") public static class DeleteCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public DeleteCallback() { allocate(); }
+    public DeleteCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DeleteCallback(int size) { allocateArray(size); }
+    public DeleteCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DeleteCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -654,9 +650,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback2<bool,char const&,char const&>") public static class CharCompareCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public CharCompareCallback() { allocate(); }
+    public CharCompareCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public CharCompareCallback(int size) { allocateArray(size); }
+    public CharCompareCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CharCompareCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -671,9 +667,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback2<bool,FILE*,char const&>") public static class CharWriteCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public CharWriteCallback() { allocate(); }
+    public CharWriteCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public CharWriteCallback(int size) { allocateArray(size); }
+    public CharWriteCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CharWriteCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -688,9 +684,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback2<bool,STRING const&,STRING const&>") public static class StringCompareCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public StringCompareCallback() { allocate(); }
+    public StringCompareCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public StringCompareCallback(int size) { allocateArray(size); }
+    public StringCompareCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public StringCompareCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -705,9 +701,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback2<bool,FILE*,STRING const&>") public static class StringWriteCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public StringWriteCallback() { allocate(); }
+    public StringWriteCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public StringWriteCallback(int size) { allocateArray(size); }
+    public StringWriteCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public StringWriteCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -722,9 +718,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback2<bool,int const&,int const&>") public static class IntCompareCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public IntCompareCallback() { allocate(); }
+    public IntCompareCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public IntCompareCallback(int size) { allocateArray(size); }
+    public IntCompareCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IntCompareCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -739,9 +735,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback2<bool,FILE*,int const&>") public static class IntWriteCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public IntWriteCallback() { allocate(); }
+    public IntWriteCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public IntWriteCallback(int size) { allocateArray(size); }
+    public IntWriteCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IntWriteCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -756,9 +752,9 @@ public static class TessClosure extends Pointer {
 @Name("TessCallback3<const UNICHARSET&,int,PAGE_RES*>") public static class TruthCallback3 extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public TruthCallback3() { allocate(); }
+    public TruthCallback3() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TruthCallback3(int size) { allocateArray(size); }
+    public TruthCallback3(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TruthCallback3(Pointer p) { super(p); }
     private native void allocate();
@@ -773,9 +769,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback3<bool,FILE*,char*,bool>") public static class CharReadCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public CharReadCallback() { allocate(); }
+    public CharReadCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public CharReadCallback(int size) { allocateArray(size); }
+    public CharReadCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CharReadCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -790,9 +786,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback3<bool,FILE*,STRING*,bool>") public static class StringReadCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public StringReadCallback() { allocate(); }
+    public StringReadCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public StringReadCallback(int size) { allocateArray(size); }
+    public StringReadCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public StringReadCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -807,9 +803,9 @@ public static class TessClosure extends Pointer {
 @Name("TessResultCallback3<bool,FILE*,int*,bool>") public static class IntReadCallback extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public IntReadCallback() { allocate(); }
+    public IntReadCallback() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public IntReadCallback(int size) { allocateArray(size); }
+    public IntReadCallback(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IntReadCallback(Pointer p) { super(p); }
     private native void allocate();
@@ -824,9 +820,9 @@ public static class TessClosure extends Pointer {
 @Name("TessCallback4<const UNICHARSET&,int,tesseract::PageIterator*,Pix*>") public static class TruthCallback4 extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public TruthCallback4() { allocate(); }
+    public TruthCallback4() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TruthCallback4(int size) { allocateArray(size); }
+    public TruthCallback4(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TruthCallback4(Pointer p) { super(p); }
     private native void allocate();
@@ -1346,7 +1342,7 @@ public static native @Cast("bool") boolean PTIsPulloutType(@Cast("PolyBlockType"
  *  | < #######  .   c |  Upright Chinese characters are represented C and c.
  *  | 3 #######      c |
  *  +------------------+  NOTA BENE: enum values here should match goodoc.proto
-
+ <p>
  * If you orient your head so that "up" aligns with Orientation,
  * then the characters will appear "right side up" and readable.
  *
@@ -1557,8 +1553,6 @@ public static final int
  *  desired. */
 @Namespace("tesseract") @NoOffset public static class ImageThresholder extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public ImageThresholder() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ImageThresholder(Pointer p) { super(p); }
 
@@ -1688,39 +1682,39 @@ public static final int
 // #include "platform.h"
 
 @Opaque public static class BlamerBundle extends Pointer {
-    /** Empty constructor. */
-    public BlamerBundle() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public BlamerBundle() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BlamerBundle(Pointer p) { super(p); }
 }
 @Opaque public static class C_BLOB_IT extends Pointer {
-    /** Empty constructor. */
-    public C_BLOB_IT() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public C_BLOB_IT() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public C_BLOB_IT(Pointer p) { super(p); }
 }
 @Opaque public static class PAGE_RES extends Pointer {
-    /** Empty constructor. */
-    public PAGE_RES() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PAGE_RES() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PAGE_RES(Pointer p) { super(p); }
 }
 @Opaque public static class PAGE_RES_IT extends Pointer {
-    /** Empty constructor. */
-    public PAGE_RES_IT() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public PAGE_RES_IT() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PAGE_RES_IT(Pointer p) { super(p); }
 }
 @Opaque public static class WERD extends Pointer {
-    /** Empty constructor. */
-    public WERD() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public WERD() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public WERD(Pointer p) { super(p); }
 }
 
 @Namespace("tesseract") @Opaque public static class Tesseract extends Pointer {
-    /** Empty constructor. */
-    public Tesseract() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public Tesseract() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Tesseract(Pointer p) { super(p); }
 }
@@ -1740,8 +1734,6 @@ public static final int
 
 @Namespace("tesseract") @NoOffset public static class PageIterator extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public PageIterator() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PageIterator(Pointer p) { super(p); }
 
@@ -1762,7 +1754,7 @@ public static final int
   public PageIterator(PAGE_RES page_res, Tesseract tesseract,
                  int scale, int scaled_yres,
                  int rect_left, int rect_top,
-                 int rect_width, int rect_height) { allocate(page_res, tesseract, scale, scaled_yres, rect_left, rect_top, rect_width, rect_height); }
+                 int rect_width, int rect_height) { super((Pointer)null); allocate(page_res, tesseract, scale, scaled_yres, rect_left, rect_top, rect_width, rect_height); }
   private native void allocate(PAGE_RES page_res, Tesseract tesseract,
                  int scale, int scaled_yres,
                  int rect_left, int rect_top,
@@ -1774,7 +1766,7 @@ public static final int
    * objects at a higher level. These constructors DO NOT CALL Begin, so
    * iterations will continue from the location of src.
    */
-  public PageIterator(@Const @ByRef PageIterator src) { allocate(src); }
+  public PageIterator(@Const @ByRef PageIterator src) { super((Pointer)null); allocate(src); }
   private native void allocate(@Const @ByRef PageIterator src);
   public native @Const @ByRef @Name("operator =") PageIterator put(@Const @ByRef PageIterator src);
 
@@ -2083,14 +2075,14 @@ public static final int
 // #include "unichar.h"
 
 @Opaque public static class BLOB_CHOICE_IT extends Pointer {
-    /** Empty constructor. */
-    public BLOB_CHOICE_IT() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public BLOB_CHOICE_IT() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BLOB_CHOICE_IT(Pointer p) { super(p); }
 }
 @Opaque public static class WERD_RES extends Pointer {
-    /** Empty constructor. */
-    public WERD_RES() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public WERD_RES() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public WERD_RES(Pointer p) { super(p); }
 }
@@ -2108,8 +2100,6 @@ public static final int
 
 @Namespace("tesseract") @NoOffset public static class LTRResultIterator extends PageIterator {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public LTRResultIterator() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LTRResultIterator(Pointer p) { super(p); }
 
@@ -2128,7 +2118,7 @@ public static final int
   public LTRResultIterator(PAGE_RES page_res, Tesseract tesseract,
                       int scale, int scaled_yres,
                       int rect_left, int rect_top,
-                      int rect_width, int rect_height) { allocate(page_res, tesseract, scale, scaled_yres, rect_left, rect_top, rect_width, rect_height); }
+                      int rect_width, int rect_height) { super((Pointer)null); allocate(page_res, tesseract, scale, scaled_yres, rect_left, rect_top, rect_width, rect_height); }
   private native void allocate(PAGE_RES page_res, Tesseract tesseract,
                       int scale, int scaled_yres,
                       int rect_left, int rect_top,
@@ -2267,15 +2257,13 @@ public static final int
 // Class to iterate over the classifier choices for a single RIL_SYMBOL.
 @Namespace("tesseract") @NoOffset public static class ChoiceIterator extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public ChoiceIterator() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ChoiceIterator(Pointer p) { super(p); }
 
   // Construction is from a LTRResultIterator that points to the symbol of
   // interest. The ChoiceIterator allows a one-shot iteration over the
   // choices for this symbol and after that is is useless.
-  public ChoiceIterator(@Const @ByRef LTRResultIterator result_it) { allocate(result_it); }
+  public ChoiceIterator(@Const @ByRef LTRResultIterator result_it) { super((Pointer)null); allocate(result_it); }
   private native void allocate(@Const @ByRef LTRResultIterator result_it);
 
   // Moves to the next choice for the symbol and returns false if there
@@ -2331,8 +2319,6 @@ public static final int
 
 @Namespace("tesseract") @NoOffset public static class ResultIterator extends LTRResultIterator {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public ResultIterator() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ResultIterator(Pointer p) { super(p); }
 
@@ -2462,8 +2448,8 @@ public static final int
 // #include          "platform.h"
 // #include          "memry.h"
 @Namespace("tesseract") @Opaque public static class TFile extends Pointer {
-    /** Empty constructor. */
-    public TFile() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public TFile() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TFile(Pointer p) { super(p); }
 }
@@ -2485,23 +2471,23 @@ public static final int STRING_IS_PROTECTED = STRING_IS_PROTECTED();
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public STRING(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public STRING(int size) { allocateArray(size); }
+    public STRING(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public STRING position(int position) {
         return (STRING)super.position(position);
     }
 
-    public STRING() { allocate(); }
+    public STRING() { super((Pointer)null); allocate(); }
     private native void allocate();
-    public STRING(@Const @ByRef STRING string) { allocate(string); }
+    public STRING(@Const @ByRef STRING string) { super((Pointer)null); allocate(string); }
     private native void allocate(@Const @ByRef STRING string);
-    public STRING(@Cast("const char*") BytePointer string) { allocate(string); }
+    public STRING(@Cast("const char*") BytePointer string) { super((Pointer)null); allocate(string); }
     private native void allocate(@Cast("const char*") BytePointer string);
-    public STRING(String string) { allocate(string); }
+    public STRING(String string) { super((Pointer)null); allocate(string); }
     private native void allocate(String string);
-    public STRING(@Cast("const char*") BytePointer data, int length) { allocate(data, length); }
+    public STRING(@Cast("const char*") BytePointer data, int length) { super((Pointer)null); allocate(data, length); }
     private native void allocate(@Cast("const char*") BytePointer data, int length);
-    public STRING(String data, int length) { allocate(data, length); }
+    public STRING(String data, int length) { super((Pointer)null); allocate(data, length); }
     private native void allocate(String data, int length);
 
     // Writes to the given file. Returns false in case of error.
@@ -2610,19 +2596,19 @@ public static final int STRING_IS_PROTECTED = STRING_IS_PROTECTED();
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CharGenericVector(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public CharGenericVector(int size) { allocateArray(size); }
+    public CharGenericVector(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public CharGenericVector position(int position) {
         return (CharGenericVector)super.position(position);
     }
 
-  public CharGenericVector() { allocate(); }
+  public CharGenericVector() { super((Pointer)null); allocate(); }
   private native void allocate();
-  public CharGenericVector(int size, @Cast("char") byte init_val) { allocate(size, init_val); }
+  public CharGenericVector(int size, @Cast("char") byte init_val) { super((Pointer)null); allocate(size, init_val); }
   private native void allocate(int size, @Cast("char") byte init_val);
 
   // Copy
-  public CharGenericVector(@Const @ByRef CharGenericVector other) { allocate(other); }
+  public CharGenericVector(@Const @ByRef CharGenericVector other) { super((Pointer)null); allocate(other); }
   private native void allocate(@Const @ByRef CharGenericVector other);
   public native @ByRef @Name("operator +=") CharGenericVector addPut(@Const @ByRef CharGenericVector other);
   public native @ByRef @Name("operator =") CharGenericVector put(@Const @ByRef CharGenericVector other);
@@ -2816,19 +2802,19 @@ public static final int STRING_IS_PROTECTED = STRING_IS_PROTECTED();
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public StringGenericVector(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public StringGenericVector(int size) { allocateArray(size); }
+    public StringGenericVector(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public StringGenericVector position(int position) {
         return (StringGenericVector)super.position(position);
     }
 
-  public StringGenericVector() { allocate(); }
+  public StringGenericVector() { super((Pointer)null); allocate(); }
   private native void allocate();
-  public StringGenericVector(int size, @ByVal STRING init_val) { allocate(size, init_val); }
+  public StringGenericVector(int size, @ByVal STRING init_val) { super((Pointer)null); allocate(size, init_val); }
   private native void allocate(int size, @ByVal STRING init_val);
 
   // Copy
-  public StringGenericVector(@Const @ByRef StringGenericVector other) { allocate(other); }
+  public StringGenericVector(@Const @ByRef StringGenericVector other) { super((Pointer)null); allocate(other); }
   private native void allocate(@Const @ByRef StringGenericVector other);
   public native @ByRef @Name("operator +=") StringGenericVector addPut(@Const @ByRef StringGenericVector other);
   public native @ByRef @Name("operator =") StringGenericVector put(@Const @ByRef StringGenericVector other);
@@ -3012,19 +2998,19 @@ public static final int STRING_IS_PROTECTED = STRING_IS_PROTECTED();
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IntGenericVector(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public IntGenericVector(int size) { allocateArray(size); }
+    public IntGenericVector(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public IntGenericVector position(int position) {
         return (IntGenericVector)super.position(position);
     }
 
-  public IntGenericVector() { allocate(); }
+  public IntGenericVector() { super((Pointer)null); allocate(); }
   private native void allocate();
-  public IntGenericVector(int size, int init_val) { allocate(size, init_val); }
+  public IntGenericVector(int size, int init_val) { super((Pointer)null); allocate(size, init_val); }
   private native void allocate(int size, int init_val);
 
   // Copy
-  public IntGenericVector(@Const @ByRef IntGenericVector other) { allocate(other); }
+  public IntGenericVector(@Const @ByRef IntGenericVector other) { super((Pointer)null); allocate(other); }
   private native void allocate(@Const @ByRef IntGenericVector other);
   public native @ByRef @Name("operator +=") IntGenericVector addPut(@Const @ByRef IntGenericVector other);
   public native @ByRef @Name("operator =") IntGenericVector put(@Const @ByRef IntGenericVector other);
@@ -3266,13 +3252,13 @@ public static class FileWriter extends FunctionPointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public IntGenericVectorEqEq(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public IntGenericVectorEqEq(int size) { allocateArray(size); }
+    public IntGenericVectorEqEq(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public IntGenericVectorEqEq position(int position) {
         return (IntGenericVectorEqEq)super.position(position);
     }
 
-  public IntGenericVectorEqEq() { allocate(); }
+  public IntGenericVectorEqEq() { super((Pointer)null); allocate(); }
   private native void allocate();
   
 }
@@ -3446,124 +3432,124 @@ public static final int TESSERACT_VERSION = 0x030400;
 // #include "pageiterator.h"
 // #include "resultiterator.h"
 @Opaque public static class ParagraphModel extends Pointer {
-    /** Empty constructor. */
-    public ParagraphModel() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public ParagraphModel() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ParagraphModel(Pointer p) { super(p); }
 }
 @Opaque public static class BLOCK_LIST extends Pointer {
-    /** Empty constructor. */
-    public BLOCK_LIST() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public BLOCK_LIST() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BLOCK_LIST(Pointer p) { super(p); }
 }
 @Opaque public static class DENORM extends Pointer {
-    /** Empty constructor. */
-    public DENORM() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public DENORM() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DENORM(Pointer p) { super(p); }
 }
 @Opaque public static class MATRIX extends Pointer {
-    /** Empty constructor. */
-    public MATRIX() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public MATRIX() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public MATRIX(Pointer p) { super(p); }
 }
 @Opaque public static class ROW extends Pointer {
-    /** Empty constructor. */
-    public ROW() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public ROW() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ROW(Pointer p) { super(p); }
 }
 @Opaque public static class ETEXT_DESC extends Pointer {
-    /** Empty constructor. */
-    public ETEXT_DESC() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public ETEXT_DESC() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ETEXT_DESC(Pointer p) { super(p); }
 }
 @Opaque public static class OSResults extends Pointer {
-    /** Empty constructor. */
-    public OSResults() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public OSResults() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public OSResults(Pointer p) { super(p); }
 }
 @Opaque public static class TBOX extends Pointer {
-    /** Empty constructor. */
-    public TBOX() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public TBOX() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TBOX(Pointer p) { super(p); }
 }
 @Opaque public static class UNICHARSET extends Pointer {
-    /** Empty constructor. */
-    public UNICHARSET() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public UNICHARSET() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public UNICHARSET(Pointer p) { super(p); }
 }
 @Opaque public static class WERD_CHOICE_LIST extends Pointer {
-    /** Empty constructor. */
-    public WERD_CHOICE_LIST() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public WERD_CHOICE_LIST() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public WERD_CHOICE_LIST(Pointer p) { super(p); }
 }
 
 @Opaque public static class INT_FEATURE_STRUCT extends Pointer {
-    /** Empty constructor. */
-    public INT_FEATURE_STRUCT() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public INT_FEATURE_STRUCT() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public INT_FEATURE_STRUCT(Pointer p) { super(p); }
 }
 @Opaque public static class TBLOB extends Pointer {
-    /** Empty constructor. */
-    public TBLOB() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public TBLOB() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TBLOB(Pointer p) { super(p); }
 }
 
 @Namespace("tesseract") @Opaque public static class CubeRecoContext extends Pointer {
-    /** Empty constructor. */
-    public CubeRecoContext() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public CubeRecoContext() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CubeRecoContext(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class Dawg extends Pointer {
-    /** Empty constructor. */
-    public Dawg() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public Dawg() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Dawg(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class Dict extends Pointer {
-    /** Empty constructor. */
-    public Dict() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public Dict() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Dict(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class EquationDetect extends Pointer {
-    /** Empty constructor. */
-    public EquationDetect() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public EquationDetect() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public EquationDetect(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class MutableIterator extends Pointer {
-    /** Empty constructor. */
-    public MutableIterator() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public MutableIterator() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public MutableIterator(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class TessResultRenderer extends Pointer {
-    /** Empty constructor. */
-    public TessResultRenderer() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public TessResultRenderer() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TessResultRenderer(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class Trie extends Pointer {
-    /** Empty constructor. */
-    public Trie() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public Trie() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Trie(Pointer p) { super(p); }
 }
 @Namespace("tesseract") @Opaque public static class Wordrec extends Pointer {
-    /** Empty constructor. */
-    public Wordrec() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public Wordrec() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Wordrec(Pointer p) { super(p); }
 }
@@ -3615,13 +3601,13 @@ public static final int TESSERACT_VERSION = 0x030400;
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TessBaseAPI(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TessBaseAPI(int size) { allocateArray(size); }
+    public TessBaseAPI(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public TessBaseAPI position(int position) {
         return (TessBaseAPI)super.position(position);
     }
 
-  public TessBaseAPI() { allocate(); }
+  public TessBaseAPI() { super((Pointer)null); allocate(); }
   private native void allocate();
 
   /**
@@ -3894,7 +3880,7 @@ public static final int TESSERACT_VERSION = 0x030400;
   public native void ClearAdaptiveClassifier();
 
   /**
-   * @defgroup AdvancedAPI Advanced API
+   * \defgroup AdvancedAPI Advanced API
    * The following methods break TesseractRect into pieces, so you can
    * get hold of the thresholded image, get the text in different formats,
    * get bounding boxes, confidences etc.
@@ -4264,7 +4250,7 @@ public static final int TESSERACT_VERSION = 0x030400;
   /**
    * Check whether a word is valid according to Tesseract's language model
    * @return 0 if the word is invalid, non-zero if valid.
-   * @warning temporary! This function will be removed from here and placed
+   * \warning temporary! This function will be removed from here and placed
    * in a separate API at some future time.
    */
   public native int IsValidWord(@Cast("const char*") BytePointer word);

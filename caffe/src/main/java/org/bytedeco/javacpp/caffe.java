@@ -1,4 +1,4 @@
-// Targeted by JavaCPP version 1.1
+// Targeted by JavaCPP version 1.2-SNAPSHOT
 
 package org.bytedeco.javacpp;
 
@@ -111,6 +111,32 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
     public native StringVector put(@Cast("size_t") long i, BytePointer value);
 
     public StringVector put(BytePointer ... array) {
+        if (size() != array.length) { resize(array.length); }
+        for (int i = 0; i < array.length; i++) {
+            put(i, array[i]);
+        }
+        return this;
+    }
+}
+
+@Name("std::vector<caffe::Datum>") public static class DatumVector extends Pointer {
+    static { Loader.load(); }
+    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+    public DatumVector(Pointer p) { super(p); }
+    public DatumVector(Datum ... array) { this(array.length); put(array); }
+    public DatumVector()       { allocate();  }
+    public DatumVector(long n) { allocate(n); }
+    private native void allocate();
+    private native void allocate(@Cast("size_t") long n);
+    public native @Name("operator=") @ByRef DatumVector put(@ByRef DatumVector x);
+
+    public native long size();
+    public native void resize(@Cast("size_t") long n);
+
+    @Index public native @ByRef Datum get(@Cast("size_t") long i);
+    public native DatumVector put(@Cast("size_t") long i, Datum value);
+
+    public DatumVector put(Datum ... array) {
         if (size() != array.length) { resize(array.length); }
         for (int i = 0; i < array.length; i++) {
             put(i, array[i]);
@@ -431,6 +457,58 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
     }
 }
 
+@Name("std::vector<caffe::Solver<float>::Callback*>") public static class FloatCallbackVector extends Pointer {
+    static { Loader.load(); }
+    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+    public FloatCallbackVector(Pointer p) { super(p); }
+    public FloatCallbackVector(FloatSolver.Callback ... array) { this(array.length); put(array); }
+    public FloatCallbackVector()       { allocate();  }
+    public FloatCallbackVector(long n) { allocate(n); }
+    private native void allocate();
+    private native void allocate(@Cast("size_t") long n);
+    public native @Name("operator=") @ByRef FloatCallbackVector put(@ByRef FloatCallbackVector x);
+
+    public native long size();
+    public native void resize(@Cast("size_t") long n);
+
+    @Index public native FloatSolver.Callback get(@Cast("size_t") long i);
+    public native FloatCallbackVector put(@Cast("size_t") long i, FloatSolver.Callback value);
+
+    public FloatCallbackVector put(FloatSolver.Callback ... array) {
+        if (size() != array.length) { resize(array.length); }
+        for (int i = 0; i < array.length; i++) {
+            put(i, array[i]);
+        }
+        return this;
+    }
+}
+
+@Name("std::vector<caffe::Solver<double>::Callback*>") public static class DoubleCallbackVector extends Pointer {
+    static { Loader.load(); }
+    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+    public DoubleCallbackVector(Pointer p) { super(p); }
+    public DoubleCallbackVector(DoubleSolver.Callback ... array) { this(array.length); put(array); }
+    public DoubleCallbackVector()       { allocate();  }
+    public DoubleCallbackVector(long n) { allocate(n); }
+    private native void allocate();
+    private native void allocate(@Cast("size_t") long n);
+    public native @Name("operator=") @ByRef DoubleCallbackVector put(@ByRef DoubleCallbackVector x);
+
+    public native long size();
+    public native void resize(@Cast("size_t") long n);
+
+    @Index public native DoubleSolver.Callback get(@Cast("size_t") long i);
+    public native DoubleCallbackVector put(@Cast("size_t") long i, DoubleSolver.Callback value);
+
+    public DoubleCallbackVector put(DoubleSolver.Callback ... array) {
+        if (size() != array.length) { resize(array.length); }
+        for (int i = 0; i < array.length; i++) {
+            put(i, array[i]);
+        }
+        return this;
+    }
+}
+
 // Parsed from caffe/caffe.hpp
 
 // caffe.hpp is the header file that you need to include in your code. It wraps
@@ -582,8 +660,6 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
 // caffe is going to use for cublas, curand, etc.
 @Namespace("caffe") @NoOffset public static class Caffe extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public Caffe() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Caffe(Pointer p) { super(p); }
 
@@ -603,11 +679,11 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
       /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
       public RNG(Pointer p) { super(p); }
   
-    public RNG() { allocate(); }
+    public RNG() { super((Pointer)null); allocate(); }
     private native void allocate();
-    public RNG(@Cast("unsigned int") int seed) { allocate(seed); }
+    public RNG(@Cast("unsigned int") int seed) { super((Pointer)null); allocate(seed); }
     private native void allocate(@Cast("unsigned int") int seed);
-    public RNG(@Const @ByRef RNG arg0) { allocate(arg0); }
+    public RNG(@Const @ByRef RNG arg0) { super((Pointer)null); allocate(arg0); }
     private native void allocate(@Const @ByRef RNG arg0);
     public native @ByRef @Name("operator =") RNG put(@Const @ByRef RNG arg0);
     public native Pointer generator();
@@ -1297,16 +1373,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BlobShape(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public BlobShape(int size) { allocateArray(size); }
+    public BlobShape(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public BlobShape position(int position) {
         return (BlobShape)super.position(position);
     }
 
-  public BlobShape() { allocate(); }
+  public BlobShape() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public BlobShape(@Const @ByRef BlobShape from) { allocate(from); }
+  public BlobShape(@Const @ByRef BlobShape from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef BlobShape from);
 
   public native @ByRef @Name("operator =") BlobShape put(@Const @ByRef BlobShape from);
@@ -1360,16 +1436,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BlobProto(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public BlobProto(int size) { allocateArray(size); }
+    public BlobProto(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public BlobProto position(int position) {
         return (BlobProto)super.position(position);
     }
 
-  public BlobProto() { allocate(); }
+  public BlobProto() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public BlobProto(@Const @ByRef BlobProto from) { allocate(from); }
+  public BlobProto(@Const @ByRef BlobProto from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef BlobProto from);
 
   public native @ByRef @Name("operator =") BlobProto put(@Const @ByRef BlobProto from);
@@ -1484,16 +1560,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BlobProtoVector(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public BlobProtoVector(int size) { allocateArray(size); }
+    public BlobProtoVector(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public BlobProtoVector position(int position) {
         return (BlobProtoVector)super.position(position);
     }
 
-  public BlobProtoVector() { allocate(); }
+  public BlobProtoVector() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public BlobProtoVector(@Const @ByRef BlobProtoVector from) { allocate(from); }
+  public BlobProtoVector(@Const @ByRef BlobProtoVector from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef BlobProtoVector from);
 
   public native @ByRef @Name("operator =") BlobProtoVector put(@Const @ByRef BlobProtoVector from);
@@ -1547,16 +1623,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Datum(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public Datum(int size) { allocateArray(size); }
+    public Datum(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public Datum position(int position) {
         return (Datum)super.position(position);
     }
 
-  public Datum() { allocate(); }
+  public Datum() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public Datum(@Const @ByRef Datum from) { allocate(from); }
+  public Datum(@Const @ByRef Datum from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef Datum from);
 
   public native @ByRef @Name("operator =") Datum put(@Const @ByRef Datum from);
@@ -1657,16 +1733,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FillerParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public FillerParameter(int size) { allocateArray(size); }
+    public FillerParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public FillerParameter position(int position) {
         return (FillerParameter)super.position(position);
     }
 
-  public FillerParameter() { allocate(); }
+  public FillerParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public FillerParameter(@Const @ByRef FillerParameter from) { allocate(from); }
+  public FillerParameter(@Const @ByRef FillerParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef FillerParameter from);
 
   public native @ByRef @Name("operator =") FillerParameter put(@Const @ByRef FillerParameter from);
@@ -1795,16 +1871,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public NetParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public NetParameter(int size) { allocateArray(size); }
+    public NetParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public NetParameter position(int position) {
         return (NetParameter)super.position(position);
     }
 
-  public NetParameter() { allocate(); }
+  public NetParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public NetParameter(@Const @ByRef NetParameter from) { allocate(from); }
+  public NetParameter(@Const @ByRef NetParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef NetParameter from);
 
   public native @ByRef @Name("operator =") NetParameter put(@Const @ByRef NetParameter from);
@@ -1934,16 +2010,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SolverParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SolverParameter(int size) { allocateArray(size); }
+    public SolverParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SolverParameter position(int position) {
         return (SolverParameter)super.position(position);
     }
 
-  public SolverParameter() { allocate(); }
+  public SolverParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public SolverParameter(@Const @ByRef SolverParameter from) { allocate(from); }
+  public SolverParameter(@Const @ByRef SolverParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef SolverParameter from);
 
   public native @ByRef @Name("operator =") SolverParameter put(@Const @ByRef SolverParameter from);
@@ -2388,16 +2464,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SolverState(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SolverState(int size) { allocateArray(size); }
+    public SolverState(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SolverState position(int position) {
         return (SolverState)super.position(position);
     }
 
-  public SolverState() { allocate(); }
+  public SolverState() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public SolverState(@Const @ByRef SolverState from) { allocate(from); }
+  public SolverState(@Const @ByRef SolverState from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef SolverState from);
 
   public native @ByRef @Name("operator =") SolverState put(@Const @ByRef SolverState from);
@@ -2478,16 +2554,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public NetState(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public NetState(int size) { allocateArray(size); }
+    public NetState(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public NetState position(int position) {
         return (NetState)super.position(position);
     }
 
-  public NetState() { allocate(); }
+  public NetState() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public NetState(@Const @ByRef NetState from) { allocate(from); }
+  public NetState(@Const @ByRef NetState from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef NetState from);
 
   public native @ByRef @Name("operator =") NetState put(@Const @ByRef NetState from);
@@ -2563,16 +2639,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public NetStateRule(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public NetStateRule(int size) { allocateArray(size); }
+    public NetStateRule(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public NetStateRule position(int position) {
         return (NetStateRule)super.position(position);
     }
 
-  public NetStateRule() { allocate(); }
+  public NetStateRule() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public NetStateRule(@Const @ByRef NetStateRule from) { allocate(from); }
+  public NetStateRule(@Const @ByRef NetStateRule from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef NetStateRule from);
 
   public native @ByRef @Name("operator =") NetStateRule put(@Const @ByRef NetStateRule from);
@@ -2671,16 +2747,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ParamSpec(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ParamSpec(int size) { allocateArray(size); }
+    public ParamSpec(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ParamSpec position(int position) {
         return (ParamSpec)super.position(position);
     }
 
-  public ParamSpec() { allocate(); }
+  public ParamSpec() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ParamSpec(@Const @ByRef ParamSpec from) { allocate(from); }
+  public ParamSpec(@Const @ByRef ParamSpec from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ParamSpec from);
 
   public native @ByRef @Name("operator =") ParamSpec put(@Const @ByRef ParamSpec from);
@@ -2780,16 +2856,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LayerParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public LayerParameter(int size) { allocateArray(size); }
+    public LayerParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public LayerParameter position(int position) {
         return (LayerParameter)super.position(position);
     }
 
-  public LayerParameter() { allocate(); }
+  public LayerParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public LayerParameter(@Const @ByRef LayerParameter from) { allocate(from); }
+  public LayerParameter(@Const @ByRef LayerParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef LayerParameter from);
 
   public native @ByRef @Name("operator =") LayerParameter put(@Const @ByRef LayerParameter from);
@@ -3308,16 +3384,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TransformationParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TransformationParameter(int size) { allocateArray(size); }
+    public TransformationParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public TransformationParameter position(int position) {
         return (TransformationParameter)super.position(position);
     }
 
-  public TransformationParameter() { allocate(); }
+  public TransformationParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public TransformationParameter(@Const @ByRef TransformationParameter from) { allocate(from); }
+  public TransformationParameter(@Const @ByRef TransformationParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef TransformationParameter from);
 
   public native @ByRef @Name("operator =") TransformationParameter put(@Const @ByRef TransformationParameter from);
@@ -3419,16 +3495,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LossParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public LossParameter(int size) { allocateArray(size); }
+    public LossParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public LossParameter position(int position) {
         return (LossParameter)super.position(position);
     }
 
-  public LossParameter() { allocate(); }
+  public LossParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public LossParameter(@Const @ByRef LossParameter from) { allocate(from); }
+  public LossParameter(@Const @ByRef LossParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef LossParameter from);
 
   public native @ByRef @Name("operator =") LossParameter put(@Const @ByRef LossParameter from);
@@ -3488,16 +3564,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public AccuracyParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public AccuracyParameter(int size) { allocateArray(size); }
+    public AccuracyParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public AccuracyParameter position(int position) {
         return (AccuracyParameter)super.position(position);
     }
 
-  public AccuracyParameter() { allocate(); }
+  public AccuracyParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public AccuracyParameter(@Const @ByRef AccuracyParameter from) { allocate(from); }
+  public AccuracyParameter(@Const @ByRef AccuracyParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef AccuracyParameter from);
 
   public native @ByRef @Name("operator =") AccuracyParameter put(@Const @ByRef AccuracyParameter from);
@@ -3564,16 +3640,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ArgMaxParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ArgMaxParameter(int size) { allocateArray(size); }
+    public ArgMaxParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ArgMaxParameter position(int position) {
         return (ArgMaxParameter)super.position(position);
     }
 
-  public ArgMaxParameter() { allocate(); }
+  public ArgMaxParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ArgMaxParameter(@Const @ByRef ArgMaxParameter from) { allocate(from); }
+  public ArgMaxParameter(@Const @ByRef ArgMaxParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ArgMaxParameter from);
 
   public native @ByRef @Name("operator =") ArgMaxParameter put(@Const @ByRef ArgMaxParameter from);
@@ -3640,16 +3716,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ConcatParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ConcatParameter(int size) { allocateArray(size); }
+    public ConcatParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ConcatParameter position(int position) {
         return (ConcatParameter)super.position(position);
     }
 
-  public ConcatParameter() { allocate(); }
+  public ConcatParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ConcatParameter(@Const @ByRef ConcatParameter from) { allocate(from); }
+  public ConcatParameter(@Const @ByRef ConcatParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ConcatParameter from);
 
   public native @ByRef @Name("operator =") ConcatParameter put(@Const @ByRef ConcatParameter from);
@@ -3709,16 +3785,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BatchNormParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public BatchNormParameter(int size) { allocateArray(size); }
+    public BatchNormParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public BatchNormParameter position(int position) {
         return (BatchNormParameter)super.position(position);
     }
 
-  public BatchNormParameter() { allocate(); }
+  public BatchNormParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public BatchNormParameter(@Const @ByRef BatchNormParameter from) { allocate(from); }
+  public BatchNormParameter(@Const @ByRef BatchNormParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef BatchNormParameter from);
 
   public native @ByRef @Name("operator =") BatchNormParameter put(@Const @ByRef BatchNormParameter from);
@@ -3785,16 +3861,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ContrastiveLossParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ContrastiveLossParameter(int size) { allocateArray(size); }
+    public ContrastiveLossParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ContrastiveLossParameter position(int position) {
         return (ContrastiveLossParameter)super.position(position);
     }
 
-  public ContrastiveLossParameter() { allocate(); }
+  public ContrastiveLossParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ContrastiveLossParameter(@Const @ByRef ContrastiveLossParameter from) { allocate(from); }
+  public ContrastiveLossParameter(@Const @ByRef ContrastiveLossParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ContrastiveLossParameter from);
 
   public native @ByRef @Name("operator =") ContrastiveLossParameter put(@Const @ByRef ContrastiveLossParameter from);
@@ -3854,16 +3930,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ConvolutionParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ConvolutionParameter(int size) { allocateArray(size); }
+    public ConvolutionParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ConvolutionParameter position(int position) {
         return (ConvolutionParameter)super.position(position);
     }
 
-  public ConvolutionParameter() { allocate(); }
+  public ConvolutionParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ConvolutionParameter(@Const @ByRef ConvolutionParameter from) { allocate(from); }
+  public ConvolutionParameter(@Const @ByRef ConvolutionParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ConvolutionParameter from);
 
   public native @ByRef @Name("operator =") ConvolutionParameter put(@Const @ByRef ConvolutionParameter from);
@@ -4056,16 +4132,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DataParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DataParameter(int size) { allocateArray(size); }
+    public DataParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public DataParameter position(int position) {
         return (DataParameter)super.position(position);
     }
 
-  public DataParameter() { allocate(); }
+  public DataParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public DataParameter(@Const @ByRef DataParameter from) { allocate(from); }
+  public DataParameter(@Const @ByRef DataParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef DataParameter from);
 
   public native @ByRef @Name("operator =") DataParameter put(@Const @ByRef DataParameter from);
@@ -4213,16 +4289,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DropoutParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DropoutParameter(int size) { allocateArray(size); }
+    public DropoutParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public DropoutParameter position(int position) {
         return (DropoutParameter)super.position(position);
     }
 
-  public DropoutParameter() { allocate(); }
+  public DropoutParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public DropoutParameter(@Const @ByRef DropoutParameter from) { allocate(from); }
+  public DropoutParameter(@Const @ByRef DropoutParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef DropoutParameter from);
 
   public native @ByRef @Name("operator =") DropoutParameter put(@Const @ByRef DropoutParameter from);
@@ -4275,16 +4351,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DummyDataParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DummyDataParameter(int size) { allocateArray(size); }
+    public DummyDataParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public DummyDataParameter position(int position) {
         return (DummyDataParameter)super.position(position);
     }
 
-  public DummyDataParameter() { allocate(); }
+  public DummyDataParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public DummyDataParameter(@Const @ByRef DummyDataParameter from) { allocate(from); }
+  public DummyDataParameter(@Const @ByRef DummyDataParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef DummyDataParameter from);
 
   public native @ByRef @Name("operator =") DummyDataParameter put(@Const @ByRef DummyDataParameter from);
@@ -4378,16 +4454,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public EltwiseParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public EltwiseParameter(int size) { allocateArray(size); }
+    public EltwiseParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public EltwiseParameter position(int position) {
         return (EltwiseParameter)super.position(position);
     }
 
-  public EltwiseParameter() { allocate(); }
+  public EltwiseParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public EltwiseParameter(@Const @ByRef EltwiseParameter from) { allocate(from); }
+  public EltwiseParameter(@Const @ByRef EltwiseParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef EltwiseParameter from);
 
   public native @ByRef @Name("operator =") EltwiseParameter put(@Const @ByRef EltwiseParameter from);
@@ -4476,16 +4552,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public EmbedParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public EmbedParameter(int size) { allocateArray(size); }
+    public EmbedParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public EmbedParameter position(int position) {
         return (EmbedParameter)super.position(position);
     }
 
-  public EmbedParameter() { allocate(); }
+  public EmbedParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public EmbedParameter(@Const @ByRef EmbedParameter from) { allocate(from); }
+  public EmbedParameter(@Const @ByRef EmbedParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef EmbedParameter from);
 
   public native @ByRef @Name("operator =") EmbedParameter put(@Const @ByRef EmbedParameter from);
@@ -4570,16 +4646,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ExpParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ExpParameter(int size) { allocateArray(size); }
+    public ExpParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ExpParameter position(int position) {
         return (ExpParameter)super.position(position);
     }
 
-  public ExpParameter() { allocate(); }
+  public ExpParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ExpParameter(@Const @ByRef ExpParameter from) { allocate(from); }
+  public ExpParameter(@Const @ByRef ExpParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ExpParameter from);
 
   public native @ByRef @Name("operator =") ExpParameter put(@Const @ByRef ExpParameter from);
@@ -4646,16 +4722,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FlattenParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public FlattenParameter(int size) { allocateArray(size); }
+    public FlattenParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public FlattenParameter position(int position) {
         return (FlattenParameter)super.position(position);
     }
 
-  public FlattenParameter() { allocate(); }
+  public FlattenParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public FlattenParameter(@Const @ByRef FlattenParameter from) { allocate(from); }
+  public FlattenParameter(@Const @ByRef FlattenParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef FlattenParameter from);
 
   public native @ByRef @Name("operator =") FlattenParameter put(@Const @ByRef FlattenParameter from);
@@ -4715,16 +4791,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public HDF5DataParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public HDF5DataParameter(int size) { allocateArray(size); }
+    public HDF5DataParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public HDF5DataParameter position(int position) {
         return (HDF5DataParameter)super.position(position);
     }
 
-  public HDF5DataParameter() { allocate(); }
+  public HDF5DataParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public HDF5DataParameter(@Const @ByRef HDF5DataParameter from) { allocate(from); }
+  public HDF5DataParameter(@Const @ByRef HDF5DataParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef HDF5DataParameter from);
 
   public native @ByRef @Name("operator =") HDF5DataParameter put(@Const @ByRef HDF5DataParameter from);
@@ -4797,16 +4873,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public HDF5OutputParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public HDF5OutputParameter(int size) { allocateArray(size); }
+    public HDF5OutputParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public HDF5OutputParameter position(int position) {
         return (HDF5OutputParameter)super.position(position);
     }
 
-  public HDF5OutputParameter() { allocate(); }
+  public HDF5OutputParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public HDF5OutputParameter(@Const @ByRef HDF5OutputParameter from) { allocate(from); }
+  public HDF5OutputParameter(@Const @ByRef HDF5OutputParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef HDF5OutputParameter from);
 
   public native @ByRef @Name("operator =") HDF5OutputParameter put(@Const @ByRef HDF5OutputParameter from);
@@ -4865,16 +4941,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public HingeLossParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public HingeLossParameter(int size) { allocateArray(size); }
+    public HingeLossParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public HingeLossParameter position(int position) {
         return (HingeLossParameter)super.position(position);
     }
 
-  public HingeLossParameter() { allocate(); }
+  public HingeLossParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public HingeLossParameter(@Const @ByRef HingeLossParameter from) { allocate(from); }
+  public HingeLossParameter(@Const @ByRef HingeLossParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef HingeLossParameter from);
 
   public native @ByRef @Name("operator =") HingeLossParameter put(@Const @ByRef HingeLossParameter from);
@@ -4947,16 +5023,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ImageDataParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ImageDataParameter(int size) { allocateArray(size); }
+    public ImageDataParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ImageDataParameter position(int position) {
         return (ImageDataParameter)super.position(position);
     }
 
-  public ImageDataParameter() { allocate(); }
+  public ImageDataParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ImageDataParameter(@Const @ByRef ImageDataParameter from) { allocate(from); }
+  public ImageDataParameter(@Const @ByRef ImageDataParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ImageDataParameter from);
 
   public native @ByRef @Name("operator =") ImageDataParameter put(@Const @ByRef ImageDataParameter from);
@@ -5104,16 +5180,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public InfogainLossParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public InfogainLossParameter(int size) { allocateArray(size); }
+    public InfogainLossParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public InfogainLossParameter position(int position) {
         return (InfogainLossParameter)super.position(position);
     }
 
-  public InfogainLossParameter() { allocate(); }
+  public InfogainLossParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public InfogainLossParameter(@Const @ByRef InfogainLossParameter from) { allocate(from); }
+  public InfogainLossParameter(@Const @ByRef InfogainLossParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef InfogainLossParameter from);
 
   public native @ByRef @Name("operator =") InfogainLossParameter put(@Const @ByRef InfogainLossParameter from);
@@ -5172,16 +5248,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public InnerProductParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public InnerProductParameter(int size) { allocateArray(size); }
+    public InnerProductParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public InnerProductParameter position(int position) {
         return (InnerProductParameter)super.position(position);
     }
 
-  public InnerProductParameter() { allocate(); }
+  public InnerProductParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public InnerProductParameter(@Const @ByRef InnerProductParameter from) { allocate(from); }
+  public InnerProductParameter(@Const @ByRef InnerProductParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef InnerProductParameter from);
 
   public native @ByRef @Name("operator =") InnerProductParameter put(@Const @ByRef InnerProductParameter from);
@@ -5266,16 +5342,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LogParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public LogParameter(int size) { allocateArray(size); }
+    public LogParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public LogParameter position(int position) {
         return (LogParameter)super.position(position);
     }
 
-  public LogParameter() { allocate(); }
+  public LogParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public LogParameter(@Const @ByRef LogParameter from) { allocate(from); }
+  public LogParameter(@Const @ByRef LogParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef LogParameter from);
 
   public native @ByRef @Name("operator =") LogParameter put(@Const @ByRef LogParameter from);
@@ -5342,16 +5418,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LRNParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public LRNParameter(int size) { allocateArray(size); }
+    public LRNParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public LRNParameter position(int position) {
         return (LRNParameter)super.position(position);
     }
 
-  public LRNParameter() { allocate(); }
+  public LRNParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public LRNParameter(@Const @ByRef LRNParameter from) { allocate(from); }
+  public LRNParameter(@Const @ByRef LRNParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef LRNParameter from);
 
   public native @ByRef @Name("operator =") LRNParameter put(@Const @ByRef LRNParameter from);
@@ -5480,16 +5556,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public MemoryDataParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public MemoryDataParameter(int size) { allocateArray(size); }
+    public MemoryDataParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public MemoryDataParameter position(int position) {
         return (MemoryDataParameter)super.position(position);
     }
 
-  public MemoryDataParameter() { allocate(); }
+  public MemoryDataParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public MemoryDataParameter(@Const @ByRef MemoryDataParameter from) { allocate(from); }
+  public MemoryDataParameter(@Const @ByRef MemoryDataParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef MemoryDataParameter from);
 
   public native @ByRef @Name("operator =") MemoryDataParameter put(@Const @ByRef MemoryDataParameter from);
@@ -5563,16 +5639,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public MVNParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public MVNParameter(int size) { allocateArray(size); }
+    public MVNParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public MVNParameter position(int position) {
         return (MVNParameter)super.position(position);
     }
 
-  public MVNParameter() { allocate(); }
+  public MVNParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public MVNParameter(@Const @ByRef MVNParameter from) { allocate(from); }
+  public MVNParameter(@Const @ByRef MVNParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef MVNParameter from);
 
   public native @ByRef @Name("operator =") MVNParameter put(@Const @ByRef MVNParameter from);
@@ -5639,16 +5715,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PoolingParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PoolingParameter(int size) { allocateArray(size); }
+    public PoolingParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public PoolingParameter position(int position) {
         return (PoolingParameter)super.position(position);
     }
 
-  public PoolingParameter() { allocate(); }
+  public PoolingParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public PoolingParameter(@Const @ByRef PoolingParameter from) { allocate(from); }
+  public PoolingParameter(@Const @ByRef PoolingParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef PoolingParameter from);
 
   public native @ByRef @Name("operator =") PoolingParameter put(@Const @ByRef PoolingParameter from);
@@ -5820,16 +5896,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PowerParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PowerParameter(int size) { allocateArray(size); }
+    public PowerParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public PowerParameter position(int position) {
         return (PowerParameter)super.position(position);
     }
 
-  public PowerParameter() { allocate(); }
+  public PowerParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public PowerParameter(@Const @ByRef PowerParameter from) { allocate(from); }
+  public PowerParameter(@Const @ByRef PowerParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef PowerParameter from);
 
   public native @ByRef @Name("operator =") PowerParameter put(@Const @ByRef PowerParameter from);
@@ -5896,16 +5972,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PythonParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PythonParameter(int size) { allocateArray(size); }
+    public PythonParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public PythonParameter position(int position) {
         return (PythonParameter)super.position(position);
     }
 
-  public PythonParameter() { allocate(); }
+  public PythonParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public PythonParameter(@Const @ByRef PythonParameter from) { allocate(from); }
+  public PythonParameter(@Const @ByRef PythonParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef PythonParameter from);
 
   public native @ByRef @Name("operator =") PythonParameter put(@Const @ByRef PythonParameter from);
@@ -5997,16 +6073,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ReductionParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ReductionParameter(int size) { allocateArray(size); }
+    public ReductionParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ReductionParameter position(int position) {
         return (ReductionParameter)super.position(position);
     }
 
-  public ReductionParameter() { allocate(); }
+  public ReductionParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ReductionParameter(@Const @ByRef ReductionParameter from) { allocate(from); }
+  public ReductionParameter(@Const @ByRef ReductionParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ReductionParameter from);
 
   public native @ByRef @Name("operator =") ReductionParameter put(@Const @ByRef ReductionParameter from);
@@ -6095,16 +6171,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ReLUParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ReLUParameter(int size) { allocateArray(size); }
+    public ReLUParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ReLUParameter position(int position) {
         return (ReLUParameter)super.position(position);
     }
 
-  public ReLUParameter() { allocate(); }
+  public ReLUParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ReLUParameter(@Const @ByRef ReLUParameter from) { allocate(from); }
+  public ReLUParameter(@Const @ByRef ReLUParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ReLUParameter from);
 
   public native @ByRef @Name("operator =") ReLUParameter put(@Const @ByRef ReLUParameter from);
@@ -6185,16 +6261,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ReshapeParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ReshapeParameter(int size) { allocateArray(size); }
+    public ReshapeParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ReshapeParameter position(int position) {
         return (ReshapeParameter)super.position(position);
     }
 
-  public ReshapeParameter() { allocate(); }
+  public ReshapeParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ReshapeParameter(@Const @ByRef ReshapeParameter from) { allocate(from); }
+  public ReshapeParameter(@Const @ByRef ReshapeParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ReshapeParameter from);
 
   public native @ByRef @Name("operator =") ReshapeParameter put(@Const @ByRef ReshapeParameter from);
@@ -6263,16 +6339,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SigmoidParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SigmoidParameter(int size) { allocateArray(size); }
+    public SigmoidParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SigmoidParameter position(int position) {
         return (SigmoidParameter)super.position(position);
     }
 
-  public SigmoidParameter() { allocate(); }
+  public SigmoidParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public SigmoidParameter(@Const @ByRef SigmoidParameter from) { allocate(from); }
+  public SigmoidParameter(@Const @ByRef SigmoidParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef SigmoidParameter from);
 
   public native @ByRef @Name("operator =") SigmoidParameter put(@Const @ByRef SigmoidParameter from);
@@ -6346,16 +6422,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SliceParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SliceParameter(int size) { allocateArray(size); }
+    public SliceParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SliceParameter position(int position) {
         return (SliceParameter)super.position(position);
     }
 
-  public SliceParameter() { allocate(); }
+  public SliceParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public SliceParameter(@Const @ByRef SliceParameter from) { allocate(from); }
+  public SliceParameter(@Const @ByRef SliceParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef SliceParameter from);
 
   public native @ByRef @Name("operator =") SliceParameter put(@Const @ByRef SliceParameter from);
@@ -6423,16 +6499,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SoftmaxParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SoftmaxParameter(int size) { allocateArray(size); }
+    public SoftmaxParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SoftmaxParameter position(int position) {
         return (SoftmaxParameter)super.position(position);
     }
 
-  public SoftmaxParameter() { allocate(); }
+  public SoftmaxParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public SoftmaxParameter(@Const @ByRef SoftmaxParameter from) { allocate(from); }
+  public SoftmaxParameter(@Const @ByRef SoftmaxParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef SoftmaxParameter from);
 
   public native @ByRef @Name("operator =") SoftmaxParameter put(@Const @ByRef SoftmaxParameter from);
@@ -6513,16 +6589,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TanHParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TanHParameter(int size) { allocateArray(size); }
+    public TanHParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public TanHParameter position(int position) {
         return (TanHParameter)super.position(position);
     }
 
-  public TanHParameter() { allocate(); }
+  public TanHParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public TanHParameter(@Const @ByRef TanHParameter from) { allocate(from); }
+  public TanHParameter(@Const @ByRef TanHParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef TanHParameter from);
 
   public native @ByRef @Name("operator =") TanHParameter put(@Const @ByRef TanHParameter from);
@@ -6596,16 +6672,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public TileParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public TileParameter(int size) { allocateArray(size); }
+    public TileParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public TileParameter position(int position) {
         return (TileParameter)super.position(position);
     }
 
-  public TileParameter() { allocate(); }
+  public TileParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public TileParameter(@Const @ByRef TileParameter from) { allocate(from); }
+  public TileParameter(@Const @ByRef TileParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef TileParameter from);
 
   public native @ByRef @Name("operator =") TileParameter put(@Const @ByRef TileParameter from);
@@ -6665,16 +6741,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ThresholdParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public ThresholdParameter(int size) { allocateArray(size); }
+    public ThresholdParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public ThresholdParameter position(int position) {
         return (ThresholdParameter)super.position(position);
     }
 
-  public ThresholdParameter() { allocate(); }
+  public ThresholdParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public ThresholdParameter(@Const @ByRef ThresholdParameter from) { allocate(from); }
+  public ThresholdParameter(@Const @ByRef ThresholdParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef ThresholdParameter from);
 
   public native @ByRef @Name("operator =") ThresholdParameter put(@Const @ByRef ThresholdParameter from);
@@ -6727,16 +6803,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public WindowDataParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public WindowDataParameter(int size) { allocateArray(size); }
+    public WindowDataParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public WindowDataParameter position(int position) {
         return (WindowDataParameter)super.position(position);
     }
 
-  public WindowDataParameter() { allocate(); }
+  public WindowDataParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public WindowDataParameter(@Const @ByRef WindowDataParameter from) { allocate(from); }
+  public WindowDataParameter(@Const @ByRef WindowDataParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef WindowDataParameter from);
 
   public native @ByRef @Name("operator =") WindowDataParameter put(@Const @ByRef WindowDataParameter from);
@@ -6897,16 +6973,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SPPParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SPPParameter(int size) { allocateArray(size); }
+    public SPPParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SPPParameter position(int position) {
         return (SPPParameter)super.position(position);
     }
 
-  public SPPParameter() { allocate(); }
+  public SPPParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public SPPParameter(@Const @ByRef SPPParameter from) { allocate(from); }
+  public SPPParameter(@Const @ByRef SPPParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef SPPParameter from);
 
   public native @ByRef @Name("operator =") SPPParameter put(@Const @ByRef SPPParameter from);
@@ -7015,16 +7091,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public V1LayerParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public V1LayerParameter(int size) { allocateArray(size); }
+    public V1LayerParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public V1LayerParameter position(int position) {
         return (V1LayerParameter)super.position(position);
     }
 
-  public V1LayerParameter() { allocate(); }
+  public V1LayerParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public V1LayerParameter(@Const @ByRef V1LayerParameter from) { allocate(from); }
+  public V1LayerParameter(@Const @ByRef V1LayerParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef V1LayerParameter from);
 
   public native @ByRef @Name("operator =") V1LayerParameter put(@Const @ByRef V1LayerParameter from);
@@ -7551,16 +7627,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public V0LayerParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public V0LayerParameter(int size) { allocateArray(size); }
+    public V0LayerParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public V0LayerParameter position(int position) {
         return (V0LayerParameter)super.position(position);
     }
 
-  public V0LayerParameter() { allocate(); }
+  public V0LayerParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public V0LayerParameter(@Const @ByRef V0LayerParameter from) { allocate(from); }
+  public V0LayerParameter(@Const @ByRef V0LayerParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef V0LayerParameter from);
 
   public native @ByRef @Name("operator =") V0LayerParameter put(@Const @ByRef V0LayerParameter from);
@@ -7932,16 +8008,16 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public PReLUParameter(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public PReLUParameter(int size) { allocateArray(size); }
+    public PReLUParameter(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public PReLUParameter position(int position) {
         return (PReLUParameter)super.position(position);
     }
 
-  public PReLUParameter() { allocate(); }
+  public PReLUParameter() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  public PReLUParameter(@Const @ByRef PReLUParameter from) { allocate(from); }
+  public PReLUParameter(@Const @ByRef PReLUParameter from) { super((Pointer)null); allocate(from); }
   private native void allocate(@Const @ByRef PReLUParameter from);
 
   public native @ByRef @Name("operator =") PReLUParameter put(@Const @ByRef PReLUParameter from);
@@ -11792,13 +11868,13 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DatumBlockingQueue(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DatumBlockingQueue(int size) { allocateArray(size); }
+    public DatumBlockingQueue(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public DatumBlockingQueue position(int position) {
         return (DatumBlockingQueue)super.position(position);
     }
 
-  public DatumBlockingQueue() { allocate(); }
+  public DatumBlockingQueue() { super((Pointer)null); allocate(); }
   private native void allocate();
 
   public native void push(@ByPtrRef Datum t);
@@ -11841,7 +11917,7 @@ public static final int
 // #include "caffe/util/db.hpp"
 
 /**
- * @brief Reads data from a source to queues available to data layers.
+ * \brief Reads data from a source to queues available to data layers.
  * A single reading thread is created per source, even if multiple solvers
  * are running in parallel, e.g. for multi-GPU training. This makes sure
  * databases are read sequentially, and that each solver accesses a different
@@ -11850,12 +11926,10 @@ public static final int
  */
 @Namespace("caffe") @NoOffset public static class DataReader extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DataReader() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DataReader(Pointer p) { super(p); }
 
-  public DataReader(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DataReader(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   public native @ByRef DatumBlockingQueue free();
@@ -12201,7 +12275,7 @@ public static final int
 
 
 /**
- * @brief Manages memory allocation and synchronization between the host (CPU)
+ * \brief Manages memory allocation and synchronization between the host (CPU)
  *        and device (GPU).
  *
  * TODO(dox): more thorough description.
@@ -12211,15 +12285,15 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public SyncedMemory(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public SyncedMemory(int size) { allocateArray(size); }
+    public SyncedMemory(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public SyncedMemory position(int position) {
         return (SyncedMemory)super.position(position);
     }
 
-  public SyncedMemory() { allocate(); }
+  public SyncedMemory() { super((Pointer)null); allocate(); }
   private native void allocate();
-  public SyncedMemory(@Cast("size_t") long size) { allocate(size); }
+  public SyncedMemory(@Cast("size_t") long size) { super((Pointer)null); allocate(size); }
   private native void allocate(@Cast("size_t") long size);
   public native @Const Pointer cpu_data();
   public native void set_cpu_data(Pointer data);
@@ -12254,7 +12328,7 @@ public static final int
 @MemberGetter public static native int kMaxBlobAxes();
 
 /**
- * @brief A wrapper around SyncedMemory holders serving as the basic
+ * \brief A wrapper around SyncedMemory holders serving as the basic
  *        computational unit through which Layer%s, Net%s, and Solver%s
  *        interact.
  *
@@ -12265,32 +12339,32 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBlob(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public FloatBlob(int size) { allocateArray(size); }
+    public FloatBlob(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public FloatBlob position(int position) {
         return (FloatBlob)super.position(position);
     }
 
-  public FloatBlob() { allocate(); }
+  public FloatBlob() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  /** @brief Deprecated; use <code>Blob(const vector<int>& shape)</code>. */
+  /** \brief Deprecated; use <code>Blob(const vector<int>& shape)</code>. */
   public FloatBlob(int num, int channels, int height,
-        int width) { allocate(num, channels, height, width); }
+        int width) { super((Pointer)null); allocate(num, channels, height, width); }
   private native void allocate(int num, int channels, int height,
         int width);
-  public FloatBlob(@StdVector IntPointer shape) { allocate(shape); }
+  public FloatBlob(@StdVector IntPointer shape) { super((Pointer)null); allocate(shape); }
   private native void allocate(@StdVector IntPointer shape);
-  public FloatBlob(@StdVector IntBuffer shape) { allocate(shape); }
+  public FloatBlob(@StdVector IntBuffer shape) { super((Pointer)null); allocate(shape); }
   private native void allocate(@StdVector IntBuffer shape);
-  public FloatBlob(@StdVector int[] shape) { allocate(shape); }
+  public FloatBlob(@StdVector int[] shape) { super((Pointer)null); allocate(shape); }
   private native void allocate(@StdVector int[] shape);
 
-  /** @brief Deprecated; use <code>Reshape(const vector<int>& shape)</code>. */
+  /** \brief Deprecated; use <code>Reshape(const vector<int>& shape)</code>. */
   public native void Reshape(int num, int channels, int height,
         int width);
   /**
-   * @brief Change the dimensions of the blob, allocating new memory if
+   * \brief Change the dimensions of the blob, allocating new memory if
    *        necessary.
    *
    * This function can be called both to create an initial allocation
@@ -12311,7 +12385,7 @@ public static final int
   public native @StdString BytePointer shape_string();
   public native @StdVector IntPointer shape();
   /**
-   * @brief Returns the dimension of the index-th axis (or the negative index-th
+   * \brief Returns the dimension of the index-th axis (or the negative index-th
    *        axis from the end, if index is negative).
    *
    * @param index the axis index, which may be negative as it will be
@@ -12323,7 +12397,7 @@ public static final int
   public native int count();
 
   /**
-   * @brief Compute the volume of a slice; i.e., the product of dimensions
+   * \brief Compute the volume of a slice; i.e., the product of dimensions
    *        among a range of axes.
    *
    * @param start_axis The first axis to include in the slice.
@@ -12332,7 +12406,7 @@ public static final int
    */
   public native int count(int start_axis, int end_axis);
   /**
-   * @brief Compute the volume of a slice spanning from a particular first
+   * \brief Compute the volume of a slice spanning from a particular first
    *        axis to the final axis.
    *
    * @param start_axis The first axis to include in the slice.
@@ -12340,7 +12414,7 @@ public static final int
   public native int count(int start_axis);
 
   /**
-   * @brief Returns the 'canonical' version of a (usually) user-specified axis,
+   * \brief Returns the 'canonical' version of a (usually) user-specified axis,
    *        allowing for negative indexing (e.g., -1 for the last axis).
    *
    * @param axis_index the axis index.
@@ -12352,13 +12426,13 @@ public static final int
    */
   public native int CanonicalAxisIndex(int axis_index);
 
-  /** @brief Deprecated legacy shape accessor num: use shape(0) instead. */
+  /** \brief Deprecated legacy shape accessor num: use shape(0) instead. */
   public native int num();
-  /** @brief Deprecated legacy shape accessor channels: use shape(1) instead. */
+  /** \brief Deprecated legacy shape accessor channels: use shape(1) instead. */
   public native int channels();
-  /** @brief Deprecated legacy shape accessor height: use shape(2) instead. */
+  /** \brief Deprecated legacy shape accessor height: use shape(2) instead. */
   public native int height();
-  /** @brief Deprecated legacy shape accessor width: use shape(3) instead. */
+  /** \brief Deprecated legacy shape accessor width: use shape(3) instead. */
   public native int width();
   public native int LegacyShape(int index);
 
@@ -12370,7 +12444,7 @@ public static final int
   public native int offset(@StdVector IntBuffer indices);
   public native int offset(@StdVector int[] indices);
   /**
-   * @brief Copy from a source Blob.
+   * \brief Copy from a source Blob.
    *
    * @param source the Blob to copy from
    * @param copy_diff if false, copy the data; if true, copy the diff
@@ -12418,22 +12492,22 @@ public static final int
   public native void ToProto(BlobProto proto, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToProto(BlobProto proto);
 
-  /** @brief Compute the sum of absolute values (L1 norm) of the data. */
+  /** \brief Compute the sum of absolute values (L1 norm) of the data. */
   public native float asum_data();
-  /** @brief Compute the sum of absolute values (L1 norm) of the diff. */
+  /** \brief Compute the sum of absolute values (L1 norm) of the diff. */
   public native float asum_diff();
-  /** @brief Compute the sum of squares (L2 norm squared) of the data. */
+  /** \brief Compute the sum of squares (L2 norm squared) of the data. */
   public native float sumsq_data();
-  /** @brief Compute the sum of squares (L2 norm squared) of the diff. */
+  /** \brief Compute the sum of squares (L2 norm squared) of the diff. */
   public native float sumsq_diff();
 
-  /** @brief Scale the blob data by a constant factor. */
+  /** \brief Scale the blob data by a constant factor. */
   public native void scale_data(float scale_factor);
-  /** @brief Scale the blob diff by a constant factor. */
+  /** \brief Scale the blob diff by a constant factor. */
   public native void scale_diff(float scale_factor);
 
   /**
-   * @brief Set the data_ shared_ptr to point to the SyncedMemory holding the
+   * \brief Set the data_ shared_ptr to point to the SyncedMemory holding the
    *        data_ of Blob other -- useful in Layer%s which simply perform a copy
    *        in their Forward pass.
    *
@@ -12442,7 +12516,7 @@ public static final int
    */
   public native void ShareData(@Const @ByRef FloatBlob other);
   /**
-   * @brief Set the diff_ shared_ptr to point to the SyncedMemory holding the
+   * \brief Set the diff_ shared_ptr to point to the SyncedMemory holding the
    *        diff_ of Blob other -- useful in Layer%s which simply perform a copy
    *        in their Forward pass.
    *
@@ -12458,32 +12532,32 @@ public static final int
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBlob(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DoubleBlob(int size) { allocateArray(size); }
+    public DoubleBlob(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public DoubleBlob position(int position) {
         return (DoubleBlob)super.position(position);
     }
 
-  public DoubleBlob() { allocate(); }
+  public DoubleBlob() { super((Pointer)null); allocate(); }
   private native void allocate();
 
-  /** @brief Deprecated; use <code>Blob(const vector<int>& shape)</code>. */
+  /** \brief Deprecated; use <code>Blob(const vector<int>& shape)</code>. */
   public DoubleBlob(int num, int channels, int height,
-        int width) { allocate(num, channels, height, width); }
+        int width) { super((Pointer)null); allocate(num, channels, height, width); }
   private native void allocate(int num, int channels, int height,
         int width);
-  public DoubleBlob(@StdVector IntPointer shape) { allocate(shape); }
+  public DoubleBlob(@StdVector IntPointer shape) { super((Pointer)null); allocate(shape); }
   private native void allocate(@StdVector IntPointer shape);
-  public DoubleBlob(@StdVector IntBuffer shape) { allocate(shape); }
+  public DoubleBlob(@StdVector IntBuffer shape) { super((Pointer)null); allocate(shape); }
   private native void allocate(@StdVector IntBuffer shape);
-  public DoubleBlob(@StdVector int[] shape) { allocate(shape); }
+  public DoubleBlob(@StdVector int[] shape) { super((Pointer)null); allocate(shape); }
   private native void allocate(@StdVector int[] shape);
 
-  /** @brief Deprecated; use <code>Reshape(const vector<int>& shape)</code>. */
+  /** \brief Deprecated; use <code>Reshape(const vector<int>& shape)</code>. */
   public native void Reshape(int num, int channels, int height,
         int width);
   /**
-   * @brief Change the dimensions of the blob, allocating new memory if
+   * \brief Change the dimensions of the blob, allocating new memory if
    *        necessary.
    *
    * This function can be called both to create an initial allocation
@@ -12504,7 +12578,7 @@ public static final int
   public native @StdString BytePointer shape_string();
   public native @StdVector IntPointer shape();
   /**
-   * @brief Returns the dimension of the index-th axis (or the negative index-th
+   * \brief Returns the dimension of the index-th axis (or the negative index-th
    *        axis from the end, if index is negative).
    *
    * @param index the axis index, which may be negative as it will be
@@ -12516,7 +12590,7 @@ public static final int
   public native int count();
 
   /**
-   * @brief Compute the volume of a slice; i.e., the product of dimensions
+   * \brief Compute the volume of a slice; i.e., the product of dimensions
    *        among a range of axes.
    *
    * @param start_axis The first axis to include in the slice.
@@ -12525,7 +12599,7 @@ public static final int
    */
   public native int count(int start_axis, int end_axis);
   /**
-   * @brief Compute the volume of a slice spanning from a particular first
+   * \brief Compute the volume of a slice spanning from a particular first
    *        axis to the final axis.
    *
    * @param start_axis The first axis to include in the slice.
@@ -12533,7 +12607,7 @@ public static final int
   public native int count(int start_axis);
 
   /**
-   * @brief Returns the 'canonical' version of a (usually) user-specified axis,
+   * \brief Returns the 'canonical' version of a (usually) user-specified axis,
    *        allowing for negative indexing (e.g., -1 for the last axis).
    *
    * @param axis_index the axis index.
@@ -12545,13 +12619,13 @@ public static final int
    */
   public native int CanonicalAxisIndex(int axis_index);
 
-  /** @brief Deprecated legacy shape accessor num: use shape(0) instead. */
+  /** \brief Deprecated legacy shape accessor num: use shape(0) instead. */
   public native int num();
-  /** @brief Deprecated legacy shape accessor channels: use shape(1) instead. */
+  /** \brief Deprecated legacy shape accessor channels: use shape(1) instead. */
   public native int channels();
-  /** @brief Deprecated legacy shape accessor height: use shape(2) instead. */
+  /** \brief Deprecated legacy shape accessor height: use shape(2) instead. */
   public native int height();
-  /** @brief Deprecated legacy shape accessor width: use shape(3) instead. */
+  /** \brief Deprecated legacy shape accessor width: use shape(3) instead. */
   public native int width();
   public native int LegacyShape(int index);
 
@@ -12563,7 +12637,7 @@ public static final int
   public native int offset(@StdVector IntBuffer indices);
   public native int offset(@StdVector int[] indices);
   /**
-   * @brief Copy from a source Blob.
+   * \brief Copy from a source Blob.
    *
    * @param source the Blob to copy from
    * @param copy_diff if false, copy the data; if true, copy the diff
@@ -12611,22 +12685,22 @@ public static final int
   public native void ToProto(BlobProto proto, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToProto(BlobProto proto);
 
-  /** @brief Compute the sum of absolute values (L1 norm) of the data. */
+  /** \brief Compute the sum of absolute values (L1 norm) of the data. */
   public native double asum_data();
-  /** @brief Compute the sum of absolute values (L1 norm) of the diff. */
+  /** \brief Compute the sum of absolute values (L1 norm) of the diff. */
   public native double asum_diff();
-  /** @brief Compute the sum of squares (L2 norm squared) of the data. */
+  /** \brief Compute the sum of squares (L2 norm squared) of the data. */
   public native double sumsq_data();
-  /** @brief Compute the sum of squares (L2 norm squared) of the diff. */
+  /** \brief Compute the sum of squares (L2 norm squared) of the diff. */
   public native double sumsq_diff();
 
-  /** @brief Scale the blob data by a constant factor. */
+  /** \brief Scale the blob data by a constant factor. */
   public native void scale_data(double scale_factor);
-  /** @brief Scale the blob diff by a constant factor. */
+  /** \brief Scale the blob diff by a constant factor. */
   public native void scale_diff(double scale_factor);
 
   /**
-   * @brief Set the data_ shared_ptr to point to the SyncedMemory holding the
+   * \brief Set the data_ shared_ptr to point to the SyncedMemory holding the
    *        data_ of Blob other -- useful in Layer%s which simply perform a copy
    *        in their Forward pass.
    *
@@ -12635,7 +12709,7 @@ public static final int
    */
   public native void ShareData(@Const @ByRef DoubleBlob other);
   /**
-   * @brief Set the diff_ shared_ptr to point to the SyncedMemory holding the
+   * \brief Set the diff_ shared_ptr to point to the SyncedMemory holding the
    *        diff_ of Blob other -- useful in Layer%s which simply perform a copy
    *        in their Forward pass.
    *
@@ -12664,27 +12738,25 @@ public static final int
 // #include "caffe/proto/caffe.pb.h"
 
 /**
- * @brief Applies common transformations to the input data, such as
+ * \brief Applies common transformations to the input data, such as
  * scaling, mirroring, substracting the image mean...
  */
 @Name("caffe::DataTransformer<float>") @NoOffset public static class FloatDataTransformer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatDataTransformer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatDataTransformer(Pointer p) { super(p); }
 
-  public FloatDataTransformer(@Const @ByRef TransformationParameter param, @Cast("caffe::Phase") int phase) { allocate(param, phase); }
+  public FloatDataTransformer(@Const @ByRef TransformationParameter param, @Cast("caffe::Phase") int phase) { super((Pointer)null); allocate(param, phase); }
   private native void allocate(@Const @ByRef TransformationParameter param, @Cast("caffe::Phase") int phase);
 
   /**
-   * @brief Initialize the Random number generations if needed by the
+   * \brief Initialize the Random number generations if needed by the
    *    transformation.
    */
   public native void InitRand();
 
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to the data.
    *
    * @param datum
@@ -12696,7 +12768,7 @@ public static final int
   public native void Transform(@Const @ByRef Datum datum, FloatBlob transformed_blob);
 
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to a vector of Datum.
    *
    * @param datum_vector
@@ -12705,10 +12777,12 @@ public static final int
    *    This is destination blob. It can be part of top blob's data if
    *    set_cpu_data() is used. See memory_layer.cpp for an example.
    */
+  public native void Transform(@Const @ByRef DatumVector datum_vector,
+                  FloatBlob transformed_blob);
 
 // #ifdef USE_OPENCV
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to a vector of Mat.
    *
    * @param mat_vector
@@ -12721,7 +12795,7 @@ public static final int
                   FloatBlob transformed_blob);
 
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to a cv::Mat
    *
    * @param cv_img
@@ -12734,7 +12808,7 @@ public static final int
 // #endif  // USE_OPENCV
 
   /**
-   * @brief Applies the same transformation defined in the data layer's
+   * \brief Applies the same transformation defined in the data layer's
    * transform_param block to all the num images in a input_blob.
    *
    * @param input_blob
@@ -12747,7 +12821,7 @@ public static final int
   public native void Transform(FloatBlob input_blob, FloatBlob transformed_blob);
 
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *
    * @param datum
@@ -12755,15 +12829,16 @@ public static final int
    */
   public native @StdVector IntPointer InferBlobShape(@Const @ByRef Datum datum);
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *    It uses the first element to infer the shape of the blob.
    *
    * @param datum_vector
    *    A vector of Datum containing the data to be transformed.
    */
+  public native @StdVector IntPointer InferBlobShape(@Const @ByRef DatumVector datum_vector);
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *    It uses the first element to infer the shape of the blob.
    *
@@ -12773,7 +12848,7 @@ public static final int
 // #ifdef USE_OPENCV
   public native @StdVector IntPointer InferBlobShape(@Const @ByRef MatVector mat_vector);
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *
    * @param cv_img
@@ -12783,22 +12858,20 @@ public static final int
 }
 @Name("caffe::DataTransformer<double>") @NoOffset public static class DoubleDataTransformer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleDataTransformer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleDataTransformer(Pointer p) { super(p); }
 
-  public DoubleDataTransformer(@Const @ByRef TransformationParameter param, @Cast("caffe::Phase") int phase) { allocate(param, phase); }
+  public DoubleDataTransformer(@Const @ByRef TransformationParameter param, @Cast("caffe::Phase") int phase) { super((Pointer)null); allocate(param, phase); }
   private native void allocate(@Const @ByRef TransformationParameter param, @Cast("caffe::Phase") int phase);
 
   /**
-   * @brief Initialize the Random number generations if needed by the
+   * \brief Initialize the Random number generations if needed by the
    *    transformation.
    */
   public native void InitRand();
 
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to the data.
    *
    * @param datum
@@ -12810,7 +12883,7 @@ public static final int
   public native void Transform(@Const @ByRef Datum datum, DoubleBlob transformed_blob);
 
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to a vector of Datum.
    *
    * @param datum_vector
@@ -12819,10 +12892,12 @@ public static final int
    *    This is destination blob. It can be part of top blob's data if
    *    set_cpu_data() is used. See memory_layer.cpp for an example.
    */
+  public native void Transform(@Const @ByRef DatumVector datum_vector,
+                  DoubleBlob transformed_blob);
 
 // #ifdef USE_OPENCV
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to a vector of Mat.
    *
    * @param mat_vector
@@ -12835,7 +12910,7 @@ public static final int
                   DoubleBlob transformed_blob);
 
   /**
-   * @brief Applies the transformation defined in the data layer's
+   * \brief Applies the transformation defined in the data layer's
    * transform_param block to a cv::Mat
    *
    * @param cv_img
@@ -12848,7 +12923,7 @@ public static final int
 // #endif  // USE_OPENCV
 
   /**
-   * @brief Applies the same transformation defined in the data layer's
+   * \brief Applies the same transformation defined in the data layer's
    * transform_param block to all the num images in a input_blob.
    *
    * @param input_blob
@@ -12861,7 +12936,7 @@ public static final int
   public native void Transform(DoubleBlob input_blob, DoubleBlob transformed_blob);
 
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *
    * @param datum
@@ -12869,15 +12944,16 @@ public static final int
    */
   public native @StdVector IntPointer InferBlobShape(@Const @ByRef Datum datum);
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *    It uses the first element to infer the shape of the blob.
    *
    * @param datum_vector
    *    A vector of Datum containing the data to be transformed.
    */
+  public native @StdVector IntPointer InferBlobShape(@Const @ByRef DatumVector datum_vector);
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *    It uses the first element to infer the shape of the blob.
    *
@@ -12887,7 +12963,7 @@ public static final int
 // #ifdef USE_OPENCV
   public native @StdVector IntPointer InferBlobShape(@Const @ByRef MatVector mat_vector);
   /**
-   * @brief Infers the shape of transformed_blob will have when
+   * \brief Infers the shape of transformed_blob will have when
    *    the transformation is applied to the data.
    *
    * @param cv_img
@@ -12917,11 +12993,9 @@ public static final int
 // #include "caffe/syncedmem.hpp"
 // #include "caffe/util/math_functions.hpp"
 
-/** @brief Fills a Blob with constant or randomly-generated data. */
+/** \brief Fills a Blob with constant or randomly-generated data. */
 @Name("caffe::Filler<float>") @NoOffset public static class FloatFiller extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatFiller(Pointer p) { super(p); }
 
@@ -12929,8 +13003,6 @@ public static final int
 }
 @Name("caffe::Filler<double>") @NoOffset public static class DoubleFiller extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleFiller(Pointer p) { super(p); }
 
@@ -12938,106 +13010,90 @@ public static final int
 }  // class Filler
 
 
-/** @brief Fills a Blob with constant values @f$ x = 0 @f$. */
+/** \brief Fills a Blob with constant values \f$ x = 0 \f$. */
 @Name("caffe::ConstantFiller<float>") public static class FloatConstantFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatConstantFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatConstantFiller(Pointer p) { super(p); }
 
-  public FloatConstantFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatConstantFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::ConstantFiller<double>") public static class DoubleConstantFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleConstantFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleConstantFiller(Pointer p) { super(p); }
 
-  public DoubleConstantFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoubleConstantFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
-/** @brief Fills a Blob with uniformly distributed values @f$ x\sim U(a, b) @f$. */
+/** \brief Fills a Blob with uniformly distributed values \f$ x\sim U(a, b) \f$. */
 @Name("caffe::UniformFiller<float>") public static class FloatUniformFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatUniformFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatUniformFiller(Pointer p) { super(p); }
 
-  public FloatUniformFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatUniformFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::UniformFiller<double>") public static class DoubleUniformFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleUniformFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleUniformFiller(Pointer p) { super(p); }
 
-  public DoubleUniformFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoubleUniformFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
-/** @brief Fills a Blob with Gaussian-distributed values @f$ x = a @f$. */
+/** \brief Fills a Blob with Gaussian-distributed values \f$ x = a \f$. */
 @Name("caffe::GaussianFiller<float>") @NoOffset public static class FloatGaussianFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatGaussianFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatGaussianFiller(Pointer p) { super(p); }
 
-  public FloatGaussianFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatGaussianFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::GaussianFiller<double>") @NoOffset public static class DoubleGaussianFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleGaussianFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleGaussianFiller(Pointer p) { super(p); }
 
-  public DoubleGaussianFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoubleGaussianFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
-/** @brief Fills a Blob with values @f$ x \in [0, 1] @f$
- *         such that @f$ \forall i \sum_j x_{ij} = 1 @f$.
+/** \brief Fills a Blob with values \f$ x \in [0, 1] \f$
+ *         such that \f$ \forall i \sum_j x_{ij} = 1 \f$.
  */
 @Name("caffe::PositiveUnitballFiller<float>") public static class FloatPositiveUnitballFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatPositiveUnitballFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatPositiveUnitballFiller(Pointer p) { super(p); }
 
-  public FloatPositiveUnitballFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatPositiveUnitballFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::PositiveUnitballFiller<double>") public static class DoublePositiveUnitballFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoublePositiveUnitballFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoublePositiveUnitballFiller(Pointer p) { super(p); }
 
-  public DoublePositiveUnitballFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoublePositiveUnitballFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
 /**
- * @brief Fills a Blob with values @f$ x \sim U(-a, +a) @f$ where @f$ a @f$ is
+ * \brief Fills a Blob with values \f$ x \sim U(-a, +a) \f$ where \f$ a \f$ is
  *        set inversely proportional to number of incoming nodes, outgoing
  *        nodes, or their average.
  *
@@ -13054,30 +13110,26 @@ public static final int
  */
 @Name("caffe::XavierFiller<float>") public static class FloatXavierFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatXavierFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatXavierFiller(Pointer p) { super(p); }
 
-  public FloatXavierFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatXavierFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::XavierFiller<double>") public static class DoubleXavierFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleXavierFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleXavierFiller(Pointer p) { super(p); }
 
-  public DoubleXavierFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoubleXavierFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
 /**
- * @brief Fills a Blob with values @f$ x \sim N(0, \sigma^2) @f$ where
- *        @f$ \sigma^2 @f$ is set inversely proportional to number of incoming
+ * \brief Fills a Blob with values \f$ x \sim N(0, \sigma^2) \f$ where
+ *        \f$ \sigma^2 \f$ is set inversely proportional to number of incoming
  *        nodes, outgoing nodes, or their average.
  *
  * A Filler based on the paper [He, Zhang, Ren and Sun 2015]: Specifically
@@ -13094,34 +13146,30 @@ public static final int
  */
 @Name("caffe::MSRAFiller<float>") public static class FloatMSRAFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatMSRAFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatMSRAFiller(Pointer p) { super(p); }
 
-  public FloatMSRAFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatMSRAFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::MSRAFiller<double>") public static class DoubleMSRAFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleMSRAFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleMSRAFiller(Pointer p) { super(p); }
 
-  public DoubleMSRAFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoubleMSRAFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
 /**
-@brief Fills a Blob with coefficients for bilinear interpolation.
-
+\brief Fills a Blob with coefficients for bilinear interpolation.
+<p>
 A common use case is with the DeconvolutionLayer acting as upsampling.
 You can upsample a feature map with shape of (B, C, H, W) by any integer factor
 using the following proto.
-\code
+<pre>{@code
 layer {
   name: "upsample", type: "Deconvolution"
   bottom: "{{bottom_name}}" top: "{{top_name}}"
@@ -13133,46 +13181,42 @@ layer {
   }
   param { lr_mult: 0 decay_mult: 0 }
 }
-\endcode
-Please use this by replacing `{{}}` with your values. By specifying
-`num_output: {{C}} group: {{C}}`, it behaves as
+}</pre>
+Please use this by replacing {@code {{}}} with your values. By specifying
+{@code num_output: {{C}} group: {{C}}}, it behaves as
 channel-wise convolution. The filter shape of this deconvolution layer will be
-(C, 1, K, K) where K is `kernel_size`, and this filler will set a (K, K)
+(C, 1, K, K) where K is {@code kernel_size}, and this filler will set a (K, K)
 interpolation kernel for every channel of the filter identically. The resulting
 shape of the top feature map will be (B, C, factor * H, factor * W).
 Note that the learning rate and the
 weight decay are set to 0 in order to keep coefficient values of bilinear
 interpolation unchanged during training. If you apply this to an image, this
 operation is equivalent to the following call in Python with Scikit.Image.
-\code{.py}
+<pre>{@code {.py}
 out = skimage.transform.rescale(img, factor, mode='constant', cval=0)
-\endcode
+}</pre>
  */
 @Name("caffe::BilinearFiller<float>") public static class FloatBilinearFiller extends FloatFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBilinearFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBilinearFiller(Pointer p) { super(p); }
 
-  public FloatBilinearFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public FloatBilinearFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(FloatBlob blob);
 }
 @Name("caffe::BilinearFiller<double>") public static class DoubleBilinearFiller extends DoubleFiller {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBilinearFiller() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBilinearFiller(Pointer p) { super(p); }
 
-  public DoubleBilinearFiller(@Const @ByRef FillerParameter param) { allocate(param); }
+  public DoubleBilinearFiller(@Const @ByRef FillerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef FillerParameter param);
   public native void Fill(DoubleBlob blob);
 }
 
 /**
- * @brief Get a specific filler from the specification given in FillerParameter.
+ * \brief Get a specific filler from the specification given in FillerParameter.
  *
  * Ideally this would be replaced by a factory pattern, but we will leave it
  * this way for now.
@@ -13197,8 +13241,8 @@ out = skimage.transform.rescale(img, factor, mode='constant', cval=0)
  to avoid a boost/NVCC issues (#1009, #1010) on OSX.
  */
 @Namespace("boost") @Opaque public static class thread extends Pointer {
-    /** Empty constructor. */
-    public thread() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public thread() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public thread(Pointer p) { super(p); }
 } 
@@ -13213,13 +13257,13 @@ out = skimage.transform.rescale(img, factor, mode='constant', cval=0)
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public InternalThread(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public InternalThread(int size) { allocateArray(size); }
+    public InternalThread(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public InternalThread position(int position) {
         return (InternalThread)super.position(position);
     }
 
-  public InternalThread() { allocate(); }
+  public InternalThread() { super((Pointer)null); allocate(); }
   private native void allocate();
 
   /**
@@ -13346,18 +13390,16 @@ public static final String HDF5_DATA_DATASET_NAME = "data";
 public static final String HDF5_DATA_LABEL_NAME = "label";
 
 /**
- * @brief Provides base for data layers that feed blobs to the Net.
+ * \brief Provides base for data layers that feed blobs to the Net.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::BaseDataLayer<float>") @NoOffset public static class FloatBaseDataLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBaseDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBaseDataLayer(Pointer p) { super(p); }
 
-  public FloatBaseDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatBaseDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   // LayerSetUp: implements common data layer setup functionality, and calls
   // DataLayerSetUp to do special data layer setup for individual layer types.
@@ -13379,12 +13421,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::BaseDataLayer<double>") @NoOffset public static class DoubleBaseDataLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBaseDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBaseDataLayer(Pointer p) { super(p); }
 
-  public DoubleBaseDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleBaseDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   // LayerSetUp: implements common data layer setup functionality, and calls
   // DataLayerSetUp to do special data layer setup for individual layer types.
@@ -13408,9 +13448,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 @Name("caffe::Batch<float>") public static class FloatBatch extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public FloatBatch() { allocate(); }
+    public FloatBatch() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public FloatBatch(int size) { allocateArray(size); }
+    public FloatBatch(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBatch(Pointer p) { super(p); }
     private native void allocate();
@@ -13426,9 +13466,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 @Name("caffe::Batch<double>") public static class DoubleBatch extends Pointer {
     static { Loader.load(); }
     /** Default native constructor. */
-    public DoubleBatch() { allocate(); }
+    public DoubleBatch() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public DoubleBatch(int size) { allocateArray(size); }
+    public DoubleBatch(int size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBatch(Pointer p) { super(p); }
     private native void allocate();
@@ -13443,8 +13483,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::BasePrefetchingDataLayer<float>") @NoOffset public static class FloatBasePrefetchingDataLayer extends FloatBaseDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBasePrefetchingDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBasePrefetchingDataLayer(Pointer p) { super(p); }
     public InternalThread asInternalThread() { return asInternalThread(this); }
@@ -13468,8 +13506,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::BasePrefetchingDataLayer<double>") @NoOffset public static class DoubleBasePrefetchingDataLayer extends DoubleBaseDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBasePrefetchingDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBasePrefetchingDataLayer(Pointer p) { super(p); }
     public InternalThread asInternalThread() { return asInternalThread(this); }
@@ -13493,12 +13529,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::DataLayer<float>") @NoOffset public static class FloatDataLayer extends FloatBasePrefetchingDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatDataLayer(Pointer p) { super(p); }
 
-  public FloatDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13513,12 +13547,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::DataLayer<double>") @NoOffset public static class DoubleDataLayer extends DoubleBasePrefetchingDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleDataLayer(Pointer p) { super(p); }
 
-  public DoubleDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13532,18 +13564,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Provides data to the Net generated by a Filler.
+ * \brief Provides data to the Net generated by a Filler.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::DummyDataLayer<float>") @NoOffset public static class FloatDummyDataLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatDummyDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatDummyDataLayer(Pointer p) { super(p); }
 
-  public FloatDummyDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatDummyDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13565,12 +13595,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::DummyDataLayer<double>") @NoOffset public static class DoubleDummyDataLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleDummyDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleDummyDataLayer(Pointer p) { super(p); }
 
-  public DoubleDummyDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleDummyDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13592,18 +13620,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Provides data to the Net from HDF5 files.
+ * \brief Provides data to the Net from HDF5 files.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::HDF5DataLayer<float>") @NoOffset public static class FloatHDF5DataLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatHDF5DataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatHDF5DataLayer(Pointer p) { super(p); }
 
-  public FloatHDF5DataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatHDF5DataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13628,12 +13654,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::HDF5DataLayer<double>") @NoOffset public static class DoubleHDF5DataLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleHDF5DataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleHDF5DataLayer(Pointer p) { super(p); }
 
-  public DoubleHDF5DataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleHDF5DataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13658,18 +13682,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Write blobs to disk as HDF5 files.
+ * \brief Write blobs to disk as HDF5 files.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::HDF5OutputLayer<float>") @NoOffset public static class FloatHDF5OutputLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatHDF5OutputLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatHDF5OutputLayer(Pointer p) { super(p); }
 
-  public FloatHDF5OutputLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatHDF5OutputLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13697,12 +13719,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::HDF5OutputLayer<double>") @NoOffset public static class DoubleHDF5OutputLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleHDF5OutputLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleHDF5OutputLayer(Pointer p) { super(p); }
 
-  public DoubleHDF5OutputLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleHDF5OutputLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13730,18 +13750,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Provides data to the Net from image files.
+ * \brief Provides data to the Net from image files.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::ImageDataLayer<float>") @NoOffset public static class FloatImageDataLayer extends FloatBasePrefetchingDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatImageDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatImageDataLayer(Pointer p) { super(p); }
 
-  public FloatImageDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatImageDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13754,12 +13772,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ImageDataLayer<double>") @NoOffset public static class DoubleImageDataLayer extends DoubleBasePrefetchingDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleImageDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleImageDataLayer(Pointer p) { super(p); }
 
-  public DoubleImageDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleImageDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13772,18 +13788,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Provides data to the Net from memory.
+ * \brief Provides data to the Net from memory.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::MemoryDataLayer<float>") @NoOffset public static class FloatMemoryDataLayer extends FloatBaseDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatMemoryDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatMemoryDataLayer(Pointer p) { super(p); }
 
-  public FloatMemoryDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatMemoryDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13792,7 +13806,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native int ExactNumBottomBlobs();
   @Virtual public native int ExactNumTopBlobs();
 
-  @Virtual public native void AddDatumVector(@Cast({"caffe::Datum*", "std::vector<caffe::Datum>&"}) @StdVector Datum datum_vector);
+  @Virtual public native void AddDatumVector(@Const @ByRef DatumVector datum_vector);
 // #ifdef USE_OPENCV
   @Virtual public native void AddMatVector(@Const @ByRef MatVector mat_vector,
         @Cast({"int*", "std::vector<int>&"}) @StdVector IntPointer labels);
@@ -13814,12 +13828,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::MemoryDataLayer<double>") @NoOffset public static class DoubleMemoryDataLayer extends DoubleBaseDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleMemoryDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleMemoryDataLayer(Pointer p) { super(p); }
 
-  public DoubleMemoryDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleMemoryDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13828,7 +13840,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native int ExactNumBottomBlobs();
   @Virtual public native int ExactNumTopBlobs();
 
-  @Virtual public native void AddDatumVector(@Cast({"caffe::Datum*", "std::vector<caffe::Datum>&"}) @StdVector Datum datum_vector);
+  @Virtual public native void AddDatumVector(@Const @ByRef DatumVector datum_vector);
 // #ifdef USE_OPENCV
   @Virtual public native void AddMatVector(@Const @ByRef MatVector mat_vector,
         @Cast({"int*", "std::vector<int>&"}) @StdVector IntPointer labels);
@@ -13850,19 +13862,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Provides data to the Net from windows of images files, specified
+ * \brief Provides data to the Net from windows of images files, specified
  *        by a window data file.
  *
  * TODO(dox): thorough documentation for Forward and proto params.
  */
 @Name("caffe::WindowDataLayer<float>") @NoOffset public static class FloatWindowDataLayer extends FloatBasePrefetchingDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatWindowDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatWindowDataLayer(Pointer p) { super(p); }
 
-  public FloatWindowDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatWindowDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -13875,12 +13885,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::WindowDataLayer<double>") @NoOffset public static class DoubleWindowDataLayer extends DoubleBasePrefetchingDataLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleWindowDataLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleWindowDataLayer(Pointer p) { super(p); }
 
-  public DoubleWindowDataLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleWindowDataLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void DataLayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -13900,7 +13908,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // Parsed from caffe/layer_factory.hpp
 
 /**
- * @brief A layer factory that allows one to register layers.
+ * \brief A layer factory that allows one to register layers.
  * During runtime, registered layers could be called by passing a LayerParameter
  * protobuffer to the CreateLayer function:
  *
@@ -13949,8 +13957,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::LayerRegistry<float>") public static class FloatLayerRegistry extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatLayerRegistry() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatLayerRegistry(Pointer p) { super(p); }
 
@@ -13977,8 +13983,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::LayerRegistry<double>") public static class DoubleLayerRegistry extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleLayerRegistry() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleLayerRegistry(Pointer p) { super(p); }
 
@@ -14006,8 +14010,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::LayerRegisterer<float>") public static class FloatLayerRegisterer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatLayerRegisterer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatLayerRegisterer(Pointer p) { super(p); }
 
@@ -14020,11 +14022,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
       public native @Cast({"", "boost::shared_ptr<caffe::Layer<float> >"}) @SharedPtr @ByVal FloatLayer call(@Const @ByRef LayerParameter arg0);
   }
   public FloatLayerRegisterer(@StdString BytePointer type,
-                    Creator_LayerParameter creator) { allocate(type, creator); }
+                    Creator_LayerParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString BytePointer type,
                     Creator_LayerParameter creator);
   public FloatLayerRegisterer(@StdString String type,
-                    Creator_LayerParameter creator) { allocate(type, creator); }
+                    Creator_LayerParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString String type,
                     Creator_LayerParameter creator);
 }
@@ -14032,8 +14034,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::LayerRegisterer<double>") public static class DoubleLayerRegisterer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleLayerRegisterer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleLayerRegisterer(Pointer p) { super(p); }
 
@@ -14046,11 +14046,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
       public native @Cast({"", "boost::shared_ptr<caffe::Layer<double> >"}) @SharedPtr @ByVal DoubleLayer call(@Const @ByRef LayerParameter arg0);
   }
   public DoubleLayerRegisterer(@StdString BytePointer type,
-                    Creator_LayerParameter creator) { allocate(type, creator); }
+                    Creator_LayerParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString BytePointer type,
                     Creator_LayerParameter creator);
   public DoubleLayerRegisterer(@StdString String type,
-                    Creator_LayerParameter creator) { allocate(type, creator); }
+                    Creator_LayerParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString String type,
                     Creator_LayerParameter creator);
 }
@@ -14093,14 +14093,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  to avoid a boost/NVCC issues (#1009, #1010) on OSX.
  */
 @Namespace("boost") @Opaque public static class mutex extends Pointer {
-    /** Empty constructor. */
-    public mutex() { }
+    /** Empty constructor. Calls {@code super((Pointer)null)}. */
+    public mutex() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public mutex(Pointer p) { super(p); }
 } 
 
 /**
- * @brief An interface for the units of computation which can be composed into a
+ * \brief An interface for the units of computation which can be composed into a
  *        Net.
  *
  * Layer%s must implement a Forward function, in which they take their input
@@ -14111,8 +14111,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::Layer<float>") @NoOffset public static class FloatLayer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatLayer(Pointer p) { super(p); }
 
@@ -14123,7 +14121,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
 
   /**
-   * @brief Implements common layer setup functionality.
+   * \brief Implements common layer setup functionality.
    *
    * @param bottom the preshaped input blobs
    * @param top
@@ -14139,7 +14137,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef FloatBlobVector top);
 
   /**
-   * @brief Does layer-specific setup: your layer should implement this function
+   * \brief Does layer-specific setup: your layer should implement this function
    *        as well as Reshape.
    *
    * @param bottom
@@ -14158,27 +14156,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef FloatBlobVector top);
 
   /**
-   * @brief Whether a layer should be shared by multiple nets during data
+   * \brief Whether a layer should be shared by multiple nets during data
    *        parallelism. By default, all layers except for data layers should
    *        not be shared. data layers should be shared to ensure each worker
    *        solver access data sequentially during data parallelism.
    */
   @Virtual public native @Cast("bool") boolean ShareInParallel();
 
-  /** @brief Return whether this layer is actually shared by other nets.
+  /** \brief Return whether this layer is actually shared by other nets.
    *         If ShareInParallel() is true and using more than one GPU and the
    *         net has TRAIN phase, then this function is expected return true.
    */
   public native @Cast("bool") boolean IsShared();
 
-  /** @brief Set whether this layer is actually shared by other nets
+  /** \brief Set whether this layer is actually shared by other nets
    *         If ShareInParallel() is true and using more than one GPU and the
    *         net has TRAIN phase, then is_shared should be set true.
    */
   public native void SetShared(@Cast("bool") boolean is_shared);
 
   /**
-   * @brief Adjust the shapes of top blobs and internal buffers to accommodate
+   * \brief Adjust the shapes of top blobs and internal buffers to accommodate
    *        the shapes of the bottom blobs.
    *
    * @param bottom the input blobs, with the requested input shapes
@@ -14193,14 +14191,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef FloatBlobVector top);
 
   /**
-   * @brief Given the bottom blobs, compute the top blobs and the loss.
+   * \brief Given the bottom blobs, compute the top blobs and the loss.
    *
    * @param bottom
    *     the input blobs, whose data fields store the input data for this layer
    * @param top
    *     the preshaped output blobs, whose data fields will store this layers'
    *     outputs
-   * \return The total loss from the layer.
+   * @return The total loss from the layer.
    *
    * The Forward wrapper calls the relevant device wrapper function
    * (Forward_cpu or Forward_gpu) to compute the top blob values given the
@@ -14213,7 +14211,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef FloatBlobVector top);
 
   /**
-   * @brief Given the top blob error gradients, compute the bottom blob error
+   * \brief Given the top blob error gradients, compute the bottom blob error
    *        gradients.
    *
    * @param top
@@ -14238,37 +14236,37 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef FloatBlobVector bottom);
 
   /**
-   * @brief Returns the vector of learnable parameter blobs.
+   * \brief Returns the vector of learnable parameter blobs.
    */
   public native @ByRef FloatBlobSharedVector blobs();
 
   /**
-   * @brief Returns the layer parameter.
+   * \brief Returns the layer parameter.
    */
   public native @Const @ByRef LayerParameter layer_param();
 
   /**
-   * @brief Writes the layer parameter to a protocol buffer
+   * \brief Writes the layer parameter to a protocol buffer
    */
   @Virtual public native void ToProto(LayerParameter param, @Cast("bool") boolean write_diff/*=false*/);
 
   /**
-   * @brief Returns the scalar loss associated with a top blob at a given index.
+   * \brief Returns the scalar loss associated with a top blob at a given index.
    */
   public native float loss(int top_index);
 
   /**
-   * @brief Sets the loss associated with a top blob at a given index.
+   * \brief Sets the loss associated with a top blob at a given index.
    */
   public native void set_loss(int top_index, float value);
 
   /**
-   * @brief Returns the layer type.
+   * \brief Returns the layer type.
    */
   @Virtual public native @Cast("const char*") BytePointer type();
 
   /**
-   * @brief Returns the exact number of bottom blobs required by the layer,
+   * \brief Returns the exact number of bottom blobs required by the layer,
    *        or -1 if no exact number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14276,7 +14274,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int ExactNumBottomBlobs();
   /**
-   * @brief Returns the minimum number of bottom blobs required by the layer,
+   * \brief Returns the minimum number of bottom blobs required by the layer,
    *        or -1 if no minimum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14284,7 +14282,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MinBottomBlobs();
   /**
-   * @brief Returns the maximum number of bottom blobs required by the layer,
+   * \brief Returns the maximum number of bottom blobs required by the layer,
    *        or -1 if no maximum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14292,7 +14290,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MaxBottomBlobs();
   /**
-   * @brief Returns the exact number of top blobs required by the layer,
+   * \brief Returns the exact number of top blobs required by the layer,
    *        or -1 if no exact number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14300,7 +14298,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int ExactNumTopBlobs();
   /**
-   * @brief Returns the minimum number of top blobs required by the layer,
+   * \brief Returns the minimum number of top blobs required by the layer,
    *        or -1 if no minimum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14308,7 +14306,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MinTopBlobs();
   /**
-   * @brief Returns the maximum number of top blobs required by the layer,
+   * \brief Returns the maximum number of top blobs required by the layer,
    *        or -1 if no maximum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14316,7 +14314,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MaxTopBlobs();
   /**
-   * @brief Returns true if the layer requires an equal number of bottom and
+   * \brief Returns true if the layer requires an equal number of bottom and
    *        top blobs.
    *
    * This method should be overridden to return true if your layer expects an
@@ -14325,7 +14323,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean EqualNumBottomTopBlobs();
 
   /**
-   * @brief Return whether "anonymous" top blobs are created automatically
+   * \brief Return whether "anonymous" top blobs are created automatically
    *        by the layer.
    *
    * If this method returns true, Net::Init will create enough "anonymous" top
@@ -14335,7 +14333,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean AutoTopBlobs();
 
   /**
-   * @brief Return whether to allow force_backward for a given bottom blob
+   * \brief Return whether to allow force_backward for a given bottom blob
    *        index.
    *
    * If AllowForceBackward(i) == false, we will ignore the force_backward
@@ -14345,7 +14343,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean AllowForceBackward(int bottom_index);
 
   /**
-   * @brief Specifies whether the layer should compute gradients w.r.t. a
+   * \brief Specifies whether the layer should compute gradients w.r.t. a
    *        parameter at a particular index given by param_id.
    *
    * You can safely ignore false values and always compute gradients
@@ -14353,7 +14351,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   public native @Cast("bool") boolean param_propagate_down(int param_id);
   /**
-   * @brief Sets whether the layer should compute gradients w.r.t. a
+   * \brief Sets whether the layer should compute gradients w.r.t. a
    *        parameter at a particular index given by param_id.
    */
   public native void set_param_propagate_down(int param_id, @Cast("const bool") boolean value);
@@ -14372,8 +14370,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::Layer<double>") @NoOffset public static class DoubleLayer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleLayer(Pointer p) { super(p); }
 
@@ -14384,7 +14380,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
 
   /**
-   * @brief Implements common layer setup functionality.
+   * \brief Implements common layer setup functionality.
    *
    * @param bottom the preshaped input blobs
    * @param top
@@ -14400,7 +14396,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef DoubleBlobVector top);
 
   /**
-   * @brief Does layer-specific setup: your layer should implement this function
+   * \brief Does layer-specific setup: your layer should implement this function
    *        as well as Reshape.
    *
    * @param bottom
@@ -14419,27 +14415,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef DoubleBlobVector top);
 
   /**
-   * @brief Whether a layer should be shared by multiple nets during data
+   * \brief Whether a layer should be shared by multiple nets during data
    *        parallelism. By default, all layers except for data layers should
    *        not be shared. data layers should be shared to ensure each worker
    *        solver access data sequentially during data parallelism.
    */
   @Virtual public native @Cast("bool") boolean ShareInParallel();
 
-  /** @brief Return whether this layer is actually shared by other nets.
+  /** \brief Return whether this layer is actually shared by other nets.
    *         If ShareInParallel() is true and using more than one GPU and the
    *         net has TRAIN phase, then this function is expected return true.
    */
   public native @Cast("bool") boolean IsShared();
 
-  /** @brief Set whether this layer is actually shared by other nets
+  /** \brief Set whether this layer is actually shared by other nets
    *         If ShareInParallel() is true and using more than one GPU and the
    *         net has TRAIN phase, then is_shared should be set true.
    */
   public native void SetShared(@Cast("bool") boolean is_shared);
 
   /**
-   * @brief Adjust the shapes of top blobs and internal buffers to accommodate
+   * \brief Adjust the shapes of top blobs and internal buffers to accommodate
    *        the shapes of the bottom blobs.
    *
    * @param bottom the input blobs, with the requested input shapes
@@ -14454,14 +14450,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef DoubleBlobVector top);
 
   /**
-   * @brief Given the bottom blobs, compute the top blobs and the loss.
+   * \brief Given the bottom blobs, compute the top blobs and the loss.
    *
    * @param bottom
    *     the input blobs, whose data fields store the input data for this layer
    * @param top
    *     the preshaped output blobs, whose data fields will store this layers'
    *     outputs
-   * \return The total loss from the layer.
+   * @return The total loss from the layer.
    *
    * The Forward wrapper calls the relevant device wrapper function
    * (Forward_cpu or Forward_gpu) to compute the top blob values given the
@@ -14474,7 +14470,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef DoubleBlobVector top);
 
   /**
-   * @brief Given the top blob error gradients, compute the bottom blob error
+   * \brief Given the top blob error gradients, compute the bottom blob error
    *        gradients.
    *
    * @param top
@@ -14499,37 +14495,37 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef DoubleBlobVector bottom);
 
   /**
-   * @brief Returns the vector of learnable parameter blobs.
+   * \brief Returns the vector of learnable parameter blobs.
    */
   public native @ByRef DoubleBlobSharedVector blobs();
 
   /**
-   * @brief Returns the layer parameter.
+   * \brief Returns the layer parameter.
    */
   public native @Const @ByRef LayerParameter layer_param();
 
   /**
-   * @brief Writes the layer parameter to a protocol buffer
+   * \brief Writes the layer parameter to a protocol buffer
    */
   @Virtual public native void ToProto(LayerParameter param, @Cast("bool") boolean write_diff/*=false*/);
 
   /**
-   * @brief Returns the scalar loss associated with a top blob at a given index.
+   * \brief Returns the scalar loss associated with a top blob at a given index.
    */
   public native double loss(int top_index);
 
   /**
-   * @brief Sets the loss associated with a top blob at a given index.
+   * \brief Sets the loss associated with a top blob at a given index.
    */
   public native void set_loss(int top_index, double value);
 
   /**
-   * @brief Returns the layer type.
+   * \brief Returns the layer type.
    */
   @Virtual public native @Cast("const char*") BytePointer type();
 
   /**
-   * @brief Returns the exact number of bottom blobs required by the layer,
+   * \brief Returns the exact number of bottom blobs required by the layer,
    *        or -1 if no exact number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14537,7 +14533,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int ExactNumBottomBlobs();
   /**
-   * @brief Returns the minimum number of bottom blobs required by the layer,
+   * \brief Returns the minimum number of bottom blobs required by the layer,
    *        or -1 if no minimum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14545,7 +14541,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MinBottomBlobs();
   /**
-   * @brief Returns the maximum number of bottom blobs required by the layer,
+   * \brief Returns the maximum number of bottom blobs required by the layer,
    *        or -1 if no maximum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14553,7 +14549,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MaxBottomBlobs();
   /**
-   * @brief Returns the exact number of top blobs required by the layer,
+   * \brief Returns the exact number of top blobs required by the layer,
    *        or -1 if no exact number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14561,7 +14557,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int ExactNumTopBlobs();
   /**
-   * @brief Returns the minimum number of top blobs required by the layer,
+   * \brief Returns the minimum number of top blobs required by the layer,
    *        or -1 if no minimum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14569,7 +14565,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MinTopBlobs();
   /**
-   * @brief Returns the maximum number of top blobs required by the layer,
+   * \brief Returns the maximum number of top blobs required by the layer,
    *        or -1 if no maximum number is required.
    *
    * This method should be overridden to return a non-negative value if your
@@ -14577,7 +14573,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   @Virtual public native int MaxTopBlobs();
   /**
-   * @brief Returns true if the layer requires an equal number of bottom and
+   * \brief Returns true if the layer requires an equal number of bottom and
    *        top blobs.
    *
    * This method should be overridden to return true if your layer expects an
@@ -14586,7 +14582,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean EqualNumBottomTopBlobs();
 
   /**
-   * @brief Return whether "anonymous" top blobs are created automatically
+   * \brief Return whether "anonymous" top blobs are created automatically
    *        by the layer.
    *
    * If this method returns true, Net::Init will create enough "anonymous" top
@@ -14596,7 +14592,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean AutoTopBlobs();
 
   /**
-   * @brief Return whether to allow force_backward for a given bottom blob
+   * \brief Return whether to allow force_backward for a given bottom blob
    *        index.
    *
    * If AllowForceBackward(i) == false, we will ignore the force_backward
@@ -14606,7 +14602,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean AllowForceBackward(int bottom_index);
 
   /**
-   * @brief Specifies whether the layer should compute gradients w.r.t. a
+   * \brief Specifies whether the layer should compute gradients w.r.t. a
    *        parameter at a particular index given by param_id.
    *
    * You can safely ignore false values and always compute gradients
@@ -14614,7 +14610,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    */
   public native @Cast("bool") boolean param_propagate_down(int param_id);
   /**
-   * @brief Sets whether the layer should compute gradients w.r.t. a
+   * \brief Sets whether the layer should compute gradients w.r.t. a
    *        parameter at a particular index given by param_id.
    */
   public native void set_param_propagate_down(int param_id, @Cast("const bool") boolean value);
@@ -14664,13 +14660,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 @Namespace("caffe") @MemberGetter public static native float kLOG_THRESHOLD();
 
 /**
- * @brief Computes the classification accuracy for a one-of-many
+ * \brief Computes the classification accuracy for a one-of-many
  *        classification task.
  */
 @Name("caffe::AccuracyLayer<float>") @NoOffset public static class FloatAccuracyLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatAccuracyLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatAccuracyLayer(Pointer p) { super(p); }
 
@@ -14678,11 +14672,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides AccuracyParameter accuracy_param,
    *     with AccuracyLayer options:
    *   - top_k (\b optional, default 1).
-   *     Sets the maximum rank @f$ k @f$ at which a prediction is considered
-   *     correct.  For example, if @f$ k = 5 @f$, a prediction is counted
+   *     Sets the maximum rank \f$ k \f$ at which a prediction is considered
+   *     correct.  For example, if \f$ k = 5 \f$, a prediction is counted
    *     correct if the correct label is among the top 5 predicted labels.
    */
-  public FloatAccuracyLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatAccuracyLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -14703,8 +14697,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::AccuracyLayer<double>") @NoOffset public static class DoubleAccuracyLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleAccuracyLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleAccuracyLayer(Pointer p) { super(p); }
 
@@ -14712,11 +14704,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides AccuracyParameter accuracy_param,
    *     with AccuracyLayer options:
    *   - top_k (\b optional, default 1).
-   *     Sets the maximum rank @f$ k @f$ at which a prediction is considered
-   *     correct.  For example, if @f$ k = 5 @f$, a prediction is counted
+   *     Sets the maximum rank \f$ k \f$ at which a prediction is considered
+   *     correct.  For example, if \f$ k = 5 \f$, a prediction is counted
    *     correct if the correct label is among the top 5 predicted labels.
    */
-  public DoubleAccuracyLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleAccuracyLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -14737,7 +14729,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief An interface for Layer%s that take two Blob%s as input -- usually
+ * \brief An interface for Layer%s that take two Blob%s as input -- usually
  *        (1) predictions and (2) ground-truth labels -- and output a
  *        singleton Blob representing the loss.
  *
@@ -14746,12 +14738,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::LossLayer<float>") public static class FloatLossLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatLossLayer(Pointer p) { super(p); }
 
-  public FloatLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(
         @Const @ByRef FloatBlobVector bottom, @Const @ByRef FloatBlobVector top);
@@ -14761,7 +14751,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native int ExactNumBottomBlobs();
 
   /**
-   * @brief For convenience and backwards compatibility, instruct the Net to
+   * \brief For convenience and backwards compatibility, instruct the Net to
    *        automatically allocate a single top Blob for LossLayers, into which
    *        they output their singleton loss, (even if the user didn't specify
    *        one in the prototxt, etc.).
@@ -14776,12 +14766,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::LossLayer<double>") public static class DoubleLossLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleLossLayer(Pointer p) { super(p); }
 
-  public DoubleLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(
         @Const @ByRef DoubleBlobVector bottom, @Const @ByRef DoubleBlobVector top);
@@ -14791,7 +14779,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native int ExactNumBottomBlobs();
 
   /**
-   * @brief For convenience and backwards compatibility, instruct the Net to
+   * \brief For convenience and backwards compatibility, instruct the Net to
    *        automatically allocate a single top Blob for LossLayers, into which
    *        they output their singleton loss, (even if the user didn't specify
    *        one in the prototxt, etc.).
@@ -14806,37 +14794,35 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes the contrastive loss @f$
+ * \brief Computes the contrastive loss \f$
  *          E = \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d +
  *              \left(1-y\right) \max \left(margin-d, 0\right)^2
- *          @f$ where @f$
- *          d = \left| \left| a_n - b_n \right| \right|_2 @f$. This can be
+ *          \f$ where \f$
+ *          d = \left| \left| a_n - b_n \right| \right|_2 \f$. This can be
  *          used to train siamese networks.
  *
  * @param bottom input Blob vector (length 3)
- *   -# @f$ (N \times C \times 1 \times 1) @f$
- *      the features @f$ a \in [-\infty, +\infty]@f$
- *   -# @f$ (N \times C \times 1 \times 1) @f$
- *      the features @f$ b \in [-\infty, +\infty]@f$
- *   -# @f$ (N \times 1 \times 1 \times 1) @f$
- *      the binary similarity @f$ s \in [0, 1]@f$
+ *   -# \f$ (N \times C \times 1 \times 1) \f$
+ *      the features \f$ a \in [-\infty, +\infty]\f$
+ *   -# \f$ (N \times C \times 1 \times 1) \f$
+ *      the features \f$ b \in [-\infty, +\infty]\f$
+ *   -# \f$ (N \times 1 \times 1 \times 1) \f$
+ *      the binary similarity \f$ s \in [0, 1]\f$
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed contrastive loss: @f$ E =
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed contrastive loss: \f$ E =
  *          \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d +
  *          \left(1-y\right) \max \left(margin-d, 0\right)^2
- *          @f$ where @f$
- *          d = \left| \left| a_n - b_n \right| \right|_2 @f$.
+ *          \f$ where \f$
+ *          d = \left| \left| a_n - b_n \right| \right|_2 \f$.
  * This can be used to train siamese networks.
  */
 @Name("caffe::ContrastiveLossLayer<float>") @NoOffset public static class FloatContrastiveLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatContrastiveLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatContrastiveLossLayer(Pointer p) { super(p); }
 
-  public FloatContrastiveLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatContrastiveLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -14859,12 +14845,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ContrastiveLossLayer<double>") @NoOffset public static class DoubleContrastiveLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleContrastiveLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleContrastiveLossLayer(Pointer p) { super(p); }
 
-  public DoubleContrastiveLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleContrastiveLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -14887,20 +14871,20 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes the Euclidean (L2) loss @f$
+ * \brief Computes the Euclidean (L2) loss \f$
  *          E = \frac{1}{2N} \sum\limits_{n=1}^N \left| \left| \hat{y}_n - y_n
- *        \right| \right|_2^2 @f$ for real-valued regression tasks.
+ *        \right| \right|_2^2 \f$ for real-valued regression tasks.
  *
  * @param bottom input Blob vector (length 2)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the predictions @f$ \hat{y} \in [-\infty, +\infty]@f$
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the targets @f$ y \in [-\infty, +\infty]@f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the predictions \f$ \hat{y} \in [-\infty, +\infty]\f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the targets \f$ y \in [-\infty, +\infty]\f$
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed Euclidean loss: @f$ E =
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed Euclidean loss: \f$ E =
  *          \frac{1}{2n} \sum\limits_{n=1}^N \left| \left| \hat{y}_n - y_n
- *        \right| \right|_2^2 @f$
+ *        \right| \right|_2^2 \f$
  *
  * This can be used for least-squares regression tasks.  An InnerProductLayer
  * input to a EuclideanLossLayer exactly formulates a linear least squares
@@ -14914,12 +14898,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::EuclideanLossLayer<float>") @NoOffset public static class FloatEuclideanLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatEuclideanLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatEuclideanLossLayer(Pointer p) { super(p); }
 
-  public FloatEuclideanLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatEuclideanLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -14941,12 +14923,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::EuclideanLossLayer<double>") @NoOffset public static class DoubleEuclideanLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleEuclideanLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleEuclideanLossLayer(Pointer p) { super(p); }
 
-  public DoubleEuclideanLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleEuclideanLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -14968,56 +14948,54 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes the hinge loss for a one-of-many classification task.
+ * \brief Computes the hinge loss for a one-of-many classification task.
  *
  * @param bottom input Blob vector (length 2)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the predictions @f$ t @f$, a Blob with values in
- *      @f$ [-\infty, +\infty] @f$ indicating the predicted score for each of
- *      the @f$ K = CHW @f$ classes. In an SVM, @f$ t @f$ is the result of
- *      taking the inner product @f$ X^T W @f$ of the D-dimensional features
- *      @f$ X \in \mathcal{R}^{D \times N} @f$ and the learned hyperplane
- *      parameters @f$ W \in \mathcal{R}^{D \times K} @f$, so a Net with just
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the predictions \f$ t \f$, a Blob with values in
+ *      \f$ [-\infty, +\infty] \f$ indicating the predicted score for each of
+ *      the \f$ K = CHW \f$ classes. In an SVM, \f$ t \f$ is the result of
+ *      taking the inner product \f$ X^T W \f$ of the D-dimensional features
+ *      \f$ X \in \mathcal{R}^{D \times N} \f$ and the learned hyperplane
+ *      parameters \f$ W \in \mathcal{R}^{D \times K} \f$, so a Net with just
  *      an InnerProductLayer (with num_output = D) providing predictions to a
  *      HingeLossLayer and no other learnable parameters or losses is
  *      equivalent to an SVM.
- *   -# @f$ (N \times 1 \times 1 \times 1) @f$
- *      the labels @f$ l @f$, an integer-valued Blob with values
- *      @f$ l_n \in [0, 1, 2, ..., K - 1] @f$
- *      indicating the correct class label among the @f$ K @f$ classes
+ *   -# \f$ (N \times 1 \times 1 \times 1) \f$
+ *      the labels \f$ l \f$, an integer-valued Blob with values
+ *      \f$ l_n \in [0, 1, 2, ..., K - 1] \f$
+ *      indicating the correct class label among the \f$ K \f$ classes
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed hinge loss: @f$ E =
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed hinge loss: \f$ E =
  *        \frac{1}{N} \sum\limits_{n=1}^N \sum\limits_{k=1}^K
  *        [\max(0, 1 - \delta\{l_n = k\} t_{nk})] ^ p
- *      @f$, for the @f$ L^p @f$ norm
- *      (defaults to @f$ p = 1 @f$, the L1 norm; L2 norm, as in L2-SVM,
- *      is also available), and @f$
+ *      \f$, for the \f$ L^p \f$ norm
+ *      (defaults to \f$ p = 1 \f$, the L1 norm; L2 norm, as in L2-SVM,
+ *      is also available), and \f$
  *      \delta\{\mathrm{condition}\} = \left\{
  *         \begin{array}{lr}
  *            1 & \mbox{if condition} \\
  *           -1 & \mbox{otherwise}
  *         \end{array} \right.
- *      @f$
+ *      \f$
  *
- * In an SVM, @f$ t \in \mathcal{R}^{N \times K} @f$ is the result of taking
- * the inner product @f$ X^T W @f$ of the features
- * @f$ X \in \mathcal{R}^{D \times N} @f$
+ * In an SVM, \f$ t \in \mathcal{R}^{N \times K} \f$ is the result of taking
+ * the inner product \f$ X^T W \f$ of the features
+ * \f$ X \in \mathcal{R}^{D \times N} \f$
  * and the learned hyperplane parameters
- * @f$ W \in \mathcal{R}^{D \times K} @f$. So, a Net with just an
- * InnerProductLayer (with num_output = @f$k@f$) providing predictions to a
+ * \f$ W \in \mathcal{R}^{D \times K} \f$. So, a Net with just an
+ * InnerProductLayer (with num_output = \f$k\f$) providing predictions to a
  * HingeLossLayer is equivalent to an SVM (assuming it has no other learned
  * outside the InnerProductLayer and no other losses outside the
  * HingeLossLayer).
  */
 @Name("caffe::HingeLossLayer<float>") public static class FloatHingeLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatHingeLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatHingeLossLayer(Pointer p) { super(p); }
 
-  public FloatHingeLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatHingeLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15028,12 +15006,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::HingeLossLayer<double>") public static class DoubleHingeLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleHingeLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleHingeLossLayer(Pointer p) { super(p); }
 
-  public DoubleHingeLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleHingeLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15044,7 +15020,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief A generalization of MultinomialLogisticLossLayer that takes an
+ * \brief A generalization of MultinomialLogisticLossLayer that takes an
  *        "information gain" (infogain) matrix specifying the "value" of all label
  *        pairs.
  *
@@ -15052,37 +15028,35 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * identity.
  *
  * @param bottom input Blob vector (length 2-3)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the predictions @f$ \hat{p} @f$, a Blob with values in
- *      @f$ [0, 1] @f$ indicating the predicted probability of each of the
- *      @f$ K = CHW @f$ classes.  Each prediction vector @f$ \hat{p}_n @f$
- *      should sum to 1 as in a probability distribution: @f$
- *      \forall n \sum\limits_{k=1}^K \hat{p}_{nk} = 1 @f$.
- *   -# @f$ (N \times 1 \times 1 \times 1) @f$
- *      the labels @f$ l @f$, an integer-valued Blob with values
- *      @f$ l_n \in [0, 1, 2, ..., K - 1] @f$
- *      indicating the correct class label among the @f$ K @f$ classes
- *   -# @f$ (1 \times 1 \times K \times K) @f$
- *      (\b optional) the infogain matrix @f$ H @f$.  This must be provided as
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the predictions \f$ \hat{p} \f$, a Blob with values in
+ *      \f$ [0, 1] \f$ indicating the predicted probability of each of the
+ *      \f$ K = CHW \f$ classes.  Each prediction vector \f$ \hat{p}_n \f$
+ *      should sum to 1 as in a probability distribution: \f$
+ *      \forall n \sum\limits_{k=1}^K \hat{p}_{nk} = 1 \f$.
+ *   -# \f$ (N \times 1 \times 1 \times 1) \f$
+ *      the labels \f$ l \f$, an integer-valued Blob with values
+ *      \f$ l_n \in [0, 1, 2, ..., K - 1] \f$
+ *      indicating the correct class label among the \f$ K \f$ classes
+ *   -# \f$ (1 \times 1 \times K \times K) \f$
+ *      (\b optional) the infogain matrix \f$ H \f$.  This must be provided as
  *      the third bottom blob input if not provided as the infogain_mat in the
- *      InfogainLossParameter. If @f$ H = I @f$, this layer is equivalent to the
+ *      InfogainLossParameter. If \f$ H = I \f$, this layer is equivalent to the
  *      MultinomialLogisticLossLayer.
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed infogain multinomial logistic loss: @f$ E =
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed infogain multinomial logistic loss: \f$ E =
  *        \frac{-1}{N} \sum\limits_{n=1}^N H_{l_n} \log(\hat{p}_n) =
  *        \frac{-1}{N} \sum\limits_{n=1}^N \sum\limits_{k=1}^{K} H_{l_n,k}
  *        \log(\hat{p}_{n,k})
- *      @f$, where @f$ H_{l_n} @f$ denotes row @f$l_n@f$ of @f$H@f$.
+ *      \f$, where \f$ H_{l_n} \f$ denotes row \f$l_n\f$ of \f$H\f$.
  */
 @Name("caffe::InfogainLossLayer<float>") @NoOffset public static class FloatInfogainLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatInfogainLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatInfogainLossLayer(Pointer p) { super(p); }
 
-  public FloatInfogainLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatInfogainLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15104,12 +15078,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::InfogainLossLayer<double>") @NoOffset public static class DoubleInfogainLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleInfogainLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleInfogainLossLayer(Pointer p) { super(p); }
 
-  public DoubleInfogainLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleInfogainLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15131,7 +15103,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes the multinomial logistic loss for a one-of-many
+ * \brief Computes the multinomial logistic loss for a one-of-many
  *        classification task, directly taking a predicted probability
  *        distribution as input.
  *
@@ -15143,30 +15115,28 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * as its gradient computation is more numerically stable.
  *
  * @param bottom input Blob vector (length 2)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the predictions @f$ \hat{p} @f$, a Blob with values in
- *      @f$ [0, 1] @f$ indicating the predicted probability of each of the
- *      @f$ K = CHW @f$ classes.  Each prediction vector @f$ \hat{p}_n @f$
- *      should sum to 1 as in a probability distribution: @f$
- *      \forall n \sum\limits_{k=1}^K \hat{p}_{nk} = 1 @f$.
- *   -# @f$ (N \times 1 \times 1 \times 1) @f$
- *      the labels @f$ l @f$, an integer-valued Blob with values
- *      @f$ l_n \in [0, 1, 2, ..., K - 1] @f$
- *      indicating the correct class label among the @f$ K @f$ classes
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the predictions \f$ \hat{p} \f$, a Blob with values in
+ *      \f$ [0, 1] \f$ indicating the predicted probability of each of the
+ *      \f$ K = CHW \f$ classes.  Each prediction vector \f$ \hat{p}_n \f$
+ *      should sum to 1 as in a probability distribution: \f$
+ *      \forall n \sum\limits_{k=1}^K \hat{p}_{nk} = 1 \f$.
+ *   -# \f$ (N \times 1 \times 1 \times 1) \f$
+ *      the labels \f$ l \f$, an integer-valued Blob with values
+ *      \f$ l_n \in [0, 1, 2, ..., K - 1] \f$
+ *      indicating the correct class label among the \f$ K \f$ classes
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed multinomial logistic loss: @f$ E =
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed multinomial logistic loss: \f$ E =
  *        \frac{-1}{N} \sum\limits_{n=1}^N \log(\hat{p}_{n,l_n})
- *      @f$
+ *      \f$
  */
 @Name("caffe::MultinomialLogisticLossLayer<float>") public static class FloatMultinomialLogisticLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatMultinomialLogisticLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatMultinomialLogisticLossLayer(Pointer p) { super(p); }
 
-  public FloatMultinomialLogisticLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatMultinomialLogisticLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15179,12 +15149,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::MultinomialLogisticLossLayer<double>") public static class DoubleMultinomialLogisticLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleMultinomialLogisticLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleMultinomialLogisticLossLayer(Pointer p) { super(p); }
 
-  public DoubleMultinomialLogisticLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleMultinomialLogisticLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15197,12 +15165,12 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes the cross-entropy (logistic) loss @f$
+ * \brief Computes the cross-entropy (logistic) loss \f$
  *          E = \frac{-1}{n} \sum\limits_{n=1}^N \left[
  *                  p_n \log \hat{p}_n +
  *                  (1 - p_n) \log(1 - \hat{p}_n)
  *              \right]
- *        @f$, often used for predicting targets interpreted as probabilities.
+ *        \f$, often used for predicting targets interpreted as probabilities.
  *
  * This layer is implemented rather than separate
  * SigmoidLayer + CrossEntropyLayer
@@ -15210,29 +15178,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * At test time, this layer can be replaced simply by a SigmoidLayer.
  *
  * @param bottom input Blob vector (length 2)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the scores @f$ x \in [-\infty, +\infty]@f$,
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the scores \f$ x \in [-\infty, +\infty]\f$,
  *      which this layer maps to probability predictions
- *      @f$ \hat{p}_n = \sigma(x_n) \in [0, 1] @f$
- *      using the sigmoid function @f$ \sigma(.) @f$ (see SigmoidLayer).
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the targets @f$ y \in [0, 1] @f$
+ *      \f$ \hat{p}_n = \sigma(x_n) \in [0, 1] \f$
+ *      using the sigmoid function \f$ \sigma(.) \f$ (see SigmoidLayer).
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the targets \f$ y \in [0, 1] \f$
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed cross-entropy loss: @f$
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed cross-entropy loss: \f$
  *          E = \frac{-1}{n} \sum\limits_{n=1}^N \left[
  *                  p_n \log \hat{p}_n + (1 - p_n) \log(1 - \hat{p}_n)
  *              \right]
- *      @f$
+ *      \f$
  */
 @Name("caffe::SigmoidCrossEntropyLossLayer<float>") @NoOffset public static class FloatSigmoidCrossEntropyLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSigmoidCrossEntropyLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSigmoidCrossEntropyLossLayer(Pointer p) { super(p); }
 
-  public FloatSigmoidCrossEntropyLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSigmoidCrossEntropyLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15249,12 +15215,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SigmoidCrossEntropyLossLayer<double>") @NoOffset public static class DoubleSigmoidCrossEntropyLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSigmoidCrossEntropyLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSigmoidCrossEntropyLossLayer(Pointer p) { super(p); }
 
-  public DoubleSigmoidCrossEntropyLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSigmoidCrossEntropyLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15273,7 +15237,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // Forward declare SoftmaxLayer for use in SoftmaxWithLossLayer.
 
 /**
- * @brief Computes the multinomial logistic loss for a one-of-many
+ * \brief Computes the multinomial logistic loss for a one-of-many
  *        classification task, passing real-valued predictions through a
  *        softmax to get a probability distribution over classes.
  *
@@ -15283,27 +15247,25 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * At test time, this layer can be replaced simply by a SoftmaxLayer.
  *
  * @param bottom input Blob vector (length 2)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the predictions @f$ x @f$, a Blob with values in
- *      @f$ [-\infty, +\infty] @f$ indicating the predicted score for each of
- *      the @f$ K = CHW @f$ classes. This layer maps these scores to a
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the predictions \f$ x \f$, a Blob with values in
+ *      \f$ [-\infty, +\infty] \f$ indicating the predicted score for each of
+ *      the \f$ K = CHW \f$ classes. This layer maps these scores to a
  *      probability distribution over classes using the softmax function
- *      @f$ \hat{p}_{nk} = \exp(x_{nk}) /
- *      \left[\sum_{k'} \exp(x_{nk'})\right] @f$ (see SoftmaxLayer).
- *   -# @f$ (N \times 1 \times 1 \times 1) @f$
- *      the labels @f$ l @f$, an integer-valued Blob with values
- *      @f$ l_n \in [0, 1, 2, ..., K - 1] @f$
- *      indicating the correct class label among the @f$ K @f$ classes
+ *      \f$ \hat{p}_{nk} = \exp(x_{nk}) /
+ *      \left[\sum_{k'} \exp(x_{nk'})\right] \f$ (see SoftmaxLayer).
+ *   -# \f$ (N \times 1 \times 1 \times 1) \f$
+ *      the labels \f$ l \f$, an integer-valued Blob with values
+ *      \f$ l_n \in [0, 1, 2, ..., K - 1] \f$
+ *      indicating the correct class label among the \f$ K \f$ classes
  * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed cross-entropy classification loss: @f$ E =
+ *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
+ *      the computed cross-entropy classification loss: \f$ E =
  *        \frac{-1}{N} \sum\limits_{n=1}^N \log(\hat{p}_{n,l_n})
- *      @f$, for softmax output class probabilites @f$ \hat{p} @f$
+ *      \f$, for softmax output class probabilites \f$ \hat{p} \f$
  */
 @Name("caffe::SoftmaxWithLossLayer<float>") @NoOffset public static class FloatSoftmaxWithLossLayer extends FloatLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSoftmaxWithLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSoftmaxWithLossLayer(Pointer p) { super(p); }
 
@@ -15315,7 +15277,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
     *    If true, the loss is normalized by the number of (nonignored) labels
     *    present; otherwise the loss is simply summed over spatial locations.
     */
-  public FloatSoftmaxWithLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSoftmaxWithLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15337,8 +15299,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SoftmaxWithLossLayer<double>") @NoOffset public static class DoubleSoftmaxWithLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSoftmaxWithLossLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSoftmaxWithLossLayer(Pointer p) { super(p); }
 
@@ -15350,7 +15310,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
     *    If true, the loss is normalized by the number of (nonignored) labels
     *    present; otherwise the loss is simply summed over spatial locations.
     */
-  public DoubleSoftmaxWithLossLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSoftmaxWithLossLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15391,19 +15351,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include "caffe/proto/caffe.pb.h"
 
 /**
- * @brief An interface for layers that take one blob as input (@f$ x @f$)
- *        and produce one equally-sized blob as output (@f$ y @f$), where
+ * \brief An interface for layers that take one blob as input (\f$ x \f$)
+ *        and produce one equally-sized blob as output (\f$ y \f$), where
  *        each element of the output depends only on the corresponding input
  *        element.
  */
 @Name("caffe::NeuronLayer<float>") public static class FloatNeuronLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatNeuronLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatNeuronLayer(Pointer p) { super(p); }
 
-  public FloatNeuronLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatNeuronLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15413,12 +15371,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::NeuronLayer<double>") public static class DoubleNeuronLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleNeuronLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleNeuronLayer(Pointer p) { super(p); }
 
-  public DoubleNeuronLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleNeuronLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15428,23 +15384,21 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes @f$ y = |x| @f$
+ * \brief Computes \f$ y = |x| \f$
  *
  * @param bottom input Blob vector (length 1)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the inputs @f$ x @f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the inputs \f$ x \f$
  * @param top output Blob vector (length 1)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the computed outputs @f$ y = |x| @f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the computed outputs \f$ y = |x| \f$
  */
 @Name("caffe::AbsValLayer<float>") public static class FloatAbsValLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatAbsValLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatAbsValLayer(Pointer p) { super(p); }
 
-  public FloatAbsValLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatAbsValLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15463,12 +15417,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::AbsValLayer<double>") public static class DoubleAbsValLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleAbsValLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleAbsValLayer(Pointer p) { super(p); }
 
-  public DoubleAbsValLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleAbsValLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15487,30 +15439,28 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes @f$ y = x + \log(1 + \exp(-x)) @f$ if @f$ x > 0 @f$;
- *        @f$ y = \log(1 + \exp(x)) @f$ otherwise.
+ * \brief Computes \f$ y = x + \log(1 + \exp(-x)) \f$ if \f$ x > 0 \f$;
+ *        \f$ y = \log(1 + \exp(x)) \f$ otherwise.
  *
  * @param bottom input Blob vector (length 1)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the inputs @f$ x @f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the inputs \f$ x \f$
  * @param top output Blob vector (length 1)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the computed outputs @f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the computed outputs \f$
  *      y = \left\{
  *         \begin{array}{ll}
  *            x + \log(1 + \exp(-x)) & \mbox{if } x > 0 \\
  *            \log(1 + \exp(x)) & \mbox{otherwise}
  *         \end{array} \right.
- *      @f$
+ *      \f$
  */
 @Name("caffe::BNLLLayer<float>") public static class FloatBNLLLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBNLLLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBNLLLayer(Pointer p) { super(p); }
 
-  public FloatBNLLLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatBNLLLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15525,12 +15475,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::BNLLLayer<double>") public static class DoubleBNLLLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBNLLLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBNLLLayer(Pointer p) { super(p); }
 
-  public DoubleBNLLLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleBNLLLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15545,20 +15493,18 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief During training only, sets a random portion of @f$x@f$ to 0, adjusting
+ * \brief During training only, sets a random portion of \f$x\f$ to 0, adjusting
  *        the rest of the vector magnitude accordingly.
  *
  * @param bottom input Blob vector (length 1)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the inputs @f$ x @f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the inputs \f$ x \f$
  * @param top output Blob vector (length 1)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the computed outputs @f$ y = |x| @f$
+ *   -# \f$ (N \times C \times H \times W) \f$
+ *      the computed outputs \f$ y = |x| \f$
  */
 @Name("caffe::DropoutLayer<float>") @NoOffset public static class FloatDropoutLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatDropoutLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatDropoutLayer(Pointer p) { super(p); }
 
@@ -15566,9 +15512,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides DropoutParameter dropout_param,
    *     with DropoutLayer options:
    *   - dropout_ratio (\b optional, default 0.5).
-   *     Sets the probability @f$ p @f$ that any given unit is dropped.
+   *     Sets the probability \f$ p \f$ that any given unit is dropped.
    */
-  public FloatDropoutLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatDropoutLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15587,8 +15533,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::DropoutLayer<double>") @NoOffset public static class DoubleDropoutLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleDropoutLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleDropoutLayer(Pointer p) { super(p); }
 
@@ -15596,9 +15540,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides DropoutParameter dropout_param,
    *     with DropoutLayer options:
    *   - dropout_ratio (\b optional, default 0.5).
-   *     Sets the probability @f$ p @f$ that any given unit is dropped.
+   *     Sets the probability \f$ p \f$ that any given unit is dropped.
    */
-  public DoubleDropoutLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleDropoutLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15617,26 +15561,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes @f$ y = \gamma ^ {\alpha x + \beta} @f$,
- *        as specified by the scale @f$ \alpha @f$, shift @f$ \beta @f$,
- *        and base @f$ \gamma @f$.
+ * \brief Computes \f$ y = \gamma ^ {\alpha x + \beta} \f$,
+ *        as specified by the scale \f$ \alpha \f$, shift \f$ \beta \f$,
+ *        and base \f$ \gamma \f$.
  */
 @Name("caffe::ExpLayer<float>") @NoOffset public static class FloatExpLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatExpLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatExpLayer(Pointer p) { super(p); }
 
   /**
    * @param param provides ExpParameter exp_param,
    *     with ExpLayer options:
-   *   - scale (\b optional, default 1) the scale @f$ \alpha @f$
-   *   - shift (\b optional, default 0) the shift @f$ \beta @f$
-   *   - base (\b optional, default -1 for a value of @f$ e \approx 2.718 @f$)
-   *         the base @f$ \gamma @f$
+   *   - scale (\b optional, default 1) the scale \f$ \alpha \f$
+   *   - shift (\b optional, default 0) the shift \f$ \beta \f$
+   *   - base (\b optional, default -1 for a value of \f$ e \approx 2.718 \f$)
+   *         the base \f$ \gamma \f$
    */
-  public FloatExpLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatExpLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15653,20 +15595,18 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ExpLayer<double>") @NoOffset public static class DoubleExpLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleExpLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleExpLayer(Pointer p) { super(p); }
 
   /**
    * @param param provides ExpParameter exp_param,
    *     with ExpLayer options:
-   *   - scale (\b optional, default 1) the scale @f$ \alpha @f$
-   *   - shift (\b optional, default 0) the shift @f$ \beta @f$
-   *   - base (\b optional, default -1 for a value of @f$ e \approx 2.718 @f$)
-   *         the base @f$ \gamma @f$
+   *   - scale (\b optional, default 1) the scale \f$ \alpha \f$
+   *   - shift (\b optional, default 0) the shift \f$ \beta \f$
+   *   - base (\b optional, default -1 for a value of \f$ e \approx 2.718 \f$)
+   *         the base \f$ \gamma \f$
    */
-  public DoubleExpLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleExpLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15683,31 +15623,29 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes @f$ y = log_{\gamma}(\alpha x + \beta) @f$,
- *        as specified by the scale @f$ \alpha @f$, shift @f$ \beta @f$,
- *        and base @f$ \gamma @f$.
+ * \brief Computes \f$ y = log_{\gamma}(\alpha x + \beta) \f$,
+ *        as specified by the scale \f$ \alpha \f$, shift \f$ \beta \f$,
+ *        and base \f$ \gamma \f$.
  */
 
 /**
- * @brief Computes @f$ y = (\alpha x + \beta) ^ \gamma @f$,
- *        as specified by the scale @f$ \alpha @f$, shift @f$ \beta @f$,
- *        and power @f$ \gamma @f$.
+ * \brief Computes \f$ y = (\alpha x + \beta) ^ \gamma \f$,
+ *        as specified by the scale \f$ \alpha \f$, shift \f$ \beta \f$,
+ *        and power \f$ \gamma \f$.
  */
 @Name("caffe::PowerLayer<float>") @NoOffset public static class FloatPowerLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatPowerLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatPowerLayer(Pointer p) { super(p); }
 
   /**
    * @param param provides PowerParameter power_param,
    *     with PowerLayer options:
-   *   - scale (\b optional, default 1) the scale @f$ \alpha @f$
-   *   - shift (\b optional, default 0) the shift @f$ \beta @f$
-   *   - power (\b optional, default 1) the power @f$ \gamma @f$
+   *   - scale (\b optional, default 1) the scale \f$ \alpha \f$
+   *   - shift (\b optional, default 0) the shift \f$ \beta \f$
+   *   - power (\b optional, default 1) the power \f$ \gamma \f$
    */
-  public FloatPowerLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatPowerLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15724,19 +15662,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::PowerLayer<double>") @NoOffset public static class DoublePowerLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoublePowerLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoublePowerLayer(Pointer p) { super(p); }
 
   /**
    * @param param provides PowerParameter power_param,
    *     with PowerLayer options:
-   *   - scale (\b optional, default 1) the scale @f$ \alpha @f$
-   *   - shift (\b optional, default 0) the shift @f$ \beta @f$
-   *   - power (\b optional, default 1) the power @f$ \gamma @f$
+   *   - scale (\b optional, default 1) the scale \f$ \alpha \f$
+   *   - shift (\b optional, default 0) the shift \f$ \beta \f$
+   *   - power (\b optional, default 1) the power \f$ \gamma \f$
    */
-  public DoublePowerLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoublePowerLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15753,13 +15689,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Rectified Linear Unit non-linearity @f$ y = \max(0, x) @f$.
+ * \brief Rectified Linear Unit non-linearity \f$ y = \max(0, x) \f$.
  *        The simple max is fast to compute, and the function does not saturate.
  */
 @Name("caffe::ReLULayer<float>") public static class FloatReLULayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatReLULayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatReLULayer(Pointer p) { super(p); }
 
@@ -15767,9 +15701,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides ReLUParameter relu_param,
    *     with ReLULayer options:
    *   - negative_slope (\b optional, default 0).
-   *     the value @f$ \nu @f$ by which negative values are multiplied.
+   *     the value \f$ \nu \f$ by which negative values are multiplied.
    */
-  public FloatReLULayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatReLULayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15784,8 +15718,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ReLULayer<double>") public static class DoubleReLULayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleReLULayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleReLULayer(Pointer p) { super(p); }
 
@@ -15793,9 +15725,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides ReLUParameter relu_param,
    *     with ReLULayer options:
    *   - negative_slope (\b optional, default 0).
-   *     the value @f$ \nu @f$ by which negative values are multiplied.
+   *     the value \f$ \nu \f$ by which negative values are multiplied.
    */
-  public DoubleReLULayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleReLULayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15811,26 +15743,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 // #ifdef USE_CUDNN
 /**
- * @brief CuDNN acceleration of ReLULayer.
+ * \brief CuDNN acceleration of ReLULayer.
  */
 // #endif
 
 /**
- * @brief Sigmoid function non-linearity @f$
+ * \brief Sigmoid function non-linearity \f$
  *         y = (1 + \exp(-x))^{-1}
- *     @f$, a classic choice in neural networks.
+ *     \f$, a classic choice in neural networks.
  *
  * Note that the gradient vanishes as the values move away from 0.
  * The ReLULayer is often a better choice for this reason.
  */
 @Name("caffe::SigmoidLayer<float>") public static class FloatSigmoidLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSigmoidLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSigmoidLayer(Pointer p) { super(p); }
 
-  public FloatSigmoidLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSigmoidLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15845,12 +15775,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SigmoidLayer<double>") public static class DoubleSigmoidLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSigmoidLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSigmoidLayer(Pointer p) { super(p); }
 
-  public DoubleSigmoidLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSigmoidLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15866,26 +15794,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 // #ifdef USE_CUDNN
 /**
- * @brief CuDNN acceleration of SigmoidLayer.
+ * \brief CuDNN acceleration of SigmoidLayer.
  */
 // #endif
 
 /**
- * @brief TanH hyperbolic tangent non-linearity @f$
+ * \brief TanH hyperbolic tangent non-linearity \f$
  *         y = \frac{\exp(2x) - 1}{\exp(2x) + 1}
- *     @f$, popular in auto-encoders.
+ *     \f$, popular in auto-encoders.
  *
  * Note that the gradient vanishes as the values move away from 0.
  * The ReLULayer is often a better choice for this reason.
  */
 @Name("caffe::TanHLayer<float>") public static class FloatTanHLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatTanHLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatTanHLayer(Pointer p) { super(p); }
 
-  public FloatTanHLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatTanHLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15900,12 +15826,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::TanHLayer<double>") public static class DoubleTanHLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleTanHLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleTanHLayer(Pointer p) { super(p); }
 
-  public DoubleTanHLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleTanHLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -15921,18 +15845,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 // #ifdef USE_CUDNN
 /**
- * @brief CuDNN acceleration of TanHLayer.
+ * \brief CuDNN acceleration of TanHLayer.
  */
 // #endif
 
 /**
- * @brief Tests whether the input exceeds a threshold: outputs 1 for inputs
+ * \brief Tests whether the input exceeds a threshold: outputs 1 for inputs
  *        above threshold; 0 otherwise.
  */
 @Name("caffe::ThresholdLayer<float>") @NoOffset public static class FloatThresholdLayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatThresholdLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatThresholdLayer(Pointer p) { super(p); }
 
@@ -15940,9 +15862,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides ThresholdParameter threshold_param,
    *     with ThresholdLayer options:
    *   - threshold (\b optional, default 0).
-   *     the threshold value @f$ t @f$ to which the input values are compared.
+   *     the threshold value \f$ t \f$ to which the input values are compared.
    */
-  public FloatThresholdLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatThresholdLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -15957,8 +15879,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ThresholdLayer<double>") @NoOffset public static class DoubleThresholdLayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleThresholdLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleThresholdLayer(Pointer p) { super(p); }
 
@@ -15966,9 +15886,9 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides ThresholdParameter threshold_param,
    *     with ThresholdLayer options:
    *   - threshold (\b optional, default 0).
-   *     the threshold value @f$ t @f$ to which the input values are compared.
+   *     the threshold value \f$ t \f$ to which the input values are compared.
    */
-  public DoubleThresholdLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleThresholdLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -15983,17 +15903,15 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Parameterized Rectified Linear Unit non-linearity @f$
+ * \brief Parameterized Rectified Linear Unit non-linearity \f$
  *        y_i = \max(0, x_i) + a_i \min(0, x_i)
- *        @f$. The differences from ReLULayer are 1) negative slopes are
+ *        \f$. The differences from ReLULayer are 1) negative slopes are
  *        learnable though backprop and 2) negative slopes can vary across
  *        channels. The number of axes of input blob should be greater than or
  *        equal to 2. The 1st axis (0-based) is seen as channels.
  */
 @Name("caffe::PReLULayer<float>") @NoOffset public static class FloatPReLULayer extends FloatNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatPReLULayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatPReLULayer(Pointer p) { super(p); }
 
@@ -16005,7 +15923,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *   - channel_shared (\b optional, default false).
    *     negative slopes are shared across channels.
    */
-  public FloatPReLULayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatPReLULayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
@@ -16026,8 +15944,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::PReLULayer<double>") @NoOffset public static class DoublePReLULayer extends DoubleNeuronLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoublePReLULayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoublePReLULayer(Pointer p) { super(p); }
 
@@ -16039,7 +15955,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *   - channel_shared (\b optional, default false).
    *     negative slopes are shared across channels.
    */
-  public DoublePReLULayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoublePReLULayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
@@ -16077,8 +15993,8 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include "caffe/proto/caffe.pb.h"
 
 /**
- * @brief Compute the index of the @f$ K @f$ max values for each datum across
- *        all dimensions @f$ (C \times H \times W) @f$.
+ * \brief Compute the index of the \f$ K \f$ max values for each datum across
+ *        all dimensions \f$ (C \times H \times W) \f$.
  *
  * Intended for use after a classification layer to produce a prediction.
  * If parameter out_max_val is set to true, output is a vector of pairs
@@ -16089,8 +16005,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::ArgMaxLayer<float>") @NoOffset public static class FloatArgMaxLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatArgMaxLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatArgMaxLayer(Pointer p) { super(p); }
 
@@ -16098,7 +16012,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides ArgMaxParameter argmax_param,
    *     with ArgMaxLayer options:
    *   - top_k (\b optional uint, default 1).
-   *     the number @f$ K @f$ of maximal items to output.
+   *     the number \f$ K \f$ of maximal items to output.
    *   - out_max_val (\b optional bool, default false).
    *     if set, output a vector of pairs (max_ind, max_val) unless axis is set then
    *     output max_val along the specified axis.
@@ -16106,7 +16020,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *     if set, maximise along the specified axis else maximise the flattened
    *     trailing dimensions for each index of the first / num dimension.
    */
-  public FloatArgMaxLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatArgMaxLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16123,8 +16037,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ArgMaxLayer<double>") @NoOffset public static class DoubleArgMaxLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleArgMaxLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleArgMaxLayer(Pointer p) { super(p); }
 
@@ -16132,7 +16044,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    * @param param provides ArgMaxParameter argmax_param,
    *     with ArgMaxLayer options:
    *   - top_k (\b optional uint, default 1).
-   *     the number @f$ K @f$ of maximal items to output.
+   *     the number \f$ K \f$ of maximal items to output.
    *   - out_max_val (\b optional bool, default false).
    *     if set, output a vector of pairs (max_ind, max_val) unless axis is set then
    *     output max_val along the specified axis.
@@ -16140,7 +16052,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *     if set, maximise along the specified axis else maximise the flattened
    *     trailing dimensions for each index of the first / num dimension.
    */
-  public DoubleArgMaxLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleArgMaxLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16157,7 +16069,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Normalizes the input to have 0-mean and/or unit (1) variance across
+ * \brief Normalizes the input to have 0-mean and/or unit (1) variance across
  *        the batch.
  *
  * This layer computes Batch Normalization described in [1].  For
@@ -16188,12 +16100,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::BatchNormLayer<float>") @NoOffset public static class FloatBatchNormLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBatchNormLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBatchNormLayer(Pointer p) { super(p); }
 
-  public FloatBatchNormLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatBatchNormLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16214,12 +16124,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::BatchNormLayer<double>") @NoOffset public static class DoubleBatchNormLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBatchNormLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBatchNormLayer(Pointer p) { super(p); }
 
-  public DoubleBatchNormLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleBatchNormLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16240,7 +16148,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Index into the input blob along its first axis.
+ * \brief Index into the input blob along its first axis.
  *
  * This layer can be used to select, reorder, and even replicate examples in a
  * batch.  The second blob is cast to int and treated as an index into the
@@ -16248,12 +16156,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::BatchReindexLayer<float>") public static class FloatBatchReindexLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBatchReindexLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBatchReindexLayer(Pointer p) { super(p); }
 
-  public FloatBatchReindexLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatBatchReindexLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16272,12 +16178,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::BatchReindexLayer<double>") public static class DoubleBatchReindexLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBatchReindexLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBatchReindexLayer(Pointer p) { super(p); }
 
-  public DoubleBatchReindexLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleBatchReindexLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16296,17 +16200,15 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Takes at least two Blob%s and concatenates them along either the num
+ * \brief Takes at least two Blob%s and concatenates them along either the num
  *        or channel dimension, outputting the result.
  */
 @Name("caffe::ConcatLayer<float>") @NoOffset public static class FloatConcatLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatConcatLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatConcatLayer(Pointer p) { super(p); }
 
-  public FloatConcatLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatConcatLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16327,12 +16229,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ConcatLayer<double>") @NoOffset public static class DoubleConcatLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleConcatLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleConcatLayer(Pointer p) { super(p); }
 
-  public DoubleConcatLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleConcatLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16353,19 +16253,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Compute elementwise operations, such as product and sum,
+ * \brief Compute elementwise operations, such as product and sum,
  *        along multiple input Blobs.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::EltwiseLayer<float>") @NoOffset public static class FloatEltwiseLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatEltwiseLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatEltwiseLayer(Pointer p) { super(p); }
 
-  public FloatEltwiseLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatEltwiseLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16386,12 +16284,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::EltwiseLayer<double>") @NoOffset public static class DoubleEltwiseLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleEltwiseLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleEltwiseLayer(Pointer p) { super(p); }
 
-  public DoubleEltwiseLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleEltwiseLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16412,7 +16308,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief A layer for learning "embeddings" of one-hot vector input.
+ * \brief A layer for learning "embeddings" of one-hot vector input.
  *        Equivalent to an InnerProductLayer with one-hot vectors as input, but
  *        for efficiency the input is the "hot" index of each column itself.
  *
@@ -16420,12 +16316,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::EmbedLayer<float>") @NoOffset public static class FloatEmbedLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatEmbedLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatEmbedLayer(Pointer p) { super(p); }
 
-  public FloatEmbedLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatEmbedLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16446,12 +16340,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::EmbedLayer<double>") @NoOffset public static class DoubleEmbedLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleEmbedLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleEmbedLayer(Pointer p) { super(p); }
 
-  public DoubleEmbedLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleEmbedLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16472,19 +16364,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Takes two+ Blobs, interprets last Blob as a selector and
+ * \brief Takes two+ Blobs, interprets last Blob as a selector and
  *  filter remaining Blobs accordingly with selector data (0 means that
  * the corresponding item has to be filtered, non-zero means that corresponding
  * item needs to stay).
  */
 @Name("caffe::FilterLayer<float>") @NoOffset public static class FloatFilterLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatFilterLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatFilterLayer(Pointer p) { super(p); }
 
-  public FloatFilterLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatFilterLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16505,12 +16395,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::FilterLayer<double>") @NoOffset public static class DoubleFilterLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleFilterLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleFilterLayer(Pointer p) { super(p); }
 
-  public DoubleFilterLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleFilterLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16531,7 +16419,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Reshapes the input Blob into flat vectors.
+ * \brief Reshapes the input Blob into flat vectors.
  *
  * Note: because this layer does not change the input values -- merely the
  * dimensions -- it can simply copy the input. The copy happens "virtually"
@@ -16542,12 +16430,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::FlattenLayer<float>") public static class FloatFlattenLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatFlattenLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatFlattenLayer(Pointer p) { super(p); }
 
-  public FloatFlattenLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatFlattenLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16562,12 +16448,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::FlattenLayer<double>") public static class DoubleFlattenLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleFlattenLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleFlattenLayer(Pointer p) { super(p); }
 
-  public DoubleFlattenLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleFlattenLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16582,19 +16466,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Also known as a "fully-connected" layer, computes an inner product
+ * \brief Also known as a "fully-connected" layer, computes an inner product
  *        with a set of learned weights, and (optionally) adds biases.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::InnerProductLayer<float>") @NoOffset public static class FloatInnerProductLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatInnerProductLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatInnerProductLayer(Pointer p) { super(p); }
 
-  public FloatInnerProductLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatInnerProductLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16615,12 +16497,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::InnerProductLayer<double>") @NoOffset public static class DoubleInnerProductLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleInnerProductLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleInnerProductLayer(Pointer p) { super(p); }
 
-  public DoubleInnerProductLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleInnerProductLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16641,18 +16521,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Normalizes the input to have 0-mean and/or unit (1) variance.
+ * \brief Normalizes the input to have 0-mean and/or unit (1) variance.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::MVNLayer<float>") @NoOffset public static class FloatMVNLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatMVNLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatMVNLayer(Pointer p) { super(p); }
 
-  public FloatMVNLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatMVNLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16671,12 +16549,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::MVNLayer<double>") @NoOffset public static class DoubleMVNLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleMVNLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleMVNLayer(Pointer p) { super(p); }
 
-  public DoubleMVNLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleMVNLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16702,12 +16578,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::ReshapeLayer<float>") @NoOffset public static class FloatReshapeLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatReshapeLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatReshapeLayer(Pointer p) { super(p); }
 
-  public FloatReshapeLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatReshapeLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16728,12 +16602,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ReshapeLayer<double>") @NoOffset public static class DoubleReshapeLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleReshapeLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleReshapeLayer(Pointer p) { super(p); }
 
-  public DoubleReshapeLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleReshapeLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16754,7 +16626,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Compute "reductions" -- operations that return a scalar output Blob
+ * \brief Compute "reductions" -- operations that return a scalar output Blob
  *        for an input Blob of arbitrary size, such as the sum, absolute sum,
  *        and sum of squares.
  *
@@ -16762,12 +16634,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::ReductionLayer<float>") @NoOffset public static class FloatReductionLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatReductionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatReductionLayer(Pointer p) { super(p); }
 
-  public FloatReductionLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatReductionLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16788,12 +16658,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ReductionLayer<double>") @NoOffset public static class DoubleReductionLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleReductionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleReductionLayer(Pointer p) { super(p); }
 
-  public DoubleReductionLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleReductionLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16814,17 +16682,15 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Ignores bottom blobs while producing no top blobs. (This is useful
+ * \brief Ignores bottom blobs while producing no top blobs. (This is useful
  *        to suppress outputs during testing.)
  */
 @Name("caffe::SilenceLayer<float>") public static class FloatSilenceLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSilenceLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSilenceLayer(Pointer p) { super(p); }
 
-  public FloatSilenceLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSilenceLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16843,12 +16709,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SilenceLayer<double>") public static class DoubleSilenceLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSilenceLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSilenceLayer(Pointer p) { super(p); }
 
-  public DoubleSilenceLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSilenceLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16867,18 +16731,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Computes the softmax function.
+ * \brief Computes the softmax function.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::SoftmaxLayer<float>") @NoOffset public static class FloatSoftmaxLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSoftmaxLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSoftmaxLayer(Pointer p) { super(p); }
 
-  public FloatSoftmaxLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSoftmaxLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16897,12 +16759,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SoftmaxLayer<double>") @NoOffset public static class DoubleSoftmaxLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSoftmaxLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSoftmaxLayer(Pointer p) { super(p); }
 
-  public DoubleSoftmaxLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSoftmaxLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16922,25 +16782,23 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 // #ifdef USE_CUDNN
 /**
- * @brief cuDNN implementation of SoftmaxLayer.
+ * \brief cuDNN implementation of SoftmaxLayer.
  *        Fallback to SoftmaxLayer for CPU mode.
  */
 // #endif
 
 /**
- * @brief Creates a "split" path in the network by copying the bottom Blob
+ * \brief Creates a "split" path in the network by copying the bottom Blob
  *        into multiple top Blob%s to be used by multiple consuming layers.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::SplitLayer<float>") @NoOffset public static class FloatSplitLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSplitLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSplitLayer(Pointer p) { super(p); }
 
-  public FloatSplitLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSplitLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -16959,12 +16817,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SplitLayer<double>") @NoOffset public static class DoubleSplitLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSplitLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSplitLayer(Pointer p) { super(p); }
 
-  public DoubleSplitLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSplitLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -16983,19 +16839,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Takes a Blob and slices it along either the num or channel dimension,
+ * \brief Takes a Blob and slices it along either the num or channel dimension,
  *        outputting multiple sliced Blob results.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::SliceLayer<float>") @NoOffset public static class FloatSliceLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSliceLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSliceLayer(Pointer p) { super(p); }
 
-  public FloatSliceLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatSliceLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -17016,12 +16870,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SliceLayer<double>") @NoOffset public static class DoubleSliceLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSliceLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSliceLayer(Pointer p) { super(p); }
 
-  public DoubleSliceLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleSliceLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -17042,16 +16894,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Copy a Blob along specified dimensions.
+ * \brief Copy a Blob along specified dimensions.
  */
 @Name("caffe::TileLayer<float>") @NoOffset public static class FloatTileLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatTileLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatTileLayer(Pointer p) { super(p); }
 
-  public FloatTileLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatTileLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -17071,12 +16921,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::TileLayer<double>") @NoOffset public static class DoubleTileLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleTileLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleTileLayer(Pointer p) { super(p); }
 
-  public DoubleTileLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleTileLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void Reshape(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -17117,40 +16965,38 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include "caffe/proto/caffe.pb.h"
 
 /**
- * @brief Connects Layer%s together into a directed acyclic graph (DAG)
+ * \brief Connects Layer%s together into a directed acyclic graph (DAG)
  *        specified by a NetParameter.
  *
  * TODO(dox): more thorough description.
  */
 @Name("caffe::Net<float>") @NoOffset public static class FloatNet extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatNet() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatNet(Pointer p) { super(p); }
 
-  public FloatNet(@Const @ByRef NetParameter param, @Const FloatNet root_net/*=NULL*/) { allocate(param, root_net); }
+  public FloatNet(@Const @ByRef NetParameter param, @Const FloatNet root_net/*=NULL*/) { super((Pointer)null); allocate(param, root_net); }
   private native void allocate(@Const @ByRef NetParameter param, @Const FloatNet root_net/*=NULL*/);
-  public FloatNet(@Const @ByRef NetParameter param) { allocate(param); }
+  public FloatNet(@Const @ByRef NetParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef NetParameter param);
   public FloatNet(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase,
-        @Const FloatNet root_net/*=NULL*/) { allocate(param_file, phase, root_net); }
+        @Const FloatNet root_net/*=NULL*/) { super((Pointer)null); allocate(param_file, phase, root_net); }
   private native void allocate(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase,
         @Const FloatNet root_net/*=NULL*/);
-  public FloatNet(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase) { allocate(param_file, phase); }
+  public FloatNet(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase) { super((Pointer)null); allocate(param_file, phase); }
   private native void allocate(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase);
   public FloatNet(@StdString String param_file, @Cast("caffe::Phase") int phase,
-        @Const FloatNet root_net/*=NULL*/) { allocate(param_file, phase, root_net); }
+        @Const FloatNet root_net/*=NULL*/) { super((Pointer)null); allocate(param_file, phase, root_net); }
   private native void allocate(@StdString String param_file, @Cast("caffe::Phase") int phase,
         @Const FloatNet root_net/*=NULL*/);
-  public FloatNet(@StdString String param_file, @Cast("caffe::Phase") int phase) { allocate(param_file, phase); }
+  public FloatNet(@StdString String param_file, @Cast("caffe::Phase") int phase) { super((Pointer)null); allocate(param_file, phase); }
   private native void allocate(@StdString String param_file, @Cast("caffe::Phase") int phase);
 
-  /** @brief Initialize a network with a NetParameter. */
+  /** \brief Initialize a network with a NetParameter. */
   public native void Init(@Const @ByRef NetParameter param);
 
   /**
-   * @brief Run Forward with the input Blob%s already fed separately.
+   * \brief Run Forward with the input Blob%s already fed separately.
    *
    * You can get the input blobs using input_blobs().
    */
@@ -17170,7 +17016,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native float ForwardFromTo(int start, int end);
   public native float ForwardFrom(int start);
   public native float ForwardTo(int end);
-  /** @brief Run forward using a set of bottom blobs, and return the result. */
+  /** \brief Run forward using a set of bottom blobs, and return the result. */
   public native @Const @ByRef FloatBlobVector Forward(@Const @ByRef FloatBlobVector bottom,
         FloatPointer loss/*=NULL*/);
   public native @Const @ByRef FloatBlobVector Forward(@Const @ByRef FloatBlobVector bottom);
@@ -17179,7 +17025,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native @Const @ByRef FloatBlobVector Forward(@Const @ByRef FloatBlobVector bottom,
         float[] loss/*=NULL*/);
   /**
-   * @brief Run forward using a serialized BlobProtoVector and return the
+   * \brief Run forward using a serialized BlobProtoVector and return the
    *        result as a serialized BlobProtoVector
    */
   public native @StdString BytePointer Forward(@StdString BytePointer input_blob_protos, FloatPointer loss/*=NULL*/);
@@ -17192,7 +17038,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native @StdString String Forward(@StdString String input_blob_protos, float[] loss/*=NULL*/);
 
   /**
-   * @brief Zeroes out the diffs of all net parameters.
+   * \brief Zeroes out the diffs of all net parameters.
    *        Should be run before Backward.
    */
   public native void ClearParamDiffs();
@@ -17208,7 +17054,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native void BackwardTo(int end);
 
   /**
-   * @brief Reshape all layers from bottom to top.
+   * \brief Reshape all layers from bottom to top.
    *
    * This is useful to propagate changes to layer sizes without running
    * a forward pass, e.g. to compute output feature size.
@@ -17217,10 +17063,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   public native float ForwardBackward(@Const @ByRef FloatBlobVector bottom);
 
-  /** @brief Updates the network weights based on the diff values computed. */
+  /** \brief Updates the network weights based on the diff values computed. */
   public native void Update();
   /**
-   * @brief Shares weight data of owner blobs with shared blobs.
+   * \brief Shares weight data of owner blobs with shared blobs.
    *
    * Note: this is called by Net::Init, and thus should normally not be
    * called manually.
@@ -17228,14 +17074,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native void ShareWeights();
 
   /**
-   * @brief For an already initialized net, implicitly copies (i.e., using no
+   * \brief For an already initialized net, implicitly copies (i.e., using no
    *        additional memory) the pre-trained layers from another Net.
    */
   public native void ShareTrainedLayersWith(@Const FloatNet other);
   // For an already initialized net, CopyTrainedLayersFrom() copies the already
   // trained layers from another net parameter instance.
   /**
-   * @brief For an already initialized net, copies the pre-trained layers from
+   * \brief For an already initialized net, copies the pre-trained layers from
    *        another Net.
    */
   public native void CopyTrainedLayersFrom(@Const @ByRef NetParameter param);
@@ -17245,52 +17091,52 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native void CopyTrainedLayersFromBinaryProto(@StdString String trained_filename);
   public native void CopyTrainedLayersFromHDF5(@StdString BytePointer trained_filename);
   public native void CopyTrainedLayersFromHDF5(@StdString String trained_filename);
-  /** @brief Writes the net to a proto. */
+  /** \brief Writes the net to a proto. */
   public native void ToProto(NetParameter param, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToProto(NetParameter param);
-  /** @brief Writes the net to an HDF5 file. */
+  /** \brief Writes the net to an HDF5 file. */
   public native void ToHDF5(@StdString BytePointer filename, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToHDF5(@StdString BytePointer filename);
   public native void ToHDF5(@StdString String filename, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToHDF5(@StdString String filename);
 
-  /** @brief returns the network name. */
+  /** \brief returns the network name. */
   public native @StdString BytePointer name();
-  /** @brief returns the layer names */
+  /** \brief returns the layer names */
   public native @Const @ByRef StringVector layer_names();
-  /** @brief returns the blob names */
+  /** \brief returns the blob names */
   public native @Const @ByRef StringVector blob_names();
-  /** @brief returns the blobs */
+  /** \brief returns the blobs */
   public native @Const @ByRef FloatBlobSharedVector blobs();
-  /** @brief returns the layers */
+  /** \brief returns the layers */
   public native @Const @ByRef FloatLayerSharedVector layers();
-  /** @brief returns the phase: TRAIN or TEST */
+  /** \brief returns the phase: TRAIN or TEST */
   public native @Cast("caffe::Phase") int phase();
   /**
-   * @brief returns the bottom vecs for each layer -- usually you won't
+   * \brief returns the bottom vecs for each layer -- usually you won't
    *        need this unless you do per-layer checks such as gradients.
    */
   public native @Const @ByRef FloatBlobVectorVector bottom_vecs();
   /**
-   * @brief returns the top vecs for each layer -- usually you won't
+   * \brief returns the top vecs for each layer -- usually you won't
    *        need this unless you do per-layer checks such as gradients.
    */
   public native @Const @ByRef FloatBlobVectorVector top_vecs();
   public native @Const @ByRef BoolVectorVector bottom_need_backward();
   public native @StdVector FloatPointer blob_loss_weights();
   public native @Const @ByRef BoolVector layer_need_backward();
-  /** @brief returns the parameters */
+  /** \brief returns the parameters */
   public native @Const @ByRef FloatBlobSharedVector params();
   public native @Const @ByRef FloatBlobVector learnable_params();
-  /** @brief returns the learnable parameter learning rate multipliers */
+  /** \brief returns the learnable parameter learning rate multipliers */
   public native @StdVector FloatPointer params_lr();
   public native @Const @ByRef BoolVector has_params_lr();
-  /** @brief returns the learnable parameter decay multipliers */
+  /** \brief returns the learnable parameter decay multipliers */
   public native @StdVector FloatPointer params_weight_decay();
   public native @Const @ByRef BoolVector has_params_decay();
   public native @Const @ByRef StringIntMap param_names_index();
   public native @StdVector IntPointer param_owners();
-  /** @brief Input and output blob numbers */
+  /** \brief Input and output blob numbers */
   public native int num_inputs();
   public native int num_outputs();
   public native @Const @ByRef FloatBlobVector input_blobs();
@@ -17312,12 +17158,12 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // Helpers for Init.
   /**
-   * @brief Remove layers that the user specified should be excluded given the current
+   * \brief Remove layers that the user specified should be excluded given the current
    *        phase, level, and stage.
    */
   public static native void FilterNet(@Const @ByRef NetParameter param,
         NetParameter param_filtered);
-  /** @brief return whether NetState state meets NetStateRule rule */
+  /** \brief return whether NetState state meets NetStateRule rule */
   public static native @Cast("bool") boolean StateMeetsRule(@Const @ByRef NetState state, @Const @ByRef NetStateRule rule,
         @StdString BytePointer layer_name);
   public static native @Cast("bool") boolean StateMeetsRule(@Const @ByRef NetState state, @Const @ByRef NetStateRule rule,
@@ -17325,33 +17171,31 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::Net<double>") @NoOffset public static class DoubleNet extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleNet() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleNet(Pointer p) { super(p); }
 
-  public DoubleNet(@Const @ByRef NetParameter param, @Const DoubleNet root_net/*=NULL*/) { allocate(param, root_net); }
+  public DoubleNet(@Const @ByRef NetParameter param, @Const DoubleNet root_net/*=NULL*/) { super((Pointer)null); allocate(param, root_net); }
   private native void allocate(@Const @ByRef NetParameter param, @Const DoubleNet root_net/*=NULL*/);
-  public DoubleNet(@Const @ByRef NetParameter param) { allocate(param); }
+  public DoubleNet(@Const @ByRef NetParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef NetParameter param);
   public DoubleNet(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase,
-        @Const DoubleNet root_net/*=NULL*/) { allocate(param_file, phase, root_net); }
+        @Const DoubleNet root_net/*=NULL*/) { super((Pointer)null); allocate(param_file, phase, root_net); }
   private native void allocate(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase,
         @Const DoubleNet root_net/*=NULL*/);
-  public DoubleNet(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase) { allocate(param_file, phase); }
+  public DoubleNet(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase) { super((Pointer)null); allocate(param_file, phase); }
   private native void allocate(@StdString BytePointer param_file, @Cast("caffe::Phase") int phase);
   public DoubleNet(@StdString String param_file, @Cast("caffe::Phase") int phase,
-        @Const DoubleNet root_net/*=NULL*/) { allocate(param_file, phase, root_net); }
+        @Const DoubleNet root_net/*=NULL*/) { super((Pointer)null); allocate(param_file, phase, root_net); }
   private native void allocate(@StdString String param_file, @Cast("caffe::Phase") int phase,
         @Const DoubleNet root_net/*=NULL*/);
-  public DoubleNet(@StdString String param_file, @Cast("caffe::Phase") int phase) { allocate(param_file, phase); }
+  public DoubleNet(@StdString String param_file, @Cast("caffe::Phase") int phase) { super((Pointer)null); allocate(param_file, phase); }
   private native void allocate(@StdString String param_file, @Cast("caffe::Phase") int phase);
 
-  /** @brief Initialize a network with a NetParameter. */
+  /** \brief Initialize a network with a NetParameter. */
   public native void Init(@Const @ByRef NetParameter param);
 
   /**
-   * @brief Run Forward with the input Blob%s already fed separately.
+   * \brief Run Forward with the input Blob%s already fed separately.
    *
    * You can get the input blobs using input_blobs().
    */
@@ -17371,7 +17215,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native double ForwardFromTo(int start, int end);
   public native double ForwardFrom(int start);
   public native double ForwardTo(int end);
-  /** @brief Run forward using a set of bottom blobs, and return the result. */
+  /** \brief Run forward using a set of bottom blobs, and return the result. */
   public native @Const @ByRef DoubleBlobVector Forward(@Const @ByRef DoubleBlobVector bottom,
         DoublePointer loss/*=NULL*/);
   public native @Const @ByRef DoubleBlobVector Forward(@Const @ByRef DoubleBlobVector bottom);
@@ -17380,7 +17224,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native @Const @ByRef DoubleBlobVector Forward(@Const @ByRef DoubleBlobVector bottom,
         double[] loss/*=NULL*/);
   /**
-   * @brief Run forward using a serialized BlobProtoVector and return the
+   * \brief Run forward using a serialized BlobProtoVector and return the
    *        result as a serialized BlobProtoVector
    */
   public native @StdString BytePointer Forward(@StdString BytePointer input_blob_protos, DoublePointer loss/*=NULL*/);
@@ -17393,7 +17237,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native @StdString String Forward(@StdString String input_blob_protos, double[] loss/*=NULL*/);
 
   /**
-   * @brief Zeroes out the diffs of all net parameters.
+   * \brief Zeroes out the diffs of all net parameters.
    *        Should be run before Backward.
    */
   public native void ClearParamDiffs();
@@ -17409,7 +17253,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native void BackwardTo(int end);
 
   /**
-   * @brief Reshape all layers from bottom to top.
+   * \brief Reshape all layers from bottom to top.
    *
    * This is useful to propagate changes to layer sizes without running
    * a forward pass, e.g. to compute output feature size.
@@ -17418,10 +17262,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   public native double ForwardBackward(@Const @ByRef DoubleBlobVector bottom);
 
-  /** @brief Updates the network weights based on the diff values computed. */
+  /** \brief Updates the network weights based on the diff values computed. */
   public native void Update();
   /**
-   * @brief Shares weight data of owner blobs with shared blobs.
+   * \brief Shares weight data of owner blobs with shared blobs.
    *
    * Note: this is called by Net::Init, and thus should normally not be
    * called manually.
@@ -17429,14 +17273,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native void ShareWeights();
 
   /**
-   * @brief For an already initialized net, implicitly copies (i.e., using no
+   * \brief For an already initialized net, implicitly copies (i.e., using no
    *        additional memory) the pre-trained layers from another Net.
    */
   public native void ShareTrainedLayersWith(@Const DoubleNet other);
   // For an already initialized net, CopyTrainedLayersFrom() copies the already
   // trained layers from another net parameter instance.
   /**
-   * @brief For an already initialized net, copies the pre-trained layers from
+   * \brief For an already initialized net, copies the pre-trained layers from
    *        another Net.
    */
   public native void CopyTrainedLayersFrom(@Const @ByRef NetParameter param);
@@ -17446,52 +17290,52 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   public native void CopyTrainedLayersFromBinaryProto(@StdString String trained_filename);
   public native void CopyTrainedLayersFromHDF5(@StdString BytePointer trained_filename);
   public native void CopyTrainedLayersFromHDF5(@StdString String trained_filename);
-  /** @brief Writes the net to a proto. */
+  /** \brief Writes the net to a proto. */
   public native void ToProto(NetParameter param, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToProto(NetParameter param);
-  /** @brief Writes the net to an HDF5 file. */
+  /** \brief Writes the net to an HDF5 file. */
   public native void ToHDF5(@StdString BytePointer filename, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToHDF5(@StdString BytePointer filename);
   public native void ToHDF5(@StdString String filename, @Cast("bool") boolean write_diff/*=false*/);
   public native void ToHDF5(@StdString String filename);
 
-  /** @brief returns the network name. */
+  /** \brief returns the network name. */
   public native @StdString BytePointer name();
-  /** @brief returns the layer names */
+  /** \brief returns the layer names */
   public native @Const @ByRef StringVector layer_names();
-  /** @brief returns the blob names */
+  /** \brief returns the blob names */
   public native @Const @ByRef StringVector blob_names();
-  /** @brief returns the blobs */
+  /** \brief returns the blobs */
   public native @Const @ByRef DoubleBlobSharedVector blobs();
-  /** @brief returns the layers */
+  /** \brief returns the layers */
   public native @Const @ByRef DoubleLayerSharedVector layers();
-  /** @brief returns the phase: TRAIN or TEST */
+  /** \brief returns the phase: TRAIN or TEST */
   public native @Cast("caffe::Phase") int phase();
   /**
-   * @brief returns the bottom vecs for each layer -- usually you won't
+   * \brief returns the bottom vecs for each layer -- usually you won't
    *        need this unless you do per-layer checks such as gradients.
    */
   public native @Const @ByRef DoubleBlobVectorVector bottom_vecs();
   /**
-   * @brief returns the top vecs for each layer -- usually you won't
+   * \brief returns the top vecs for each layer -- usually you won't
    *        need this unless you do per-layer checks such as gradients.
    */
   public native @Const @ByRef DoubleBlobVectorVector top_vecs();
   public native @Const @ByRef BoolVectorVector bottom_need_backward();
   public native @StdVector DoublePointer blob_loss_weights();
   public native @Const @ByRef BoolVector layer_need_backward();
-  /** @brief returns the parameters */
+  /** \brief returns the parameters */
   public native @Const @ByRef DoubleBlobSharedVector params();
   public native @Const @ByRef DoubleBlobVector learnable_params();
-  /** @brief returns the learnable parameter learning rate multipliers */
+  /** \brief returns the learnable parameter learning rate multipliers */
   public native @StdVector FloatPointer params_lr();
   public native @Const @ByRef BoolVector has_params_lr();
-  /** @brief returns the learnable parameter decay multipliers */
+  /** \brief returns the learnable parameter decay multipliers */
   public native @StdVector FloatPointer params_weight_decay();
   public native @Const @ByRef BoolVector has_params_decay();
   public native @Const @ByRef StringIntMap param_names_index();
   public native @StdVector IntPointer param_owners();
-  /** @brief Input and output blob numbers */
+  /** \brief Input and output blob numbers */
   public native int num_inputs();
   public native int num_outputs();
   public native @Const @ByRef DoubleBlobVector input_blobs();
@@ -17513,12 +17357,12 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // Helpers for Init.
   /**
-   * @brief Remove layers that the user specified should be excluded given the current
+   * \brief Remove layers that the user specified should be excluded given the current
    *        phase, level, and stage.
    */
   public static native void FilterNet(@Const @ByRef NetParameter param,
         NetParameter param_filtered);
-  /** @brief return whether NetState state meets NetStateRule rule */
+  /** \brief return whether NetState state meets NetStateRule rule */
   public static native @Cast("bool") boolean StateMeetsRule(@Const @ByRef NetState state, @Const @ByRef NetStateRule rule,
         @StdString BytePointer layer_name);
   public static native @Cast("bool") boolean StateMeetsRule(@Const @ByRef NetState state, @Const @ByRef NetStateRule rule,
@@ -17557,12 +17401,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Namespace("caffe") @NoOffset public static class DevicePair extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DevicePair() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DevicePair(Pointer p) { super(p); }
 
-  public DevicePair(int parent, int device) { allocate(parent, device); }
+  public DevicePair(int parent, int device) { super((Pointer)null); allocate(parent, device); }
   private native void allocate(int parent, int device);
   public native int parent();
   public native int device();
@@ -17592,7 +17434,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include "caffe/solver_factory.hpp"
 
 /**
-  * @brief Enumeration of actions that a client of the Solver may request by
+  * \brief Enumeration of actions that a client of the Solver may request by
   * implementing the Solver's action request function, which a
   * a client may optionally provide in order to request early termination
   * or saving a snapshot without exiting. In the executable caffe, this
@@ -17608,19 +17450,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   
 
 /**
- * @brief Type of a function that returns a Solver Action enumeration.
+ * \brief Type of a function that returns a Solver Action enumeration.
  */
 
 /**
- * @brief An interface for classes that perform optimization on Net%s.
+ * \brief An interface for classes that perform optimization on Net%s.
  *
  * Requires implementation of ApplyUpdate to compute a parameter update
  * given the current state of the Net parameters.
  */
 @Name("caffe::Solver<float>") @NoOffset public static class FloatSolver extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSolver(Pointer p) { super(p); }
 
@@ -17652,25 +17492,21 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   // Invoked at specific points during an iteration
   public static class Callback extends Pointer {
       static { Loader.load(); }
-      /** Empty constructor. */
-      public Callback() { }
       /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
       public Callback(Pointer p) { super(p); }
   
   }
-  public native @Cast("caffe::Solver<float>::Callback**") @StdVector PointerPointer callbacks();
+  public native @Const @ByRef FloatCallbackVector callbacks();
   public native void add_callback(Callback value);
 
   public native void CheckSnapshotWritePermissions();
   /**
-   * @brief Returns the solver type.
+   * \brief Returns the solver type.
    */
   public native @Cast("const char*") BytePointer type();
 }
 @Name("caffe::Solver<double>") @NoOffset public static class DoubleSolver extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSolver(Pointer p) { super(p); }
 
@@ -17702,52 +17538,46 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   // Invoked at specific points during an iteration
   public static class Callback extends Pointer {
       static { Loader.load(); }
-      /** Empty constructor. */
-      public Callback() { }
       /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
       public Callback(Pointer p) { super(p); }
   
   }
-  public native @Cast("caffe::Solver<double>::Callback**") @StdVector PointerPointer callbacks();
+  public native @Const @ByRef DoubleCallbackVector callbacks();
   public native void add_callback(Callback value);
 
   public native void CheckSnapshotWritePermissions();
   /**
-   * @brief Returns the solver type.
+   * \brief Returns the solver type.
    */
   public native @Cast("const char*") BytePointer type();
 }
 
 /**
- * @brief Solver that only computes gradients, used as worker
+ * \brief Solver that only computes gradients, used as worker
  *        for multi-GPU training.
  */
 @Name("caffe::WorkerSolver<float>") public static class FloatWorkerSolver extends FloatSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatWorkerSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatWorkerSolver(Pointer p) { super(p); }
 
   public FloatWorkerSolver(@Const @ByRef SolverParameter param,
-        @Const FloatSolver root_solver/*=NULL*/) { allocate(param, root_solver); }
+        @Const FloatSolver root_solver/*=NULL*/) { super((Pointer)null); allocate(param, root_solver); }
   private native void allocate(@Const @ByRef SolverParameter param,
         @Const FloatSolver root_solver/*=NULL*/);
-  public FloatWorkerSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatWorkerSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
 }
 @Name("caffe::WorkerSolver<double>") public static class DoubleWorkerSolver extends DoubleSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleWorkerSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleWorkerSolver(Pointer p) { super(p); }
 
   public DoubleWorkerSolver(@Const @ByRef SolverParameter param,
-        @Const DoubleSolver root_solver/*=NULL*/) { allocate(param, root_solver); }
+        @Const DoubleSolver root_solver/*=NULL*/) { super((Pointer)null); allocate(param, root_solver); }
   private native void allocate(@Const @ByRef SolverParameter param,
         @Const DoubleSolver root_solver/*=NULL*/);
-  public DoubleWorkerSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleWorkerSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
 }
 
@@ -17759,7 +17589,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // Parsed from caffe/solver_factory.hpp
 
 /**
- * @brief A solver factory that allows one to register solvers, similar to
+ * \brief A solver factory that allows one to register solvers, similar to
  * layer factory. During runtime, registered solvers could be called by passing
  * a SolverParameter protobuffer to the CreateSolver function:
  *
@@ -17807,8 +17637,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::SolverRegistry<float>") public static class FloatSolverRegistry extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSolverRegistry() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSolverRegistry(Pointer p) { super(p); }
 
@@ -17835,8 +17663,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::SolverRegistry<double>") public static class DoubleSolverRegistry extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSolverRegistry() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSolverRegistry(Pointer p) { super(p); }
 
@@ -17864,8 +17690,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::SolverRegisterer<float>") public static class FloatSolverRegisterer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSolverRegisterer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSolverRegisterer(Pointer p) { super(p); }
 
@@ -17878,11 +17702,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
       public native FloatSolver call(@Const @ByRef SolverParameter arg0);
   }
   public FloatSolverRegisterer(@StdString BytePointer type,
-        Creator_SolverParameter creator) { allocate(type, creator); }
+        Creator_SolverParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString BytePointer type,
         Creator_SolverParameter creator);
   public FloatSolverRegisterer(@StdString String type,
-        Creator_SolverParameter creator) { allocate(type, creator); }
+        Creator_SolverParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString String type,
         Creator_SolverParameter creator);
 }
@@ -17890,8 +17714,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::SolverRegisterer<double>") public static class DoubleSolverRegisterer extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSolverRegisterer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSolverRegisterer(Pointer p) { super(p); }
 
@@ -17904,11 +17726,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
       public native DoubleSolver call(@Const @ByRef SolverParameter arg0);
   }
   public DoubleSolverRegisterer(@StdString BytePointer type,
-        Creator_SolverParameter creator) { allocate(type, creator); }
+        Creator_SolverParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString BytePointer type,
         Creator_SolverParameter creator);
   public DoubleSolverRegisterer(@StdString String type,
-        Creator_SolverParameter creator) { allocate(type, creator); }
+        Creator_SolverParameter creator) { super((Pointer)null); allocate(type, creator); }
   private native void allocate(@StdString String type,
         Creator_SolverParameter creator);
 }
@@ -17943,21 +17765,19 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include "caffe/solver.hpp"
 
 /**
- * @brief Optimizes the parameters of a Net using
+ * \brief Optimizes the parameters of a Net using
  *        stochastic gradient descent (SGD) with momentum.
  */
 @Name("caffe::SGDSolver<float>") @NoOffset public static class FloatSGDSolver extends FloatSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatSGDSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatSGDSolver(Pointer p) { super(p); }
 
-  public FloatSGDSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatSGDSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public FloatSGDSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public FloatSGDSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public FloatSGDSolver(@StdString String param_file) { allocate(param_file); }
+  public FloatSGDSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 
@@ -17965,16 +17785,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::SGDSolver<double>") @NoOffset public static class DoubleSGDSolver extends DoubleSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleSGDSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleSGDSolver(Pointer p) { super(p); }
 
-  public DoubleSGDSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleSGDSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public DoubleSGDSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public DoubleSGDSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public DoubleSGDSolver(@StdString String param_file) { allocate(param_file); }
+  public DoubleSGDSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 
@@ -17983,64 +17801,56 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::NesterovSolver<float>") public static class FloatNesterovSolver extends FloatSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatNesterovSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatNesterovSolver(Pointer p) { super(p); }
 
-  public FloatNesterovSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatNesterovSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public FloatNesterovSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public FloatNesterovSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public FloatNesterovSolver(@StdString String param_file) { allocate(param_file); }
+  public FloatNesterovSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 
 @Name("caffe::NesterovSolver<double>") public static class DoubleNesterovSolver extends DoubleSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleNesterovSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleNesterovSolver(Pointer p) { super(p); }
 
-  public DoubleNesterovSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleNesterovSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public DoubleNesterovSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public DoubleNesterovSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public DoubleNesterovSolver(@StdString String param_file) { allocate(param_file); }
+  public DoubleNesterovSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 
 @Name("caffe::AdaGradSolver<float>") public static class FloatAdaGradSolver extends FloatSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatAdaGradSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatAdaGradSolver(Pointer p) { super(p); }
 
-  public FloatAdaGradSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatAdaGradSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public FloatAdaGradSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public FloatAdaGradSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public FloatAdaGradSolver(@StdString String param_file) { allocate(param_file); }
+  public FloatAdaGradSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 
 @Name("caffe::AdaGradSolver<double>") public static class DoubleAdaGradSolver extends DoubleSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleAdaGradSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleAdaGradSolver(Pointer p) { super(p); }
 
-  public DoubleAdaGradSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleAdaGradSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public DoubleAdaGradSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public DoubleAdaGradSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public DoubleAdaGradSolver(@StdString String param_file) { allocate(param_file); }
+  public DoubleAdaGradSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
@@ -18048,16 +17858,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::RMSPropSolver<float>") public static class FloatRMSPropSolver extends FloatSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatRMSPropSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatRMSPropSolver(Pointer p) { super(p); }
 
-  public FloatRMSPropSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatRMSPropSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public FloatRMSPropSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public FloatRMSPropSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public FloatRMSPropSolver(@StdString String param_file) { allocate(param_file); }
+  public FloatRMSPropSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
@@ -18065,54 +17873,48 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
 @Name("caffe::RMSPropSolver<double>") public static class DoubleRMSPropSolver extends DoubleSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleRMSPropSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleRMSPropSolver(Pointer p) { super(p); }
 
-  public DoubleRMSPropSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleRMSPropSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public DoubleRMSPropSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public DoubleRMSPropSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public DoubleRMSPropSolver(@StdString String param_file) { allocate(param_file); }
+  public DoubleRMSPropSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 
 @Name("caffe::AdaDeltaSolver<float>") public static class FloatAdaDeltaSolver extends FloatSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatAdaDeltaSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatAdaDeltaSolver(Pointer p) { super(p); }
 
-  public FloatAdaDeltaSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatAdaDeltaSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public FloatAdaDeltaSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public FloatAdaDeltaSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public FloatAdaDeltaSolver(@StdString String param_file) { allocate(param_file); }
+  public FloatAdaDeltaSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 
 @Name("caffe::AdaDeltaSolver<double>") public static class DoubleAdaDeltaSolver extends DoubleSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleAdaDeltaSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleAdaDeltaSolver(Pointer p) { super(p); }
 
-  public DoubleAdaDeltaSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleAdaDeltaSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public DoubleAdaDeltaSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public DoubleAdaDeltaSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public DoubleAdaDeltaSolver(@StdString String param_file) { allocate(param_file); }
+  public DoubleAdaDeltaSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 
 /**
- * @brief AdamSolver, an algorithm for first-order gradient-based optimization
+ * \brief AdamSolver, an algorithm for first-order gradient-based optimization
  *        of stochastic objective functions, based on adaptive estimates of
  *        lower-order moments. Described in [1].
  *
@@ -18121,31 +17923,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::AdamSolver<float>") public static class FloatAdamSolver extends FloatSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatAdamSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatAdamSolver(Pointer p) { super(p); }
 
-  public FloatAdamSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public FloatAdamSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public FloatAdamSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public FloatAdamSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public FloatAdamSolver(@StdString String param_file) { allocate(param_file); }
+  public FloatAdamSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
 @Name("caffe::AdamSolver<double>") public static class DoubleAdamSolver extends DoubleSGDSolver {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleAdamSolver() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleAdamSolver(Pointer p) { super(p); }
 
-  public DoubleAdamSolver(@Const @ByRef SolverParameter param) { allocate(param); }
+  public DoubleAdamSolver(@Const @ByRef SolverParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef SolverParameter param);
-  public DoubleAdamSolver(@StdString BytePointer param_file) { allocate(param_file); }
+  public DoubleAdamSolver(@StdString BytePointer param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString BytePointer param_file);
-  public DoubleAdamSolver(@StdString String param_file) { allocate(param_file); }
+  public DoubleAdamSolver(@StdString String param_file) { super((Pointer)null); allocate(param_file); }
   private native void allocate(@StdString String param_file);
   public native @Cast("const char*") BytePointer type();
 }
@@ -18174,13 +17972,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include "caffe/proto/caffe.pb.h"
 
 /**
- * @brief Abstract base class that factors out the BLAS code common to
+ * \brief Abstract base class that factors out the BLAS code common to
  *        ConvolutionLayer and DeconvolutionLayer.
  */
 @Name("caffe::BaseConvolutionLayer<float>") @NoOffset public static class FloatBaseConvolutionLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatBaseConvolutionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatBaseConvolutionLayer(Pointer p) { super(p); }
 
@@ -18197,8 +17993,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::BaseConvolutionLayer<double>") @NoOffset public static class DoubleBaseConvolutionLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleBaseConvolutionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleBaseConvolutionLayer(Pointer p) { super(p); }
 
@@ -18215,7 +18009,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Convolves the input image with a bank of learned filters,
+ * \brief Convolves the input image with a bank of learned filters,
  *        and (optionally) adds biases.
  *
  *   Caffe convolves by reduction to matrix multiplication. This achieves
@@ -18232,8 +18026,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::ConvolutionLayer<float>") public static class FloatConvolutionLayer extends FloatBaseConvolutionLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatConvolutionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatConvolutionLayer(Pointer p) { super(p); }
 
@@ -18254,7 +18046,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *  - group (\b optional, default 1). The number of filter groups. Group
    *  convolution is a method for reducing parameterization by selectively
    *  connecting input and output channels. The input and output channel dimensions must be divisible
-   *  by the number of groups. For group @f$ \geq 1 @f$, the
+   *  by the number of groups. For group \f$ \geq 1 \f$, the
    *  convolutional filters' input and output channels are separated s.t. each
    *  group takes 1 / group of the input channels and makes 1 / group of the
    *  output channels. Concretely 4 input channels, 8 output channels, and
@@ -18265,7 +18057,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *  - engine: convolution has CAFFE (matrix multiplication) and CUDNN (library
    *    kernels + stream parallelism) engines.
    */
-  public FloatConvolutionLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatConvolutionLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -18282,8 +18074,6 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::ConvolutionLayer<double>") public static class DoubleConvolutionLayer extends DoubleBaseConvolutionLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleConvolutionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleConvolutionLayer(Pointer p) { super(p); }
 
@@ -18304,7 +18094,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *  - group (\b optional, default 1). The number of filter groups. Group
    *  convolution is a method for reducing parameterization by selectively
    *  connecting input and output channels. The input and output channel dimensions must be divisible
-   *  by the number of groups. For group @f$ \geq 1 @f$, the
+   *  by the number of groups. For group \f$ \geq 1 \f$, the
    *  convolutional filters' input and output channels are separated s.t. each
    *  group takes 1 / group of the input channels and makes 1 / group of the
    *  output channels. Concretely 4 input channels, 8 output channels, and
@@ -18315,7 +18105,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
    *  - engine: convolution has CAFFE (matrix multiplication) and CUDNN (library
    *    kernels + stream parallelism) engines.
    */
-  public DoubleConvolutionLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleConvolutionLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -18332,7 +18122,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 
 /**
- * @brief Convolve the input with a bank of learned filters, and (optionally)
+ * \brief Convolve the input with a bank of learned filters, and (optionally)
  *        add biases, treating filters and convolution parameters in the
  *        opposite sense as ConvolutionLayer.
  *
@@ -18347,12 +18137,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::DeconvolutionLayer<float>") public static class FloatDeconvolutionLayer extends FloatBaseConvolutionLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatDeconvolutionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatDeconvolutionLayer(Pointer p) { super(p); }
 
-  public FloatDeconvolutionLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatDeconvolutionLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -18369,12 +18157,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::DeconvolutionLayer<double>") public static class DoubleDeconvolutionLayer extends DoubleBaseConvolutionLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleDeconvolutionLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleDeconvolutionLayer(Pointer p) { super(p); }
 
-  public DoubleDeconvolutionLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleDeconvolutionLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
 
   @Virtual public native @Cast("const char*") BytePointer type();
@@ -18408,7 +18194,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #endif
 
 /**
- * @brief A helper for image operations that rearranges image regions into
+ * \brief A helper for image operations that rearranges image regions into
  *        column vectors.  Used by ConvolutionLayer to perform convolution
  *        by matrix multiplication.
  *
@@ -18416,12 +18202,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  */
 @Name("caffe::Im2colLayer<float>") @NoOffset public static class FloatIm2colLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatIm2colLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatIm2colLayer(Pointer p) { super(p); }
 
-  public FloatIm2colLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatIm2colLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -18442,12 +18226,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::Im2colLayer<double>") @NoOffset public static class DoubleIm2colLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleIm2colLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleIm2colLayer(Pointer p) { super(p); }
 
-  public DoubleIm2colLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleIm2colLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -18470,18 +18252,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // Forward declare PoolingLayer and SplitLayer for use in LRNLayer.
 
 /**
- * @brief Normalize the input in a local region across or within feature maps.
+ * \brief Normalize the input in a local region across or within feature maps.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::LRNLayer<float>") @NoOffset public static class FloatLRNLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatLRNLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatLRNLayer(Pointer p) { super(p); }
 
-  public FloatLRNLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatLRNLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -18515,12 +18295,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::LRNLayer<double>") @NoOffset public static class DoubleLRNLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoubleLRNLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoubleLRNLayer(Pointer p) { super(p); }
 
-  public DoubleLRNLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoubleLRNLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -18558,18 +18336,16 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #endif
 
 /**
- * @brief Pools the input image by taking the max, average, etc. within regions.
+ * \brief Pools the input image by taking the max, average, etc. within regions.
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
 @Name("caffe::PoolingLayer<float>") @NoOffset public static class FloatPoolingLayer extends FloatLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public FloatPoolingLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public FloatPoolingLayer(Pointer p) { super(p); }
 
-  public FloatPoolingLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public FloatPoolingLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef FloatBlobVector bottom,
         @Const @ByRef FloatBlobVector top);
@@ -18593,12 +18369,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 }
 @Name("caffe::PoolingLayer<double>") @NoOffset public static class DoublePoolingLayer extends DoubleLayer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DoublePoolingLayer() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DoublePoolingLayer(Pointer p) { super(p); }
 
-  public DoublePoolingLayer(@Const @ByRef LayerParameter param) { allocate(param); }
+  public DoublePoolingLayer(@Const @ByRef LayerParameter param) { super((Pointer)null); allocate(param); }
   private native void allocate(@Const @ByRef LayerParameter param);
   @Virtual public native void LayerSetUp(@Const @ByRef DoubleBlobVector bottom,
         @Const @ByRef DoubleBlobVector top);
@@ -18629,7 +18403,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #endif
 
 /**
- * @brief Does spatial pyramid pooling on the input image
+ * \brief Does spatial pyramid pooling on the input image
  *        by taking the max, average, etc. within regions
  *        so that the result vector of different sized
  *        images are of the same size.
@@ -18654,13 +18428,13 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Timer(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public Timer(int size) { allocateArray(size); }
+    public Timer(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public Timer position(int position) {
         return (Timer)super.position(position);
     }
 
-  public Timer() { allocate(); }
+  public Timer() { super((Pointer)null); allocate(); }
   private native void allocate();
   public native void Start();
   public native void Stop();
@@ -18678,13 +18452,13 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public CPUTimer(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public CPUTimer(int size) { allocateArray(size); }
+    public CPUTimer(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public CPUTimer position(int position) {
         return (CPUTimer)super.position(position);
     }
 
-  public CPUTimer() { allocate(); }
+  public CPUTimer() { super((Pointer)null); allocate(); }
   private native void allocate();
   public native void Start();
   public native void Stop();
@@ -18712,8 +18486,6 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") public static class Cursor extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public Cursor() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Cursor(Pointer p) { super(p); }
 
@@ -18726,8 +18498,6 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") public static class Transaction extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public Transaction() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Transaction(Pointer p) { super(p); }
 
@@ -18738,8 +18508,6 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") public static class DB extends Pointer {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public DB() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public DB(Pointer p) { super(p); }
 
@@ -18775,10 +18543,8 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") @NoOffset public static class LevelDBCursor extends Cursor {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public LevelDBCursor() { }
 
-  public LevelDBCursor(@Cast("leveldb::Iterator*") Pointer iter) { allocate(iter); }
+  public LevelDBCursor(@Cast("leveldb::Iterator*") Pointer iter) { super((Pointer)null); allocate(iter); }
   private native void allocate(@Cast("leveldb::Iterator*") Pointer iter);
   public native void SeekToFirst();
   public native void Next();
@@ -18789,10 +18555,8 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") @NoOffset public static class LevelDBTransaction extends Transaction {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public LevelDBTransaction() { }
 
-  public LevelDBTransaction(@Cast("leveldb::DB*") Pointer db) { allocate(db); }
+  public LevelDBTransaction(@Cast("leveldb::DB*") Pointer db) { super((Pointer)null); allocate(db); }
   private native void allocate(@Cast("leveldb::DB*") Pointer db);
   public native void Put(@StdString BytePointer key, @StdString BytePointer value);
   public native void Put(@StdString String key, @StdString String value);
@@ -18804,13 +18568,13 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LevelDB(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public LevelDB(int size) { allocateArray(size); }
+    public LevelDB(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public LevelDB position(int position) {
         return (LevelDB)super.position(position);
     }
 
-  public LevelDB() { allocate(); }
+  public LevelDB() { super((Pointer)null); allocate(); }
   private native void allocate();
   public native void Open(@StdString BytePointer source, @Cast("caffe::db::Mode") int mode);
   public native void Open(@StdString String source, @Cast("caffe::db::Mode") int mode);
@@ -18843,12 +18607,10 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") @NoOffset public static class LMDBCursor extends Cursor {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public LMDBCursor() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LMDBCursor(Pointer p) { super(p); }
 
-  public LMDBCursor(@Cast("MDB_txn*") Pointer mdb_txn, @Cast("MDB_cursor*") Pointer mdb_cursor) { allocate(mdb_txn, mdb_cursor); }
+  public LMDBCursor(@Cast("MDB_txn*") Pointer mdb_txn, @Cast("MDB_cursor*") Pointer mdb_cursor) { super((Pointer)null); allocate(mdb_txn, mdb_cursor); }
   private native void allocate(@Cast("MDB_txn*") Pointer mdb_txn, @Cast("MDB_cursor*") Pointer mdb_cursor);
   public native void SeekToFirst();
   public native void Next();
@@ -18859,12 +18621,10 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 
 @Namespace("caffe::db") @NoOffset public static class LMDBTransaction extends Transaction {
     static { Loader.load(); }
-    /** Empty constructor. */
-    public LMDBTransaction() { }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LMDBTransaction(Pointer p) { super(p); }
 
-  public LMDBTransaction(@Cast("MDB_dbi*") Pointer mdb_dbi, @Cast("MDB_txn*") Pointer mdb_txn) { allocate(mdb_dbi, mdb_txn); }
+  public LMDBTransaction(@Cast("MDB_dbi*") Pointer mdb_dbi, @Cast("MDB_txn*") Pointer mdb_txn) { super((Pointer)null); allocate(mdb_dbi, mdb_txn); }
   private native void allocate(@Cast("MDB_dbi*") Pointer mdb_dbi, @Cast("MDB_txn*") Pointer mdb_txn);
   public native void Put(@StdString BytePointer key, @StdString BytePointer value);
   public native void Put(@StdString String key, @StdString String value);
@@ -18876,13 +18636,13 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public LMDB(Pointer p) { super(p); }
     /** Native array allocator. Access with {@link Pointer#position(int)}. */
-    public LMDB(int size) { allocateArray(size); }
+    public LMDB(int size) { super((Pointer)null); allocateArray(size); }
     private native void allocateArray(int size);
     @Override public LMDB position(int position) {
         return (LMDB)super.position(position);
     }
 
-  public LMDB() { allocate(); }
+  public LMDB() { super((Pointer)null); allocate(); }
   private native void allocate();
   public native void Open(@StdString BytePointer source, @Cast("caffe::db::Mode") int mode);
   public native void Open(@StdString String source, @Cast("caffe::db::Mode") int mode);

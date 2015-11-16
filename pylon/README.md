@@ -5,7 +5,7 @@ Introduction
 ------------
 This directory contains the JavaCPP Presets module for:
 
- * Pylon 4.2.2  http://www.baslerweb.com/en/support/downloads
+ * Pylon 5.0.0  http://www.baslerweb.com/en/support/downloads
 
 Please refer to the parent README.md file for more detailed information about the JavaCPP Presets.
 

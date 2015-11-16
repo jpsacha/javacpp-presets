@@ -30,12 +30,12 @@ import org.bytedeco.javacpp.tools.InfoMap;
 import org.bytedeco.javacpp.tools.InfoMapper;
 
 /**
- * Wrapper for Basler Pylon library (the C API v.4).
+ * Wrapper for Basler Pylon library (the C API v.5).
  *
  * @author Jarek Sacha
  */
 @Properties(inherit = GenICam3.class,
-        target = "org.bytedeco.javacpp.Pylon4_C",
+        target = "org.bytedeco.javacpp.Pylon5_C",
         value = {
                 @Platform(value = {"linux", "windows"}, include = {
                         "<genapic/GenApiCDefines.h>",
@@ -64,7 +64,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/x64/",
                         preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/x64/"
                 )})
-public class Pylon4_C implements InfoMapper {
+public class Pylon5_C implements InfoMapper {
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("defined GENAPIC_EXPORTS").define(false))
                 .put(new Info("GENAPIC_CC").cppTypes().annotations().cppText(""))

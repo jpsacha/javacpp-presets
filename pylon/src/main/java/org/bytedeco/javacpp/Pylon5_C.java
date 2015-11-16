@@ -8,7 +8,7 @@ import org.bytedeco.javacpp.annotation.*;
 
 import static org.bytedeco.javacpp.GenICam3.*;
 
-public class Pylon4_C extends org.bytedeco.javacpp.presets.Pylon4_C {
+public class Pylon5_C extends org.bytedeco.javacpp.presets.Pylon5_C {
     static { Loader.load(); }
 
 // Parsed from <genapic/GenApiCDefines.h>

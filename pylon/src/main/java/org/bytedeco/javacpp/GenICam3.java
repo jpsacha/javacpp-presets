@@ -9,6 +9,138 @@ import org.bytedeco.javacpp.annotation.*;
 public class GenICam3 extends org.bytedeco.javacpp.presets.GenICam3 {
     static { Loader.load(); }
 
+// Parsed from <_GenICamVersion.h>
+
+//  This file is generated automatically. Do not modify! 
+// #define GENICAM_VERSION_MAJOR 3 
+// #define GENICAM_VERSION_MINOR 0 
+public static final int GENICAM_VERSION_SUBMINOR = 0;
+
+// #define GENICAM_MAIN_COMPILER VC120
+
+// #define GENICAM_COMPANY_SUFFIX Basler_pylon_v5_0
+public static final int GENICAM_SVN_REVISION = 3676;
+
+
+// Parsed from <GenICamVersion.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenICam
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    central versioning counters
+*/
+
+// #ifndef GENICAM_VERSION_H
+// #define GENICAM_VERSION_H
+
+// The following symbols are defined in a cmake generated include file
+//#define GENICAM_VERSION_MAJOR 3 
+//#define GENICAM_VERSION_MINOR 0 
+//#define GENICAM_VERSION_SUBMINOR 0
+//#define GENICAM_MAIN_COMPILER VC120 / gcc421
+// #include <_GenICamVersion.h>
+
+// The Build is not supported any more
+public static final int GENICAM_VERSION_BUILD = 0; 
+
+// Normally GENICAM_COMPILER is fed via cmake; however in pure library mode it is not
+// #ifndef GENICAM_COMPILER
+// #  define GENICAM_COMPILER GENICAM_MAIN_COMPILER
+// #endif 
+
+// Don't ask...
+// #define STRINGIFY(x) #x
+// #define TOSTRING(x) STRINGIFY(x)
+// #define GENICAM_RAW_UNDERSCORE(a, b, c) a ## _ ## b ## _ ## c 
+// #define GENICAM_SEP_UNDERSCORE(a, b, c) GENICAM_RAW_UNDERSCORE(a, b, c)
+// #define GENICAM_RAW_UNDERSCORE_COMPANY(a, b, c, d) a ## _ ## b ## _ ## c ## _ ## d
+// #define GENICAM_SEP_UNDERSCORE_COMPANY(a, b, c, d) GENICAM_RAW_UNDERSCORE_COMPANY(a, b, c, d)
+
+// String versions of the version numbers
+// #define GENICAM_VERSION_MAJOR_STR           TOSTRING( GENICAM_VERSION_MAJOR )
+// #define GENICAM_VERSION_MINOR_STR           TOSTRING( GENICAM_VERSION_MINOR )
+// #define GENICAM_VERSION_SUBMINOR_STR        TOSTRING( GENICAM_VERSION_SUBMINOR )
+// #define GENICAM_VERSION_BUILD_STR           TOSTRING( GENICAM_VERSION_BUILD )
+// #define GENICAM_COMPILER_STR                TOSTRING( GENICAM_COMPILER )
+public static final String GENICAM_ROOT =                        "GENICAM_ROOT";
+// #define GENICAM_CACHE_VERSION               "GENICAM_CACHE_V" GENICAM_VERSION_MAJOR_STR "_" GENICAM_VERSION_MINOR_STR
+// #define GENICAM_LOG_CONFIG_VERSION          "GENICAM_LOG_CONFIG_V" GENICAM_VERSION_MAJOR_STR "_" GENICAM_VERSION_MINOR_STR
+public static final String GENICAM_CLPROTOCOL =                  "GENICAM_CLPROTOCOL";
+
+// #endif // GENICAM_VERSION_H
+
+
+// Parsed from <Base/GCNamespace.h>
+
+/****************************************************************************
+(c) 2004 by Basler Vision Technologies
+(c) 2005 STEMMER IMAGING
+<p>
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+<p>
+<p>
+****************************************************************************/
+
+/** \file 
+/** \brief GenICam versioned namespace.
+/** \ingroup Base_PublicUtilities */
+
+// #ifndef GENICAM_NAMESPACE_H
+// #define GENICAM_NAMESPACE_H
+
+// #include <GenICamVersion.h>
+
+// This is the development namespace for the GenICam libraries
+// #if defined(GENICAM_COMPANY_SUFFIX)
+// #   define GENICAM_NAMESPACE GENICAM_SEP_UNDERSCORE_COMPANY(GenICam, GENICAM_VERSION_MAJOR, GENICAM_VERSION_MINOR, GENICAM_COMPANY_SUFFIX)
+// #else
+// #endif
+
+
+
+// Public alias
+
+// #endif // GENICAM_NAMESPACE_H
+
+
 // Parsed from <Base/GCTypes.h>
 
 /****************************************************************************
@@ -74,9 +206,9 @@ public class GenICam3 extends org.bytedeco.javacpp.presets.GenICam3 {
 // tag to perform 64 compatibility warnings checks on a type
 // #   if !defined(GC_W64)
 // #       if defined(_M_IX86) && _MSC_VER >= 1300
-public static native @MemberGetter int GC_W64();
-public static final int GC_W64 = GC_W64();
+// #           define GC_W64 __w64
 // #       else
+// #           define GC_W64
 // #       endif
 // #   endif
 
@@ -256,7 +388,7 @@ public static final long GC_UINT8_MAX = GC_UINT8_MAX();   /* maximum unsigned in
 // #   error Unsupported compiler or platform
 // #endif
     /** version */
-    @Namespace("GENICAM_NAMESPACE") public static class Version_t extends Pointer {
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") public static class Version_t extends Pointer {
         static { Loader.load(); }
         /** Default native constructor. */
         public Version_t() { super((Pointer)null); allocate(); }
@@ -334,13 +466,12 @@ public static final long GC_UINT8_MAX = GC_UINT8_MAX();   /* maximum unsigned in
 \brief Indicates either 'not found' or 'all remaining characters'.
 \ingroup GenApi_Implementation
 */
-public static native @MemberGetter int GCSTRING_NPOS();
-public static final int GCSTRING_NPOS = GCSTRING_NPOS();
+// #define GCSTRING_NPOS size_t(-1)
     /**
     \brief A string class which is a clone of std::string
     \ingroup Base_PublicUtilities
     */
-    @Namespace("GENICAM_NAMESPACE") @NoOffset public static class gcstring extends Pointer {
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") @NoOffset public static class gcstring extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public gcstring(Pointer p) { super(p); }
@@ -351,6 +482,31 @@ public static final int GCSTRING_NPOS = GCSTRING_NPOS();
             return (gcstring)super.position(position);
         }
     
+            /** Helper class for storing shared-ownership wchar_t * */
+            @NoOffset public static class gcwchar extends Pointer {
+                static { Loader.load(); }
+                /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+                public gcwchar(Pointer p) { super(p); }
+            
+                /** Creates a buffer of \a n wchar_ts */
+                public gcwchar( @Cast("size_t") int n ) { super((Pointer)null); allocate(n); }
+                private native void allocate( @Cast("size_t") int n );
+
+                // copy constructor
+                public gcwchar( @Const @ByRef gcwchar rhs ) { super((Pointer)null); allocate(rhs); }
+                private native void allocate( @Const @ByRef gcwchar rhs );
+
+                // assignment operator
+                public native @ByRef @Name("operator =") gcwchar put(@Const @ByRef gcwchar rhs);
+
+                /** Gets the c-string. */
+                public native @Cast("const wchar_t*") CharPointer c_str();
+
+                /** Gets the length of the buffer. */
+                public native @Cast("size_t") int length();
+
+                /** destructor  */
+            }
         public gcstring() { super((Pointer)null); allocate(); }
         private native void allocate();
         public gcstring( @Cast("const char*") BytePointer pc ) { super((Pointer)null); allocate(pc); }
@@ -366,6 +522,10 @@ public static final int GCSTRING_NPOS = GCSTRING_NPOS();
         public gcstring( @Const @ByRef gcstring str ) { super((Pointer)null); allocate(str); }
         private native void allocate( @Const @ByRef gcstring str );
 // #       if defined(_MSC_VER) && !defined(PHARLAP_WIN32)
+            public gcstring( @Cast("const wchar_t*") CharPointer pBufferUTF16 ) { super((Pointer)null); allocate(pBufferUTF16); }
+            private native void allocate( @Cast("const wchar_t*") CharPointer pBufferUTF16 );
+            public gcstring( @Cast("const wchar_t*") CharPointer pBufferUTF16, @Cast("size_t") int n ) { super((Pointer)null); allocate(pBufferUTF16, n); }
+            private native void allocate( @Cast("const wchar_t*") CharPointer pBufferUTF16, @Cast("size_t") int n );
 // #       endif
         public native @ByRef gcstring append( @Const @ByRef gcstring str );
         public native @ByRef gcstring append( @Cast("size_t") int count, @Cast("char") byte ch );
@@ -376,9 +536,12 @@ public static final int GCSTRING_NPOS = GCSTRING_NPOS();
         public native @ByRef gcstring assign( @Cast("const char*") BytePointer pc, @Cast("size_t") int n );
         public native @ByRef gcstring assign( String pc, @Cast("size_t") int n );
 // #       if defined(_MSC_VER) && !defined(PHARLAP_WIN32)
+            public native @ByRef gcstring assign( @Cast("const wchar_t*") CharPointer pStringUTF16 );
+            public native @ByRef gcstring assign( @Cast("const wchar_t*") CharPointer pStringUTF16, int n );
 // #       endif
         public native int compare( @Const @ByRef gcstring str );
 // #       if defined(_MSC_VER) && !defined(PHARLAP_WIN32)
+            public native @ByVal gcwchar w_str( );
 // #       endif
         public native @Cast("const char*") BytePointer c_str( );
         public native @Cast("bool") boolean empty( );
@@ -397,7 +560,7 @@ public static final int GCSTRING_NPOS = GCSTRING_NPOS();
         public native @Cast("size_t") int size( );
         public native void resize( @Cast("size_t") int n );
         public native @Cast("size_t") int max_size( );
-        public native @ByVal gcstring substr( @Cast("size_t") int offset/*=0*/, @Cast("size_t") int count/*=GCSTRING_NPOS*/ );
+        public native @ByVal gcstring substr( @Cast("size_t") int offset/*=0*/, @Cast("size_t") int count/*=size_t(-1)*/ );
         public native @ByVal gcstring substr( );
         public native @Cast("size_t") int find_first_of( @Const @ByRef gcstring str, @Cast("size_t") int offset/*=0*/ );
         public native @Cast("size_t") int find_first_of( @Const @ByRef gcstring str );
@@ -415,6 +578,7 @@ public static final int GCSTRING_NPOS = GCSTRING_NPOS();
         public native @ByRef @Name("operator +=") gcstring addPut( @Cast("char") byte ch );
         public native @ByRef @Name("operator =") gcstring put( @Const @ByRef gcstring str );
 // #       if defined(_MSC_VER) && !defined(PHARLAP_WIN32)
+            public native @ByRef @Name("operator =") gcstring put( @Cast("const wchar_t*") CharPointer pStringUTF16 );
 // #       endif
         public native @Cast("bool") @Name("operator ==") boolean equals( @Const @ByRef gcstring str );
         public native @Cast("bool") @Name("operator ==") boolean equals( @Cast("const char*") BytePointer pc );
@@ -432,19 +596,20 @@ public static final int GCSTRING_NPOS = GCSTRING_NPOS();
         // Beware : this static member prevents delay loading
         // use _npos() instead
         @MemberGetter public static native @Cast("const size_t") int npos();
+        public static final int npos = npos();
     }
 
     // this is necessary due to the circular dependency between string/exception
-    @Namespace("GENICAM_NAMESPACE") public static native void ThrowBadAlloc(@Cast("const char*") BytePointer source, int line);
-    @Namespace("GENICAM_NAMESPACE") public static native void ThrowBadAlloc(String source, int line);
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") public static native void ThrowBadAlloc(@Cast("const char*") BytePointer source, int line);
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") public static native void ThrowBadAlloc(String source, int line);
 
     /** STL getline
      *  \ingroup Base_PublicUtilities */
-    @Namespace("GENICAM_NAMESPACE") public static native @Cast("std::istream*") @ByRef Pointer getline(@Cast("std::istream*") @ByRef Pointer is, @ByRef gcstring str);
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") public static native @Cast("std::istream*") @ByRef Pointer getline(@Cast("std::istream*") @ByRef Pointer is, @ByRef gcstring str);
 
     /** STL getline
      *  \ingroup Base_PublicUtilities */
-    @Namespace("GENICAM_NAMESPACE") public static native @Cast("std::istream*") @ByRef Pointer getline(@Cast("std::istream*") @ByRef Pointer is, @ByRef gcstring str, @Cast("char") byte delim);
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") public static native @Cast("std::istream*") @ByRef Pointer getline(@Cast("std::istream*") @ByRef Pointer is, @ByRef gcstring str, @Cast("char") byte delim);
 
 
 
@@ -508,7 +673,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief A vector of gcstrings which is a clone of std::vector<std::string>
     \ingroup Base_PublicUtilities
     */
-    @Namespace("GENICAM_NAMESPACE") @NoOffset public static class gcstring_vector extends Pointer {
+    @Namespace("GenICam_3_0_Basler_pylon_v5_0") @NoOffset public static class gcstring_vector extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public gcstring_vector(Pointer p) { super(p); }
@@ -580,8 +745,8 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         }
         public gcstring_vector() { super((Pointer)null); allocate(); }
         private native void allocate();
-        public gcstring_vector(@Cast("size_t") int uiSize, @Const @ByRef(nullValue = "GENICAM_NAMESPACE::gcstring()") gcstring str/*=GENICAM_NAMESPACE::gcstring()*/) { super((Pointer)null); allocate(uiSize, str); }
-        private native void allocate(@Cast("size_t") int uiSize, @Const @ByRef(nullValue = "GENICAM_NAMESPACE::gcstring()") gcstring str/*=GENICAM_NAMESPACE::gcstring()*/);
+        public gcstring_vector(@Cast("size_t") int uiSize, @Const @ByRef(nullValue = "GenICam_3_0_Basler_pylon_v5_0::gcstring()") gcstring str/*=GenICam_3_0_Basler_pylon_v5_0::gcstring()*/) { super((Pointer)null); allocate(uiSize, str); }
+        private native void allocate(@Cast("size_t") int uiSize, @Const @ByRef(nullValue = "GenICam_3_0_Basler_pylon_v5_0::gcstring()") gcstring str/*=GenICam_3_0_Basler_pylon_v5_0::gcstring()*/);
         public gcstring_vector(@Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
         private native void allocate(@Cast("size_t") int uiSize);
         public gcstring_vector(@Const @ByRef gcstring_vector obj) { super((Pointer)null); allocate(obj); }
@@ -601,7 +766,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @Cast("bool") boolean empty();
         public native void pop_back();
         public native void push_back(@Const @ByRef gcstring str);
-        public native void resize(@Cast("size_t") int uiSize, @Const @ByRef(nullValue = "GENICAM_NAMESPACE::gcstring()") gcstring str/*=GENICAM_NAMESPACE::gcstring()*/);
+        public native void resize(@Cast("size_t") int uiSize, @Const @ByRef(nullValue = "GenICam_3_0_Basler_pylon_v5_0::gcstring()") gcstring str/*=GenICam_3_0_Basler_pylon_v5_0::gcstring()*/);
         public native void resize(@Cast("size_t") int uiSize);
         public native void reserve(@Cast("size_t") int uiSize);
 
@@ -625,6 +790,1361 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 // #pragma pack(pop)
 
 // #endif // GENICAM_GCSTRINGLIST_H
+
+
+// Parsed from <GenApi/Autovector.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2012 by Teledyne DALSA
+//  Section: Digital Imaging
+//  Project: GenAPI
+//  Author:  Eric Bourbonnais
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group. 
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'. 
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+// 
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,  
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR  
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP 
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL, 
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO, 
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS; 
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY, 
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE) 
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+//
+/**
+\file
+\brief   This file contains the public definition of the autovector classes.
+\ingroup GenApi_PublicInterface
+*/
+
+//////////////////////////////////////////////////////////////////////////////
+
+// #ifndef GENAPI_AUTOVECTOR_H
+// #define GENAPI_AUTOVECTOR_H
+
+// #include <vector>
+// #include <Base/GCTypes.h>
+// #include <GenApi/GenApiDll.h>
+
+// #if defined (_WIN32)
+// #elif (defined(__GNUC__) && (defined (__linux__)) || defined (__APPLE__)) || defined(VXWORKS)
+// #else
+// #   error Unsupported platform
+// #endif
+    /**
+    \brief Vector of integers with reference counting
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class int64_autovector_t extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public int64_autovector_t(Pointer p) { super(p); }
+    
+        public int64_autovector_t() { super((Pointer)null); allocate(); }
+        private native void allocate();
+                  public int64_autovector_t( @Const @ByRef int64_autovector_t obj ) { super((Pointer)null); allocate(obj); }
+                  private native void allocate( @Const @ByRef int64_autovector_t obj );
+        public int64_autovector_t( @Cast("size_t") int n ) { super((Pointer)null); allocate(n); }
+        private native void allocate( @Cast("size_t") int n );
+
+        public native @ByRef @Name("operator =") int64_autovector_t put( @Const @ByRef int64_autovector_t obj );
+
+        public native @Cast("int64_t*") @ByRef @Name("operator []") LongPointer get( @Cast("size_t") int uiIndex );
+        public native @Cast("size_t") int size( );
+    }
+    
+    /**
+    \brief Vector of doubles with reference counting
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class double_autovector_t extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public double_autovector_t(Pointer p) { super(p); }
+    
+        public double_autovector_t() { super((Pointer)null); allocate(); }
+        private native void allocate();
+                  public double_autovector_t( @Const @ByRef double_autovector_t obj ) { super((Pointer)null); allocate(obj); }
+                  private native void allocate( @Const @ByRef double_autovector_t obj );
+        public double_autovector_t( @Cast("size_t") int n ) { super((Pointer)null); allocate(n); }
+        private native void allocate( @Cast("size_t") int n );
+
+        public native @ByRef @Name("operator =") double_autovector_t put( @Const @ByRef double_autovector_t obj );
+
+        public native @ByRef @Name("operator []") DoublePointer get( @Cast("size_t") int uiIndex );
+        public native @Cast("size_t") int size( );
+    }
+
+
+// #endif // GENAPI_AUTOVECTOR_H
+
+
+// Parsed from <GenApi/Reference.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of template CReference
+\ingroup GenApi_PublicImpl
+*/
+
+// #ifndef GENAPI_REFERENCE_H
+// #define GENAPI_REFERENCE_H
+
+// #include <GenApi/Types.h>
+// #include <GenApi/GenApiDll.h>
+
+    //*************************************************************
+    // IReference interface
+    //*************************************************************
+
+    /**
+    \brief Interface to construct a reference
+    \ingroup GenApi_PublicImpl
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IReference extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IReference(Pointer p) { super(p); }
+    
+        /** sets the implementation to a reference */
+        public native void SetReference( IBase pBase );
+    }
+
+    //*************************************************************
+    // IEnumReference interface
+    //*************************************************************
+
+    /**
+    \brief Interface to construct an enum reference
+    \ingroup GenApi_PublicImpl
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IEnumReference extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumReference(Pointer p) { super(p); }
+    
+        /** sets the Enum value corresponding to a value */
+        public native void SetEnumReference( int Index, @ByVal gcstring Name);
+
+        /** sets the number of enum vallues */
+        public native void SetNumEnums( int NumEnums );
+    }
+
+    //*************************************************************
+    // CReference class
+    //*************************************************************
+
+    /**
+    \brief Reference to an IBase derived pointer
+    \ingroup GenApi_PublicImpl
+    */
+    @Name("GENAPI_NAMESPACE::CReferenceT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") @NoOffset public static class CReferenceTInteger extends IInteger {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CReferenceTInteger(Pointer p) { super(p); }
+        public IReference asIReference() { return asIReference(this); }
+        @Namespace public static native @Name("static_cast<GENAPI_NAMESPACE::IReference*>") IReference asIReference(CReferenceTInteger pointer);
+    
+        // Constructor
+
+        /*--------------------------------------------------------*/
+        // IReference
+        /*--------------------------------------------------------*/
+
+        /** sets the implementation to the reference */
+        public native void SetReference( IBase ptr );
+    }
+
+
+
+// #endif // ifndef GENAPI_REFERENCE_H
+
+
+// Parsed from <GenApi/IBase.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief  Definition of interface IBase
+\ingroup GenApi_PublicInterface
+*/
+
+
+// #ifndef GENAPI_IBASE_H
+// #define GENAPI_IBASE_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/Reference.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IBase interface
+    //*************************************************************
+
+    /**
+    \brief Base interface common to all nodes
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IBase extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IBase(Pointer p) { super(p); }
+    
+        /** Get the access mode of the node */
+        public native @Cast("GENAPI_NAMESPACE::EAccessMode") int GetAccessMode();
+
+		/** Virtual destructor enforcing virtual destructor on all derived classes */
+    }
+
+	// Implementation required for Windows only.
+	// Note: the C++ standard >= 11 prohibit pure virtual destructors with a function body
+	// in the declaration. Consequently gcc 4.0 and newer reject an inline implementation
+	// in the class.
+	
+
+    //*************************************************************
+    // CBaseRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IBase pointer
+    \ingroup GenApi_PublicImpl
+    */
+    @Name("GENAPI_NAMESPACE::CBaseRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") public static class CBaseRefTInteger extends CReferenceTInteger {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaseRefTInteger(Pointer p) { super(p); }
+    
+        /*--------------------------------------------------------*/
+        // IBase
+        /*--------------------------------------------------------*/
+
+        /** Get the access mode of the node */
+        public native @Cast("GENAPI_NAMESPACE::EAccessMode") int GetAccessMode();
+
+    }
+
+    /** Reference to an IBase pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IBASE_H
+
+
+// Parsed from <GenApi/IValue.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of the interface IValue.
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IVALUE_H
+// #define GENAPI_IVALUE_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IBase.h>
+// #include <GenApi/INode.h>
+// #include <Base/GCString.h>
+// #include <Base/GCException.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+
+    //*************************************************************
+    // IValue interface
+    //*************************************************************
+
+    /**
+    \brief Interface for value properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IValue extends IBase {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IValue(Pointer p) { super(p); }
+    
+        /** Get the INode interface of the node */
+        public native INode GetNode();
+
+        /** Get content of the node as string
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @ByVal gcstring ToString(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @ByVal gcstring ToString();
+
+        /** Set content of the node as string
+        /**
+        @param ValueStr The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void FromString(@Const @ByRef gcstring ValueStr, @Cast("bool") boolean Verify/*=true*/);
+        public native void FromString(@Const @ByRef gcstring ValueStr);
+
+        /** Checks if the value comes from cache or is requested from another node */
+        public native @Cast("bool") boolean IsValueCacheValid();
+    }
+
+
+    //*************************************************************
+    // CValueRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IValue pointer
+    \ingroup GenApi_PublicImpl
+    */
+    @Name("GENAPI_NAMESPACE::CValueRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") public static class CValueRefTInteger extends CBaseRefTInteger {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CValueRefTInteger(Pointer p) { super(p); }
+    
+        /*--------------------------------------------------------*/
+        // IValue
+        /*--------------------------------------------------------*/
+
+        /** Get the INode interface of the node */
+        public native INode GetNode();
+
+        /** Get content of the node as string */
+        public native @ByVal gcstring ToString(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @ByVal gcstring ToString();
+
+        /** Set content of the node as string */
+        public native void FromString(@Const @ByRef gcstring ValueStr, @Cast("bool") boolean Verify/*=true*/);
+        public native void FromString(@Const @ByRef gcstring ValueStr);
+
+        /** Checks if the value comes from cache or is requested from another node */
+        public native @Cast("bool") boolean IsValueCacheValid();
+    }
+
+    /** Reference to an IValue pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IVALUE_H
+
+
+// Parsed from <GenApi/IBoolean.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of IBoolean interface
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IBOOLEAN_H
+// #define GENAPI_IBOOLEAN_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IBoolean interface
+    //*************************************************************
+
+    /**
+    \brief Interface for Boolean  properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IBoolean extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IBoolean(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("bool") boolean Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("bool") boolean Value);
+
+        /** Set node value */
+        public native @Name("operator =") void put(@Cast("bool") boolean Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("bool") boolean GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("bool") boolean GetValue();
+
+        /** Get node value */
+        public native @Cast("bool") @Name("operator ()") boolean apply();
+    }
+
+
+    //*************************************************************
+    // CBooleanRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+    /**
+    \internal
+    \brief Reference to an IInteger pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IBoolean pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IBOOLEAN_H
+
+
+// Parsed from <GenApi/IInteger.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of the interface IInteger.
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IIINTEGER_H
+// #define GENAPI_IIINTEGER_H
+
+// #include <Base/GCUtilities.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IInteger interface
+    //*************************************************************
+
+    /**
+    \brief Interface for integer properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IInteger extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IInteger(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("int64_t") long Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("int64_t") long Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IInteger put(@Cast("int64_t") long Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("int64_t") long GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/ );
+        public native @Cast("int64_t") long GetValue( );
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator ()") long apply();
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator *") long multiply();
+
+        /** Get minimum value allowed */
+        public native @Cast("int64_t") long GetMin();
+
+        /** Get maximum value allowed */
+        public native @Cast("int64_t") long GetMax();
+
+        /** Get increment mode */
+        public native @Cast("GENAPI_NAMESPACE::EIncMode") int GetIncMode();
+
+        /** Get increment */
+        public native @Cast("int64_t") long GetInc();
+
+        /** Get list of valid value */
+        public native @ByVal int64_autovector_t GetListOfValidValues(@Cast("bool") boolean bounded/*=true*/);
+        public native @ByVal int64_autovector_t GetListOfValidValues();
+
+        /** Get recommended representation */
+        public native @Cast("GENAPI_NAMESPACE::ERepresentation") int GetRepresentation();
+
+        /** Get the physical unit name */
+        public native @ByVal gcstring GetUnit();
+
+        /** Restrict minimum value */
+        public native void ImposeMin(@Cast("int64_t") long Value);
+
+        /** Restrict maximum value */
+        public native void ImposeMax(@Cast("int64_t") long Value);
+    }
+
+
+    //*************************************************************
+    // CIntegerRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IInteger pointer
+    \ingroup GenApi_PublicImpl
+    */
+    @Name("GENAPI_NAMESPACE::CIntegerRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") public static class CIntegerRef extends CValueRefTInteger {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CIntegerRef() { super((Pointer)null); allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CIntegerRef(int size) { super((Pointer)null); allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CIntegerRef(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CIntegerRef position(int position) {
+            return (CIntegerRef)super.position(position);
+        }
+    
+        /*--------------------------------------------------------*/
+        // IInteger
+        /*--------------------------------------------------------*/
+
+        /** Set node value */
+        public native void SetValue(@Cast("int64_t") long Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("int64_t") long Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IInteger put(@Cast("int64_t") long Value);
+
+        /** Get node value */
+        public native @Cast("int64_t") long GetValue( @Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/ );
+        public native @Cast("int64_t") long GetValue( );
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator ()") long apply();
+
+        /** Get node value */
+        public native @Cast("int64_t") @Name("operator *") long multiply();
+
+        /** Get minimum value allowed */
+        public native @Cast("int64_t") long GetMin();
+
+        /** Get maximum value allowed */
+        public native @Cast("int64_t") long GetMax();
+
+        /** Get increment */
+        public native @Cast("GENAPI_NAMESPACE::EIncMode") int GetIncMode();
+
+        /** Get increment */
+        public native @Cast("int64_t") long GetInc();
+
+        /** Implementation of IInteger::GetListOfValidValues */
+        public native @ByVal int64_autovector_t GetListOfValidValues(@Cast("bool") boolean bounded/*=true*/);
+        public native @ByVal int64_autovector_t GetListOfValidValues();
+
+        /** Get recommended representation */
+        public native @Cast("GENAPI_NAMESPACE::ERepresentation") int GetRepresentation();
+
+        /** Get the physical unit name */
+        public native @ByVal gcstring GetUnit();
+
+        /** gets the interface of an alias node. */
+        public native IFloat GetFloatAlias();
+
+        /** Restrict minimum value */
+        public native void ImposeMin(@Cast("int64_t") long Value);
+
+        /** Restrict maximum value */
+        public native void ImposeMax(@Cast("int64_t") long Value);
+
+    }
+
+    /** Reference to an IInteger pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IIINTEGER_H
+
+
+// Parsed from <GenApi/IFloat.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of the IFloat interface
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IFLOAT_H
+// #define GENAPI_IFLOAT_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IFloat interface
+    //*************************************************************
+
+    /**
+    \brief Interface for float properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IFloat extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IFloat(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(double Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(double Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IFloat put(double Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native double GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native double GetValue();
+
+        /** Get node value */
+        public native @Name("operator ()") double apply();
+
+        /** Get node value */
+        public native @Name("operator *") double multiply();
+
+        /** Get minimum value allowed */
+        public native double GetMin();
+
+        /** Get maximum value allowed */
+        public native double GetMax();
+
+        /** True if the float has a constant increment */
+        public native @Cast("bool") boolean HasInc();
+
+        /** Get increment mode */
+        public native @Cast("GENAPI_NAMESPACE::EIncMode") int GetIncMode();
+
+        /** Get the constant increment if there is any */
+        public native double GetInc();
+
+        /** Get list of valid value */
+        public native @ByVal double_autovector_t GetListOfValidValues( @Cast("bool") boolean bounded/*=true*/);
+        public native @ByVal double_autovector_t GetListOfValidValues();
+
+        /** Get recommended representation */
+        public native @Cast("GENAPI_NAMESPACE::ERepresentation") int GetRepresentation();
+
+        /** Get the physical unit name */
+        public native @ByVal gcstring GetUnit();
+
+        /** Get the way the float should be converted to a string */
+        public native @Cast("GENAPI_NAMESPACE::EDisplayNotation") int GetDisplayNotation();
+
+        /** Get the precision to be used when converting the float to a string */
+        public native @Cast("int64_t") long GetDisplayPrecision();
+
+        /** Restrict minimum value */
+        public native void ImposeMin(double Value);
+
+        /** Restrict maximum value */
+        public native void ImposeMax(double Value);
+    }
+
+    //*************************************************************
+    // CFloatRef class
+    //*************************************************************
+    @Namespace("GENAPI_NAMESPACE") @Opaque public static class IEnumeration extends Pointer {
+        /** Empty constructor. Calls {@code super((Pointer)null)}. */
+        public IEnumeration() { super((Pointer)null); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumeration(Pointer p) { super(p); }
+    }
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IEnumEntry pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IFloat pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IFLOAT_H
+
+
+// Parsed from <GenApi/IPort.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of interface IPort
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IPORT_H
+// #define GENAPI_IPORT_H
+
+// #include <Base/GCException.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IBase.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IPort interface
+    //*************************************************************
+
+    /**
+    \brief Interface for ports
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IPort extends IBase {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IPort(Pointer p) { super(p); }
+    
+        /** Reads a chunk of bytes from the port */
+        public native void Read(Pointer pBuffer, @Cast("int64_t") long Address, @Cast("int64_t") long Length);
+
+        /** Writes a chunk of bytes to the port */
+        public native void Write(@Const Pointer pBuffer, @Cast("int64_t") long Address, @Cast("int64_t") long Length);
+    }
+
+    //*************************************************************
+    // CPortRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IPort pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IEnumEntry pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IPORT_H
+
+
+// Parsed from <GenApi/INode.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief  Definition of interface INode and types NodeList_t and CallbackHandleType:
+\ingroup GenApi_PublicInterface
+*/
+
+
+// #ifndef GENAPI_INODE_H
+// #define GENAPI_INODE_H
+
+// #include <Base/GCString.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IBase.h>
+// #include <GenApi/Container.h>
+
+// #include <assert.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    @Namespace("GENAPI_NAMESPACE") @Opaque public static class INodeMap extends Pointer {
+        /** Empty constructor. Calls {@code super((Pointer)null)}. */
+        public INodeMap() { super((Pointer)null); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public INodeMap(Pointer p) { super(p); }
+    }
+
+    /** a list of node references */
+
+    /** the callback handle for nodes */
+
+    @Namespace("GENAPI_NAMESPACE") @Opaque public static class CNodeCallback extends Pointer {
+        /** Empty constructor. Calls {@code super((Pointer)null)}. */
+        public CNodeCallback() { super((Pointer)null); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CNodeCallback(Pointer p) { super(p); }
+    }
+
+    //*************************************************************
+    // INode interface
+    //*************************************************************
+
+    /**
+    \brief Interface common to all nodes
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class INode extends IBase {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public INode(Pointer p) { super(p); }
+    
+        /** Get node name */
+        public native @ByVal gcstring GetName(@Cast("bool") boolean FullQualified/*=false*/);
+        public native @ByVal gcstring GetName();
+
+        /** Get name space */
+        public native @Cast("GENAPI_NAMESPACE::ENameSpace") int GetNameSpace();
+
+        /** Get the recommended visibility of the node */
+        public native @Cast("GENAPI_NAMESPACE::EVisibility") int GetVisibility();
+
+        /** Indicates that the node's value may have changed.
+        /** Fires the callback on this and all dependent nodes */
+        public native void InvalidateNode();
+
+        /** Is the node value cachable */
+        public native @Cast("bool") boolean IsCachable();
+
+        /** True if the AccessMode can be cached */
+        public native @Cast("GENAPI_NAMESPACE::EYesNo") int IsAccessModeCacheable();
+
+        /** Get Caching Mode */
+        public native @Cast("GENAPI_NAMESPACE::ECachingMode") int GetCachingMode();
+
+        /** recommended polling time (for not cachable nodes) */
+        public native @Cast("int64_t") long GetPollingTime();
+
+        /** Get a short description of the node */
+        public native @ByVal gcstring GetToolTip();
+
+        /** Get a long description of the node */
+        public native @ByVal gcstring GetDescription();
+
+        /** Get a name string for display */
+        public native @ByVal gcstring GetDisplayName();
+
+        /** Get a name of the device */
+        public native @ByVal gcstring GetDeviceName();
+
+        /**
+        \brief Get all nodes this node directly depends on.
+        @param [out] Children List of children nodes
+        @param LinkType The link type
+        */
+        public native void GetChildren(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Children, @Cast("GENAPI_NAMESPACE::ELinkType") int LinkType/*=ctReadingChildren*/);
+        public native void GetChildren(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Children);
+
+        /**
+        \brief Gets all nodes this node is directly depending on
+        @param [out] Parents List of parent nodes
+        */
+        public native void GetParents(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Parents);
+
+        /** Register change callback
+        /** Takes ownership of the CNodeCallback object */
+        public native @Cast("GENAPI_NAMESPACE::CallbackHandleType") long RegisterCallback( CNodeCallback pCallback );
+
+        /** De register change callback
+        /** Destroys CNodeCallback object
+        @return true if the callback handle was valid
+        */
+        public native @Cast("bool") boolean DeregisterCallback( @Cast("GENAPI_NAMESPACE::CallbackHandleType") long hCallback );
+
+        /** Retrieves the central node map */
+        public native INodeMap GetNodeMap();
+
+        /** Get the EventId of the node */
+        public native @ByVal gcstring GetEventID();
+
+        /** True if the node is streamable */
+        public native @Cast("bool") boolean IsStreamable();
+
+        /** Returns a list of the names all properties set during initialization */
+        public native void GetPropertyNames(@ByRef gcstring_vector PropertyNames);
+
+        /** Retrieves a property plus an additional attribute by name
+        /** If a property has multiple values/attribute they come with Tabs as delimiters */
+        public native @Cast("bool") boolean GetProperty(@Const @ByRef gcstring PropertyName, @ByRef gcstring ValueStr, @ByRef gcstring AttributeStr);
+
+        /** Imposes an access mode to the natural access mode of the node */
+        public native void ImposeAccessMode(@Cast("GENAPI_NAMESPACE::EAccessMode") int ImposedAccessMode);
+
+        /** Imposes a visibility  to the natural visibility of the node */
+        public native void ImposeVisibility(@Cast("GENAPI_NAMESPACE::EVisibility") int ImposedVisibility);
+
+        /** Retrieves the a node which describes the same feature in a different way */
+        public native INode GetAlias();
+
+        /** Retrieves the a node which describes the same feature so that it can be casted */
+        public native INode GetCastAlias();
+
+        /** Gets a URL pointing to the documentation of that feature */
+        public native @ByVal gcstring GetDocuURL();
+
+        /** True if the node should not be used any more */
+        public native @Cast("bool") boolean IsDeprecated();
+
+        /** Get the type of the main interface of a node */
+        public native @Cast("GENAPI_NAMESPACE::EInterfaceType") int GetPrincipalInterfaceType();
+
+        /** True if the node can be reached via category nodes from a category node named "Root" */
+        public native @Cast("bool") boolean IsFeature();
+
+    }
+
+    /** \addtogroup GenApi_PublicInterface
+     *  \{
+
+     *  Tests if readable */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsReadable( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+
+    /** Checks if a node is readable */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsReadable( @Const IBase p);
+
+    /** Checks if a node is readable */
+
+    /** Tests if writable */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsWritable( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+
+    /** Checks if a node is writable */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsWritable( @Const IBase p);
+
+    /** Checks if a node is writable */
+
+    /** Tests if implemented */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsImplemented( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+
+    /** Checks if a node is implemented */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsImplemented( @Const IBase p);
+
+    /** Checks if a node is implemented */
+
+    /** Tests if available */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsAvailable( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+
+    /** Checks if a node is available */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsAvailable( @Const IBase p);
+    
+    /** Checks if a node is available */
+
+    /** Computes which access mode the two guards allow together */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("GENAPI_NAMESPACE::EAccessMode") int Combine(@Cast("GENAPI_NAMESPACE::EAccessMode") int Peter, @Cast("GENAPI_NAMESPACE::EAccessMode") int Paul);
+
+
+    /** Tests Visibility
+    /** CAVE : this relys on the EVisibility enum's coding */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsVisible( @Cast("GENAPI_NAMESPACE::EVisibility") int Visibility, @Cast("GENAPI_NAMESPACE::EVisibility") int MaxVisiblity );
+
+
+    /** Computes which visibility the two guards allow together */
+
+
+    /** Tests Cacheability */
+    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsCacheable( @Cast("GENAPI_NAMESPACE::ECachingMode") int CachingMode );
+
+    /** Computes which CachingMode results from a combination */
+
+    /** \} */
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_INODE_H
+
+
+// Parsed from <GenApi/Synch.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Hartmut Nebelung
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of Lock classes
+\ingroup GenApi_PublicImpl
+*/
+
+// #ifndef GENAPI_SYNCH_H
+// #define GENAPI_SYNCH_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <Base/GCException.h>
+
+// #if defined (_WIN32)
+// #   include <windows.h>
+// #   include <winbase.h>
+// #elif defined (__GNUC__) && (defined (__linux__) || defined (__APPLE__))
+// #   include <pthread.h>
+// #   include <errno.h>
+// #   include <list>
+// #elif defined(VXWORKS)
+//    #include <vxworks.h>
+//    #include <intLib.h>
+//    #include <taskLib.h>
+// #else
+// #   error No/unknown platform thread support
+// #endif
+
+    //-----------------------------------------------------------------
+    // CLock
+    //-----------------------------------------------------------------
+
+    /**
+    \brief A lock class
+    \ingroup GenApi_PublicImpl
+    */
+    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class CLock extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CLock(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CLock(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CLock position(int position) {
+            return (CLock)super.position(position);
+        }
+    
+        /** Constructor */
+        public CLock() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Destructor */
+
+        /** tries to enter the critical section; returns true if successful */
+        public native @Cast("bool") boolean TryLock();
+
+        /** enters the critical section (may block) */
+        public native void Lock();
+
+        /** leaves the critical section */
+        public native void Unlock();
+
+    }
+
+
+    /** This class is for testing purposes only. It should not be used for
+     *  client code because it exists only for Windows but not for Linux
+     *  since it uses internal data structures of a Win32 object */
+    @Namespace("GENAPI_NAMESPACE") public static class CLockEx extends CLock {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CLockEx(Pointer p) { super(p); }
+    
+
+// #       if defined (_WIN32)
+
+            /** Gives access to internal data member for test and purposes */
+            public native @Cast("int64_t") long GetLockCount();
+
+            /** Gives access to internal data member for test and purposes */
+            public native @Cast("int64_t") long GetRecursionCount();
+
+// #       elif defined (__GNUC__) && (defined (__linux__) || defined (__APPLE__) || defined(VXWORKS))
+            // nothing implemented for Unix
+// #       else
+// #           error No/unknown platform support
+
+    }
+
+
+    //-----------------------------------------------------------------
+    // AutoLock
+    //-----------------------------------------------------------------
+    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class AutoLock extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public AutoLock(Pointer p) { super(p); }
+    
+        public AutoLock(@ByRef CLock lock) { super((Pointer)null); allocate(lock); }
+        private native void allocate(@ByRef CLock lock);
+    }
+
+
+    //-----------------------------------------------------------------
+    // template LockableObject<Object,ThreadingModel>
+    //-----------------------------------------------------------------
+
+    /**
+    \brief Instance-Lock for an object
+    \ingroup GenApi_PublicImpl
+    */
+
+ // namespace GenApi
+
+// #endif // GENAPI_SYNCH_H
 
 
 }

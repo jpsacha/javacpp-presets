@@ -30,12 +30,12 @@ import org.bytedeco.javacpp.tools.InfoMap;
 import org.bytedeco.javacpp.tools.InfoMapper;
 
 /**
- * Wrapper for Basler Pylon library (the C++ API v.4).
+ * Wrapper for Basler Pylon library (the C++ API v.5).
  *
  * @author Jarek Sacha
  */
 @Properties(inherit = GenICam3.class,
-        target = "org.bytedeco.javacpp.Pylon4",
+        target = "org.bytedeco.javacpp.Pylon5",
         value = {
                 @Platform(value = {"linux", "windows"}, include = {
                         "<pylon/Platform.h>",
@@ -43,37 +43,37 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/PylonBase.h>",
                         "<pylon/PylonVersionInfo.h>",
                         "<pylon/Info.h>",
-//                        "<pylon/TlInfo.h>",
-//                        "<pylon/DeviceClass.h>",
-//                        "<pylon/DeviceInfo.h>",
-//                        "<pylon/InterfaceInfo.h>",
-//                        "<pylon/Container.h>",
-//                        // DeviceAccessMode Excluded due to linker problems with bitset
-////                        "<pylon/DeviceAccessMode.h>",
-//                        "<pylon/DeviceFactory.h>",
-//                        "<pylon/TransportLayer.h>",
-//                        "<pylon/TlFactory.h>",
-//                        "<pylon/EventAdapter.h>",
-//
-//                        "<pylon/PixelType.h>",
-//                        "<pylon/PayloadType.h>",
-//                        "<pylon/Image.h>",
-//                        "<pylon/GrabResultData.h>",
-//                        "<pylon/GrabResultPtr.h>",
-//
-//                        "<pylon/WaitObject.h>",
-//                        "<pylon/_InstantCameraParams.h>",
-//                        "<pylon/ConfigurationEventHandler.h>",
-//                        "<pylon/ImageEventHandler.h>",
-//                        "<pylon/CameraEventHandler.h>",
-//                        "<pylon/BufferFactory.h>",
-//                        "<pylon/InstantCamera.h>",
-//                        // Acquisition Configurations
-//                        "<pylon/AcquireSingleFrameConfiguration.h>",
-//                        "<pylon/AcquireContinuousConfiguration.h>",
-//                        "<pylon/SoftwareTriggerConfiguration.h>",
-//                        // "<pylon/gige/ActionTriggerConfiguration.h>",
-//                        //
+                        "<pylon/TlInfo.h>",
+                        "<pylon/DeviceClass.h>",
+                        "<pylon/DeviceInfo.h>",
+                        "<pylon/InterfaceInfo.h>",
+                        "<pylon/Container.h>",
+                        // DeviceAccessMode Excluded due to linker problems with bitset
+//                        "<pylon/DeviceAccessMode.h>",
+                        "<pylon/DeviceFactory.h>",
+                        "<pylon/TransportLayer.h>",
+                        "<pylon/TlFactory.h>",
+                        "<pylon/EventAdapter.h>",
+
+                        "<pylon/PixelType.h>",
+                        "<pylon/PayloadType.h>",
+                        "<pylon/Image.h>",
+                        "<pylon/GrabResultData.h>",
+                        "<pylon/GrabResultPtr.h>",
+
+                        "<pylon/WaitObject.h>",
+                        "<pylon/_InstantCameraParams.h>",
+                        "<pylon/ConfigurationEventHandler.h>",
+                        "<pylon/ImageEventHandler.h>",
+                        "<pylon/CameraEventHandler.h>",
+                        "<pylon/BufferFactory.h>",
+                        "<pylon/InstantCamera.h>",
+                        // Acquisition Configurations
+                        "<pylon/AcquireSingleFrameConfiguration.h>",
+                        "<pylon/AcquireContinuousConfiguration.h>",
+                        "<pylon/SoftwareTriggerConfiguration.h>",
+                        // "<pylon/gige/ActionTriggerConfiguration.h>",
+                        //
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
@@ -90,13 +90,13 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/x64/",
                         preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/x64/"
                 )})
-public class Pylon4 implements InfoMapper {
+public class Pylon5 implements InfoMapper {
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("defined(WIN32) || defined(WIN64)").define())
-                /* "<pylon/stdinclude.h>" - Fix missing definition > */
-                .put(new Info("!defined(GENAPI_DLL_MANAGER_INVALID_HANDLE)").define(false))
-                .put(new Info("!defined(GENAPI_DLL_MANAGER_INVALID_SYMBOL)").define(false))
-                .put(new Info("GCSTRING_NPOS").skip())
+//                /* "<pylon/stdinclude.h>" - Fix missing definition > */
+//                .put(new Info("!defined(GENAPI_DLL_MANAGER_INVALID_HANDLE)").define(false))
+//                .put(new Info("!defined(GENAPI_DLL_MANAGER_INVALID_SYMBOL)").define(false))
+//                .put(new Info("GCSTRING_NPOS").skip())
                 .put(new Info("PYLON_FUNC").skip())
                 .put(new Info("GENAPI_DEPRECATED_FEATURE").skip())
                 /* "<pylon/PylonBase.h>" */
@@ -104,23 +104,27 @@ public class Pylon4 implements InfoMapper {
                 /* "<pylon/PylonBase.h>" Do not generate wrapper for PylonAutoInitTerm to avoid JNI compilation error
                 /* (cannot access `new`, which is intentionally private). */
                 .put(new Info("Pylon::PylonAutoInitTerm").skip())
+
+                /* <pylon/TlInfo.h> */
+                .put(new Info("PYLON_LINUX_BUILD").define(false).skip())
+
                 /* <pylon/Container.h> correct template wrapping. */
-                .put(new Info("PYLONBASE_EXPORT_TEMPLATE").define())
-                .put(new Info("Pylon::TList::iterator").skip())
-                .put(new Info("Pylon::TList::const_iterator").skip())
+//                .put(new Info("PYLONBASE_EXPORT_TEMPLATE").define())
+//                .put(new Info("Pylon::TList::iterator").skip())
+//                .put(new Info("Pylon::TList::const_iterator").skip())
                 .put(new Info("Pylon::TList<Pylon::CDeviceInfo>").pointerTypes("TListCDeviceInfo"))
                 .put(new Info("Pylon::TList<Pylon::CTlInfo>").pointerTypes("TListCTlInfo"))
                 .put(new Info("Pylon::TList<Pylon::CInterfaceInfo>").pointerTypes("TListCInterfaceInfo"))
-//                /* "<pylon/DeviceAccessMode.h>" */
-//                .put(new Info("std::bitset<Pylon::_NumModes>").pointerTypes("ModeBitSet").define())
-                /* ignore to avoid problem with "std::bitset<Pylon::_NumModes>" */
-                .put(new Info("Pylon::CTlFactory::IsDeviceAccessible").skip())
-
+////                /* "<pylon/DeviceAccessMode.h>" */
+////                .put(new Info("std::bitset<Pylon::_NumModes>").pointerTypes("ModeBitSet").define())
+//                /* ignore to avoid problem with "std::bitset<Pylon::_NumModes>" */
+//                .put(new Info("Pylon::CTlFactory::IsDeviceAccessible").skip())
+//
                 /* Workaround for not being able to parse <pylon/DeviceAccessMode.h>*/
                 .put(new Info("Pylon::AccessModeSet").cast().pointerTypes("Pointer"))
                 .put(new Info("Pylon::Control").cast().valueTypes("int").cppText("0x1"))
 //                .put(new Info("Pylon::IDeviceFactory::IsDeviceAccessible").skip())
-
+//
                 /* "<pylon/WaitObject.h>" */
                 .put(new Info("defined (PYLON_LINUX_BUILD)").define(false))
                 /* typedef void *HANDLE */

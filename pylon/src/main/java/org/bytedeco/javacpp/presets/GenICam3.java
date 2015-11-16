@@ -30,44 +30,42 @@ import org.bytedeco.javacpp.tools.InfoMap;
 import org.bytedeco.javacpp.tools.InfoMapper;
 
 /**
- * Wrapper for Basler Pylon library (the C++ API v.4).
+ * Wrapper for Basler Pylon library (the C++ API v.5).
  *
  * @author Jarek Sacha
  */
 @Properties(target = "org.bytedeco.javacpp.GenICam3", value = {
         @Platform(value = {"linux", "windows"}, include = {
-//                "<_GenICamVersion.h>",
-//                "<GenICamVersion.h>",
-//                "<Base/GCNamespace.h>",
+                "<_GenICamVersion.h>",
+                "<GenICamVersion.h>",
+                "<Base/GCNamespace.h>",
                 "<Base/GCTypes.h>",
                 "<Base/GCString.h>",
                 "<Base/GCStringVector.h>",
-////                "<Base/GCException.h>",
-////                "<Base/GCUtilities.h>",
-////                "<Base/GCBase.h>",
-////                "<GenApi/GenApi.h>",
-//                // <GenApi/Types.h> commented out due to issues with enums with Long values
-////                "<GenApi/Types.h>",
-//                "<GenApi/Reference.h>",
-//                "<GenApi/IBase.h>",
-//                "<GenApi/IValue.h>",
-//                "<GenApi/IBoolean.h>",
-//                "<GenApi/IInteger.h>",
-//                "<GenApi/IFloat.h>",
-//                "<GenApi/IPort.h>",
-//                "<GenApi/INode.h>",
-//                "<GenApi/Synch.h>",
-////                "<GenApi/Container.h>",
-////                "<GenApi/INodeMap.h>",
+//                "<Base/GCException.h>",
+//                "<Base/GCUtilities.h>",
+//                "<Base/GCBase.h>",
+//                "<GenApi/GenApi.h>",
+                // <GenApi/Types.h> commented out due to issues with enums with Long values
+//                "<GenApi/Types.h>",
+                "<GenApi/Autovector.h>",
+                "<GenApi/Reference.h>",
+                "<GenApi/IBase.h>",
+                "<GenApi/IValue.h>",
+                "<GenApi/IBoolean.h>",
+                "<GenApi/IInteger.h>",
+                "<GenApi/IFloat.h>",
+                "<GenApi/IPort.h>",
+                "<GenApi/INode.h>",
+                "<GenApi/Synch.h>",
+//                "<GenApi/Container.h>",
+//                "<GenApi/INodeMap.h>",
         }),
-        @Platform(value = "linux", link = "genicam@.2", includepath = "/usr/include/pylon/genicam"),
+        @Platform(value = "linux", link = "genicam@.3", includepath = "/usr/include/pylon/genicam"),
         @Platform(value = "windows",
                 link = {/* GeniCam */
-//                        "CLAllSerial_MD_VC100_v2_3",
-//                        "CLProtocol_MD_VC100_v2_3",
-//                        "CLSerCOM",
+                        "GenApi_MD_VC120_v3_0_Basler_pylon_v5_0",
                         "GCBase_MD_VC120_v3_0_Basler_pylon_v5_0",
-//                        "GenApi_MD_VC100_v2_3"
                 },
                 includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
         @Platform(
@@ -82,16 +80,27 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         )})
 public class GenICam3 implements InfoMapper {
     public void map(InfoMap infoMap) {
-        infoMap.put(new Info("defined(WIN32) || defined(WIN64)").define())
-//                /* _GenICamVersion.h and GenICamVersion.h */
-                .put(new Info("GENICAM_MAIN_COMPILER").skip())
-                .put(new Info("GENICAM_COMPANY_SUFFIX").skip())
-                .put(new Info("GENICAM_COMPILER").skip())
-
-//                .put(new Info("GENICAM_NAMESPACE").annotations().cppText("GenICam"))
+        infoMap
+////        infoMap.put(new Info("defined(WIN32) || defined(WIN64)").define())
+                /* _GenICamVersion.h and GenICamVersion.h */
+                .put(new Info("GENICAM_MAIN_COMPILER", "GENICAM_COMPILER").skip())
+                .put(new Info(
+                        "GENICAM_VERSION_MAJOR",
+                        "GENICAM_VERSION_MINOR",
+                        "GENICAM_COMPANY_SUFFIX",
+                        "GENICAM_VERSION_MAJOR_STR",
+                        "GENICAM_VERSION_MINOR_STR",
+                        "GENICAM_VERSION_SUBMINOR_STR",
+                        "GENICAM_VERSION_BUILD_STR",
+                        "GENICAM_COMPILER_STR",
+                        "GENICAM_CACHE_VERSION",
+                        "GENICAM_LOG_CONFIG_VERSION",
+                        "GENICAM_NAMESPACE",
+                        "GC_W64",
+                        "GCSTRING_NPOS").cppTypes())
+                .put(new Info("defined(GENICAM_COMPANY_SUFFIX)").define())
 
                 /* "Base/GCTypes.h" - Fix wrapping of > */
-                .put(new Info("GC_W64").define(true))
                 .put(new Info("INT64_MAX").define(false))
                 .put(new Info("INT64_MIN").define(false))
                 .put(new Info("UINT64_MAX").define(false))
@@ -103,29 +112,29 @@ public class GenICam3 implements InfoMapper {
                 .put(new Info("UINT8_MAX").define(false))
                 .put(new Info("GCBASE_API").cppTypes().cppTypes().annotations().cppText(""))
                 .put(new Info("GCBASE_RTTI_CLASS_API").cppTypes().annotations().cppText(""))
-
-                /* "Base/GCString.h" prevent parsing of things related to inner class `gcwchar` **/
-
-                .put(new Info("defined(_MSC_VER) && !defined(PHARLAP_WIN32)").define(false))
+//
+//                /* "Base/GCString.h" prevent parsing of things related to inner class `gcwchar` **/
+//
+//                .put(new Info("defined(_MSC_VER) && !defined(PHARLAP_WIN32)").define(false))
                 /* Enums defined here since <GenApi/Types.h> cannot be parsed due to Long enums */
-                .put(new Info("GenApi::EAccessMode").cast().valueTypes("int"))
-                .put(new Info("GenApi::ECachingMode").cast().valueTypes("int"))
-                .put(new Info("GenApi::ECachingMode").cast().valueTypes("int"))
-                .put(new Info("GenApi::EDisplayNotation").cast().valueTypes("int"))
-                .put(new Info("GenApi::EInterfaceType").cast().valueTypes("int"))
-                .put(new Info("GenApi::ELinkType").cast().valueTypes("int"))
-                .put(new Info("GenApi::ENameSpace").cast().valueTypes("int"))
-                .put(new Info("GenApi::ERepresentation").cast().valueTypes("int"))
-                .put(new Info("GenApi::EVisibility").cast().valueTypes("int"))
-                .put(new Info("GenApi::EYesNo").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::EAccessMode").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::ECachingMode").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::EDisplayNotation").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::EIncMode").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::EInterfaceType").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::ELinkType").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::ENameSpace").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::ERepresentation").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::EVisibility").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::EYesNo").cast().valueTypes("int"))
 
-                .put(new Info("GenApi::CReferenceT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CReferenceTInteger").purify())
-                .put(new Info("GenApi::CBaseRefT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CBaseRefTInteger").purify())
-                .put(new Info("GenApi::CValueRefT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CValueRefTInteger").purify())
-                .put(new Info("GenApi::CIntegerRefT<GenApi::IInteger,GenApi::IInteger>").pointerTypes("CIntegerRef"))
+                .put(new Info("GENAPI_NAMESPACE::CReferenceT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CReferenceTInteger").purify())
+                .put(new Info("GENAPI_NAMESPACE::CBaseRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CBaseRefTInteger").purify())
+                .put(new Info("GENAPI_NAMESPACE::CValueRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CValueRefTInteger").purify())
+                .put(new Info("GENAPI_NAMESPACE::CIntegerRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CIntegerRef"))
 
                 /* Workaround for not be ing able to parse <GenApi/Container.h>*/
-                .put(new Info("GenApi::node_vector").cast().pointerTypes("Pointer"))
+                .put(new Info("GENAPI_NAMESPACE::node_vector").cast().pointerTypes("Pointer"))
 
         ;
     }

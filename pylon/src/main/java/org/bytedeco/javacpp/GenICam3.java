@@ -1650,12 +1650,6 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     //*************************************************************
     // CFloatRef class
     //*************************************************************
-    @Namespace("GENAPI_NAMESPACE") @Opaque public static class IEnumeration extends Pointer {
-        /** Empty constructor. Calls {@code super((Pointer)null)}. */
-        public IEnumeration() { super((Pointer)null); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public IEnumeration(Pointer p) { super(p); }
-    }
 
 // #ifndef DOXYGEN_IGNORE
 
@@ -2145,6 +2139,273 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
  // namespace GenApi
 
 // #endif // GENAPI_SYNCH_H
+
+
+// Parsed from <GenApi/IEnumEntry.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IENUMENTRY_H
+// #define GENAPI_IENUMENTRY_H
+
+
+// #include <Base/GCString.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+
+    //*************************************************************
+    // IEnumEntry interface
+    //*************************************************************
+
+    /**
+    \brief Interface of single enum value
+    \ingroup GenApi_PublicInterface
+    */
+    /** Maps of Enum Values to symbolic values */
+    @Namespace("GENAPI_NAMESPACE") public static class IEnumEntry extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumEntry(Pointer p) { super(p); }
+    
+        /** Get numeric enum value */
+        public native @Cast("int64_t") long GetValue();
+
+        /** Get symbolic enum value */
+        public native @ByVal gcstring GetSymbolic();
+
+        /** Get double number associated with the entry */
+        public native double GetNumericValue();
+
+        /** Indicates if the corresponding EnumEntry is self clearing */
+        public native @Cast("bool") boolean IsSelfClearing();
+    }
+
+    //*************************************************************
+    // CEnumEntryRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IEnumEntry pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IEnumEntry pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IENUMENTRY_H
+
+
+// Parsed from <GenApi/IEnumeration.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of interface IEnumeration
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IENUMERATION_H
+// #define GENAPI_IENUMERATION_H
+
+// #include <Base/GCStringVector.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // Enumeration interface
+    //*************************************************************
+
+    /**
+    \brief Interface for enumeration properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GENAPI_NAMESPACE") public static class IEnumeration extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumeration(Pointer p) { super(p); }
+    
+
+        /** Get list of symbolic Values */
+        public native void GetSymbolics(@Cast("GENAPI_NAMESPACE::StringList_t*") @ByRef Pointer Symbolics);
+
+        /** Get list of entry nodes */
+        public native void GetEntries(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Entries);
+
+        /** Set string node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** Set integer node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetIntValue(@Cast("int64_t") long Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetIntValue(@Cast("int64_t") long Value);
+
+        /** Get string node value */
+        public native @ByVal @Name("operator *") gcstring multiply();
+
+        /** Get integer node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("int64_t") long GetIntValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("int64_t") long GetIntValue();
+
+        /** Get an entry node by name */
+        public native IEnumEntry GetEntryByName(@Const @ByRef gcstring Symbolic);
+
+        /** Get an entry node by its IntValue */
+        public native IEnumEntry GetEntry(@Cast("const int64_t") long IntValue);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IENUMERATION_H
+
+
+// Parsed from <GenApi/IEnumerationT.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of interface IEnumerationT
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IENUMERATIONT_H
+// #define GENAPI_IENUMERATIONT_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/Pointer.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/Compatibility.h>
+// #include <vector>
+    //*************************************************************
+    // Enumeration template interface
+    //*************************************************************
+
+    /**
+    \brief Interface for enumeration properties
+    \ingroup GenApi_PublicInterface
+    */
+
+    //*************************************************************
+    // CEnumerationTRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IEnumerationT pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+// #endif
+
+
+
+// #endif // ifndef GENAPI_IENUMERATIONT_H
 
 
 }

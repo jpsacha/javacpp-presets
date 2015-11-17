@@ -205,7 +205,6 @@ public static final int PYLON_PACKING = 8;
 // #       define PYLON_UNALIGNED __unaligned
 // #   endif
 // #elif defined(PYLON_LINUX_BUILD)
-// #       define PYLON_UNALIGNED
 // #else
 // #   error Invalid platform
 // #endif
@@ -5786,6 +5785,1972 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #endif /* _MSC_VER */
 
 // #endif /* INCLUDED_SOFTWARETRIGGERCONFIGURATION_H_4655834 */
+
+
+// Parsed from <pylon/ReusableImage.h>
+
+//------------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//------------------------------------------------------------------------------
+/**
+    \file
+    \brief  Contains an interface for a reusable image.
+*/
+
+// #ifndef INCLUDED_REUSABLEIMAGE_H_1558802
+// #define INCLUDED_REUSABLEIMAGE_H_1558802
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/PylonBase.h>
+// #include <pylon/Image.h>
+    /** \addtogroup Pylon_ImageHandlingSupport
+     * \{
+     */
+
+    /**
+    \interface  IReusableImage
+    \brief  Extends the IImage interface to be able to reuse the image's resources to represent a different image.
+    */
+    @Namespace("Pylon") public static class IReusableImage extends IImage {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IReusableImage(Pointer p) { super(p); }
+    
+        /** Ensure proper destruction by using a virtual destructor. */
+        // implementation must be out of class or older compilers will throw an error (see below)
+
+
+        /**
+        \brief Can be used to check whether the pixel type is supported.
+        <p>
+        @return Returns true if the pixel type is supported.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean IsSupportedPixelType( @Cast("Pylon::EPixelType") int pixelType);
+
+
+        /**
+        \brief Can be used to check whether the value of PaddingX can be defined by the user.
+        <p>
+        @return Returns true if the value of PaddingX can be defined by the user.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean IsAdditionalPaddingSupported();
+
+
+        /**
+        \brief Resets the image properties and provides a buffer to hold the image.
+        <p>
+        @param [in]   pixelType   The pixel type of the new image.
+        @param [in]   width       The number of pixels in a row in the new image.
+        @param [in]   height      The number of rows in the new image.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        <p>
+        \pre
+        <ul>
+        <li> The IsSupportedPixelType() method returns true.
+        <li> The \c width value must be >= 0 and < _I32_MAX.
+        <li> The \c height value must be >= 0 and < _I32_MAX.
+        </ul>
+        <p>
+        \post
+        <ul>
+        <li> The properties of the image are changed.
+        <li> A buffer large enough to hold the image is provided.
+        </ul>
+        <p>
+        \error
+            Throws an exception when the preconditions are not met.
+            Throws an exception when no buffer with the required size can be provided, e.g. by allocation.
+            The original representation is preserved on error.
+        */
+        public native void Reset( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+        public native void Reset( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height);
+
+
+        /**
+        \brief Resets the image properties including user defined PaddingX and provides a buffer to hold the image.
+        <p>
+        Extends the Reset(EPixelType, uint32_t, uint32_t) method with user provided padding.
+        <p>
+        @param [in]   pixelType The pixel type of the new image.
+        @param [in]   width     The number of pixels in a row in the new image.
+        @param [in]   height    The number of rows in the new image.
+        @param [in]   paddingX  The number of extra data bytes at the end of each row.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        <p>
+        \pre
+        <ul>
+        <li> The preconditions of the Reset() method without paddingX parameter apply.
+        <li> The IsAdditionalPaddingSupported() method returns true.
+        </ul>
+        */
+        public native void Reset( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+
+
+        /**
+        \brief Releases the image buffer and resets to an invalid image.
+        <p>
+        \post
+            <ul>
+            <li> PixelType = PixelType_Undefined.
+            <li> Width = 0.
+            <li> Height = 0.
+            <li> PaddingX = 0.
+            <li> No buffer is allocated.
+            </ul>
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native void Release();
+    }
+
+    /**
+     * \}
+     */
+
+     // implementation for d'tor must be out of class
+     
+
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_REUSABLEIMAGE_H_1558802 */
+
+
+// Parsed from <pylon/ImagePersistence.h>
+
+//------------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2011-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//------------------------------------------------------------------------------
+/**
+    \file
+    \brief  Contains an image loading and saving support class.
+*/
+// #ifndef INCLUDED_IMAGEPERSISTENCE_H_3336145
+// #define INCLUDED_IMAGEPERSISTENCE_H_3336145
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+
+// #include <pylon/stdinclude.h>
+// #include <pylon/PylonUtility.h>
+// #include <pylon/ReusableImage.h>
+    /** \addtogroup Pylon_ImageHandlingSupport
+     * \{
+     */
+
+// #if defined(PYLON_WIN_BUILD)
+    /** Lists the available file formats */
+    /** enum Pylon::EImageFileFormat */
+    public static final int
+        /** Windows Bitmap, no compression. */
+        ImageFileFormat_Bmp = 0,
+        /** Tagged Image File Format, no compression, supports mono images with more than 8 bit bit depth. */
+        ImageFileFormat_Tiff = 1,
+        /** Joint Photographic Experts Group, lossy data compression. */
+        ImageFileFormat_Jpeg = 2,
+        /** Portable Network Graphics, lossless data compression. */
+        ImageFileFormat_Png = 3;
+// #elif defined(PYLON_LINUX_BUILD)
+// #else
+// #   error unsupported platform
+// #endif
+
+
+    /** Used to pass options to CImagePersistence methods. */
+    @Namespace("Pylon") @NoOffset public static class CImagePersistenceOptions extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CImagePersistenceOptions(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CImagePersistenceOptions(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CImagePersistenceOptions position(int position) {
+            return (CImagePersistenceOptions)super.position(position);
+        }
+    
+        public CImagePersistenceOptions() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Set the image quality options. Valid quality values range from 0 to 100. */
+        public native void SetQuality( int quality);
+
+        /** Returns the set quality level. */
+        public native int GetQuality();
+    }
+
+
+    /**
+    \class  CImagePersistence
+    \brief  Contains static functions supporting loading and saving of images.
+    */
+    @Namespace("Pylon") public static class CImagePersistence extends Pointer {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CImagePersistence() { super((Pointer)null); allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CImagePersistence(int size) { super((Pointer)null); allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CImagePersistence(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CImagePersistence position(int position) {
+            return (CImagePersistence)super.position(position);
+        }
+    
+        /**
+        \brief Saves the image to disk. Converts the image to a format that can be saved if required.
+        <p>
+        If required, the image is automatically converted to a new image and then saved. See
+        CanSaveWithoutConversion() for more information.
+        An image with a bit depth higher than 8 bit is stored with 16 bit bit depth
+        if supported by the image file format. In this case the pixel data is MSB aligned.
+        <p>
+        If more control over the conversion is required then the CImageFormatConverter class
+        can be used to convert the input image before saving it.
+        <p>
+        @param [in]   imageFileFormat The file format to save the image in.
+        @param [in]   filename        Name and path of the image.
+        @param [in]   pBuffer    The pointer to the buffer of the image.
+        @param [in]   bufferSize The size of the buffer in byte.
+        @param [in]   pixelType  The pixel type of the image to save.
+        @param [in]   width      The number of pixels in a row of the image to save.
+        @param [in]   height     The number of rows of the image to save.
+        @param [in]   paddingX   The number of extra data bytes at the end of each row.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        @param [in]   pOptions   Additional options.
+        <p>
+        \pre
+        <ul>
+        <li> The pixel type of the image to save must be a supported input format of the Pylon::CImageFormatConverter.
+        <li> The \c width value must be >= 0 and < _I32_MAX.
+        <li> The \c height value must be >= 0 and < _I32_MAX.
+        </ul>
+        <p>
+        \error
+            Throws an exception if saving the image fails.
+        */
+        public static native void Save( @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("const Pylon::String_t*") @ByRef gcstring filename, @Const Pointer pBuffer, @Cast("size_t") int bufferSize, @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("Pylon::EImageOrientation") int orientation, CImagePersistenceOptions pOptions/*=NULL*/);
+        public static native void Save( @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("const Pylon::String_t*") @ByRef gcstring filename, @Const Pointer pBuffer, @Cast("size_t") int bufferSize, @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("Pylon::EImageOrientation") int orientation);
+
+
+        /**
+        \brief Saves the image to disk. Converts the image to a format that can be if required.
+        <p>
+        If required, the image is automatically converted to a new image and then saved. See
+        CanSaveWithoutConversion() for more information.
+        An image with a bit depth higher than 8 bit is stored with 16 bit bit depth
+        if supported by the image file format. In this case the pixel data is MSB aligned.
+        <p>
+        If more control over the conversion is required then the CImageFormatConverter class
+        can be used to convert the input image before saving it.
+        <p>
+        @param [in]   imageFileFormat The target file format for the image to save.
+        @param [in]   filename        Name and path of the image.
+        @param [in]   image           The image to save, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        @param [in]   pOptions        Additional options.
+        <p>
+        \pre
+            The pixel type of the image to save must be a supported input format of the Pylon::CImageFormatConverter.
+        <p>
+        \error
+            Throws an exception if saving the image fails.
+        */
+        public static native void Save( @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("const Pylon::String_t*") @ByRef gcstring filename, @Const @ByRef IImage image, CImagePersistenceOptions pOptions/*=NULL*/);
+        public static native void Save( @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("const Pylon::String_t*") @ByRef gcstring filename, @Const @ByRef IImage image);
+
+
+        /**
+        \brief Can be used to check whether the given image can be saved without prior conversion.
+        <p>
+        See the CImagePersistence::CanSaveWithoutConversion( EImageFileFormat, const IImage&) method documentation for a list of supported pixel formats.
+        <p>
+        @param [in]   imageFileFormat The target file format for the image to save.
+        @param [in]   pixelType The pixel type of the image to save.
+        @param [in]   width     The number of pixels in a row of the image to save.
+        @param [in]   height    The number of rows of the image to save.
+        @param [in]   paddingX  The number of extra data bytes at the end of each row.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        @return Returns true if the image can be saved without prior conversion.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public static native @Cast("bool") boolean CanSaveWithoutConversion( @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("Pylon::EImageOrientation") int orientation);
+
+
+        /**
+        \brief Can be used to check whether the image can be saved without prior conversion.
+        <p>
+        Supported formats for TIFF:
+        <ul>
+        <li> PixelType_Mono8
+        <li> PixelType_Mono16
+        <li> PixelType_RGB8packed
+        <li> PixelType_RGB16packed
+        </ul>
+        <p>
+        Supported formats for BMP, JPEG and PNG:
+        <ul>
+        <li> PixelType_Mono8
+        <li> PixelType_BGR8packed
+        <li> PixelType_BGRA8packed
+        </ul>
+        <p>
+        @param [in]   imageFileFormat The target file format for the image to save.
+        @param [in]   image           The image to save, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        @return Returns true if the image can be saved without prior conversion.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public static native @Cast("bool") boolean CanSaveWithoutConversion( @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Const @ByRef IImage image);
+
+
+        /**
+        \brief Loads an image from disk.
+        <p>
+        The orientation of loaded images is always ImageOrientation_TopDown.
+        <p>
+        @param [in]   filename        Name and path of the image.
+        @param [in]   image           The target image object, e.g. a CPylonImage or CPylonBitmapImage object.
+                                     When passing a CPylonBitmapImage object the loaded format must be supported by the CPylonBitmapImage class.
+        <p>
+        \error
+            Throws an exception if the image cannot be loaded. The image buffer content is undefined when the loading of the image fails.
+        */
+        public static native void Load( @Cast("const Pylon::String_t*") @ByRef gcstring filename, @ByRef IReusableImage image);
+
+        /**
+        \brief Loads an image from memory.
+        <p>
+        The orientation of loaded images is always ImageOrientation_TopDown.
+        Currently BMP, JPEG & PNG images are supported.
+        <p>
+        @param [in]   pBuffer         The pointer to the buffer of the source image.
+        @param [in]   bufferSizeBytes The size of the buffer of the source image.
+        @param [in]   image           The target image object, e.g. a CPylonImage or CPylonBitmapImage object.
+                                     When passing a CPylonBitmapImage object the loaded format must be supported by the CPylonBitmapImage class.
+        <p>
+        \error
+            Throws an exception if the image cannot be loaded. The image buffer content is undefined when the loading of the image fails.
+        */
+        public static native void LoadFromMemory( @Const Pointer pBuffer, @Cast("size_t") int bufferSizeBytes, @ByRef IReusableImage image);
+
+    }
+
+    /**
+     * \}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_IMAGEPERSISTENCE_H_3336145 */
+
+
+// Parsed from <pylon/PixelData.h>
+
+//------------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2012-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//------------------------------------------------------------------------------
+/**
+    \file
+    \brief  Contains a data structure describing the data of one pixel.
+*/
+
+// #ifndef INCLUDED_PIXELDATA_H_9714014
+// #define INCLUDED_PIXELDATA_H_9714014
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/PylonBase.h>
+    /** \addtogroup Pylon_ImageHandlingSupport
+     * \{
+     */
+
+    /**
+    \class  SPixelData
+    \brief  Describes the data of one pixel.
+    */
+    @Namespace("Pylon") @NoOffset public static class SPixelData extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public SPixelData(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public SPixelData(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public SPixelData position(int position) {
+            return (SPixelData)super.position(position);
+        }
+    
+        /** Construct and clear. */
+        public SPixelData() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Lists the possible pixel data types.
+         *  Do not confound this enumeration with the Pylon::PixelType enumeration that lists all pixel formats. */
+        /** enum Pylon::SPixelData::EPixelDataType */
+        public static final int
+            /** Will be returned, if the pixel data cannot be determined. */
+            PixelDataType_Unknown = 0,
+            /** Pixel data of monochrome images. */
+            PixelDataType_Mono = 1,
+            /** Pixel data of YUV images. */
+            PixelDataType_YUV = 2,
+            /** Pixel data of RGB or BGR images. */
+            PixelDataType_RGB = 3,
+            /** Pixel data of RGB or BGR images with alpha channel. */
+            PixelDataType_RGBA = 4,
+            /** Pixel data of a red pixel of bayer images. */
+            PixelDataType_BayerR = 5,
+            /** Pixel data of a green pixel of bayer images. */
+            PixelDataType_BayerG = 6,
+            /** Pixel data of a blue pixel of bayer images. */
+            PixelDataType_BayerB = 7;
+
+        /** The type of pixel data held. */
+        public native @Cast("Pylon::SPixelData::EPixelDataType") int PixelDataType(); public native SPixelData PixelDataType(int PixelDataType);
+        /** The bit depth of the data held. */
+        public native @Cast("uint32_t") int BitDepth(); public native SPixelData BitDepth(int BitDepth);
+
+            /** Pixel data of monochrome images. */
+            @Name("Data.Mono") public native int Data_Mono(); public native SPixelData Data_Mono(int Data_Mono);
+            /** Pixel data of a red pixel of bayer images. */
+            @Name("Data.BayerR") public native int Data_BayerR(); public native SPixelData Data_BayerR(int Data_BayerR);
+            /** Pixel data of a green pixel of bayer images. */
+            @Name("Data.BayerG") public native int Data_BayerG(); public native SPixelData Data_BayerG(int Data_BayerG);
+            /** Pixel data of a blue pixel of bayer images. */
+            @Name("Data.BayerB") public native int Data_BayerB(); public native SPixelData Data_BayerB(int Data_BayerB);
+
+                /** Brightness. */
+                @Name("Data.YUV.Y") public native int Data_YUV_Y(); public native SPixelData Data_YUV_Y(int Data_YUV_Y);
+                /** Chroma U. */
+                @Name("Data.YUV.U") public native int Data_YUV_U(); public native SPixelData Data_YUV_U(int Data_YUV_U);
+                /** Chroma V. */
+                @Name("Data.YUV.V") public native int Data_YUV_V(); public native SPixelData Data_YUV_V(int Data_YUV_V);
+
+                /** Red. */
+                @Name("Data.RGB.R") public native int Data_RGB_R(); public native SPixelData Data_RGB_R(int Data_RGB_R);
+                /** Green. */
+                @Name("Data.RGB.G") public native int Data_RGB_G(); public native SPixelData Data_RGB_G(int Data_RGB_G);
+                /** Blue. */
+                @Name("Data.RGB.B") public native int Data_RGB_B(); public native SPixelData Data_RGB_B(int Data_RGB_B);
+
+                /** Red. */
+                @Name("Data.RGBA.R") public native int Data_RGBA_R(); public native SPixelData Data_RGBA_R(int Data_RGBA_R);
+                /** Green. */
+                @Name("Data.RGBA.G") public native int Data_RGBA_G(); public native SPixelData Data_RGBA_G(int Data_RGBA_G);
+                /** Blue. */
+                @Name("Data.RGBA.B") public native int Data_RGBA_B(); public native SPixelData Data_RGBA_B(int Data_RGBA_B);
+                /** Transparency. */
+                @Name("Data.RGBA.A") public native int Data_RGBA_A(); public native SPixelData Data_RGBA_A(int Data_RGBA_A);
+
+        /** Compares pixel data. */
+        public native @Cast("bool") @Name("operator ==") boolean equals( @Const @ByRef SPixelData rhs);
+
+        /** Compares pixel data. */
+        public native @Cast("bool") @Name("operator !=") boolean notEquals( @Const @ByRef SPixelData rhs);
+    }
+
+    /**
+     * \}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_PIXELDATA_H_9714014 */
+
+
+// Parsed from <pylon/PylonImageBase.h>
+
+//------------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//------------------------------------------------------------------------------
+/**
+    \file
+    \brief  Contains the pylon image base class.
+*/
+
+// #ifndef INCLUDED_PYLONIMAGEBASE_H_6835095
+// #define INCLUDED_PYLONIMAGEBASE_H_6835095
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/stdinclude.h>
+// #include <pylon/PylonUtility.h>
+// #include <pylon/ReusableImage.h>
+// #include <pylon/ImagePersistence.h>
+// #include <pylon/PixelData.h>
+    /** \addtogroup Pylon_ImageHandlingSupport
+     * \{
+     */
+
+    /**
+    \class  CPylonImageBase
+    \brief  Provides basic functionality for pylon image classes.
+    */
+    @Namespace("Pylon") public static class CPylonImageBase extends IReusableImage {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CPylonImageBase(Pointer p) { super(p); }
+    
+
+        /**
+        \brief Saves the image to disk. Converts the image to a format that can be saved if required.
+        <p>
+        This is a convenience method that calls CImagePersistence::Save().
+        <p>
+        If required, the image is automatically converted into a new image and saved afterwards. See
+        CImagePersistence::CanSaveWithoutConversion() for more information.
+        An image with a bit depth higher than 8 bit is stored with 16 bit bit depth,
+        if supported by the image file format. In this case the pixel data is MSB aligned.
+        <p>
+        If more control over the conversion is required, the CImageFormatConverter class
+        can be used to convert the input image before saving it.
+        <p>
+        @param [in]   imageFileFormat File format to save the image in.
+        @param [in]   filename        Name and path of the image.
+        @param [in]   pOptions        Additional options.
+        <p>
+        \pre
+            The pixel type of the image to be saved must be a supported input format of the Pylon::CImageFormatConverter.
+        <p>
+        \error
+            Throws an exception if the saving of the image fails.
+        */
+        public native void Save(  @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("const Pylon::String_t*") @ByRef gcstring filename, CImagePersistenceOptions pOptions/*=NULL*/);
+        public native void Save(  @Cast("Pylon::EImageFileFormat") int imageFileFormat, @Cast("const Pylon::String_t*") @ByRef gcstring filename);
+
+
+        /**
+        \brief Loads an image from a disk.
+        <p>
+        This is a convenience method that calls CImagePersistence::Load()
+        <p>
+        @param [in]   filename Name and path of the image.
+        <p>
+        \pre
+            The image object must be able to hold the image format of the loaded image.
+        <p>
+        \error
+            Throws an exception if the image cannot be loaded. The image buffer content is undefined when the loading of the image fails.
+        */
+        public native void Load( @Cast("const Pylon::String_t*") @ByRef gcstring filename);
+
+
+        /**
+        \brief Can be used to check whether the image can be saved without prior conversion.
+         <p>
+         This is a convenience method that calls CImagePersistence::CanSaveWithoutConversion().
+        <p>
+        @param [in]   imageFileFormat Target file format for the image to be saved.
+        @return Returns true, if the image can be saved without prior conversion.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean CanSaveWithoutConversion( @Cast("Pylon::EImageFileFormat") int imageFileFormat);
+
+        /**
+        \brief Retrieves the data of a pixel.
+        <p>
+        \note This method is relativly slow. Do not use it for image processing tasks.
+        <p>
+        @param [in]   posX Horizontal position of the pixel. The first column has position 0.
+        @param [in]   posY Vertical position of the pixel. The first row has position 0.
+        @return Returns the data of a pixel for supported pixel types. For unsupported pixel types pixel data of the SPixelData::PixelDataType_Unknown type is returned.
+        <p>
+        \pre
+        <ul>
+        <li> The image must be valid.
+        <li> The pixel position defined by \c posX and \c posY must be located inside the image area.
+        </ul>
+        <p>
+        Supported pixel types:
+        <ul>
+        <li> PixelType_Mono1packed
+        <li> PixelType_Mono2packed
+        <li> PixelType_Mono4packed
+        <li> PixelType_Mono8
+        <li> PixelType_Mono8signed
+        <li> PixelType_Mono10
+        <li> PixelType_Mono10packed
+        <li> PixelType_Mono10p
+        <li> PixelType_Mono12
+        <li> PixelType_Mono12packed
+        <li> PixelType_Mono12p
+        <li> PixelType_Mono16
+        </ul>
+        <ul>
+        <li> PixelType_BayerGR8
+        <li> PixelType_BayerRG8
+        <li> PixelType_BayerGB8
+        <li> PixelType_BayerBG8
+        <li> PixelType_BayerGR10
+        <li> PixelType_BayerRG10
+        <li> PixelType_BayerGB10
+        <li> PixelType_BayerBG10
+        <li> PixelType_BayerGR12
+        <li> PixelType_BayerRG12
+        <li> PixelType_BayerGB12
+        <li> PixelType_BayerBG12
+        <li> PixelType_BayerGR12Packed
+        <li> PixelType_BayerRG12Packed
+        <li> PixelType_BayerGB12Packed
+        <li> PixelType_BayerBG12Packed
+        <li> PixelType_BayerGR10p
+        <li> PixelType_BayerRG10p
+        <li> PixelType_BayerGB10p
+        <li> PixelType_BayerBG10p
+        <li> PixelType_BayerGR12p
+        <li> PixelType_BayerRG12p
+        <li> PixelType_BayerGB12p
+        <li> PixelType_BayerBG12p
+        <li> PixelType_BayerGR16
+        <li> PixelType_BayerRG16
+        <li> PixelType_BayerGB16
+        <li> PixelType_BayerBG16
+        </ul>
+        <ul>
+        <li> PixelType_RGB8packed
+        <li> PixelType_BGR8packed
+        <li> PixelType_RGBA8packed
+        <li> PixelType_BGRA8packed
+        <li> PixelType_RGB10packed
+        <li> PixelType_BGR10packed
+        <li> PixelType_RGB12packed
+        <li> PixelType_BGR12packed
+        <li> PixelType_RGB12V1packed
+        <li> PixelType_RGB16packed
+        <li> PixelType_RGB8planar
+        <li> PixelType_RGB10planar
+        <li> PixelType_RGB12planar
+        <li> PixelType_RGB16planar
+        </ul>
+        <ul>
+        <li> PixelType_YUV422packed
+        <li> PixelType_YUV422_YUYV_Packed
+        </ul>
+        <p>
+        \error
+            Throws an exception, if the preconditions are not met.
+        */
+        public native @ByVal SPixelData GetPixelData( @Cast("uint32_t") int posX, @Cast("uint32_t") int posY);
+
+       }
+
+    /**
+     * \}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_PYLONIMAGEBASE_H_6835095 */
+
+
+// Parsed from <pylon/PylonImage.h>
+
+//------------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//------------------------------------------------------------------------------
+/**
+    \file
+    \brief  Contains an image class.
+*/
+
+// #ifndef INCLUDED_PYLONIMAGE_H_6241114
+// #define INCLUDED_PYLONIMAGE_H_6241114
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/stdinclude.h>
+// #include <pylon/PylonUtility.h>
+// #include <pylon/PylonImageBase.h>
+    // Forward references.
+
+    /** \addtogroup Pylon_ImageHandlingSupport
+     * \{
+     */
+
+    /**
+    \class  CPylonImage
+    \brief  Describes an image.
+    <p>
+    <ul>
+    <li> Automatically handles size and lifetime of the image buffer.
+    <li> Allows to take over a buffer of grab result which is preventing its reuse as long as required.
+    <li> Allows to connect user buffers or buffers provided by third party software packages.
+    <li> Provides methods for loading and saving an image in different file formats.
+    <li> Serves as the main target format for the image format converter \c CImageFormatConverter.
+    <li> Eases working with planar images.
+    <li> Eases extraction of AOIs, e.g. for thumbnail images of defects.
+    </ul>
+    <p>
+    \par Buffer Handling:
+    The buffer that is automatically created by the CPylonImage class or a hosted grab result buffer are replaced by a larger buffer if required.
+    The size of the allocated buffer is never decreased.
+    Referenced user buffers are never automatically replaced by a larger buffer.
+    Referenced grab result buffers are never reused. See the Reset() method for more details.
+    The Release() method can be used to detach a user buffer, release a hosted grab result buffer or to free an allocated buffer.
+    <p>
+    \threading
+        The CPylonImage class is not thread-safe.
+    */
+    @Namespace("Pylon") @NoOffset public static class CPylonImage extends CPylonImageBase {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CPylonImage(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CPylonImage(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CPylonImage position(int position) {
+            return (CPylonImage)super.position(position);
+        }
+    
+
+        /**
+        \brief Creates an invalid image.
+        <p>
+        See Pylon::IImage on how the properties of an invalid image are returned.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public CPylonImage() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+
+        /**
+        \brief  Copies the image properties and creates a reference to the buffer of the source image.
+        <p>
+        @param [in] source The source image.
+        <p>
+        \post
+        <ul>
+        <li> Another reference to the source image buffer is created.
+        <li> Creates an invalid image if the source image is invalid.
+        </ul>
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public CPylonImage( @Const @ByRef CPylonImage source) { super((Pointer)null); allocate(source); }
+        private native void allocate( @Const @ByRef CPylonImage source);
+
+
+        /**
+        \brief Destroys a pylon image object.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+
+
+        /**
+        \brief  Copies the image properties and creates a reference to the buffer of the source image.
+        <p>
+        @param [in] source The source image.
+        <p>
+        \post
+        <ul>
+        <li> Another reference to the source image buffer is created.
+        <li> Creates an invalid image if the source image is invalid.
+        </ul>
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @ByRef @Name("operator =") CPylonImage put( @Const @ByRef CPylonImage source);
+
+
+        /**
+        \brief Creates an image and allocates a buffer for it.
+        <p>
+        @param [in]   pixelType The pixel type of the new image.
+        @param [in]   width     The number of pixels in a row in the new image.
+        @param [in]   height    The number of rows in the new image.
+        @param [in]   paddingX  The number of extra data bytes at the end of each row.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        <p>
+        \pre
+        <ul>
+        <li> The pixel type must be valid.
+        <li> The \c width value must be >= 0 and < _I32_MAX.
+        <li> The \c height value must be >= 0 and < _I32_MAX.
+        </ul>
+        <p>
+        \error
+            Throws an exception when the parameters are invalid.
+            Throws an exception when no buffer with the required size could be allocated.
+        */
+        public static native @ByVal CPylonImage Create( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX/*=0*/, @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+        public static native @ByVal CPylonImage Create( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height);
+
+
+        /**
+        \brief Copies the image data from a different image.
+        <p>
+        This method is used for making a full copy of an image.
+        Calls the Reset() method to set the same image properties as the source image and
+        copies the image data.
+        <p>
+        @param [in]   image The source image, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        <p>
+        \pre
+            The preconditions of the Reset() method must be met.
+        <p>
+        <p>
+        \post
+        <ul>
+        <li> The image contains a copy of the image data contained by the source image.
+        <li> Creates an invalid image if the source image is invalid.
+        </ul>
+        <p>
+        \error
+            Throws an exception when no buffer with the required size could be allocated.
+            Throws an exception when the preconditions of the Reset() method are not met.
+        */
+        public native void CopyImage( @Const @ByRef IImage image);
+
+
+        /**
+        \brief Copies the image data from a different image and changes the padding while copying.
+        <p>
+        This method is used for making a full copy of an image except for changing the padding.
+        Calls the Reset() method to set the same image properties as the source image and
+        copies the image data.
+        This method is useful in combination with the GetAoi() method.
+        <p>
+        @param [in]   image The source image, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        @param [in]   newPaddingX The number of extra data bytes at the end of each row.
+        <p>
+        \pre
+        <ul>
+        <li> The preconditions of the Reset() method must be met.
+        <li> The rows of the source image must be byte aligned. This may not be the case for packed pixel types. See Pylon::IsPacked().
+        <li> The rows of the newly created image must be byte aligned. This may not be the case for packed pixel types. See Pylon::IsPacked().
+        </ul>
+        <p>
+        \post
+        <ul>
+        <li> The image contains a copy of the image data contained by the source image.
+        <li> The line padding is adjusted.
+        <li> The byte aligned row padding area is set to zero.
+        <li> Creates an invalid image if the source image is invalid.
+        </ul>
+        <p>
+        \error
+            Throws an exception when no buffer with the required size could be allocated.
+            Throws an exception when the preconditions of the Reset() method are not met.
+        */
+        public native void CopyImage( @Const @ByRef IImage image, @Cast("size_t") int newPaddingX);
+
+
+        /**
+        \brief Copies the image data from a provided buffer.
+        <p>
+        This method is used for making a full copy of an image.
+        Calls the Reset() method to set the same image properties as the source image and
+        copies the image data.
+        <p>
+        @param [in]   pBuffer          The pointer to the buffer of the source image.
+        @param [in]   bufferSizeBytes  The size of the buffer of the source image.
+        @param [in]   pixelType The pixel type of the source image.
+        @param [in]   width     The number of pixels in a row in the source image.
+        @param [in]   height    The number of rows in the source image.
+        @param [in]   paddingX  The number of extra data bytes at the end of each row.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        <p>
+        \pre
+        <ul>
+        <li> The pixel type must be valid.
+        <li> The \c width value must be >= 0 and < _I32_MAX.
+        <li> The \c height value must be >= 0 and < _I32_MAX.
+        <li> The pointer to the source buffer must not be NULL.
+        <li> The source buffer must be large enough to hold the image described by the parameters.
+        <li> The preconditions of the Reset() method must be met.
+        </ul>
+        <p>
+        \post A copy of the image contained by the source image buffer is made.
+        <p>
+        \error
+            Throws an exception when no buffer with the required size could be allocated.
+            Throws an exception when the preconditions of the Reset() method are not met.
+        */
+        public native void CopyImage(
+                    Pointer pBuffer,
+                    @Cast("size_t") int bufferSizeBytes,
+                    @Cast("Pylon::EPixelType") int pixelType,
+                    @Cast("uint32_t") int width,
+                    @Cast("uint32_t") int height,
+                    @Cast("size_t") int paddingX,
+                    @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+        public native void CopyImage(
+                    Pointer pBuffer,
+                    @Cast("size_t") int bufferSizeBytes,
+                    @Cast("Pylon::EPixelType") int pixelType,
+                    @Cast("uint32_t") int width,
+                    @Cast("uint32_t") int height,
+                    @Cast("size_t") int paddingX);
+
+
+        /**
+        \brief Attaches a grab result buffer.
+        <p>
+        @param [in]   grabResult The source image represented by a grab result.
+        <p>
+        \post
+        <ul>
+        <li> The image properties are taken over from the grab result.
+        <li> The grab result buffer is used by the image class.
+        <li> Another reference to the grab result buffer is created. This prevents the buffer's reuse for grabbing.
+        <li> Creates an invalid image if the \c grabResult is invalid.
+        <li> Creates an invalid image if the grab was not successful. See CGrabResultData::GrabSucceeded().
+        </ul>
+        <p>
+        \error
+            Throws an exception when no buffer with the required size could be allocated.
+            Throws an exception when the preconditions of the Reset() method are not met.
+        */
+        public native void AttachGrabResultBuffer( @Const @ByRef CGrabResultPtr grabResult);
+
+
+        /**
+        \brief Attaches a user buffer.
+        <p>
+        @param [in]   pBuffer          The pointer to the buffer of the source image.
+        @param [in]   bufferSizeBytes  The size of the buffer of the source image.
+        @param [in]   pixelType The pixel type of the source image.
+        @param [in]   width     The number of pixels in a row in the source image.
+        @param [in]   height    The number of rows in the source image.
+        @param [in]   paddingX  The number of extra data bytes at the end of each row.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        <p>
+        \pre
+        <ul>
+        <li> The pixel type must be valid.
+        <li> The \c width value must be >= 0 and < _I32_MAX.
+        <li> The \c height value must be >= 0 and < _I32_MAX.
+        <li> The pointer to the source buffer must not be NULL.
+        <li> The source buffer must be large enough to hold the image described by the parameters.
+        </ul>
+        <p>
+        \post
+        <ul>
+        <li> The image properties are taken over from the passed parameters.
+        <li> The user buffer is used by the image class.
+        <li> The buffer must not be freed while being attached.
+        </ul>
+        <p>
+        \error
+            Throws an exception if the preconditions are not met.
+        */
+        public native void AttachUserBuffer(
+                    Pointer pBuffer,
+                    @Cast("size_t") int bufferSizeBytes,
+                    @Cast("Pylon::EPixelType") int pixelType,
+                    @Cast("uint32_t") int width,
+                    @Cast("uint32_t") int height,
+                    @Cast("size_t") int paddingX,
+                    @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+        public native void AttachUserBuffer(
+                    Pointer pBuffer,
+                    @Cast("size_t") int bufferSizeBytes,
+                    @Cast("Pylon::EPixelType") int pixelType,
+                    @Cast("uint32_t") int width,
+                    @Cast("uint32_t") int height,
+                    @Cast("size_t") int paddingX);
+
+
+        // Implements Pylon::IImage.
+        public native @Cast("bool") boolean IsValid();
+
+        // Implements Pylon::IImage.
+        public native @Cast("Pylon::EPixelType") int GetPixelType();
+
+        // Implements Pylon::IImage.
+        public native @Cast("uint32_t") int GetWidth();
+
+        // Implements Pylon::IImage.
+        public native @Cast("uint32_t") int GetHeight();
+
+        // Implements Pylon::IImage.
+        public native @Cast("size_t") int GetPaddingX();
+
+        // Implements Pylon::IImage.
+        public native @Cast("Pylon::EImageOrientation") int GetOrientation();
+
+        // Implements Pylon::IImage.
+        public native Pointer GetBuffer();
+
+        // Implements Pylon::IImage.
+
+        // Implements Pylon::IImage.
+        public native @Cast("size_t") int GetImageSize();
+
+        // Implements Pylon::IImage.
+        public native @Cast("bool") boolean IsUnique();
+
+        // Implements Pylon::IImage.
+        public native @Cast("bool") boolean GetStride( @Cast("size_t*") @ByRef IntPointer strideBytes);
+        public native @Cast("bool") boolean GetStride( @Cast("size_t*") @ByRef IntBuffer strideBytes);
+        public native @Cast("bool") boolean GetStride( @Cast("size_t*") @ByRef int[] strideBytes);
+
+        // Implements Pylon::IReusableImage.
+        public native @Cast("bool") boolean IsSupportedPixelType( @Cast("Pylon::EPixelType") int pixelType);
+
+        // Implements Pylon::IReusableImage, always returns true.
+        public native @Cast("bool") boolean IsAdditionalPaddingSupported();
+
+
+        //Implements Pylon::IReusableImage
+        /**
+        \brief Resets the image properties and allocates a new buffer if required.
+        <p>
+        @param [in]   pixelType The pixel type of the new image.
+        @param [in]   width     The number of pixels in a row in the new image.
+        @param [in]   height    The number of rows in the new image.
+        @param [in]   orientation The vertical orientation of the image in the image buffer.
+        <p>
+        \pre
+        <ul>
+        <li> The \c width value must be >= 0 and < _I32_MAX.
+        <li> The \c height value must be >= 0 and < _I32_MAX.
+        <li> If a user buffer is referenced then this buffer must not be referenced by another pylon image. See the IsUnique() and IsUserBufferAttached() methods.
+        <li> If a user buffer is referenced then this buffer must be large enough to hold the destination image. See the GetAllocatedBufferSize() and IsUserBufferAttached() methods.
+        </ul>
+        <p>
+        \post
+        <ul>
+        <li> If the previously referenced buffer is a grab result buffer, a new buffer has been allocated.
+        <li> If the previously referenced buffer is also referenced by another pylon image, a new buffer has been allocated.
+        <li> If the previously referenced buffer is not large enough to hold an image with the given properties, a new buffer has been allocated.
+        <li> If no buffer has been allocated before, a buffer has been allocated.
+        </ul>
+        <p>
+        \error
+            Throws an exception when the preconditions are not met.
+            Throws an exception when no buffer with the required size could be allocated.
+        */
+        public native void Reset( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+        public native void Reset( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height);
+
+
+        // Implements Pylon::IReusableImage, user defined padding is always supported.
+        /**
+            \brief Extends the Reset( EPixelType, uint32_t, uint32_t, EImageOrientation) method by settable paddingX.
+            \copydetails Reset( EPixelType, uint32_t, uint32_t, EImageOrientation)
+            @param [in]   paddingX  The number of extra data bytes at the end of each row.
+        */
+        public native void Reset( @Cast("Pylon::EPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("Pylon::EImageOrientation") int orientation/*=Pylon::ImageOrientation_TopDown*/);
+
+        // Implements Pylon::IReusableImage.
+        public native void Release();
+
+        /** Returns true if the referenced buffer has been provided by the user. */
+        public native @Cast("bool") boolean IsUserBufferAttached();
+
+        /** Returns true if the referenced buffer has been provided by a grab result. */
+        public native @Cast("bool") boolean IsGrabResultBufferAttached();
+
+        /**
+        \brief Returns the size of the used buffer.
+        <p>
+        This method is useful when working with so-called user buffers.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("size_t") int GetAllocatedBufferSize();
+
+        /**
+        \brief Changes the pixel type of the image.
+        <p>
+        @param [in]   pixelType The new pixel type.
+        <p>
+        \pre
+        <ul>
+        <li> Pylon::SamplesPerPixel( oldPixelType) == Pylon::SamplesPerPixel( newPixelType)
+        <li> Pylon::BitPerPixel( oldPixelType) == Pylon::BitPerPixel( newPixelType)
+        </ul>
+        <p>
+        \error
+            Throws an exception when the new pixel type properties do not match the existing ones.
+        */
+        public native void ChangePixelType( @Cast("Pylon::EPixelType") int pixelType);
+
+
+        /**
+        \brief Creates a new pylon image for a plane of the image. No image data is copied.
+        <p>
+        Use CopyImage( const IImage& image) to create a full copy.
+        <p>
+        <pre>{@code
+            copiedPlane.CopyImage( planarImage.GetPlane( 2));
+        }</pre>
+        <p>
+        @param [in]   planeIndex The zero based index of the plane.
+        @return A pylon image referencing a plane of the image.
+        <p>
+        \pre
+            The value of planeIndex < Pylon::PlaneCount( GetPixelType()).
+        <p>
+        \post
+        <ul>
+        <li> A reference to the same buffer is created. No image data is copied.
+        <li> The returned image has the Pylon::GetPlanePixelType( GetPixelType()) pixel type.
+        <li> If the image is not planar only index 0 is allowed. A call passing index 0 returns a copy of the image. No image data is copied.
+        </ul>
+        <p>
+        \error
+            Throws an exception when the plane index is out of range.
+        */
+        public native @ByVal CPylonImage GetPlane( @Cast("size_t") int planeIndex);
+
+
+        /**
+        \brief Creates a new pylon image for an image area of interest (Image AOI) derived from the image. No image data is copied.
+        <p>
+        Use CopyImage( const IImage& image, size_t newPaddingX) to create a full copy and to remove the additional padding.
+        <p>
+        <pre>{@code
+            copiedAoi.CopyImage( image.GetAoi( 80, 90, 100, 100), 0);
+        }</pre>
+        <p>
+        @param [in]   topLeftX The x-coordinate of the top left corner of the image AOI in pixels.
+        @param [in]   topLeftY The y-coordinate of the top left corner of the image AOI in pixels.
+        @param [in]   width The width of the image AOI in pixels.
+        @param [in]   height The height of the image AOI in pixels.
+        <p>
+        @return A pylon image referencing an image AOI of the image.
+        <p>
+        \pre
+        <ul>
+        <li> The image must be valid.
+        <li> The image AOI is located inside the image.
+        <li> The image is not in a planar format, see Pylon::IsPlanar(). Use GetPlane() first in this case.
+        <li> The rows of the image must be byte aligned. This may not be the case for packed pixel types. See Pylon::IsPacked().
+        <li> The x-coordinate must be byte aligned. This may not be the case for packed pixel types. See Pylon::IsPacked().
+        <li> The \c topLeftX parameter must be divisible by the return value of Pylon::GetPixelIncrementX() for the image's pixel type.
+        <li> The \c topLeftY parameter must be divisible by the return value of Pylon::GetPixelIncrementY() for the image's pixel type.
+        </ul>
+        <p>
+        \post
+        <ul>
+        <li> A reference to the same buffer is created. The image data is not copied.
+        <li> The returned image uses the paddingX property to skip over image content outside of the image AOI.
+        </ul>
+        <p>
+        \error
+            Throws an exception when the preconditions are not met.
+        */
+        public native @ByVal CPylonImage GetAoi( @Cast("uint32_t") int topLeftX, @Cast("uint32_t") int topLeftY, @Cast("uint32_t") int width, @Cast("uint32_t") int height );
+    }
+
+    /**
+     * \}
+     */
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_PYLONIMAGE_H_6241114 */
+
+
+// Parsed from <pylon/_ImageFormatConverterParams.h>
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  (c) 2004-2008 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Interface to image format converter parameters.
+*/
+
+//-----------------------------------------------------------------------------
+//  This file is generated automatically
+//  Do not modify!
+//-----------------------------------------------------------------------------
+
+
+
+// #ifndef Basler_ImageFormatConverterParams_PARAMS_H
+// #define Basler_ImageFormatConverterParams_PARAMS_H
+
+// #ifdef __GNUC__
+// #define GENAPI_DEPRECATED_FEATURE __attribute__((deprecated))
+// #elif defined(_MSC_VER)
+// #define GENAPI_DEPRECATED_FEATURE __declspec(deprecated)
+// #else
+// #define GENAPI_DEPRECATED_FEATURE
+// #endif
+
+// #include <GenApi/IEnumerationT.h>
+// #include <GenApi/NodeMapRef.h>
+// #include <GenApi/DLLLoad.h>
+
+
+// common node types
+// #include <GenApi/IBoolean.h>
+// #include <GenApi/ICategory.h>
+// #include <GenApi/ICommand.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/IFloat.h>
+// #include <GenApi/IInteger.h>
+// #include <GenApi/IString.h>
+// #include <GenApi/IRegister.h>
+
+
+/** The namespace containing the device's control interface and related enumeration types */
+
+    //**************************************************************************************************
+    // Enumerations
+    //**************************************************************************************************
+    
+    /** Valid values for MonoConversionMethod */
+    /** enum Basler_ImageFormatConverterParams::MonoConversionMethodEnums */
+    public static final int
+        /**Gamma conversion is used to convert from input to output format. */
+        MonoConversionMethod_Gamma = 0,
+        /**Image data is shifted when using this conversion method. */
+        MonoConversionMethod_Truncate = 1;
+
+    /** Valid values for OutputOrientation */
+    /** enum Basler_ImageFormatConverterParams::OutputOrientationEnums */
+    public static final int
+        /**The orientation of the image is not changed. */
+        OutputOrientation_Unchanged = 0,
+        /**The first row of the image is located at the start of the image buffer. */
+        OutputOrientation_TopDown = 1,
+        /**The last row of the image is located at the start of the image buffer. */
+        OutputOrientation_BottomUp = 2;
+
+    /** Valid values for InconvertibleEdgeHandling */
+    /** enum Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums */
+    public static final int
+        /**Rows and columns that cannot be converted are set to zero. */
+        InconvertibleEdgeHandling_SetZero = 0,
+        /**Rows and columns that cannot be converted are removed from the output image. */
+        InconvertibleEdgeHandling_Clip = 1;
+
+    /** Valid values for OutputBitAlignment */
+    /** enum Basler_ImageFormatConverterParams::OutputBitAlignmentEnums */
+    public static final int
+        /**The data is aligned at the least significant bit. */
+        OutputBitAlignment_LsbAligned = 0,
+        /**The data is aligned at the most significant bit. */
+        OutputBitAlignment_MsbAligned = 1;
+
+
+    //**************************************************************************************************
+    // Parameter class
+    //**************************************************************************************************
+    
+
+    /** Interface to image format converter parameters. */
+    @Namespace("Basler_ImageFormatConverterParams") @NoOffset public static class CImageFormatConverterParams_Params extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CImageFormatConverterParams_Params(Pointer p) { super(p); }
+    
+        
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the conversion method for monochrome images.
+        <p>
+        Sets the conversion method for monochrome images.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationTMonoConversionMethodEnums MonoConversionMethod(); public native CImageFormatConverterParams_Params MonoConversionMethod(IEnumerationTMonoConversionMethodEnums MonoConversionMethod);
+    
+    //@}
+    
+
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the gamma value for converting monochrome images.
+        <p>
+        Sets the gamma value for converting monochrome images.	The image data is converted using a lookup table. The values of the lookup table are computed using the following formula: valueOut = min((((valueIn ^ Gamma) / (valueInMax ^ Gamma)) * valueOutMax), valueOutMax).
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat Gamma(); public native CImageFormatConverterParams_Params Gamma(IFloat Gamma);
+    
+    //@}
+    
+
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the value for additional shifting when converting monochrome images in Truncate mode.
+        <p>
+        Sets the value for additional shifting when converting monochrome images in Truncate mode. The image data is converted using a lookup table if the parameter value differs from zero. Shifted values exceeding the maximum output value boundary are set to the maximum allowed value. Negative values are treated as right shifted values.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger AdditionalLeftShift(); public native CImageFormatConverterParams_Params AdditionalLeftShift(IInteger AdditionalLeftShift);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief The number of additional data bytes at the end of each line.
+        <p>
+        The number of additional data bytes at the end of each line. These bytes are set to zero during the conversion.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger OutputPaddingX(); public native CImageFormatConverterParams_Params OutputPaddingX(IInteger OutputPaddingX);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief Defines the vertical orientation of the output image in memory.
+        <p>
+        Defines the vertical orientation of the output image in memory.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef EnumerationTOutputOrientationEnums OutputOrientation(); public native CImageFormatConverterParams_Params OutputOrientation(EnumerationTOutputOrientationEnums OutputOrientation);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief Sets the handling for rows and columns that cannot be converted.
+        <p>
+        Sets the handling for rows and columns that cannot be converted.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationTInconvertibleEdgeHandlingEnums InconvertibleEdgeHandling(); public native CImageFormatConverterParams_Params InconvertibleEdgeHandling(IEnumerationTInconvertibleEdgeHandlingEnums InconvertibleEdgeHandling);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief Controls the alignment of the bits in the target pixel type.
+        <p>
+        Controls the alignment of the bits in the target pixel type if the target value has more bits than the source value.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationTOutputBitAlignmentEnums OutputBitAlignment(); public native CImageFormatConverterParams_Params OutputBitAlignment(IEnumerationTOutputBitAlignmentEnums OutputBitAlignment);
+    }
+
+
+    //**************************************************************************************************
+    // Parameter class implementation
+    //**************************************************************************************************
+
+    /** \cond HIDE_CLASS_METHODS */
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /** \endcond */
+
+ // namespace Basler_ImageFormatConverterParams
+
+// #undef GENAPI_DEPRECATED_FEATURE
+// #endif // Basler_ImageFormatConverterParams_PARAMS_H
+
+
+// Parsed from <pylon/ImageFormatConverter.h>
+
+//------------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//------------------------------------------------------------------------------
+/**
+    \file
+    \brief  Contains an image format converter class.
+*/
+
+// #ifndef INCLUDED_IMAGEFORMATCONVERTER_H_1564142
+// #define INCLUDED_IMAGEFORMATCONVERTER_H_1564142
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #ifdef _MSC_VER
+// #pragma warning( push )
+// #pragma warning( disable : 4275 ) // Class must have a dll interface to be used by clients of the class.
+// #endif
+
+// #include <pylon/stdinclude.h>
+// #include <pylon/PylonUtility.h>
+// #include <pylon/_ImageFormatConverterParams.h>
+// #include <pylon/ReusableImage.h>
+
+
+    /** \addtogroup Pylon_ImageHandlingSupport
+     * \{
+     */
+
+    /**
+    \class  CImageFormatConverter
+    \brief  Creates new images by converting a source image to another format.
+    <p>
+    Supported input image formats defined by the pixel type:
+        <p>
+        <ul>
+        <li> PixelType_Mono1packed
+        <li> PixelType_Mono2packed
+        <li> PixelType_Mono4packed
+        <li> PixelType_Mono8
+        <li> PixelType_Mono10
+        <li> PixelType_Mono10packed
+        <li> PixelType_Mono10p
+        <li> PixelType_Mono12
+        <li> PixelType_Mono12packed
+        <li> PixelType_Mono12p
+        <li> PixelType_Mono16
+        </ul>
+        <ul>
+        <li> PixelType_BayerGR8
+        <li> PixelType_BayerRG8
+        <li> PixelType_BayerGB8
+        <li> PixelType_BayerBG8
+        <li> PixelType_BayerGR10
+        <li> PixelType_BayerRG10
+        <li> PixelType_BayerGB10
+        <li> PixelType_BayerBG10
+        <li> PixelType_BayerGR12
+        <li> PixelType_BayerRG12
+        <li> PixelType_BayerGB12
+        <li> PixelType_BayerBG12
+        <li> PixelType_BayerGR12Packed
+        <li> PixelType_BayerRG12Packed
+        <li> PixelType_BayerGB12Packed
+        <li> PixelType_BayerBG12Packed
+        <li> PixelType_BayerGR10p
+        <li> PixelType_BayerRG10p
+        <li> PixelType_BayerGB10p
+        <li> PixelType_BayerBG10p
+        <li> PixelType_BayerGR12p
+        <li> PixelType_BayerRG12p
+        <li> PixelType_BayerGB12p
+        <li> PixelType_BayerBG12p
+        <li> PixelType_BayerGR16
+        <li> PixelType_BayerRG16
+        <li> PixelType_BayerGB16
+        <li> PixelType_BayerBG16
+        </ul>
+        <ul>
+        <li> PixelType_RGB8packed
+        <li> PixelType_BGR8packed
+        <li> PixelType_RGBA8packed
+        <li> PixelType_BGRA8packed
+        <li> PixelType_RGB10packed
+        <li> PixelType_BGR10packed
+        <li> PixelType_RGB12packed
+        <li> PixelType_BGR12packed
+        <li> PixelType_RGB12V1packed
+        <li> PixelType_RGB16packed
+        <li> PixelType_RGB8planar
+        <li> PixelType_RGB16planar
+        </ul>
+        <ul>
+        <li> PixelType_YUV422packed
+        <li> PixelType_YUV422_YUYV_Packed
+        </ul>
+    <p>
+    Supported ouput image formats defined by the pixel type:
+        <p>
+        <ul>
+        <li> PixelType_BGRA8packed - This pixel type can be used in Windows bitmaps. See Pylon::SBGRA8Pixel.
+        <li> PixelType_BGR8packed - This pixel type can be used in Windows bitmaps. See Pylon::SBGR8Pixel.
+        <li> PixelType_RGB8packed - See Pylon::SRGB8Pixel.
+        <li> PixelType_RGB16packed - See Pylon::SRGB16Pixel.
+        <li> PixelType_RGB8planar
+        <li> PixelType_RGB16planar
+        <li> PixelType_Mono8
+        <li> PixelType_Mono16
+        </ul>
+    <p>
+    <p>
+    All input image formats can be converted to all output image formats.
+    <p>
+    RGB, BGR and Bayer image formats are converted to monochrome formats by using the following formula:
+    <p>
+    <pre>{@code
+            mono = (0.25 * red) + (0.625 * green) + (0.125 * blue);
+    }</pre>
+    <p>
+    YUV formats are converted to 16 bit bit depth in an intermediate conversion step. This is why the output
+    is always aligned at the most significant bit when converting to 16 bit color output formats like PixelType_RGB16packed.
+    <p>
+    \par Limitations:
+    The last column of a YUV input image with odd width cannot be converted.
+    The last column and the last row of a Bayer input image cannot be converted.
+    <p>
+    The default treatment of rows and columns that cannot be converted due to their location on edges,
+    can be controlled using the CImageFormatConverter::InconvertibleEdgeHandling parameter.
+    See also the Convert() method description.
+    <p>
+    \threading
+        The CImageFormatConverter class is not thread-safe.
+    */
+    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends CImageFormatConverterParams_Params {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CImageFormatConverter(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CImageFormatConverter(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CImageFormatConverter position(int position) {
+            return (CImageFormatConverter)super.position(position);
+        }
+    
+
+        /**
+        \brief Creates an image format converter.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public CImageFormatConverter() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+
+        /**
+        \brief Destroys the image format converter.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+
+
+        /**
+        \brief Optionally initializes the image format converter before conversion.
+        <p>
+        @param [in]   sourcePixelType The pixel type of the source image.
+        <p>
+        <ul>
+        <li> Depending on parameter settings and the input format, data structures required for conversion are created, e.g. lookup tables.
+        <li> Initialization is done automatically when calling Convert() if needed. This may add a delay when converting the first image.
+        </ul>
+        <p>
+        \pre
+            <ul>
+            <li> The converter parameters are set up.
+            <li> The \c pixelTypeSource must be supported by the converter.
+            </ul>
+        <p>
+        Lookup tables are created when using monochrome images as input and when
+        the gamma conversion method is selected
+        or when the shift conversion method is selected and the value of AdditionalLeftShift is not zero.
+        The converter can be reinitialized with other settings if required.
+        <p>
+        \error
+            Throws an exception if the passed pixel type does not represent a valid input format.
+            The converter object is still valid after error and can be initialized again.
+        */
+        public native void Initialize( @Cast("Pylon::EPixelType") int sourcePixelType);
+
+
+        /**
+        \brief  Returns information about the converter being initialized.
+        <p>
+        @param [in]   sourcePixelType The pixel type of the source image.
+        <p>
+        The result depends on the converter settings.
+        <p>
+        @return True if initialized.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean IsInitialized( @Cast("Pylon::EPixelType") int sourcePixelType);
+
+
+        /**
+        \brief  Destroys data structures required for conversion.
+        <p>
+        This function can be called to free resources held by the format converter.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native void Uninitialize();
+
+
+        /**
+        \brief Checks to see if a conversion is required or if the source image already has the desired format.
+        <p>
+        @param [in]  sourceImage The source image, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        @return  Returns true if the source image already has the desired format.
+        <p>
+        A conversion may even be required image format does not change e.g. if the gamma conversion method is selected and the format describes a monochrome image.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean ImageHasDestinationFormat( @Const @ByRef IImage sourceImage);
+
+
+        /**
+        \brief Checks to see if a conversion is required or if the source image already has the desired format.
+        <p>
+        @param [in]   sourcePixelType The pixel type of the source image.
+        @param [in]   sourcePaddingX  The number of extra data bytes at the end of each row. The default value is usually 0.
+        @param [in]   sourceOrientation The vertical orientation of the image in the image buffer. The default value is usually ImageOrientation_TopDown.
+        <p>
+        @return  Returns true if the source image already has the desired format. This is done according to the current converter settings.
+        <p>
+        A conversion may even be required image format does not change e.g. if the gamma conversion method is selected and the format describes a monochrome image.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean ImageHasDestinationFormat( @Cast("Pylon::EPixelType") int sourcePixelType, @Cast("size_t") int sourcePaddingX, @Cast("Pylon::EImageOrientation") int sourceOrientation);
+
+
+        /**
+        \brief Computes the size of the destination image buffer in byte.
+        <p>
+        @param [in]  sourceImage The source image, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        @return  The size of the destination image when converting the given source image using current converter settings.
+        <p>
+        \error
+            Throws an exception if the destination image size for the passed input cannot be computed. The converter object is still valid after error.
+        */
+        public native @Cast("size_t") int GetBufferSizeForConversion( @Const @ByRef IImage sourceImage);
+
+
+        /**
+        \brief Computes the size of the destination image buffer in byte.
+        <p>
+        @param [in]  sourceWidth     The number of pixels in a row in the source image.
+        @param [in]  sourceHeight    The number of rows in the source image.
+        @param [in]  sourcePixelType The pixel type of the source image.
+        @return  The size of the destination image when converting the source image using current converter settings.
+        <p>
+        \pre
+            <ul>
+            <li> The \c sourceWidth value must be >= 0 and < _I32_MAX.
+            <li> The \c sourceHeight value must be >= 0 and < _I32_MAX.
+            </ul>
+        <p>
+        \error
+            Throws an exception if the destination image size for the passed input cannot be computed. The converter object is still valid after error.
+        */
+        public native @Cast("size_t") int GetBufferSizeForConversion( @Cast("Pylon::EPixelType") int sourcePixelType, @Cast("uint32_t") int sourceWidth, @Cast("uint32_t") int sourceHeight);
+
+
+        /**
+        \brief Creates a new image by converting an image to a different format.
+        <p>
+        The IReusableImage::Reset() method of the destination image is called to set the destination format.
+        The image is converted to the destination image according to the current converter settings.
+        The padding area of a row in the destination image is set to zero.
+        <p>
+        The OutputPaddingX setting is ignored for images that do not support user defined padding, e.g.
+        CPylonBitmapImage. See also IReusableImage::IsAdditionalPaddingSupported().
+        <p>
+        @param [out]  destinationImage The destination image, e.g. a CPylonImage or CPylonBitmapImage object.
+                                      When passing a CPylonBitmapImage object the target format must be supported by the CPylonBitmapImage class.
+        @param [in]   sourceImage      The source image, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        <p>
+        \pre
+            <ul>
+            <li> The source and destination images must be different images.
+            <li> The source image must be valid.
+            <li> The format of the source image must be supported by the converter.
+            <li> The destination image must support the destination format.
+            <li> The destination image must be able to provide a large enough buffer to hold the image.
+            </ul>
+        <p>
+        \error
+            Throws an exception if the passed parameters are not valid. The converter object is still valid after error.
+        */
+        public native void Convert( @ByRef IReusableImage destinationImage, @Const @ByRef IImage sourceImage);
+
+
+        /**
+        \brief Creates a new image by converting an image to a different format.
+        <p>
+        The IReusableImage::Reset() method of the destination image is called to set the destination format.
+        The image is converted to the destination image according to the current converter settings.
+        The padding area of a row in the destination image is set to zero.
+        <p>
+        The OutputPaddingX setting is ignored for images that do not support user defined padding, e.g.
+        CPylonBitmapImage. See also IReusableImage::IsAdditionalPaddingSupported().
+        <p>
+        @param [out]  destinationImage The destination image.
+        @param [in]   pSourceBuffer The pointer to the buffer of the source image.
+        @param [in]   sourceBufferSizeBytes  The size of the buffer of the source image.
+        @param [in]   sourcePixelType The pixel type of the source image.
+        @param [in]   sourceWidth     The number of pixels in a row in the source image.
+        @param [in]   sourceHeight    The number of rows in the source image.
+        @param [in]   sourcePaddingX  The number of extra data bytes at the end of each row. The default value is usually 0.
+        @param [in]   sourceOrientation The vertical orientation of the source image in the image buffer. The default value is usually ImageOrientation_TopDown.
+        <p>
+        \pre
+            <ul>
+            <li> The pixel type must be valid.
+            <li> The \c sourceWidth value must be >= 0 and < _I32_MAX.
+            <li> The \c sourceHeight value must be >= 0 and < _I32_MAX.
+            <li> The pointer to the source buffer must not be NULL.
+            <li> The source buffer must be large enough to hold the image described by the parameters.
+            <li> The format of the input image represented by the given parameter must be supported by the converter.
+            <li> The destination image must support the destination format.
+            <li> The destination image must be able to provide a large enough buffer to hold the image.
+            <li> The source image buffer and the destination image buffer must not be identical.
+            </ul>
+        <p>
+        \error
+            Throws an exception if the passed parameters are not valid. The converter object is still valid after error.
+        */
+        public native void Convert( @ByRef IReusableImage destinationImage,
+                              @Const Pointer pSourceBuffer,
+                              @Cast("size_t") int sourceBufferSizeBytes,
+                              @Cast("Pylon::EPixelType") int sourcePixelType,
+                              @Cast("uint32_t") int sourceWidth,
+                              @Cast("uint32_t") int sourceHeight,
+                              @Cast("size_t") int sourcePaddingX,
+                              @Cast("Pylon::EImageOrientation") int sourceOrientation
+                              );
+
+
+        /**
+        \brief Creates a new image by converting an image to a different format.
+        <p>
+        The image is converted to the destination image according to the current converter settings.
+        The padding area of a row in the destination image is set to zero.
+        <p>
+        @param [out]  pDestinationBuffer The pointer to the buffer of the destination image.
+        @param [in]   destinationBufferSizeBytes The size of the buffer of the destination image.
+        @param [in]   sourceImage      The source image, e.g. a CPylonImage, CPylonBitmapImage, or Grab Result Smart Pointer object.
+        <p>
+        \pre
+            <ul>
+            <li> The format of the source image must be supported by the converter.
+            <li> The destination image buffer must be large enough to hold the destination image.
+            <li> The source image buffer and the destination image buffer must not be identical.
+            </ul>
+        <p>
+        \error
+            Throws an exception if the passed parameters are not valid. The converter object is still valid after error.
+        */
+        public native void Convert( Pointer pDestinationBuffer, @Cast("size_t") int destinationBufferSizeBytes, @Const @ByRef IImage sourceImage);
+
+
+        /**
+        \brief Creates a new image by converting an image to a different format.
+        <p>
+        The image is converted to the destination image according to the current converter settings.
+        The padding area of a row in the destination image is set to zero.
+        <p>
+        @param [out]  pDestinationBuffer The pointer to the buffer of the destination image.
+        @param [in]   destinationBufferSizeBytes The size of the buffer of the destination image.
+        @param [in]   pSourceBuffer The pointer to the buffer of the source image.
+        @param [in]   sourceBufferSizeBytes  The size of the buffer of the source image.
+        @param [in]   sourcePixelType   The pixel type of the source image.
+        @param [in]   sourceWidth       The number of pixels in a row in the source image.
+        @param [in]   sourceHeight      The number of rows in the source image.
+        @param [in]   sourcePaddingX    The number of extra data bytes at the end of each row. The default value is usually 0.
+        @param [in]   sourceOrientation The vertical orientation of the source image in the image buffer. The default value is usually ImageOrientation_TopDown.
+        <p>
+        \pre
+            <ul>
+            <li> The parameters regarding the source buffer must describe a valid image.
+            <li> The format of the input image represented by the given parameter must be supported by the converter.
+            <li> If the destination image buffer must be large enough to hold the destination image.
+            <li> The the source buffer can not be equal the destination buffer.
+            </ul>
+        <p>
+        \error
+            Throws an exception if the passed parameters are not valid. The converter object is still valid after error.
+        */
+        public native void Convert( Pointer pDestinationBuffer,
+                              @Cast("size_t") int destinationBufferSizeBytes,
+                              @Const Pointer pSourceBuffer,
+                              @Cast("size_t") int sourceBufferSizeBytes,
+                              @Cast("Pylon::EPixelType") int sourcePixelType,
+                              @Cast("uint32_t") int sourceWidth,
+                              @Cast("uint32_t") int sourceHeight,
+                              @Cast("size_t") int sourcePaddingX,
+                              @Cast("Pylon::EImageOrientation") int sourceOrientation
+                              );
+
+
+        /**
+        \brief Returns true if the image format defined by the given pixel type is a supported input format.
+        <p>
+        @param [in]   sourcePixelType The pixel type of the source image.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public static native @Cast("bool") boolean IsSupportedInputFormat( @Cast("Pylon::EPixelType") int sourcePixelType);
+
+
+        /**
+        \brief Returns true if the image format defined by the given pixel type is a supported output format.
+        <p>
+        @param [in]   destinationPixelType The pixel type of the destination image.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public static native @Cast("bool") boolean IsSupportedOutputFormat( @Cast("Pylon::EPixelType") int destinationPixelType);
+
+
+        /**
+        \brief Provides access to the node map of the format converter.
+        @return Reference to the node map of the format converter.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @ByRef INodeMap GetNodeMap();
+        // This class emulates part of the behavior of a GenApi::IEnumerationT<T> interface used for native parameter access.
+        // This allows using the EPixelType enumeration.
+        public static class IOutputPixelFormatEnum extends Pointer {
+            static { Loader.load(); }
+            /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+            public IOutputPixelFormatEnum(Pointer p) { super(p); }
+        
+            public native @Name("operator =") void put( @Cast("Pylon::EPixelType") int outputPixelType);
+            public native void SetValue( @Cast("Pylon::EPixelType") int outputPixelType);
+
+            public native @Cast("Pylon::EPixelType") int GetValue();
+            public native @Cast("Pylon::EPixelType") @Name("operator ()") int apply();
+        }
+
+        /**
+            \brief The pixel data format of the output image.
+            <p>
+            This member can be used to get and set the output pixel format using the EPixelType enumeration.
+            It emulates the behavior of native parameter access.
+            <p>
+            \pre
+                The pixel format set must be a supported output pixel format. See IsSupportedOutputFormat().
+            \error
+                Throws an exception if the set output pixel format is not supported.
+        */
+        public native @ByRef IOutputPixelFormatEnum OutputPixelFormat(); public native CImageFormatConverter OutputPixelFormat(IOutputPixelFormatEnum OutputPixelFormat);
+    }
+
+    /**
+     * \}
+     */
+
+
+// #ifdef _MSC_VER
+// #pragma warning(pop)
+// #endif
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_IMAGEFORMATCONVERTER_H_1564142 */
 
 
 }

@@ -60,6 +60,9 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "<GenApi/Synch.h>",
 //                "<GenApi/Container.h>",
 //                "<GenApi/INodeMap.h>",
+                "<GenApi/IEnumEntry.h>",
+                "<GenApi/IEnumeration.h>",
+                "<GenApi/IEnumerationT.h>",
         }),
         @Platform(value = "linux", link = "genicam@.3", includepath = "/usr/include/pylon/genicam"),
         @Platform(value = "windows",
@@ -127,13 +130,14 @@ public class GenICam3 implements InfoMapper {
                 .put(new Info("GENAPI_NAMESPACE::ERepresentation").cast().valueTypes("int"))
                 .put(new Info("GENAPI_NAMESPACE::EVisibility").cast().valueTypes("int"))
                 .put(new Info("GENAPI_NAMESPACE::EYesNo").cast().valueTypes("int"))
+                .put(new Info("GENAPI_NAMESPACE::StringList_t").cast().pointerTypes("Pointer"))
 
                 .put(new Info("GENAPI_NAMESPACE::CReferenceT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CReferenceTInteger").purify())
                 .put(new Info("GENAPI_NAMESPACE::CBaseRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CBaseRefTInteger").purify())
                 .put(new Info("GENAPI_NAMESPACE::CValueRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CValueRefTInteger").purify())
                 .put(new Info("GENAPI_NAMESPACE::CIntegerRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CIntegerRef"))
 
-                /* Workaround for not be ing able to parse <GenApi/Container.h>*/
+                /* Workaround for not being able to parse <GenApi/Container.h>*/
                 .put(new Info("GENAPI_NAMESPACE::node_vector").cast().pointerTypes("Pointer"))
 
         ;

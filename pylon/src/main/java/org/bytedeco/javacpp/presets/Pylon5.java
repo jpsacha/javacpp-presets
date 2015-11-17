@@ -73,11 +73,20 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/AcquireContinuousConfiguration.h>",
                         "<pylon/SoftwareTriggerConfiguration.h>",
                         // "<pylon/gige/ActionTriggerConfiguration.h>",
-                        //
+
+                        // Images and conversions
+                        "<pylon/ReusableImage.h>",
+                        "<pylon/ImagePersistence.h>",
+                        "<pylon/PixelData.h>",
+                        "<pylon/PylonImageBase.h>",
+                        "<pylon/PylonImage.h>",
+//                        "<pylon/PylonBitmapImage.h>",
+                        "<pylon/_ImageFormatConverterParams.h>",
+                        "<pylon/ImageFormatConverter.h>",
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
-                        link = {"PylonBase_MD_VC120_v5_0" /*, "PylonUsb_MD_VC100_TL"*/},
+                        link = {"PylonBase_MD_VC120_v5_0" , "PylonGUI_MD_VC120_v5_0", "PylonUtility_MD_VC120_v5_0"},
                         includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
                 @Platform(
                         value = "windows-x86",
@@ -130,6 +139,21 @@ public class Pylon5 implements InfoMapper {
                 /* typedef void *HANDLE */
 //                .put(new Info("HANDLE").valueTypes("HANDLE").pointerTypes("@Cast(\"HANDLE*\") @ByPtrPtr HANDLE").define())
                 .put(new Info("HANDLE").cast().valueTypes("Pointer").pointerTypes("void"))
-        ;
+
+                /* <pylon/ImagePersistence.h> */
+                .put(new Info("defined(PYLON_WIN_BUILD)").define())
+                .put(new Info("defined(PYLON_LINUX_BUILD)").define(false))
+
+                /* <pylon/ImagePersistence.h> */
+                // Use `purify` to request creation of an abstract class, otherwise get error: "cannot instantiate abstract class"
+//                .put(new Info("Pylon::IImage").purify())
+                .put(new Info("Pylon::CPylonImageBase").purify())
+
+                /* <pylon/_ImageFormatConverterParams.h> */
+                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::MonoConversionMethodEnums>").pointerTypes("IEnumerationTMonoConversionMethodEnums"))
+                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::OutputOrientationEnums>").pointerTypes("EnumerationTOutputOrientationEnums"))
+                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums>").pointerTypes("IEnumerationTInconvertibleEdgeHandlingEnums"))
+                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::OutputBitAlignmentEnums>").pointerTypes("IEnumerationTOutputBitAlignmentEnums"))
+       ;
     }
 }

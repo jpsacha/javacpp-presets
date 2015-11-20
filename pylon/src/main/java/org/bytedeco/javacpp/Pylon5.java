@@ -7194,7 +7194,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         
     
     */
-    public native @ByRef EnumerationTOutputOrientationEnums OutputOrientation(); public native CImageFormatConverterParams_Params OutputOrientation(EnumerationTOutputOrientationEnums OutputOrientation);
+    public native @ByRef IEnumerationTOutputOrientationEnums OutputOrientation(); public native CImageFormatConverterParams_Params OutputOrientation(IEnumerationTOutputOrientationEnums OutputOrientation);
     
     //@}
     
@@ -7751,6 +7751,239 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #endif /* _MSC_VER */
 
 // #endif /* INCLUDED_IMAGEFORMATCONVERTER_H_1564142 */
+
+
+// Parsed from <GenApi/IEnumerationT.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of interface IEnumerationT
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IENUMERATIONT_H
+// #define GENAPI_IENUMERATIONT_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/Pointer.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/Compatibility.h>
+// #include <vector>
+    //*************************************************************
+    // Enumeration template interface
+    //*************************************************************
+
+    /**
+    \brief Interface for enumeration properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::MonoConversionMethodEnums>") public static class IEnumerationTMonoConversionMethodEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationTMonoConversionMethodEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::MonoConversionMethodEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::MonoConversionMethodEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_ImageFormatConverterParams::MonoConversionMethodEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_ImageFormatConverterParams::MonoConversionMethodEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_ImageFormatConverterParams::MonoConversionMethodEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_ImageFormatConverterParams::MonoConversionMethodEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_ImageFormatConverterParams::MonoConversionMethodEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputOrientationEnums>") public static class IEnumerationTOutputOrientationEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationTOutputOrientationEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::OutputOrientationEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::OutputOrientationEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_ImageFormatConverterParams::OutputOrientationEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_ImageFormatConverterParams::OutputOrientationEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_ImageFormatConverterParams::OutputOrientationEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_ImageFormatConverterParams::OutputOrientationEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_ImageFormatConverterParams::OutputOrientationEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums>") public static class IEnumerationTInconvertibleEdgeHandlingEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationTInconvertibleEdgeHandlingEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputBitAlignmentEnums>") public static class IEnumerationTOutputBitAlignmentEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationTOutputBitAlignmentEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_ImageFormatConverterParams::OutputBitAlignmentEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+
+    //*************************************************************
+    // CEnumerationTRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IEnumerationT pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+// #endif
+
+
+
+// #endif // ifndef GENAPI_IENUMERATIONT_H
 
 
 }

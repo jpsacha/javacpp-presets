@@ -93,6 +93,58 @@ public static final String GENICAM_CLPROTOCOL =                  "GENICAM_CLPROT
 // #endif // GENICAM_VERSION_H
 
 
+// Parsed from <GenApi/GenApiNamespace.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  (c) 2015 by STEMMER IMAGING GmbH
+//
+//  Project: GenApi
+//  Author:  Sascha Dorenbeck
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file GenApiNamespace.h
+\brief GenICam versioned namespace.
+\ingroup GenApi_PublicImpl
+*/
+
+// #ifndef GENAPI_NAMESPACE_H
+// #define GENAPI_NAMESPACE_H
+
+// #include <GenICamVersion.h>
+
+// This is the development namespace for the GenApi library
+// #if defined(GENICAM_COMPANY_SUFFIX)
+// #define GENAPI_NAMESPACE GENICAM_SEP_UNDERSCORE_COMPANY(GenApi, GENICAM_VERSION_MAJOR, GENICAM_VERSION_MINOR, GENICAM_COMPANY_SUFFIX)
+// #else
+// #endif
+
+// And make it usable nicely by api's clients
+
+// Public alias
+
+// #endif // GENAPI_NAMESPACE_H
+
+
 // Parsed from <Base/GCNamespace.h>
 
 /****************************************************************************
@@ -792,6 +844,271 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 // #endif // GENICAM_GCSTRINGLIST_H
 
 
+// Parsed from <GenApi/Types.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Common types used in the public GenApi interface.
+\ingroup GenApi_PublicUtilities
+*/
+
+// #ifndef GENAPI_TYPES_H
+// #define GENAPI_TYPES_H
+
+// #include <Base/GCTypes.h>
+// #include <Base/GCStringVector.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Autovector.h>
+// #include <GenICamFwd.h>
+
+    /** signed or unsigned integers
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::ESign */
+    public static final int
+        /** Integer is signed */
+        Signed = 0,
+        /** Integer is unsigned */
+        Unsigned = 1,
+        /** Object is not yet initialized */
+        _UndefinedSign = 2;
+
+    /** access mode of a node
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EAccessMode */
+    public static final int
+        /** Not implemented */
+        NI = 0,
+        /** Not available */
+        NA = 1,
+        /** Write Only */
+        WO = 2,
+        /** Read Only */
+        RO = 3,
+        /** Read and Write */
+        RW = 4,
+        /** Object is not yet initialized */
+        _UndefinedAccesMode = 5,
+        /** used internally for AccessMode cycle detection */
+        _CycleDetectAccesMode = 6;
+
+    /** recommended visibility of a node
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EVisibility */
+    public static final int
+        /** Always visible */
+        Beginner = 0,
+        /** Visible for experts or Gurus */
+        Expert = 1,
+        /** Visible for Gurus */
+        Guru = 2,
+        /** Not Visible */
+        Invisible = 3,
+        /** Object is not yet initialized */
+        _UndefinedVisibility  = 99;
+
+    /** caching mode of a register
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::ECachingMode */
+    public static final int
+        /** Do not use cache */
+        NoCache = 0,
+        /** Write to cache and register */
+        WriteThrough = 1,
+        /** Write to register, write to cache on read */
+        WriteAround = 2,
+        /** Not yet initialized */
+        _UndefinedCachingMode = 3;
+
+    /** recommended representation of a node value
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::ERepresentation */
+    public static final int
+        /** Slider with linear behavior */
+        Linear = 0,
+        /** Slider with logarithmic behaviour */
+        Logarithmic = 1,
+        /** Check box */
+        Boolean = 2,
+        /** Decimal number in an edit control */
+        PureNumber = 3,
+        /** Hex number in an edit control */
+        HexNumber = 4,
+        /** IP-Address */
+        IPV4Address = 5,
+        /** MAC-Address */
+        MACAddress = 6,
+        _UndefinedRepresentation = 7;
+
+// this define is required to deal with a spelling error corrected in v1.2
+// #ifndef NO_UNDEFINEDED_REPRESENTATION
+public static final int _UndefindedRepresentation = _UndefinedRepresentation;
+// #endif
+
+    /** Endianess of a value in a register
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EEndianess */
+    public static final int
+        /** Register is big endian */
+        BigEndian = 0,
+        /** Register is little endian */
+        LittleEndian = 1,
+        /** Object is not yet initialized */
+        _UndefinedEndian = 2;
+
+
+    /** Defines if a node name is standard or custom
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::ENameSpace */
+    public static final int
+        /** name resides in custom namespace */
+        Custom = 0,
+        /** name resides in one of the standard namespaces */
+        Standard = 1,
+        /** Object is not yet initialized */
+        _UndefinedNameSpace = 2;
+
+
+    /** Defines from which standard namespace a node name comes from
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EStandardNameSpace */
+    public static final int
+        /** name resides in custom namespace */
+        None = 0,
+        /** name resides in GigE Vision namespace */
+        GEV = 1,
+        /** name resides in 1394 IIDC namespace */
+        IIDC = 2,
+        /** name resides in camera link namespace */
+        CL = 3,
+        /** name resides in USB namespace */
+        USB = 4,
+        /** Object is not yet initialized */
+        _UndefinedStandardNameSpace = 5;
+
+
+    /** Defines the chices of a Yes/No alternaitve
+     *  \ingroup GenApi_PublicUtilities */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EYesNo */
+    public static final int
+        /** yes */
+        Yes = 1,
+        /** no */
+        No = 0,
+        /** Object is not yet initialized */
+        _UndefinedYesNo = 2;
+
+    /** A list of strings
+     *  \ingroup GenApi_PublicImpl */
+
+
+    /** typedef for fomula type
+     *  \ingroup GenApi_PublicImpl */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::ESlope */
+    public static final int
+        Increasing = 0,      /**> strictly monotonous increasing */
+        Decreasing = 1,      /**> strictly monotonous decreasing */
+        Varying = 2,         /**> slope changes, e.g. at run-time */
+        Automatic = 3,       /**> slope is determined automatically by probing the function */
+        /** Object is not yet initialized */
+        _UndefinedESlope = 4;
+
+    /** typedef describing the different validity checks which can be performed on an XML file
+    /** The enum values for a bitfield of length uint32_t */
+    /** \ingroup GenApi_PublicImpl */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EXMLValidation */
+    public static final long
+        xvLoad      =  0x00000001L,    /**> Creates a dummy node map */
+        xvCycles    =  0x00000002L,    /**> checks for write and dependency cycles (implies xvLoad) */
+        xvSFNC      =  0x00000004L,    /**> checks for conformance with the standard feature naming convention (SFNC) */
+        xvDefault   =  0x00000000L,    /**> checks performed if nothing else is said */
+        xvAll       =  0xffffffffL,    /**> all possible checks */
+        /** Object is not yet initialized */
+        _UndefinedEXMLValidation =  0x8000000L;
+
+    /** typedef for float notation
+     *  \ingroup GenApi_PublicImpl */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EDisplayNotation */
+    public static final int
+        fnAutomatic = 0,                /**> the notation if either scientific or fixed depending on what is shorter */
+        fnFixed = 1,                    /**> the notation is fixed, e.g. 123.4 */
+        fnScientific = 2,               /**> the notation is scientific, e.g. 1.234e2 */
+        /** Object is not yet initialized */
+        _UndefinedEDisplayNotation = 3;
+
+    /** typedef for interface type
+     *  \ingroup GenApi_PublicImpl */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EInterfaceType */
+    public static final int
+        intfIValue = 0,       /**> IValue interface */
+        intfIBase = 1,        /**> IBase interface */
+        intfIInteger = 2,     /**> IInteger interface */
+        intfIBoolean = 3,     /**> IBoolean interface */
+        intfICommand = 4,     /**> ICommand interface */
+        intfIFloat = 5,       /**> IFloat interface */
+        intfIString = 6,      /**> IString interface */
+        intfIRegister = 7,    /**> IRegister interface */
+        intfICategory = 8,    /**> ICategory interface */
+        intfIEnumeration = 9, /**> IEnumeration interface */
+        intfIEnumEntry = 10,   /**> IEnumEntry interface */
+        intfIPort = 11;         /**> IPort interface */
+
+    /** typedef for link type
+    /** For details see GenICam wiki : GenApi/SoftwareArchitecture/NodeDependencies
+    \ingroup GenApi_PublicImpl
+    */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::ELinkType */
+    public static final int
+        ctParentNodes = 0,			/**> All nodes for which this node is at least an invalidating child */
+        ctReadingChildren = 1,		/**> All nodes which can be read from  */
+        ctWritingChildren = 2,		/**> All nodes which can write a value further down the node stack */
+        ctInvalidatingChildren = 3, /**> All directly connected nodes which invalidate this node */
+        ctDependingNodes = 4,	/**> All directly or indirectly connected nodes which are invalidated by this nodes (i.e. which are dependent on this node) */
+        ctTerminalNodes = 5;		/**> All indirectly connected terminal nodes */
+
+    /** typedef for increment mode
+     *  \ingroup GenApi_PublicImpl */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EIncMode */
+    public static final int
+        noIncrement = 0,    // !> The feature has no increment
+        fixedIncrement = 1, // !> The feature has a fix increment
+        listIncrement = 2;   // !> The feature has a list of valid value
+
+    /** typedef for link type
+     *  \ingroup GenApi_PublicImpl */
+    /** enum GenApi_3_0_Basler_pylon_v5_0::EInputDirection */
+    public static final int
+        idFrom = 0, /**> Indicates a swiss knife that it is used as worker for a converter computing FROM */
+        idTo = 1,   /**> Indicates a swiss knife that it is used as worker for a converter computing TO */
+        idNone = 2;  /**> SwissKnife is not used within a converter */
+
+
+// #endif // ifndef GENAPI_TYPES_H
+
+
 // Parsed from <GenApi/Autovector.h>
 
 //-----------------------------------------------------------------------------
@@ -842,7 +1159,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Vector of integers with reference counting
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class int64_autovector_t extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @NoOffset public static class int64_autovector_t extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public int64_autovector_t(Pointer p) { super(p); }
@@ -864,7 +1181,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Vector of doubles with reference counting
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class double_autovector_t extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @NoOffset public static class double_autovector_t extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public double_autovector_t(Pointer p) { super(p); }
@@ -932,7 +1249,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface to construct a reference
     \ingroup GenApi_PublicImpl
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IReference extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IReference extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IReference(Pointer p) { super(p); }
@@ -949,7 +1266,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface to construct an enum reference
     \ingroup GenApi_PublicImpl
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IEnumReference extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IEnumReference extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IEnumReference(Pointer p) { super(p); }
@@ -969,22 +1286,6 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IBase derived pointer
     \ingroup GenApi_PublicImpl
     */
-    @Name("GENAPI_NAMESPACE::CReferenceT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") @NoOffset public static class CReferenceTInteger extends IInteger {
-        static { Loader.load(); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public CReferenceTInteger(Pointer p) { super(p); }
-        public IReference asIReference() { return asIReference(this); }
-        @Namespace public static native @Name("static_cast<GENAPI_NAMESPACE::IReference*>") IReference asIReference(CReferenceTInteger pointer);
-    
-        // Constructor
-
-        /*--------------------------------------------------------*/
-        // IReference
-        /*--------------------------------------------------------*/
-
-        /** sets the implementation to the reference */
-        public native void SetReference( IBase ptr );
-    }
 
 
 
@@ -1041,13 +1342,13 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Base interface common to all nodes
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IBase extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IBase extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IBase(Pointer p) { super(p); }
     
         /** Get the access mode of the node */
-        public native @Cast("GENAPI_NAMESPACE::EAccessMode") int GetAccessMode();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int GetAccessMode();
 
 		/** Virtual destructor enforcing virtual destructor on all derived classes */
     }
@@ -1069,19 +1370,6 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IBase pointer
     \ingroup GenApi_PublicImpl
     */
-    @Name("GENAPI_NAMESPACE::CBaseRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") public static class CBaseRefTInteger extends CReferenceTInteger {
-        static { Loader.load(); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public CBaseRefTInteger(Pointer p) { super(p); }
-    
-        /*--------------------------------------------------------*/
-        // IBase
-        /*--------------------------------------------------------*/
-
-        /** Get the access mode of the node */
-        public native @Cast("GENAPI_NAMESPACE::EAccessMode") int GetAccessMode();
-
-    }
 
     /** Reference to an IBase pointer
      *  \ingroup GenApi_PublicImpl */
@@ -1147,7 +1435,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface for value properties
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IValue extends IBase {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IValue extends IBase {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IValue(Pointer p) { super(p); }
@@ -1188,29 +1476,6 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IValue pointer
     \ingroup GenApi_PublicImpl
     */
-    @Name("GENAPI_NAMESPACE::CValueRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") public static class CValueRefTInteger extends CBaseRefTInteger {
-        static { Loader.load(); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public CValueRefTInteger(Pointer p) { super(p); }
-    
-        /*--------------------------------------------------------*/
-        // IValue
-        /*--------------------------------------------------------*/
-
-        /** Get the INode interface of the node */
-        public native INode GetNode();
-
-        /** Get content of the node as string */
-        public native @ByVal gcstring ToString(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
-        public native @ByVal gcstring ToString();
-
-        /** Set content of the node as string */
-        public native void FromString(@Const @ByRef gcstring ValueStr, @Cast("bool") boolean Verify/*=true*/);
-        public native void FromString(@Const @ByRef gcstring ValueStr);
-
-        /** Checks if the value comes from cache or is requested from another node */
-        public native @Cast("bool") boolean IsValueCacheValid();
-    }
 
     /** Reference to an IValue pointer
      *  \ingroup GenApi_PublicImpl */
@@ -1273,7 +1538,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface for Boolean  properties
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IBoolean extends IValue {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IBoolean extends IValue {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IBoolean(Pointer p) { super(p); }
@@ -1377,7 +1642,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface for integer properties
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IInteger extends IValue {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IInteger extends IValue {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IInteger(Pointer p) { super(p); }
@@ -1415,7 +1680,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @Cast("int64_t") long GetMax();
 
         /** Get increment mode */
-        public native @Cast("GENAPI_NAMESPACE::EIncMode") int GetIncMode();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EIncMode") int GetIncMode();
 
         /** Get increment */
         public native @Cast("int64_t") long GetInc();
@@ -1425,7 +1690,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @ByVal int64_autovector_t GetListOfValidValues();
 
         /** Get recommended representation */
-        public native @Cast("GENAPI_NAMESPACE::ERepresentation") int GetRepresentation();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::ERepresentation") int GetRepresentation();
 
         /** Get the physical unit name */
         public native @ByVal gcstring GetUnit();
@@ -1449,73 +1714,6 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Reference to an IInteger pointer
     \ingroup GenApi_PublicImpl
     */
-    @Name("GENAPI_NAMESPACE::CIntegerRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>") public static class CIntegerRef extends CValueRefTInteger {
-        static { Loader.load(); }
-        /** Default native constructor. */
-        public CIntegerRef() { super((Pointer)null); allocate(); }
-        /** Native array allocator. Access with {@link Pointer#position(int)}. */
-        public CIntegerRef(int size) { super((Pointer)null); allocateArray(size); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public CIntegerRef(Pointer p) { super(p); }
-        private native void allocate();
-        private native void allocateArray(int size);
-        @Override public CIntegerRef position(int position) {
-            return (CIntegerRef)super.position(position);
-        }
-    
-        /*--------------------------------------------------------*/
-        // IInteger
-        /*--------------------------------------------------------*/
-
-        /** Set node value */
-        public native void SetValue(@Cast("int64_t") long Value, @Cast("bool") boolean Verify/*=true*/);
-        public native void SetValue(@Cast("int64_t") long Value);
-
-        /** Set node value */
-        public native @ByRef @Name("operator =") IInteger put(@Cast("int64_t") long Value);
-
-        /** Get node value */
-        public native @Cast("int64_t") long GetValue( @Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/ );
-        public native @Cast("int64_t") long GetValue( );
-
-        /** Get node value */
-        public native @Cast("int64_t") @Name("operator ()") long apply();
-
-        /** Get node value */
-        public native @Cast("int64_t") @Name("operator *") long multiply();
-
-        /** Get minimum value allowed */
-        public native @Cast("int64_t") long GetMin();
-
-        /** Get maximum value allowed */
-        public native @Cast("int64_t") long GetMax();
-
-        /** Get increment */
-        public native @Cast("GENAPI_NAMESPACE::EIncMode") int GetIncMode();
-
-        /** Get increment */
-        public native @Cast("int64_t") long GetInc();
-
-        /** Implementation of IInteger::GetListOfValidValues */
-        public native @ByVal int64_autovector_t GetListOfValidValues(@Cast("bool") boolean bounded/*=true*/);
-        public native @ByVal int64_autovector_t GetListOfValidValues();
-
-        /** Get recommended representation */
-        public native @Cast("GENAPI_NAMESPACE::ERepresentation") int GetRepresentation();
-
-        /** Get the physical unit name */
-        public native @ByVal gcstring GetUnit();
-
-        /** gets the interface of an alias node. */
-        public native IFloat GetFloatAlias();
-
-        /** Restrict minimum value */
-        public native void ImposeMin(@Cast("int64_t") long Value);
-
-        /** Restrict maximum value */
-        public native void ImposeMax(@Cast("int64_t") long Value);
-
-    }
 
     /** Reference to an IInteger pointer
      *  \ingroup GenApi_PublicImpl */
@@ -1578,7 +1776,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface for float properties
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IFloat extends IValue {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IFloat extends IValue {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IFloat(Pointer p) { super(p); }
@@ -1619,7 +1817,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @Cast("bool") boolean HasInc();
 
         /** Get increment mode */
-        public native @Cast("GENAPI_NAMESPACE::EIncMode") int GetIncMode();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EIncMode") int GetIncMode();
 
         /** Get the constant increment if there is any */
         public native double GetInc();
@@ -1629,13 +1827,13 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @ByVal double_autovector_t GetListOfValidValues();
 
         /** Get recommended representation */
-        public native @Cast("GENAPI_NAMESPACE::ERepresentation") int GetRepresentation();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::ERepresentation") int GetRepresentation();
 
         /** Get the physical unit name */
         public native @ByVal gcstring GetUnit();
 
         /** Get the way the float should be converted to a string */
-        public native @Cast("GENAPI_NAMESPACE::EDisplayNotation") int GetDisplayNotation();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EDisplayNotation") int GetDisplayNotation();
 
         /** Get the precision to be used when converting the float to a string */
         public native @Cast("int64_t") long GetDisplayPrecision();
@@ -1721,7 +1919,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface for ports
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IPort extends IBase {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IPort extends IBase {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IPort(Pointer p) { super(p); }
@@ -1803,7 +2001,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 
 // #pragma warning ( push )
 // #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-    @Namespace("GENAPI_NAMESPACE") @Opaque public static class INodeMap extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @Opaque public static class INodeMap extends Pointer {
         /** Empty constructor. Calls {@code super((Pointer)null)}. */
         public INodeMap() { super((Pointer)null); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
@@ -1814,7 +2012,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
 
     /** the callback handle for nodes */
 
-    @Namespace("GENAPI_NAMESPACE") @Opaque public static class CNodeCallback extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @Opaque public static class CNodeCallback extends Pointer {
         /** Empty constructor. Calls {@code super((Pointer)null)}. */
         public CNodeCallback() { super((Pointer)null); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
@@ -1829,7 +2027,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface common to all nodes
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class INode extends IBase {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class INode extends IBase {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public INode(Pointer p) { super(p); }
@@ -1839,10 +2037,10 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @ByVal gcstring GetName();
 
         /** Get name space */
-        public native @Cast("GENAPI_NAMESPACE::ENameSpace") int GetNameSpace();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::ENameSpace") int GetNameSpace();
 
         /** Get the recommended visibility of the node */
-        public native @Cast("GENAPI_NAMESPACE::EVisibility") int GetVisibility();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EVisibility") int GetVisibility();
 
         /** Indicates that the node's value may have changed.
         /** Fires the callback on this and all dependent nodes */
@@ -1852,10 +2050,10 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @Cast("bool") boolean IsCachable();
 
         /** True if the AccessMode can be cached */
-        public native @Cast("GENAPI_NAMESPACE::EYesNo") int IsAccessModeCacheable();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EYesNo") int IsAccessModeCacheable();
 
         /** Get Caching Mode */
-        public native @Cast("GENAPI_NAMESPACE::ECachingMode") int GetCachingMode();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::ECachingMode") int GetCachingMode();
 
         /** recommended polling time (for not cachable nodes) */
         public native @Cast("int64_t") long GetPollingTime();
@@ -1877,24 +2075,24 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         @param [out] Children List of children nodes
         @param LinkType The link type
         */
-        public native void GetChildren(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Children, @Cast("GENAPI_NAMESPACE::ELinkType") int LinkType/*=ctReadingChildren*/);
-        public native void GetChildren(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Children);
+        public native void GetChildren(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Children, @Cast("GenApi_3_0_Basler_pylon_v5_0::ELinkType") int LinkType/*=GenApi_3_0_Basler_pylon_v5_0::ctReadingChildren*/);
+        public native void GetChildren(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Children);
 
         /**
         \brief Gets all nodes this node is directly depending on
         @param [out] Parents List of parent nodes
         */
-        public native void GetParents(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Parents);
+        public native void GetParents(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Parents);
 
         /** Register change callback
         /** Takes ownership of the CNodeCallback object */
-        public native @Cast("GENAPI_NAMESPACE::CallbackHandleType") long RegisterCallback( CNodeCallback pCallback );
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::CallbackHandleType") long RegisterCallback( CNodeCallback pCallback );
 
         /** De register change callback
         /** Destroys CNodeCallback object
         @return true if the callback handle was valid
         */
-        public native @Cast("bool") boolean DeregisterCallback( @Cast("GENAPI_NAMESPACE::CallbackHandleType") long hCallback );
+        public native @Cast("bool") boolean DeregisterCallback( @Cast("GenApi_3_0_Basler_pylon_v5_0::CallbackHandleType") long hCallback );
 
         /** Retrieves the central node map */
         public native INodeMap GetNodeMap();
@@ -1913,10 +2111,10 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @Cast("bool") boolean GetProperty(@Const @ByRef gcstring PropertyName, @ByRef gcstring ValueStr, @ByRef gcstring AttributeStr);
 
         /** Imposes an access mode to the natural access mode of the node */
-        public native void ImposeAccessMode(@Cast("GENAPI_NAMESPACE::EAccessMode") int ImposedAccessMode);
+        public native void ImposeAccessMode(@Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int ImposedAccessMode);
 
         /** Imposes a visibility  to the natural visibility of the node */
-        public native void ImposeVisibility(@Cast("GENAPI_NAMESPACE::EVisibility") int ImposedVisibility);
+        public native void ImposeVisibility(@Cast("GenApi_3_0_Basler_pylon_v5_0::EVisibility") int ImposedVisibility);
 
         /** Retrieves the a node which describes the same feature in a different way */
         public native INode GetAlias();
@@ -1931,7 +2129,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
         public native @Cast("bool") boolean IsDeprecated();
 
         /** Get the type of the main interface of a node */
-        public native @Cast("GENAPI_NAMESPACE::EInterfaceType") int GetPrincipalInterfaceType();
+        public native @Cast("GenApi_3_0_Basler_pylon_v5_0::EInterfaceType") int GetPrincipalInterfaceType();
 
         /** True if the node can be reached via category nodes from a category node named "Root" */
         public native @Cast("bool") boolean IsFeature();
@@ -1942,51 +2140,51 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
      *  \{
 
      *  Tests if readable */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsReadable( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsReadable( @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int AccessMode );
 
     /** Checks if a node is readable */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsReadable( @Const IBase p);
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsReadable( @Const IBase p);
 
     /** Checks if a node is readable */
 
     /** Tests if writable */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsWritable( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsWritable( @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int AccessMode );
 
     /** Checks if a node is writable */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsWritable( @Const IBase p);
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsWritable( @Const IBase p);
 
     /** Checks if a node is writable */
 
     /** Tests if implemented */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsImplemented( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsImplemented( @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int AccessMode );
 
     /** Checks if a node is implemented */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsImplemented( @Const IBase p);
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsImplemented( @Const IBase p);
 
     /** Checks if a node is implemented */
 
     /** Tests if available */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsAvailable( @Cast("GENAPI_NAMESPACE::EAccessMode") int AccessMode );
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsAvailable( @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int AccessMode );
 
     /** Checks if a node is available */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsAvailable( @Const IBase p);
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsAvailable( @Const IBase p);
     
     /** Checks if a node is available */
 
     /** Computes which access mode the two guards allow together */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("GENAPI_NAMESPACE::EAccessMode") int Combine(@Cast("GENAPI_NAMESPACE::EAccessMode") int Peter, @Cast("GENAPI_NAMESPACE::EAccessMode") int Paul);
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int Combine(@Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int Peter, @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int Paul);
 
 
     /** Tests Visibility
     /** CAVE : this relys on the EVisibility enum's coding */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsVisible( @Cast("GENAPI_NAMESPACE::EVisibility") int Visibility, @Cast("GENAPI_NAMESPACE::EVisibility") int MaxVisiblity );
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsVisible( @Cast("GenApi_3_0_Basler_pylon_v5_0::EVisibility") int Visibility, @Cast("GenApi_3_0_Basler_pylon_v5_0::EVisibility") int MaxVisiblity );
 
 
     /** Computes which visibility the two guards allow together */
 
 
     /** Tests Cacheability */
-    @Namespace("GENAPI_NAMESPACE") public static native @Cast("bool") boolean IsCacheable( @Cast("GENAPI_NAMESPACE::ECachingMode") int CachingMode );
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsCacheable( @Cast("GenApi_3_0_Basler_pylon_v5_0::ECachingMode") int CachingMode );
 
     /** Computes which CachingMode results from a combination */
 
@@ -2060,7 +2258,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief A lock class
     \ingroup GenApi_PublicImpl
     */
-    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class CLock extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @NoOffset public static class CLock extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CLock(Pointer p) { super(p); }
@@ -2092,7 +2290,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     /** This class is for testing purposes only. It should not be used for
      *  client code because it exists only for Windows but not for Linux
      *  since it uses internal data structures of a Win32 object */
-    @Namespace("GENAPI_NAMESPACE") public static class CLockEx extends CLock {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class CLockEx extends CLock {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CLockEx(Pointer p) { super(p); }
@@ -2117,7 +2315,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     //-----------------------------------------------------------------
     // AutoLock
     //-----------------------------------------------------------------
-    @Namespace("GENAPI_NAMESPACE") @NoOffset public static class AutoLock extends Pointer {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @NoOffset public static class AutoLock extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public AutoLock(Pointer p) { super(p); }
@@ -2192,7 +2390,7 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \ingroup GenApi_PublicInterface
     */
     /** Maps of Enum Values to symbolic values */
-    @Namespace("GENAPI_NAMESPACE") public static class IEnumEntry extends IValue {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IEnumEntry extends IValue {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IEnumEntry(Pointer p) { super(p); }
@@ -2285,17 +2483,17 @@ public static native @Cast("std::istream*") @ByRef @Name("operator >>") Pointer 
     \brief Interface for enumeration properties
     \ingroup GenApi_PublicInterface
     */
-    @Namespace("GENAPI_NAMESPACE") public static class IEnumeration extends IValue {
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IEnumeration extends IValue {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public IEnumeration(Pointer p) { super(p); }
     
 
         /** Get list of symbolic Values */
-        public native void GetSymbolics(@Cast("GENAPI_NAMESPACE::StringList_t*") @ByRef Pointer Symbolics);
+        public native void GetSymbolics(@Cast("GenApi_3_0_Basler_pylon_v5_0::StringList_t*") @ByRef gcstring_vector Symbolics);
 
         /** Get list of entry nodes */
-        public native void GetEntries(@Cast("GENAPI_NAMESPACE::NodeList_t*") @ByRef Pointer Entries);
+        public native void GetEntries(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Entries);
 
         /** Set string node value */
         public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);

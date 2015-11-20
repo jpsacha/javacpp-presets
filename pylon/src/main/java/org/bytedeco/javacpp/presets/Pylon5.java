@@ -83,6 +83,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 //                        "<pylon/PylonBitmapImage.h>",
                         "<pylon/_ImageFormatConverterParams.h>",
                         "<pylon/ImageFormatConverter.h>",
+                        "<GenApi/IEnumerationT.h>",
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
@@ -150,10 +151,10 @@ public class Pylon5 implements InfoMapper {
                 .put(new Info("Pylon::CPylonImageBase").purify())
 
                 /* <pylon/_ImageFormatConverterParams.h> */
-                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::MonoConversionMethodEnums>").pointerTypes("IEnumerationTMonoConversionMethodEnums"))
-                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::OutputOrientationEnums>").pointerTypes("EnumerationTOutputOrientationEnums"))
-                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums>").pointerTypes("IEnumerationTInconvertibleEdgeHandlingEnums"))
-                .put(new Info("GenApi::IEnumerationT<Basler_ImageFormatConverterParams::OutputBitAlignmentEnums>").pointerTypes("IEnumerationTOutputBitAlignmentEnums"))
+                .put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::MonoConversionMethodEnums>").pointerTypes("IEnumerationTMonoConversionMethodEnums").define())
+                .put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputOrientationEnums>").pointerTypes("IEnumerationTOutputOrientationEnums").define())
+                .put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums>").pointerTypes("IEnumerationTInconvertibleEdgeHandlingEnums").define())
+                .put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputBitAlignmentEnums>").pointerTypes("IEnumerationTOutputBitAlignmentEnums").define())
        ;
     }
 }

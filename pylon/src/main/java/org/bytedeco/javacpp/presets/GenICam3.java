@@ -38,6 +38,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         @Platform(value = {"linux", "windows"}, include = {
                 "<_GenICamVersion.h>",
                 "<GenICamVersion.h>",
+                "<GenApi/GenApiNamespace.h>",
                 "<Base/GCNamespace.h>",
                 "<Base/GCTypes.h>",
                 "<Base/GCString.h>",
@@ -46,8 +47,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 //                "<Base/GCUtilities.h>",
 //                "<Base/GCBase.h>",
 //                "<GenApi/GenApi.h>",
-                // <GenApi/Types.h> commented out due to issues with enums with Long values
-//                "<GenApi/Types.h>",
+                "<GenApi/Types.h>",
                 "<GenApi/Autovector.h>",
                 "<GenApi/Reference.h>",
                 "<GenApi/IBase.h>",
@@ -98,7 +98,7 @@ public class GenICam3 implements InfoMapper {
                         "GENICAM_COMPILER_STR",
                         "GENICAM_CACHE_VERSION",
                         "GENICAM_LOG_CONFIG_VERSION",
-                        "GENICAM_NAMESPACE",
+                        "GENICAM_NAMESPACE", "GENAPI_NAMESPACE",
                         "GC_W64",
                         "GCSTRING_NPOS").cppTypes())
                 .put(new Info("defined(GENICAM_COMPANY_SUFFIX)").define())
@@ -138,7 +138,7 @@ public class GenICam3 implements InfoMapper {
                 .put(new Info("GENAPI_NAMESPACE::CIntegerRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CIntegerRef"))
 
                 /* Workaround for not being able to parse <GenApi/Container.h>*/
-                .put(new Info("GENAPI_NAMESPACE::node_vector").cast().pointerTypes("Pointer"))
+                .put(new Info("GenApi_3_0_Basler_pylon_v5_0::node_vector").cast().pointerTypes("Pointer"))
 
         ;
     }

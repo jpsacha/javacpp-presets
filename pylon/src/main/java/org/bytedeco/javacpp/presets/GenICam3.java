@@ -119,18 +119,6 @@ public class GenICam3 implements InfoMapper {
 //                /* "Base/GCString.h" prevent parsing of things related to inner class `gcwchar` **/
 //
 //                .put(new Info("defined(_MSC_VER) && !defined(PHARLAP_WIN32)").define(false))
-                /* Enums defined here since <GenApi/Types.h> cannot be parsed due to Long enums */
-                .put(new Info("GENAPI_NAMESPACE::EAccessMode").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::ECachingMode").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::EDisplayNotation").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::EIncMode").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::EInterfaceType").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::ELinkType").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::ENameSpace").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::ERepresentation").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::EVisibility").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::EYesNo").cast().valueTypes("int"))
-                .put(new Info("GENAPI_NAMESPACE::StringList_t").cast().pointerTypes("Pointer"))
 
                 .put(new Info("GENAPI_NAMESPACE::CReferenceT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CReferenceTInteger").purify())
                 .put(new Info("GENAPI_NAMESPACE::CBaseRefT<GENAPI_NAMESPACE::IInteger,GENAPI_NAMESPACE::IInteger>").pointerTypes("CBaseRefTInteger").purify())

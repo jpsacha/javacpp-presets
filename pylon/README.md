@@ -15,7 +15,7 @@ The wrappers are currently used development and were tested only on Windows 7 64
 Building Pylon Presets
 ----------------------
 
-To build Pylon presets follow normal javacpp-presets setup. You will need to install [Pylon 4.2.2](http://www.baslerweb.com/en/support/downloads) in default location. You do not need `buildcpp` as the installed Pylon binaries are used. Tu build presets run:
+To build Pylon presets follow normal javacpp-presets setup. You will need to install [Pylon 5.0.0](http://www.baslerweb.com/en/support/downloads) in default location. You do not need `buildcpp` as the installed Pylon binaries are used. Tu build presets run:
 
 ```
 mvn install --projects .,pylon

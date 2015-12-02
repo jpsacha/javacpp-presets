@@ -583,6 +583,7 @@ public static native @Cast("GENAPIC_RESULT") long GenApiIntegerGetRepresentation
 public static native @Cast("GENAPIC_RESULT") long GenApiBooleanSetValue( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool") boolean value );
 
 public static native @Cast("GENAPIC_RESULT") long GenApiBooleanGetValue( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") BoolPointer pValue );
+public static native @Cast("GENAPIC_RESULT") long GenApiBooleanGetValue( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") boolean[] pValue );
 // #endif
 
 /* IFloat */
@@ -625,6 +626,7 @@ public static native @Cast("GENAPIC_RESULT") long GenApiCommandExecute( @ByVal @
 
 // #ifndef GENAPIC_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long GenApiCommandIsDone( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") BoolPointer pValue );
+public static native @Cast("GENAPIC_RESULT") long GenApiCommandIsDone( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") boolean[] pValue );
 // #endif
 
 /* IEnumeration */
@@ -651,12 +653,16 @@ public static native @Cast("GENAPIC_RESULT") long GenApiEnumerationEntryGetSymbo
 /* Convenience */
 // #ifndef GENAPIC_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsImplemented( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") BoolPointer pResult );
+public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsImplemented( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") boolean[] pResult );
 
 public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsReadable( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") BoolPointer pResult );
+public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsReadable( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") boolean[] pResult );
 
 public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsWritable( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") BoolPointer pResult );
+public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsWritable( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") boolean[] pResult );
 
 public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsAvailable( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") BoolPointer pResult );
+public static native @Cast("GENAPIC_RESULT") long GenApiNodeIsAvailable( @ByVal @Cast("NODE_HANDLE*") Pointer hNode, @Cast("_Bool*") boolean[] pResult );
 // #endif
 
 /* Category */
@@ -678,9 +684,10 @@ public static native @Cast("GENAPIC_RESULT") long GenApiPortWrite(@ByVal @Cast("
 // #ifndef GENAPIC_TLB_ONLY
 /* DeviceFileStream */
 public static native @Cast("GENAPIC_RESULT") long GenApiFilesAreSupported( @ByVal @Cast("NODEMAP_HANDLE*") Pointer hMap, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long GenApiFilesAreSupported( @ByVal @Cast("NODEMAP_HANDLE*") Pointer hMap, @Cast("_Bool*") boolean[] pResult);
 
 public static native @Cast("GENAPIC_RESULT") long GenApiFileExists( @ByVal @Cast("NODEMAP_HANDLE*") Pointer hMap, @Cast("const char*") BytePointer pFileName, @Cast("_Bool*") BoolPointer pResult);
-public static native @Cast("GENAPIC_RESULT") long GenApiFileExists( @ByVal @Cast("NODEMAP_HANDLE*") Pointer hMap, String pFileName, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long GenApiFileExists( @ByVal @Cast("NODEMAP_HANDLE*") Pointer hMap, String pFileName, @Cast("_Bool*") boolean[] pResult);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long GenApiFileOpen( @ByVal @Cast("NODEMAP_HANDLE*") Pointer hMap, @Cast("const char*") BytePointer pFileName, @Cast("EGenApiFileAccessMode") int accessMode, @Cast("GENAPI_FILE_HANDLE*") Pointer phFile);
@@ -1508,7 +1515,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonGigEAnnounceRemoteDevice(
 public static native @Cast("GENAPIC_RESULT") long PylonGigEAnnounceRemoteDevice( String pIpAddress);
 
 public static native @Cast("GENAPIC_RESULT") long PylonGigERenounceRemoteDevice( @Cast("const char*") BytePointer pIpAddress, @Cast("_Bool*") BoolPointer pFound);
-public static native @Cast("GENAPIC_RESULT") long PylonGigERenounceRemoteDevice( String pIpAddress, @Cast("_Bool*") BoolPointer pFound);
+public static native @Cast("GENAPIC_RESULT") long PylonGigERenounceRemoteDevice( String pIpAddress, @Cast("_Bool*") boolean[] pFound);
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonGigEGetPersistentIpAddress( @ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("char*") BytePointer pIpAddress, @Cast("size_t*") IntPointer pIpAddressLen, @Cast("char*") BytePointer pSubnetMask, @Cast("size_t*") IntPointer pSubnetMaskLen, @Cast("char*") BytePointer pDefaultGateway, @Cast("size_t*") IntPointer pDefaultGatewayLen);
@@ -1536,7 +1543,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonGigEBroadcastIpConfigurat
                                   String pSubnetMask,
                                   String pDefaultGateway,
                                   String pUserdefinedName,
-                                  @Cast("_Bool*") BoolPointer pRetval
+                                  @Cast("_Bool*") boolean[] pRetval
                                   );
 
 public static native @Cast("GENAPIC_RESULT") long PylonGigEIssueActionCommand( @Cast("uint32_t") int deviceKey, @Cast("uint32_t") int groupKey, @Cast("uint32_t") int groupMask, @Cast("const char*") BytePointer pBroadcastAddress, @Cast("uint32_t") int timeoutMs,  @Cast("uint32_t*") IntPointer pNumResults, PylonGigEActionCommandResult_t pResults );
@@ -1586,6 +1593,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonCreateDeviceFromDirectSho
 public static native @Cast("GENAPIC_RESULT") long PylonDestroyDevice(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev);
 
 public static native @Cast("GENAPIC_RESULT") long PylonIsDeviceAccessible( @Cast("size_t") int index, int accessMode, @Cast("_Bool*") BoolPointer pIsAccessible );
+public static native @Cast("GENAPIC_RESULT") long PylonIsDeviceAccessible( @Cast("size_t") int index, int accessMode, @Cast("_Bool*") boolean[] pIsAccessible );
 
 /* Device operations */
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceOpen(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, int accessMode);
@@ -1594,6 +1602,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonDeviceClose(@ByVal @Cast(
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceIsOpen(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("_Bool*") BoolPointer pOpen);
+public static native @Cast("GENAPIC_RESULT") long PylonDeviceIsOpen(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("_Bool*") boolean[] pOpen);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceAccessMode(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, IntPointer pAccessMode);
@@ -1667,6 +1676,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetIntegerFeatureIn
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetIntegerFeatureInc(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("const char*") BytePointer pName, @Cast("int64_t*") LongBuffer pValue);
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetIntegerFeatureInc(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, String pName, @Cast("int64_t*") long[] pValue);
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceGrabSingleFrame(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("size_t") int channel, Pointer pBuffer, @Cast("size_t") int bufferSize, PylonGrabResult_t pGrabResult, @Cast("_Bool*") BoolPointer pReady, @Cast("uint32_t") int timeout);
+public static native @Cast("GENAPIC_RESULT") long PylonDeviceGrabSingleFrame(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("size_t") int channel, Pointer pBuffer, @Cast("size_t") int bufferSize, PylonGrabResult_t pGrabResult, @Cast("_Bool*") boolean[] pReady, @Cast("uint32_t") int timeout);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceSetFloatFeature(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("const char*") BytePointer pName, double value);
@@ -1698,7 +1708,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonDeviceSetBooleanFeature(@
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceSetBooleanFeature(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, String pName, @Cast("_Bool") boolean value);
 
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetBooleanFeature(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("const char*") BytePointer pName, @Cast("_Bool*") BoolPointer pValue);
-public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetBooleanFeature(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, String pName, @Cast("_Bool*") BoolPointer pValue);
+public static native @Cast("GENAPIC_RESULT") long PylonDeviceGetBooleanFeature(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, String pName, @Cast("_Bool*") boolean[] pValue);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceExecuteCommandFeature(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("const char*") BytePointer pName);
@@ -1706,7 +1716,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonDeviceExecuteCommandFeatu
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceIsCommandDone(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("const char*") BytePointer pName, @Cast("_Bool*") BoolPointer pResult);
-public static native @Cast("GENAPIC_RESULT") long PylonDeviceIsCommandDone(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, String pName, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonDeviceIsCommandDone(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, String pName, @Cast("_Bool*") boolean[] pResult);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonDeviceFeatureFromString(@ByVal @Cast("PYLON_DEVICE_HANDLE*") IntPointer hDev, @Cast("const char*") BytePointer pName, @Cast("const char*") BytePointer pValue);
@@ -1747,6 +1757,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberClose(@ByVal
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberIsOpen(@ByVal @Cast("PYLON_STREAMGRABBER_HANDLE*") IntPointer hStg, @Cast("_Bool*") BoolPointer pOpen);
+public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberIsOpen(@ByVal @Cast("PYLON_STREAMGRABBER_HANDLE*") IntPointer hStg, @Cast("_Bool*") boolean[] pOpen);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberGetWaitObject(@ByVal @Cast("PYLON_STREAMGRABBER_HANDLE*") IntPointer hStg, @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer phWobj);
@@ -1778,6 +1789,7 @@ public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberCancelGrab(@
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberRetrieveResult(@ByVal @Cast("PYLON_STREAMGRABBER_HANDLE*") IntPointer hStg, PylonGrabResult_t pGrabResult, @Cast("_Bool*") BoolPointer pReady);
+public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberRetrieveResult(@ByVal @Cast("PYLON_STREAMGRABBER_HANDLE*") IntPointer hStg, PylonGrabResult_t pGrabResult, @Cast("_Bool*") boolean[] pReady);
 public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberQueueBuffer(@ByVal @Cast("PYLON_STREAMGRABBER_HANDLE*") IntPointer hStg, @ByVal @Cast("PYLON_STREAMBUFFER_HANDLE*") IntPointer hBuf, @Const Pointer pContext);
 // #endif
 
@@ -1788,8 +1800,10 @@ public static native @Cast("GENAPIC_RESULT") long PylonStreamGrabberGetNodeMap(@
 /* Wait objects */
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectIsValid(@ByVal @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer hWobj, @Cast("_Bool*") BoolPointer pValid);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectIsValid(@ByVal @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer hWobj, @Cast("_Bool*") boolean[] pValid);
 
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectWait(@ByVal @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer hWobj, @Cast("uint32_t") int timeout, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectWait(@ByVal @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer hWobj, @Cast("uint32_t") int timeout, @Cast("_Bool*") boolean[] pResult);
 
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectWaitEx(@ByVal @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer hWobj, @Cast("uint32_t") int timeout, @Cast("_Bool") boolean alertable, @Cast("EPylonWaitExResult*") IntPointer pWaitResult);
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectWaitEx(@ByVal @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer hWobj, @Cast("uint32_t") int timeout, @Cast("_Bool") boolean alertable, @Cast("EPylonWaitExResult*") IntBuffer pWaitResult);
@@ -1822,10 +1836,14 @@ public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsRemoveAll(@ByV
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAll(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAll(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("_Bool*") boolean[] pResult);
 
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") IntPointer pIndex, @Cast("_Bool*") BoolPointer pResult);
-public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") IntBuffer pIndex, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") IntBuffer pIndex, @Cast("_Bool*") boolean[] pResult);
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") int[] pIndex, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") IntPointer pIndex, @Cast("_Bool*") boolean[] pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") IntBuffer pIndex, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAny(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("size_t*") int[] pIndex, @Cast("_Bool*") boolean[] pResult);
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAllEx(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("_Bool") boolean alertable, @Cast("EPylonWaitExResult*") IntPointer pWaitResult);
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAllEx(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("_Bool") boolean alertable, @Cast("EPylonWaitExResult*") IntBuffer pWaitResult);
 public static native @Cast("GENAPIC_RESULT") long PylonWaitObjectsWaitForAllEx(@ByVal @Cast("PYLON_WAITOBJECTS_HANDLE*") IntPointer hWos, @Cast("uint32_t") int timeout, @Cast("_Bool") boolean alertable, @Cast("EPylonWaitExResult*") int[] pWaitResult);
@@ -1846,8 +1864,10 @@ public static native @Cast("GENAPIC_RESULT") long PylonEventGrabberClose(@ByVal 
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonEventGrabberIsOpen(@ByVal @Cast("PYLON_EVENTGRABBER_HANDLE*") IntPointer hEvg, @Cast("_Bool*") BoolPointer pOpen);
+public static native @Cast("GENAPIC_RESULT") long PylonEventGrabberIsOpen(@ByVal @Cast("PYLON_EVENTGRABBER_HANDLE*") IntPointer hEvg, @Cast("_Bool*") boolean[] pOpen);
 
 public static native @Cast("GENAPIC_RESULT") long PylonEventGrabberRetrieveEvent(@ByVal @Cast("PYLON_EVENTGRABBER_HANDLE*") IntPointer hEvg, PylonEventResult_t pEventResult, @Cast("_Bool*") BoolPointer pReady);
+public static native @Cast("GENAPIC_RESULT") long PylonEventGrabberRetrieveEvent(@ByVal @Cast("PYLON_EVENTGRABBER_HANDLE*") IntPointer hEvg, PylonEventResult_t pEventResult, @Cast("_Bool*") boolean[] pReady);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonEventGrabberGetWaitObject(@ByVal @Cast("PYLON_EVENTGRABBER_HANDLE*") IntPointer hEvg, @Cast("PYLON_WAITOBJECT_HANDLE*") IntPointer phWobj);
@@ -1879,8 +1899,10 @@ public static native @Cast("GENAPIC_RESULT") long PylonChunkParserDetachBuffer(@
 public static native @Cast("GENAPIC_RESULT") long PylonChunkParserUpdateBuffer(@ByVal @Cast("PYLON_CHUNKPARSER_HANDLE*") IntPointer hChp, @Const Pointer pBuffer);
 
 public static native @Cast("GENAPIC_RESULT") long PylonChunkParserHasCRC(@ByVal @Cast("PYLON_CHUNKPARSER_HANDLE*") IntPointer hChp, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonChunkParserHasCRC(@ByVal @Cast("PYLON_CHUNKPARSER_HANDLE*") IntPointer hChp, @Cast("_Bool*") boolean[] pResult);
 
 public static native @Cast("GENAPIC_RESULT") long PylonChunkParserCheckCRC(@ByVal @Cast("PYLON_CHUNKPARSER_HANDLE*") IntPointer hChp, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonChunkParserCheckCRC(@ByVal @Cast("PYLON_CHUNKPARSER_HANDLE*") IntPointer hChp, @Cast("_Bool*") boolean[] pResult);
 // #endif
 
 /* Deprecated: PylonPixelFormatConverterCreate has been deprecated. Use PylonImageFormatConverterCreate instead. */
@@ -1906,7 +1928,9 @@ public static native @Cast("GENAPIC_RESULT") long PylonBitsPerPixel(@Cast("EPylo
 
 // #ifndef PYLON_TLB_ONLY
 public static native @Cast("GENAPIC_RESULT") long PylonIsMono(@Cast("EPylonPixelType") int pixelType, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonIsMono(@Cast("EPylonPixelType") int pixelType, @Cast("_Bool*") boolean[] pResult);
 public static native @Cast("GENAPIC_RESULT") long PylonIsBayer(@Cast("EPylonPixelType") int pixelType, @Cast("_Bool*") BoolPointer pResult);
+public static native @Cast("GENAPIC_RESULT") long PylonIsBayer(@Cast("EPylonPixelType") int pixelType, @Cast("_Bool*") boolean[] pResult);
 // #endif
 
 public static native @Cast("GENAPIC_RESULT") long PylonPixelTypeFromString(@Cast("const char*") BytePointer pString, @Cast("EPylonPixelType*") IntPointer pPixelType);
@@ -2007,10 +2031,12 @@ public static native @Cast("GENAPIC_RESULT") long PylonAviWriterOpen(@ByVal @Cas
 public static native @Cast("GENAPIC_RESULT") long PylonAviWriterClose(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter);
 
 public static native @Cast("GENAPIC_RESULT") long PylonAviWriterIsOpen(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Cast("_Bool*") BoolPointer pIsOpen);
+public static native @Cast("GENAPIC_RESULT") long PylonAviWriterIsOpen(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Cast("_Bool*") boolean[] pIsOpen);
 
 public static native @Cast("GENAPIC_RESULT") long PylonAviWriterAdd(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Const Pointer pBuffer, @Cast("size_t") int bufferSize, @Cast("EPylonPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("EPylonImageOrientation") int orientation, @Cast("EPylonKeyFrameSelection") int keyFrameSelection);
 
 public static native @Cast("GENAPIC_RESULT") long PylonAviWriterCanAddWithoutConversion(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Cast("EPylonPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("EPylonImageOrientation") int orientation, @Cast("_Bool*") BoolPointer pCanAddWithoutConversion);
+public static native @Cast("GENAPIC_RESULT") long PylonAviWriterCanAddWithoutConversion(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Cast("EPylonPixelType") int pixelType, @Cast("uint32_t") int width, @Cast("uint32_t") int height, @Cast("size_t") int paddingX, @Cast("EPylonImageOrientation") int orientation, @Cast("_Bool*") boolean[] pCanAddWithoutConversion);
 
 public static native @Cast("GENAPIC_RESULT") long PylonAviWriterGetImageDataBytesWritten(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Cast("size_t*") IntPointer pImageDataBytesWritten);
 public static native @Cast("GENAPIC_RESULT") long PylonAviWriterGetImageDataBytesWritten(@ByVal @Cast("PYLON_AVI_WRITER_HANDLE*") IntPointer hWriter, @Cast("size_t*") IntBuffer pImageDataBytesWritten);

@@ -1593,6 +1593,196 @@ public static final int _UndefindedRepresentation = _UndefinedRepresentation;
 // #endif // ifndef GENAPI_IBOOLEAN_H
 
 
+// Parsed from <GenApi/ICategory.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief  Definition of interface ICategory and types FeatureList_t :
+\ingroup GenApi_PublicInterface
+*/
+
+
+// #ifndef GENAPI_ICATEGORY_H
+// #define GENAPI_ICATEGORY_H
+
+// #include <Base/GCString.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+// #include <GenApi/Container.h>
+
+// #include <assert.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+
+
+    //*************************************************************
+    // ICategory interface
+    //*************************************************************
+
+    /**
+    \brief Gives access to a category node
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class ICategory extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public ICategory(Pointer p) { super(p); }
+    
+
+        /** Get all features of the category (including sub-categories) */
+        public native void GetFeatures(@Cast("GenApi_3_0_Basler_pylon_v5_0::FeatureList_t*") @ByRef Pointer Features);
+
+    }
+
+
+    //*************************************************************
+    // CCategoryRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an ICategory pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an ICategory pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_ICATEGORY_H
+
+
+// Parsed from <GenApi/ICommand.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Hartmut Nebelung
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of ICommand interface
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_ICOMMAND_H
+// #define GENAPI_ICOMMAND_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // ICommand interface
+    //*************************************************************
+
+    /** Interface for command like  properties
+     *  \ingroup GenApi_PublicInterface */
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class ICommand extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public ICommand(Pointer p) { super(p); }
+    
+
+        /** Execute the command
+        /**
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void Execute(@Cast("bool") boolean Verify/*=true*/);
+        public native void Execute();
+
+        /** Execute the command */
+        public native @Name("operator ()") void apply();
+
+        /** Query whether the command is executed
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @return True if the Execute command has finished; false otherwise
+        */
+        public native @Cast("bool") boolean IsDone(@Cast("bool") boolean Verify/*=true*/);
+        public native @Cast("bool") boolean IsDone();
+
+
+    }
+
+
+    //*************************************************************
+    // CCommandRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IInteger pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an ICommand pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_ICOMMAND_H
+
+
 // Parsed from <GenApi/IInteger.h>
 
 //-----------------------------------------------------------------------------
@@ -2001,12 +2191,6 @@ public static final int _UndefindedRepresentation = _UndefinedRepresentation;
 
 // #pragma warning ( push )
 // #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-    @Namespace("GenApi_3_0_Basler_pylon_v5_0") @Opaque public static class INodeMap extends Pointer {
-        /** Empty constructor. Calls {@code super((Pointer)null)}. */
-        public INodeMap() { super((Pointer)null); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public INodeMap(Pointer p) { super(p); }
-    }
 
     /** a list of node references */
 
@@ -2138,7 +2322,7 @@ public static final int _UndefindedRepresentation = _UndefinedRepresentation;
 
     /** \addtogroup GenApi_PublicInterface
      *  \{
-
+     <p>
      *  Tests if readable */
     @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static native @Cast("bool") boolean IsReadable( @Cast("GenApi_3_0_Basler_pylon_v5_0::EAccessMode") int AccessMode );
 
@@ -2195,6 +2379,228 @@ public static final int _UndefindedRepresentation = _UndefinedRepresentation;
 // #pragma warning ( pop )
 
 // #endif // ifndef GENAPI_INODE_H
+
+
+// Parsed from <GenApi/IString.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of interface IString
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_ISTRING_H
+// #define GENAPI_ISTRING_H
+
+// #include <Base/GCString.h>
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IString interface
+    //*************************************************************
+
+    /**
+    \brief Interface for string properties
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IString extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IString(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Const @ByRef gcstring Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Const @ByRef gcstring Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IString put(@Const @ByRef gcstring Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @ByVal gcstring GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @ByVal gcstring GetValue();
+
+        /** Get node value */
+        public native @ByVal @Name("operator ()") gcstring apply();
+
+        /** Get node value */
+        public native @ByVal @Name("operator *") gcstring multiply();
+
+        /** Retrieves the maximum length of the string in bytes */
+        public native @Cast("int64_t") long GetMaxLength();
+
+    }
+    //*************************************************************
+    // CStringRef class
+    //*************************************************************
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IEnumEntry pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IString pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_ISTRING_H
+
+
+// Parsed from <GenApi/IRegister.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Margret Albrecht
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of RegisterList_t type and the interface IRegister
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_IREGISTER_H
+// #define GENAPI_IREGISTER_H
+
+// #include <GenApi/GenApiDll.h>
+// #include <GenApi/Types.h>
+// #include <GenApi/IValue.h>
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+    //*************************************************************
+    // IRegister interface
+    //*************************************************************
+
+    /**
+    \brief Interface for registers
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class IRegister extends IValue {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IRegister(Pointer p) { super(p); }
+    
+        /** Set the register's contents
+        /**
+        @param pBuffer The buffer containing the data to set
+        @param Length The number of bytes in pBuffer
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void Set(@Cast("const uint8_t*") BytePointer pBuffer, @Cast("int64_t") long Length, @Cast("bool") boolean Verify/*=true*/);
+        public native void Set(@Cast("const uint8_t*") BytePointer pBuffer, @Cast("int64_t") long Length);
+        public native void Set(@Cast("const uint8_t*") ByteBuffer pBuffer, @Cast("int64_t") long Length, @Cast("bool") boolean Verify/*=true*/);
+        public native void Set(@Cast("const uint8_t*") ByteBuffer pBuffer, @Cast("int64_t") long Length);
+        public native void Set(@Cast("const uint8_t*") byte[] pBuffer, @Cast("int64_t") long Length, @Cast("bool") boolean Verify/*=true*/);
+        public native void Set(@Cast("const uint8_t*") byte[] pBuffer, @Cast("int64_t") long Length);
+
+        /** Fills a buffer with the register's contents
+        /**
+        @param pBuffer The buffer receiving the data to read
+        @param Length The number of bytes to retrieve
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        */
+        public native void Get(@Cast("uint8_t*") BytePointer pBuffer, @Cast("int64_t") long Length, @Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native void Get(@Cast("uint8_t*") BytePointer pBuffer, @Cast("int64_t") long Length);
+        public native void Get(@Cast("uint8_t*") ByteBuffer pBuffer, @Cast("int64_t") long Length, @Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native void Get(@Cast("uint8_t*") ByteBuffer pBuffer, @Cast("int64_t") long Length);
+        public native void Get(@Cast("uint8_t*") byte[] pBuffer, @Cast("int64_t") long Length, @Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native void Get(@Cast("uint8_t*") byte[] pBuffer, @Cast("int64_t") long Length);
+
+        /** Retrieves the Length of the register [Bytes] */
+        public native @Cast("int64_t") long GetLength();
+
+        /** Retrieves the Address of the register */
+        public native @Cast("int64_t") long GetAddress();
+    }
+
+    //*************************************************************
+    // CRegisterRef class
+    //*************************************************************
+
+
+// #ifndef DOXYGEN_IGNORE
+
+    /**
+    \internal
+    \brief Reference to an IRegister pointer
+    \ingroup GenApi_PublicImpl
+    */
+
+    /** Reference to an IRegister pointer
+     *  \ingroup GenApi_PublicImpl */
+
+// #endif
+
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_IREGISTER_H
 
 
 // Parsed from <GenApi/Synch.h>
@@ -2337,6 +2743,99 @@ public static final int _UndefindedRepresentation = _UndefinedRepresentation;
  // namespace GenApi
 
 // #endif // GENAPI_SYNCH_H
+
+
+// Parsed from <GenApi/INodeMap.h>
+
+//-----------------------------------------------------------------------------
+//  (c) 2006 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//  Author:  Fritz Dierks
+//  $Header$
+//
+//  License: This file is published under the license of the EMVA GenICam  Standard Group.
+//  A text file describing the legal terms is included in  your installation as 'GenICam_license.pdf'.
+//  If for some reason you are missing  this file please contact the EMVA or visit the website
+//  (http://www.genicam.org) for a full copy.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE EMVA GENICAM STANDARD GROUP "AS IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+//  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE EMVA GENICAM STANDARD  GROUP
+//  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,
+//  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  LIMITED TO,
+//  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  DATA, OR PROFITS;
+//  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY,
+//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief  Definition of interface INodeMap
+\ingroup GenApi_PublicInterface
+*/
+
+// #ifndef GENAPI_INODEMAP_H
+// #define GENAPI_INODEMAP_H
+
+// #include <Base/GCBase.h>
+// #include <GenApi/INode.h>
+// #include <GenApi/IPort.h>
+// #include <GenApi/Synch.h>
+
+
+// #pragma warning ( push )
+// #pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+
+    //*************************************************************
+    // INodeMap interface
+    //*************************************************************
+
+    /**
+    \brief Interface to access the node map
+    \ingroup GenApi_PublicInterface
+    */
+    @Namespace("GenApi_3_0_Basler_pylon_v5_0") public static class INodeMap extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public INodeMap(Pointer p) { super(p); }
+    
+        /** Retrieves all nodes in the node map */
+        public native void GetNodes(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Nodes);
+
+        /** Retrieves the node from the central map by Name */
+        public native INode GetNode( @Const @ByRef gcstring Name);
+
+        /** Invalidates all nodes */
+        public native void InvalidateNodes();
+
+        /** Connects a port to a port node with given name */
+        public native @Cast("bool") boolean Connect( IPort pPort, @Const @ByRef gcstring PortName);
+
+        /** Connects a port to the standard port "Device" */
+        public native @Cast("bool") boolean Connect( IPort pPort);
+
+        /** Get device name
+        /** The device name identifies a device instance, e.g. for debuggin purposes.
+        The default ist "Device". */
+        public native @ByVal gcstring GetDeviceName();
+
+        /** Fires nodes which have a polling time */
+        public native void Poll( @Cast("int64_t") long ElapsedTime );
+
+        /** Returns the lock which guards the node map */
+        public native @ByRef CLock GetLock();
+
+        /** Get the number of nodes in the map */
+        public native @Cast("uint64_t") int GetNumNodes();
+    }
+
+
+// #pragma warning ( pop )
+
+// #endif // ifndef GENAPI_INODEMAP_H
 
 
 // Parsed from <GenApi/IEnumEntry.h>

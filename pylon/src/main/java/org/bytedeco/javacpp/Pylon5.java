@@ -11,6 +11,20 @@ import static org.bytedeco.javacpp.GenICam3.*;
 public class Pylon5 extends org.bytedeco.javacpp.presets.Pylon5 {
     static { Loader.load(); }
 
+@Name("std::bitset<Pylon::_NumModes>") public static class BitSetNumModes extends Pointer {
+    static { Loader.load(); }
+    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+    public BitSetNumModes(Pointer p) { super(p); }
+    public BitSetNumModes()       { allocate();  }
+    private native void allocate();
+    public native @Name("operator=") @ByRef BitSetNumModes put(@ByRef BitSetNumModes x);
+
+    public native long size();
+
+    @Index public native @ByRef boolean get(@Cast("size_t") long i);
+    public native BitSetNumModes put(@Cast("size_t") long i, boolean value);
+}
+
 // Parsed from <pylon/Platform.h>
 
 //-----------------------------------------------------------------------------
@@ -553,13 +567,13 @@ public static final int PYLON_PACKING = 8;
         public native @Cast("bool") boolean IsSubset( @Const @ByRef IProperties Subset);
 
     }
-        ///Identifies the human readable name of the device.
+        /**Identifies the human readable name of the device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer FriendlyNameKey();
-        ///Identifies the full name identifying the device.
+        /**Identifies the full name identifying the device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer FullNameKey();
-        ///Identifies the vendor name of the device.
+        /**Identifies the vendor name of the device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer VendorNameKey();
-        ///Identifies the device class device, e.g. Basler1394.
+        /**Identifies the device class device, e.g. Basler1394. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer DeviceClassKey();
     
 
@@ -598,36 +612,36 @@ public static final int PYLON_PACKING = 8;
         /* The underlying implementation does not need to support all the listed properties.
         The properties that are not supported always have the value "N/A" which is the value of CInfoBase::PropertyNotAvailable */
 
-        ///Retrieves the human readable name of the device.
-        ///This property is identified by Key::FriendlyNameKey.
+        /**Retrieves the human readable name of the device.
+        /**This property is identified by Key::FriendlyNameKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetFriendlyName();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CInfoBase SetFriendlyName( @Cast("const Pylon::String_t*") @ByRef gcstring FriendlyNameValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsFriendlyNameAvailable();
 
-        ///Retrieves the full name identifying the device.
-        ///This property is identified by Key::FullNameKey.
+        /**Retrieves the full name identifying the device.
+         * This property is identified by Key::FullNameKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetFullName();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CInfoBase SetFullName( @Cast("const Pylon::String_t*") @ByRef gcstring FullNameValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsFullNameAvailable();
 
-        ///Retrieves the vendor name of the device.
-        ///This property is identified by Key::VendorNameKey.
+        /**Retrieves the vendor name of the device.
+         * This property is identified by Key::VendorNameKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetVendorName();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CInfoBase SetVendorName( @Cast("const Pylon::String_t*") @ByRef gcstring VendorNameValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsVendorNameAvailable();
 
-        ///Retrieves the device class device, e.g. Basler1394.
-        ///This property is identified by Key::DeviceClassKey.
+        /**Retrieves the device class device, e.g. Basler1394.
+         * This property is identified by Key::DeviceClassKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetDeviceClass();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CInfoBase SetDeviceClass( @Cast("const Pylon::String_t*") @ByRef gcstring DeviceClassValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsDeviceClassAvailable();
         public static native @Cast("const char*") BytePointer GetPropertyNotAvailable();
         public native int GetPropertyNames( @Cast("Pylon::StringList_t*") @ByRef gcstring_vector arg0 );
@@ -789,18 +803,18 @@ public static final int PYLON_PACKING = 8;
 // #include <pylon/stdinclude.h>
 // #include <pylon/Info.h>
 
-    ///This namespace contains keys for accessing the properties of pylon info objects
-        ///Identifies the serial number if it supported by the underlying implementation
+    /**This namespace contains keys for accessing the properties of pylon info objects */
+        /**Identifies the serial number if it supported by the underlying implementation */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer SerialNumberKey();
-        ///Identifies the user-defined name if present.
+        /**Identifies the user-defined name if present. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer UserDefinedNameKey();
-        ///Identifies the model name of the device.
+        /**Identifies the model name of the device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer ModelNameKey();
-        ///Identifies the version string of the device.
+        /**Identifies the version string of the device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer DeviceVersionKey();
-        ///Identifies the identifier for the transport layer able to create this device.
+        /**Identifies the identifier for the transport layer able to create this device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer DeviceFactoryKey();
-        ///Identifies the source of the XML used to create the node map of this device.
+        /**Identifies the source of the XML used to create the node map of this device. */
         @Namespace("Pylon::Key") @MemberGetter public static native @Cast("const char*") BytePointer XMLSourceKey();
     
 
@@ -833,77 +847,77 @@ public static final int PYLON_PACKING = 8;
         /* The underlying implementation does not need to support all the listed properties.
         The properties that are not supported always have the value "N/A" which is the value of CInfoBase::PropertyNotAvailable */
 
-        ///Retrieves the serial number if it supported by the underlying implementation
-        ///This property is identified by Key::SerialNumberKey.
+        /**Retrieves the serial number if it supported by the underlying implementation
+        /**This property is identified by Key::SerialNumberKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetSerialNumber();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CDeviceInfo SetSerialNumber(@Cast("const Pylon::String_t*") @ByRef gcstring SerialNumberValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsSerialNumberAvailable();
 
-        ///Retrieves the user-defined name if present.
-        ///This property is identified by Key::UserDefinedNameKey.
+        /**Retrieves the user-defined name if present.
+         * This property is identified by Key::UserDefinedNameKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetUserDefinedName();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CDeviceInfo SetUserDefinedName(@Cast("const Pylon::String_t*") @ByRef gcstring UserDefinedNameValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsUserDefinedNameAvailable();
 
-        ///Retrieves the model name of the device.
-        ///This property is identified by Key::ModelNameKey.
+        /**Retrieves the model name of the device.
+         * This property is identified by Key::ModelNameKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetModelName();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CDeviceInfo SetModelName(@Cast("const Pylon::String_t*") @ByRef gcstring ModelNameValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsModelNameAvailable();
 
-        ///Retrieves the version string of the device.
-        ///This property is identified by Key::DeviceVersionKey.
+        /**Retrieves the version string of the device.
+         * This property is identified by Key::DeviceVersionKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetDeviceVersion();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CDeviceInfo SetDeviceVersion(@Cast("const Pylon::String_t*") @ByRef gcstring DeviceVersionValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsDeviceVersionAvailable();
 
-        ///Retrieves the identifier for the transport layer able to create this device.
-        ///This property is identified by Key::DeviceFactoryKey.
+        /**Retrieves the identifier for the transport layer able to create this device.
+         * This property is identified by Key::DeviceFactoryKey. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetDeviceFactory();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CDeviceInfo SetDeviceFactory(@Cast("const Pylon::String_t*") @ByRef gcstring DeviceFactoryValue);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsDeviceFactoryAvailable();
 
-        ///Retrieves the location where the XML file was loaded from.
-        ///This property is identified by Key::XMLSourceKey.
-        ///You must use the DeviceInfo of an opened IPylonDevice to retrieve this property.
+        /**Retrieves the location where the XML file was loaded from.
+         * This property is identified by Key::XMLSourceKey.
+         * You must use the DeviceInfo of an opened IPylonDevice to retrieve this property. */
         public native @ByVal @Cast("Pylon::String_t*") gcstring GetXMLSource();
-        ///Sets the above property.
+        /**Sets the above property. */
         public native @ByRef CDeviceInfo SetXMLSource(@Cast("const Pylon::String_t*") @ByRef gcstring XMLSource);
-        ///Returns true if the above property is available.
+        /**Returns true if the above property is available. */
         public native @Cast("bool") boolean IsXMLSourceAvailable();
 
-        ///Sets the display friendly name of the device.
-        ///This property is identified by Key::FriendlyNameKey.
-        ///This method overrides a method of a base class returning a reference to CDeviceInfo
+        /**Sets the display friendly name of the device.
+         * This property is identified by Key::FriendlyNameKey.
+         * This method overrides a method of a base class returning a reference to CDeviceInfo */
         public native @ByRef CDeviceInfo SetFriendlyName(@Cast("const Pylon::String_t*") @ByRef gcstring FriendlyNameValue);
 
-        ///Sets the full name identifying the device.
-        ///This property is identified by Key::FullNameKey.
-        ///This method overrides a method of a base class returning a reference to CDeviceInfo
+        /**Sets the full name identifying the device.
+         * This property is identified by Key::FullNameKey.
+         * This method overrides a method of a base class returning a reference to CDeviceInfo */
         public native @ByRef CDeviceInfo SetFullName(@Cast("const Pylon::String_t*") @ByRef gcstring FullNameValue);
 
-        ///Sets the vendor name of the device.
-        ///This property is identified by Key::VendorNameKey.
-        ///This method overrides a method of a base class returning a reference to CDeviceInfo
+        /**Sets the vendor name of the device.
+         * This property is identified by Key::VendorNameKey.
+         * This method overrides a method of a base class returning a reference to CDeviceInfo */
         public native @ByRef CDeviceInfo SetVendorName(@Cast("const Pylon::String_t*") @ByRef gcstring VendorNameValue);
 
-        ///Sets the device class device, e.g. Basler1394.
-        ///This property is identified by Key::DeviceClassKey.
-        ///This method overrides a method of a base class returning a reference to CDeviceInfo
+        /**Sets the device class device, e.g. Basler1394.
+         * This property is identified by Key::DeviceClassKey.
+         * This method overrides a method of a base class returning a reference to CDeviceInfo */
         public native @ByRef CDeviceInfo SetDeviceClass(@Cast("const Pylon::String_t*") @ByRef gcstring DeviceClassValue);
 
         /** Modifies a property value
-        ///This method overrides a method of a base class returning a reference to CDeviceInfo */
+         * This method overrides a method of a base class returning a reference to CDeviceInfo */
         public native @ByRef CDeviceInfo SetPropertyValue(@Cast("const Pylon::String_t*") @ByRef gcstring Name, @Cast("const Pylon::String_t*") @ByRef gcstring Value);
     }
 
@@ -1002,8 +1016,8 @@ public static final int PYLON_PACKING = 8;
 // #include <pylon/InterfaceInfo.h>
 
     // ---------------------------------------------------------------------------
-    ///
-    /** \brief STL std::vector like container class.
+    /**
+     *  \brief STL std::vector like container class.
     /**
     //  Based on the GenICam::gcstring_vector class.
     */
@@ -1330,7 +1344,7 @@ public static final int PYLON_PACKING = 8;
 
     // ---------------------------------------------------------------------------
     /** \brief Gets the sum of the given \a iInc and the given \a iter.
-    ///
+     * 
      *  @param [in] iInc Increment from which the sum is calculated.
      *  @param [in] iter Iterator from which the sum is calculated.
      *  @return Sum of iterator. */
@@ -1352,8 +1366,8 @@ public static final int PYLON_PACKING = 8;
     //
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    ///
-    /** \brief STL std::vector like container for Pylon::CDeviceInfo objects.
+    /**
+     *  \brief STL std::vector like container for Pylon::CDeviceInfo objects.
     /**
     // \ingroup Pylon_TransportLayer
     */
@@ -1446,6 +1460,146 @@ public static final int PYLON_PACKING = 8;
 // #endif /* _MSC_VER */
 
 // #endif //__CONTAINER_H__
+
+
+// Parsed from <pylon/DeviceAccessMode.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2006-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Hartmut Nebelung
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of Device Access Mode
+*/
+
+// #ifndef INCLUDED_DEVICEACCESSMODE_H_6600916
+// #define INCLUDED_DEVICEACCESSMODE_H_6600916
+
+// #include <pylon/PylonBase.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <bitset>
+    // --------------------------------------------------------------------------
+    // enum EDeviceAccessMode
+    // --------------------------------------------------------------------------
+    /** The available access modes when opening a camera object
+    /**
+        \ingroup Pylon_TransportLayer
+    */
+    /** enum Pylon::EDeviceAccessMode */
+    public static final int
+        /** access the control and status registers */
+        Control =  0x1,
+        /** access a streaming data channel */
+        Stream  =  0x3,
+        /** access the event data channel */
+        Event   =  0x4,
+        /** exclusive access to the device */
+        Exclusive =  0x5,
+        _NumModes =  0x5 + 1;
+
+    // pylon 2.x compatibility.
+
+    // --------------------------------------------------------------------------
+    // class AccessModeSet
+    // --------------------------------------------------------------------------
+    /** Collection of access mode bits
+    /**
+        Used for defining how a device is accessed.
+        <p>
+        \par Low Level API:
+        This set is used when a device is opened. The combination of
+        different access modes specifies how the device is opened.
+        Not all combinations may be allowed because the
+        device implementations have certain restrictions.
+        <p>
+        <pre>{@code
+        AccessModeSet a = Exclusive | Stream;
+        if (a.test( Exclusive ))
+        {
+            // Exclusive implies Control access, so set it also
+            a |= Control;
+        }
+        }</pre>
+        \sa The method of IDevice::Open() uses it to define a default value.
+        \sa The global operator |( EDeviceAccessMode lhs, EDeviceAccessMode rhs ) allows to combine
+        two modes to a set.
+        \ingroup Pylon_TransportLayer
+    */
+    @Namespace("Pylon") public static class AccessModeSet extends BitSetNumModes {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public AccessModeSet(Pointer p) { super(p); }
+    
+            /** Default constructor creates an empty set. */
+            public AccessModeSet() { super((Pointer)null); allocate(); }
+            private native void allocate();
+            /** Converts an access mode into a set. */
+            public AccessModeSet(@Cast("Pylon::EDeviceAccessMode") int arg0) { super((Pointer)null); allocate(arg0); }
+            private native void allocate(@Cast("Pylon::EDeviceAccessMode") int arg0);
+            /** Copy constructor */
+            
+            ///
+            public AccessModeSet(@Const @ByRef AccessModeSet s) { super((Pointer)null); allocate(s); }
+            private native void allocate(@Const @ByRef AccessModeSet s);
+            /** */
+// #if _MSC_VER < 1600
+            public AccessModeSet(@Cast("unsigned long") long l) { super((Pointer)null); allocate(l); }
+            private native void allocate(@Cast("unsigned long") long l);
+// #else
+// #endif
+
+    }
+
+    // -------------------------------------------------------------------------
+    // Access mode operators
+    // -------------------------------------------------------------------------
+
+    /**
+       \brief Creates a set containing lhs and rhs operands
+       @param lhs left operand
+       @param rhs right operand
+       @return returns an AccessModeSet containing both operands
+        \ingroup Pylon_TransportLayer
+    */
+    @Namespace("Pylon") public static native @ByVal @Name("operator +") AccessModeSet add(@Cast("Pylon::EDeviceAccessMode") int lhs, @Cast("Pylon::EDeviceAccessMode") int rhs);
+
+    /**
+        \brief Creates a set containing lhs and rhs operands.
+       @param lhs left operand
+       @param rhs right operand
+        \ingroup Pylon_TransportLayer
+    */
+    @Namespace("Pylon") public static native @ByVal @Name("operator |") AccessModeSet or(@Cast("Pylon::EDeviceAccessMode") int lhs, @Cast("Pylon::EDeviceAccessMode") int rhs);
+
+    /**
+        \brief Adds the operand rhs to the set lhs
+        @param lhs a set of bits.
+        @param rhs the additional bit
+        \ingroup Pylon_LowLevelApi
+    */
+    @Namespace("Pylon") public static native @ByVal @Name("operator +") AccessModeSet add(@Const @ByRef AccessModeSet lhs, @Cast("Pylon::EDeviceAccessMode") int rhs);
+
+    /**
+        \brief Adds the operand rhs to the set lhs
+        @param lhs a set of bits.
+        @param rhs the additional bit
+        \ingroup Pylon_TransportLayer
+    */
+    @Namespace("Pylon") public static native @ByVal @Name("operator |") AccessModeSet or(@Const @ByRef AccessModeSet lhs, @Cast("Pylon::EDeviceAccessMode") int rhs);
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+
+// #endif /* INCLUDED_DEVICEACCESSMODE_H_6600916 */
 
 
 // Parsed from <pylon/DeviceFactory.h>
@@ -1604,10 +1758,10 @@ the IDeviceFactory interface.
     \error
          Throws a C++ exception, if the preconditions are not met.
     */
-    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntPointer pAccessibilityInfo/*=NULL*/);
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") AccessModeSet mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntPointer pAccessibilityInfo/*=NULL*/);
     public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo);
-    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntBuffer pAccessibilityInfo/*=NULL*/);
-    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") int[] pAccessibilityInfo/*=NULL*/);
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") AccessModeSet mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntBuffer pAccessibilityInfo/*=NULL*/);
+    public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") AccessModeSet mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") int[] pAccessibilityInfo/*=NULL*/);
 }
 
 
@@ -1835,10 +1989,10 @@ the IDeviceFactory interface.
         public native void DestroyDevice( IPylonDevice arg0 );
 
         // implements IDeviceFactory::IsDeviceAccessible
-        public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntPointer pAccessibilityInfo/*=NULL*/);
+        public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") AccessModeSet mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntPointer pAccessibilityInfo/*=NULL*/);
         public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo);
-        public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntBuffer pAccessibilityInfo/*=NULL*/);
-        public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") @Cast("Pylon::AccessModeSet*") Pointer mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") int[] pAccessibilityInfo/*=NULL*/);
+        public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") AccessModeSet mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") IntBuffer pAccessibilityInfo/*=NULL*/);
+        public native @Cast("bool") boolean IsDeviceAccessible( @Const @ByRef CDeviceInfo deviceInfo, @ByVal(nullValue = "Pylon::Control") AccessModeSet mode/*=Pylon::Control*/, @Cast("Pylon::EDeviceAccessiblityInfo*") int[] pAccessibilityInfo/*=NULL*/);
     }
 
 
@@ -2409,7 +2563,7 @@ public static final int PIXEL_COLOR = 0x02000000;
      * \{
      */
 
-    ///Defines the vertical orientation of an image in memory.
+    /**Defines the vertical orientation of an image in memory. */
     /** enum Pylon::EImageOrientation */
     public static final int
         /**The first row of the image is located at the start of the image buffer. This is the default for images taken by a camera. */
@@ -3693,7 +3847,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnAttach( @ByRef CInstantCamera camera);
+        @Virtual public native void OnAttach( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after a %Pylon Device (Pylon::IPylonDevice) has been attached by calling the Instant Camera object's Attach() method.
@@ -3709,7 +3863,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnAttached( @ByRef CInstantCamera camera);
+        @Virtual public native void OnAttached( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called before the attached %Pylon Device is detached from the Instant Camera object.
@@ -3724,7 +3878,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnDetach( @ByRef CInstantCamera camera);
+        @Virtual public native void OnDetach( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after the attached %Pylon Device has been detached from the Instant Camera object.
@@ -3737,7 +3891,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnDetached( @ByRef CInstantCamera camera);
+        @Virtual public native void OnDetached( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called before the attached %Pylon Device is destroyed.
@@ -3752,7 +3906,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnDestroy( @ByRef CInstantCamera camera);
+        @Virtual public native void OnDestroy( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after the attached %Pylon Device has been destroyed.
@@ -3765,7 +3919,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnDestroyed( @ByRef CInstantCamera camera);
+        @Virtual public native void OnDestroyed( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called before the attached %Pylon Device is opened.
@@ -3778,7 +3932,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnOpen( @ByRef CInstantCamera camera);
+        @Virtual public native void OnOpen( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after the attached %Pylon Device has been opened.
@@ -3791,7 +3945,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnOpened( @ByRef CInstantCamera camera);
+        @Virtual public native void OnOpened( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called before the attached %Pylon Device is closed.
@@ -3806,7 +3960,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnClose( @ByRef CInstantCamera camera);
+        @Virtual public native void OnClose( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after the attached %Pylon Device has been closed.
@@ -3819,7 +3973,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnClosed( @ByRef CInstantCamera camera);
+        @Virtual public native void OnClosed( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called before a grab session is started.
@@ -3834,7 +3988,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnGrabStart( @ByRef CInstantCamera camera);
+        @Virtual public native void OnGrabStart( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after a grab session has been started.
@@ -3847,7 +4001,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnGrabStarted( @ByRef CInstantCamera camera);
+        @Virtual public native void OnGrabStarted( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called before a grab session is stopped.
@@ -3862,7 +4016,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnGrabStop( @ByRef CInstantCamera camera);
+        @Virtual public native void OnGrabStop( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called after a grab session has been stopped.
@@ -3875,7 +4029,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnGrabStopped( @ByRef CInstantCamera camera);
+        @Virtual public native void OnGrabStopped( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called when an exception has been triggered during grabbing.
@@ -3891,8 +4045,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnGrabError( @ByRef CInstantCamera camera, @Cast("const char*") BytePointer errorMessage);
-        public native void OnGrabError( @ByRef CInstantCamera camera, String errorMessage);
+        @Virtual public native void OnGrabError( @ByRef CInstantCamera camera, @Cast("const char*") BytePointer errorMessage);
 
         /**
         \brief This method is called when a camera device removal from the PC has been detected.
@@ -3910,7 +4063,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object from an additional thread.
         */
-        public native void OnCameraDeviceRemoved( @ByRef CInstantCamera camera);
+        @Virtual public native void OnCameraDeviceRemoved( @ByRef CInstantCamera camera);
 
 
         /**
@@ -3923,7 +4076,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnConfigurationRegistered( @ByRef CInstantCamera camera);
+        @Virtual public native void OnConfigurationRegistered( @ByRef CInstantCamera camera);
 
         /**
         \brief This method is called when the configuration event handler has been deregistered.
@@ -3938,7 +4091,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \threading
             This method is called inside the lock of the camera object.
         */
-        public native void OnConfigurationDeregistered( @ByRef CInstantCamera camera);
+        @Virtual public native void OnConfigurationDeregistered( @ByRef CInstantCamera camera);
 
         /**
         \brief Destroys the configuration event handler.
@@ -3946,7 +4099,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         \error
             C++ exceptions from this call will be caught and ignored.
         */
-        public native void DestroyConfiguration();
+        @Virtual public native void DestroyConfiguration();
 
         /** Create. */
         public CConfigurationEventHandler() { super((Pointer)null); allocate(); }
@@ -4420,7 +4573,7 @@ public static final int PIXEL_COLOR = 0x02000000;
      * \{
      */
 
-    ///Lists the possible grab strategies.
+    /**Lists the possible grab strategies. */
     /** enum Pylon::EGrabStrategy */
     public static final int
         /** The images are processed in the order of their arrival. This is the default grab strategy. */
@@ -4447,7 +4600,7 @@ public static final int PIXEL_COLOR = 0x02000000;
  *  the %pylon Programmer's Guide for more information. */
         GrabStrategy_UpcomingImage = 3;
 
-    ///Defines who deletes a passed object if it is not needed anymore.
+    /**Defines who deletes a passed object if it is not needed anymore. */
     /** enum Pylon::ECleanup */
     public static final int
         /** The caller is responsible for deleting the passed object. The object needs to be detached or deregistered before deletion. */
@@ -4458,9 +4611,9 @@ public static final int PIXEL_COLOR = 0x02000000;
         Ownership_ExternalOwnership =  Cleanup_None,
         /** Deprecated: Use Cleanup_Delete instead. */
         Ownership_TakeOwnership =  Cleanup_Delete;
-    ///Deprecated: Use ECleanup instead.
+    /**Deprecated: Use ECleanup instead. */
 
-    ///Defines the use of an additional grab loop thread.
+    /**Defines the use of an additional grab loop thread. */
     /** enum Pylon::EGrabLoop */
     public static final int
         /** The grab loop thread is provided by the Instant Camera. It calls RetrieveResult() in a loop. Grabbed images are processed by registered image event handlers. The grab loop thread is started when the grab starts. */
@@ -4468,7 +4621,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         /** The user code calls RetrieveResult() in a loop to process grabbed images and camera events. */
         GrabLoop_ProvidedByUser = 1;
 
-    ///Defines how to register an item.
+    /**Defines how to register an item. */
     /** enum Pylon::ERegistrationMode */
     public static final int
         /** The item is appended to the list of registered items. */
@@ -4476,7 +4629,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         /** The item replaces all other registered items. */
         RegistrationMode_ReplaceAll = 1;
 
-    ///Defines how to register a camera event handler.
+    /**Defines how to register a camera event handler. */
     /** enum Pylon::ECameraEventAvailability */
     public static final int
         /** The camera event must be provided by the camera, otherwise an exception is thrown. */
@@ -4484,7 +4637,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         /** The camera event handler is not used if the camera does not support the camera event. */
         CameraEventAvailability_Optional = 1;
 
-    ///Defines how to handle a timeout for a method.
+    /**Defines how to handle a timeout for a method. */
     /** enum Pylon::ETimeoutHandling */
     public static final int
         /** The method returns on timeout. What data is returned can be found in the documentation of the method. */
@@ -7130,7 +7283,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         
     
     */
-    public native @ByRef IEnumerationTMonoConversionMethodEnums MonoConversionMethod(); public native CImageFormatConverterParams_Params MonoConversionMethod(IEnumerationTMonoConversionMethodEnums MonoConversionMethod);
+    public native @ByRef IEnumerationT_MonoConversionMethodEnums MonoConversionMethod(); public native CImageFormatConverterParams_Params MonoConversionMethod(IEnumerationT_MonoConversionMethodEnums MonoConversionMethod);
     
     //@}
     
@@ -7194,7 +7347,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         
     
     */
-    public native @ByRef IEnumerationTOutputOrientationEnums OutputOrientation(); public native CImageFormatConverterParams_Params OutputOrientation(IEnumerationTOutputOrientationEnums OutputOrientation);
+    public native @ByRef IEnumerationT_OutputOrientationEnums OutputOrientation(); public native CImageFormatConverterParams_Params OutputOrientation(IEnumerationT_OutputOrientationEnums OutputOrientation);
     
     //@}
     
@@ -7210,7 +7363,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         
     
     */
-    public native @ByRef IEnumerationTInconvertibleEdgeHandlingEnums InconvertibleEdgeHandling(); public native CImageFormatConverterParams_Params InconvertibleEdgeHandling(IEnumerationTInconvertibleEdgeHandlingEnums InconvertibleEdgeHandling);
+    public native @ByRef IEnumerationT_InconvertibleEdgeHandlingEnums InconvertibleEdgeHandling(); public native CImageFormatConverterParams_Params InconvertibleEdgeHandling(IEnumerationT_InconvertibleEdgeHandlingEnums InconvertibleEdgeHandling);
     
     //@}
     
@@ -7226,7 +7379,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         
     
     */
-    public native @ByRef IEnumerationTOutputBitAlignmentEnums OutputBitAlignment(); public native CImageFormatConverterParams_Params OutputBitAlignment(IEnumerationTOutputBitAlignmentEnums OutputBitAlignment);
+    public native @ByRef IEnumerationT_OutputBitAlignmentEnums OutputBitAlignment(); public native CImageFormatConverterParams_Params OutputBitAlignment(IEnumerationT_OutputBitAlignmentEnums OutputBitAlignment);
     }
 
 
@@ -7802,10 +7955,10 @@ public static final int PIXEL_COLOR = 0x02000000;
     \brief Interface for enumeration properties
     \ingroup GenApi_PublicInterface
     */
-    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::MonoConversionMethodEnums>") public static class IEnumerationTMonoConversionMethodEnums extends IEnumeration {
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::MonoConversionMethodEnums>") public static class IEnumerationT_MonoConversionMethodEnums extends IEnumeration {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public IEnumerationTMonoConversionMethodEnums(Pointer p) { super(p); }
+        public IEnumerationT_MonoConversionMethodEnums(Pointer p) { super(p); }
     
         /** Set node value
         /**
@@ -7843,10 +7996,10 @@ public static final int PIXEL_COLOR = 0x02000000;
         public native IEnumEntry GetCurrentEntry();
 
     }
-    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputOrientationEnums>") public static class IEnumerationTOutputOrientationEnums extends IEnumeration {
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputOrientationEnums>") public static class IEnumerationT_OutputOrientationEnums extends IEnumeration {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public IEnumerationTOutputOrientationEnums(Pointer p) { super(p); }
+        public IEnumerationT_OutputOrientationEnums(Pointer p) { super(p); }
     
         /** Set node value
         /**
@@ -7884,10 +8037,10 @@ public static final int PIXEL_COLOR = 0x02000000;
         public native IEnumEntry GetCurrentEntry();
 
     }
-    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums>") public static class IEnumerationTInconvertibleEdgeHandlingEnums extends IEnumeration {
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::InconvertibleEdgeHandlingEnums>") public static class IEnumerationT_InconvertibleEdgeHandlingEnums extends IEnumeration {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public IEnumerationTInconvertibleEdgeHandlingEnums(Pointer p) { super(p); }
+        public IEnumerationT_InconvertibleEdgeHandlingEnums(Pointer p) { super(p); }
     
         /** Set node value
         /**
@@ -7925,10 +8078,10 @@ public static final int PIXEL_COLOR = 0x02000000;
         public native IEnumEntry GetCurrentEntry();
 
     }
-    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputBitAlignmentEnums>") public static class IEnumerationTOutputBitAlignmentEnums extends IEnumeration {
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_ImageFormatConverterParams::OutputBitAlignmentEnums>") public static class IEnumerationT_OutputBitAlignmentEnums extends IEnumeration {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public IEnumerationTOutputBitAlignmentEnums(Pointer p) { super(p); }
+        public IEnumerationT_OutputBitAlignmentEnums(Pointer p) { super(p); }
     
         /** Set node value
         /**

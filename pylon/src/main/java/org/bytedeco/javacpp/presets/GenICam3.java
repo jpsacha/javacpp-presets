@@ -53,13 +53,17 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "<GenApi/IBase.h>",
                 "<GenApi/IValue.h>",
                 "<GenApi/IBoolean.h>",
+                "<GenApi/ICategory.h>",
+                "<GenApi/ICommand.h>",
                 "<GenApi/IInteger.h>",
                 "<GenApi/IFloat.h>",
                 "<GenApi/IPort.h>",
                 "<GenApi/INode.h>",
+                "<GenApi/IString.h>",
+                "<GenApi/IRegister.h>",
                 "<GenApi/Synch.h>",
 //                "<GenApi/Container.h>",
-//                "<GenApi/INodeMap.h>",
+                "<GenApi/INodeMap.h>",
                 "<GenApi/IEnumEntry.h>",
                 "<GenApi/IEnumeration.h>",
                 "<GenApi/IEnumerationT.h>",
@@ -127,6 +131,8 @@ public class GenICam3 implements InfoMapper {
 
                 /* Workaround for not being able to parse <GenApi/Container.h>*/
                 .put(new Info("GenApi_3_0_Basler_pylon_v5_0::node_vector").cast().pointerTypes("Pointer"))
+                // typedef value_vector FeatureList_t;
+                .put(new Info("GenApi_3_0_Basler_pylon_v5_0::FeatureList_t").cast().pointerTypes("Pointer"))
 
         ;
     }

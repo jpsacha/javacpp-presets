@@ -7906,6 +7906,4823 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #endif /* INCLUDED_IMAGEFORMATCONVERTER_H_1564142 */
 
 
+// Parsed from <pylon/usb/_BaslerUsbCameraParams.h>
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  (c) 2004-2008 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Basler USB3Vision camera interface
+*/
+
+//-----------------------------------------------------------------------------
+//  This file is generated automatically
+//  Do not modify!
+//-----------------------------------------------------------------------------
+
+
+
+// #ifndef Basler_UsbCameraParams_PARAMS_H
+// #define Basler_UsbCameraParams_PARAMS_H
+
+// #ifdef __GNUC__
+// #define GENAPI_DEPRECATED_FEATURE __attribute__((deprecated))
+// #elif defined(_MSC_VER)
+// #define GENAPI_DEPRECATED_FEATURE __declspec(deprecated)
+// #else
+// #define GENAPI_DEPRECATED_FEATURE
+// #endif
+
+// #include <GenApi/IEnumerationT.h>
+// #include <GenApi/NodeMapRef.h>
+// #include <GenApi/DLLLoad.h>
+
+
+// common node types
+// #include <GenApi/IBoolean.h>
+// #include <GenApi/ICategory.h>
+// #include <GenApi/ICommand.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/IFloat.h>
+// #include <GenApi/IInteger.h>
+// #include <GenApi/IString.h>
+// #include <GenApi/IRegister.h>
+
+
+/** The namespace containing the device's control interface and related enumeration types */
+
+    //**************************************************************************************************
+    // Enumerations
+    //**************************************************************************************************
+    
+    /** Valid values for SequencerMode */
+    /** enum Basler_UsbCameraParams::SequencerModeEnums */
+    public static final int
+        /**Disables the sequencer for image acquisition. */
+        SequencerMode_Off = 0,
+        /**Enables the sequencer for image acquisition. */
+        SequencerMode_On = 1;
+
+    /** Valid values for SequencerConfigurationMode */
+    /** enum Basler_UsbCameraParams::SequencerConfigurationModeEnums */
+    public static final int
+        /**Disables the sequencer for configuration. */
+        SequencerConfigurationMode_Off = 0,
+        /**Enables the sequencer for configuration. */
+        SequencerConfigurationMode_On = 1;
+
+    /** Valid values for SequencerTriggerSource */
+    /** enum Basler_UsbCameraParams::SequencerTriggerSourceEnums */
+    public static final int
+        /**Selects Line 1 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Line1 = 0,
+        /**Selects Line 2 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Line2 = 1,
+        /**Selects Line 3 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Line3 = 2,
+        /**Selects Line 4 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Line4 = 3,
+        /**Selects SoftwareSignal1 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_SoftwareSignal1 = 4,
+        /**Selects SoftwareSignal2 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_SoftwareSignal2 = 5,
+        /**Selects SoftwareSignal3 as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_SoftwareSignal3 = 6,
+        /**Selects Counter1End as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Counter1End = 7,
+        /**Selects Counter2End as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Counter2End = 8,
+        /**Selects Counter3End as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_Counter3End = 9,
+        /**Selects FrameSart as the trigger source for sequencer set advance. */
+        SequencerTriggerSource_FrameStart = 10,
+        //!<
+        SequencerTriggerSource_FrameEnd = 11;
+
+    /** Valid values for SequencerTriggerActivation */
+    /** enum Basler_UsbCameraParams::SequencerTriggerActivationEnums */
+    public static final int
+        /**Sets the selected trigger to become active on the rising edge of the source signal. */
+        SequencerTriggerActivation_RisingEdge = 0,
+        /**Sets the selected trigger to become active on the falling edge of the source signal. */
+        SequencerTriggerActivation_FallingEdge = 1,
+        /**Sets the selected trigger to become active on the falling or rising edge of the source signal. */
+        SequencerTriggerActivation_AnyEdge = 2,
+        /**Sets the selected trigger to become active when the source signal is high. */
+        SequencerTriggerActivation_LevelHigh = 3,
+        /**Sets the selected trigger to become active when the source signal is low. */
+        SequencerTriggerActivation_LevelLow = 4;
+
+    /** Valid values for BinningHorizontalMode */
+    /** enum Basler_UsbCameraParams::BinningHorizontalModeEnums */
+    public static final int
+        /**Sets the binning mode to sum. */
+        BinningHorizontalMode_Sum = 0,
+        /**Sets the binning mode to average. */
+        BinningHorizontalMode_Average = 1;
+
+    /** Valid values for BinningVerticalMode */
+    /** enum Basler_UsbCameraParams::BinningVerticalModeEnums */
+    public static final int
+        /**Sets the binning mode to sum. */
+        BinningVerticalMode_Sum = 0,
+        /**Sets the binning mode to average. */
+        BinningVerticalMode_Average = 1;
+
+    /** Valid values for PixelFormat */
+    /** enum Basler_UsbCameraParams::PixelFormatEnums */
+    public static final int
+        /**Sets the pixel format to Mono 8. */
+        PixelFormat_Mono8 = 0,
+        /**Sets the pixel format to Mono 10. */
+        PixelFormat_Mono10 = 1,
+        /**Sets the pixel format to Mono 10p. */
+        PixelFormat_Mono10p = 2,
+        /**Sets the pixel format to Mono 12. */
+        PixelFormat_Mono12 = 3,
+        /**Sets the pixel format to Mono 12p. */
+        PixelFormat_Mono12p = 4,
+        /**Sets the pixel format to Bayer GR 8. */
+        PixelFormat_BayerGR8 = 5,
+        /**Sets the pixel format to Bayer RG 8. */
+        PixelFormat_BayerRG8 = 6,
+        /**Sets the pixel format to Bayer GB 8. */
+        PixelFormat_BayerGB8 = 7,
+        /**Sets the pixel format to Bayer BG 8. */
+        PixelFormat_BayerBG8 = 8,
+        /**Sets the pixel format to Bayer GR 10. */
+        PixelFormat_BayerGR10 = 9,
+        /**Sets the pixel format to Bayer GR 10p. */
+        PixelFormat_BayerGR10p = 10,
+        /**Sets the pixel format to Bayer RG 10. */
+        PixelFormat_BayerRG10 = 11,
+        /**Sets the pixel format to Bayer RG 10p. */
+        PixelFormat_BayerRG10p = 12,
+        /**Sets the pixel format to Bayer GB 10. */
+        PixelFormat_BayerGB10 = 13,
+        /**Sets the pixel format to Bayer GB 10p. */
+        PixelFormat_BayerGB10p = 14,
+        /**Sets the pixel format to Bayer BG 10. */
+        PixelFormat_BayerBG10 = 15,
+        /**Sets the pixel format to Bayer BG 10p. */
+        PixelFormat_BayerBG10p = 16,
+        /**Sets the pixel format to Bayer GR 12. */
+        PixelFormat_BayerGR12 = 17,
+        /**Sets the pixel format to Bayer GR 12p. */
+        PixelFormat_BayerGR12p = 18,
+        /**Sets the pixel format to Bayer RG 12. */
+        PixelFormat_BayerRG12 = 19,
+        /**Sets the pixel format to Bayer RG 12p. */
+        PixelFormat_BayerRG12p = 20,
+        /**Sets the pixel format to Bayer GB 12. */
+        PixelFormat_BayerGB12 = 21,
+        /**Sets the pixel format to Bayer GB 12p. */
+        PixelFormat_BayerGB12p = 22,
+        /**Sets the pixel format to Bayer BG 12. */
+        PixelFormat_BayerBG12 = 23,
+        /**Sets the pixel format to Bayer BG 12p. */
+        PixelFormat_BayerBG12p = 24,
+        /**Sets the pixel format to RGB 8 */
+        PixelFormat_RGB8 = 25,
+        /**Sets the pixel format to BGR 8 */
+        PixelFormat_BGR8 = 26,
+        /**Sets the pixel format to YCbCr 422. */
+        PixelFormat_YCbCr422_8 = 27;
+
+    /** Valid values for PixelSize */
+    /** enum Basler_UsbCameraParams::PixelSizeEnums */
+    public static final int
+        /**The depth of the pixel values in the acquired images is 1 bit per pixel. */
+        PixelSize_Bpp1 = 0,
+        /**The depth of the pixel values in the acquired images is 2 bits per pixel. */
+        PixelSize_Bpp2 = 1,
+        /**The depth of the pixel values in the acquired images is 4 bits per pixel. */
+        PixelSize_Bpp4 = 2,
+        /**The depth of the pixel values in the acquired images is 8 bits per pixel. */
+        PixelSize_Bpp8 = 3,
+        /**The depth of the pixel values in the acquired images is 10 bits per pixel. */
+        PixelSize_Bpp10 = 4,
+        /**The depth of the pixel values in the acquired images is 12 bits per pixel. */
+        PixelSize_Bpp12 = 5,
+        /**The depth of the pixel values in the acquired images is 16 bits per pixel. */
+        PixelSize_Bpp16 = 6,
+        /**The depth of the pixel values in the acquired images is 24 bits per pixel. */
+        PixelSize_Bpp24 = 7;
+
+    /** Valid values for PixelColorFilter */
+    /** enum Basler_UsbCameraParams::PixelColorFilterEnums */
+    public static final int
+        /**No Bayer filter is present on the camera. */
+        PixelColorFilter_None = 0,
+        /**The Bayer filter has an RG/GB alignment to the pixels in the acquired images. */
+        PixelColorFilter_BayerRG = 1,
+        /**The Bayer filter has a GB/RG alignment to the pixels in the acquired images. */
+        PixelColorFilter_BayerGB = 2,
+        /**The Bayer filter has a GR/BG alignment to the pixels in the acquired images. */
+        PixelColorFilter_BayerGR = 3,
+        /**The Bayer filter has a BG/GR alignment to the pixels in the acquired images. */
+        PixelColorFilter_BayerBG = 4;
+
+    /** Valid values for TestImageSelector */
+    /** enum Basler_UsbCameraParams::TestImageSelectorEnums */
+    public static final int
+        /**No test image will be output from the camera. */
+        TestImageSelector_Off = 0,
+        /**The camera generates and transmits test images with a test image 1 pattern. */
+        TestImageSelector_Testimage1 = 1,
+        /**The camera generates and transmits test images with a test image 2 pattern. */
+        TestImageSelector_Testimage2 = 2,
+        /**The camera generates and transmits test images with a test image 3 pattern. */
+        TestImageSelector_Testimage3 = 3,
+        /**The camera generates and transmits test images with a test image 4 pattern. */
+        TestImageSelector_Testimage4 = 4,
+        /**The camera generates and transmits test images with a test image 5 pattern. */
+        TestImageSelector_Testimage5 = 5,
+        /**The camera generates and transmits test images with a test image 6 pattern. */
+        TestImageSelector_Testimage6 = 6;
+
+    /** Valid values for GainAuto */
+    /** enum Basler_UsbCameraParams::GainAutoEnums */
+    public static final int
+        /**Disables the Gain Auto function. */
+        GainAuto_Off = 0,
+        /**Sets the auto function mode of operation to 'once'. */
+        GainAuto_Once = 1,
+        /**Sets the auto function mode of operation to 'continuous'. */
+        GainAuto_Continuous = 2;
+
+    /** Valid values for GainSelector */
+    /** enum Basler_UsbCameraParams::GainSelectorEnums */
+    public static final int
+        /**Selects all gain controls for adjustment. */
+        GainSelector_All = 0,
+        /**Selects all digital gain controls for adjustment */
+        GainSelector_DigitalAll = 1,
+        /**Selects all analog gain controls for adjustment */
+        GainSelector_AnalogAll = 2;
+
+    /** Valid values for BlackLevelSelector */
+    /** enum Basler_UsbCameraParams::BlackLevelSelectorEnums */
+    public static final int
+        /**Selects all black level controls for adjustment. */
+        BlackLevelSelector_All = 0;
+
+    /** Valid values for LightSourcePreset */
+    /** enum Basler_UsbCameraParams::LightSourcePresetEnums */
+    public static final int
+        /**No light source preset selected. */
+        LightSourcePreset_Off = 0,
+        /**Color preset for image acquisition with daylight of 5000 K. */
+        LightSourcePreset_Daylight5000K = 1,
+        /**Color preset for image acquisition with daylight of 6500 K. */
+        LightSourcePreset_Daylight6500K = 2,
+        /**Color preset for image acquisition with tungsten incandescent light (2800 K). */
+        LightSourcePreset_Tungsten2800K = 3;
+
+    /** Valid values for ColorSpace */
+    /** enum Basler_UsbCameraParams::ColorSpaceEnums */
+    public static final int
+        /**Colors in accord with the RGB color space. */
+        ColorSpace_RGB = 0,
+        /**Colors in accord with the sRGB color space. */
+        ColorSpace_sRGB = 1;
+
+    /** Valid values for BalanceWhiteAuto */
+    /** enum Basler_UsbCameraParams::BalanceWhiteAutoEnums */
+    public static final int
+        /**Disables the balance white auto function. */
+        BalanceWhiteAuto_Off = 0,
+        /**Sets the balance white auto function to 'once' operation mode. */
+        BalanceWhiteAuto_Once = 1,
+        /**Sets the balance white auto function to 'continuous' operation mode. */
+        BalanceWhiteAuto_Continuous = 2;
+
+    /** Valid values for BalanceRatioSelector */
+    /** enum Basler_UsbCameraParams::BalanceRatioSelectorEnums */
+    public static final int
+        /**Selects the red balance ratio control for adjustment. */
+        BalanceRatioSelector_Red = 0,
+        /**Selects the green balance ratio control for adjustment. */
+        BalanceRatioSelector_Green = 1,
+        /**Selects the blue balance ratio control for adjustment. */
+        BalanceRatioSelector_Blue = 2;
+
+    /** Valid values for ColorAdjustmentSelector */
+    /** enum Basler_UsbCameraParams::ColorAdjustmentSelectorEnums */
+    public static final int
+        /**Selects red for the adjustment of colors with predominant red. */
+        ColorAdjustmentSelector_Red = 0,
+        /**Selects yellow for the adjustment of colors with predominant yellow. */
+        ColorAdjustmentSelector_Yellow = 1,
+        /**Selects green the adjustment of colors with predominant green. */
+        ColorAdjustmentSelector_Green = 2,
+        /**Selects cyan for the adjustment of colors with predominant cyan. */
+        ColorAdjustmentSelector_Cyan = 3,
+        /**Selects blue for the adjustment of colors with predominant blue. */
+        ColorAdjustmentSelector_Blue = 4,
+        /**Selects magenta for the adjustment of colors with predominant magenta. */
+        ColorAdjustmentSelector_Magenta = 5;
+
+    /** Valid values for ColorTransformationSelector */
+    /** enum Basler_UsbCameraParams::ColorTransformationSelectorEnums */
+    public static final int
+        /**Matrix color transformation from RGB to RGB. */
+        ColorTransformationSelector_RGBtoRGB = 0,
+        /**Matrix color transformation from YUV to RGB. */
+        ColorTransformationSelector_RGBtoYUV = 1,
+        /**Matrix color transformation from RGB to YUV. */
+        ColorTransformationSelector_YUVtoRGB = 2;
+
+    /** Valid values for ColorTransformationValueSelector */
+    /** enum Basler_UsbCameraParams::ColorTransformationValueSelectorEnums */
+    public static final int
+        /**Element in row 0 and column 0 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain00 = 0,
+        /**Element in row 0 and column 1 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain01 = 1,
+        /**Element in row 0 and column 2 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain02 = 2,
+        /**Element in row 1 and column 0 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain10 = 3,
+        /**Element in row 1 and column 1 of the color transformation matrix */
+        ColorTransformationValueSelector_Gain11 = 4,
+        /**Element in row 1 and column 2 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain12 = 5,
+        /**Element in row 2 and column 0 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain20 = 6,
+        /**Element in row 2 and column 1 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain21 = 7,
+        /**Element in row 2 and column 2 of the color transformation matrix. */
+        ColorTransformationValueSelector_Gain22 = 8;
+
+    /** Valid values for AcquisitionMode */
+    /** enum Basler_UsbCameraParams::AcquisitionModeEnums */
+    public static final int
+        /**Sets the acquisition mode to single frame */
+        AcquisitionMode_SingleFrame = 0,
+        /**Sets the acquisition mode to continuous */
+        AcquisitionMode_Continuous = 1;
+
+    /** Valid values for ShutterMode */
+    /** enum Basler_UsbCameraParams::ShutterModeEnums */
+    public static final int
+        /**Sets the shutter mode to global shutter */
+        ShutterMode_Global = 0,
+        /**Sets the shutter mode to rolling shutter */
+        ShutterMode_Rolling = 1,
+        /**Sets the shutter mode to global reset release shutter */
+        ShutterMode_GlobalResetRelease = 2;
+
+    /** Valid values for ExposureAuto */
+    /** enum Basler_UsbCameraParams::ExposureAutoEnums */
+    public static final int
+        /**Disables the exposure auto function. */
+        ExposureAuto_Off = 0,
+        /**Sets the exposure auto function mode of operation to 'once'. */
+        ExposureAuto_Once = 1,
+        /**Sets the exposure auto function mode of operation to 'continuous'. */
+        ExposureAuto_Continuous = 2;
+
+    /** Valid values for ExposureMode */
+    /** enum Basler_UsbCameraParams::ExposureModeEnums */
+    public static final int
+        /**Sets the exposure mode to 'timed'. */
+        ExposureMode_Timed = 0,
+        /**Sets the exposure mode to 'trigger width'. */
+        ExposureMode_TriggerWidth = 1;
+
+    /** Valid values for ExposureOverlapTimeMode */
+    /** enum Basler_UsbCameraParams::ExposureOverlapTimeModeEnums */
+    public static final int
+        /**Manually sets the ExposureOverlapTimeMax parameter value. */
+        ExposureOverlapTimeMode_Manual = 0,
+        /**Automatic control of the overlap between image acquisitions. */
+        ExposureOverlapTimeMode_Automatic = 1;
+
+    /** Valid values for SensorReadoutMode */
+    /** enum Basler_UsbCameraParams::SensorReadoutModeEnums */
+    public static final int
+        /**Image readout to achieve optimized image quality */
+        SensorReadoutMode_Normal = 0,
+        /**Fast image readout with increased framerate: */
+        SensorReadoutMode_Fast = 1;
+
+    /** Valid values for TriggerSelector */
+    /** enum Basler_UsbCameraParams::TriggerSelectorEnums */
+    public static final int
+        /**Selects the frame burst start trigger for configuration. */
+        TriggerSelector_FrameBurstStart = 0,
+        /**Selects the frame start trigger for configuration. */
+        TriggerSelector_FrameStart = 1;
+
+    /** Valid values for TriggerMode */
+    /** enum Basler_UsbCameraParams::TriggerModeEnums */
+    public static final int
+        /**Sets the mode for the selected trigger to 'off'. */
+        TriggerMode_Off = 0,
+        /**Sets the mode for the selected trigger to 'on'. */
+        TriggerMode_On = 1;
+
+    /** Valid values for TriggerSource */
+    /** enum Basler_UsbCameraParams::TriggerSourceEnums */
+    public static final int
+        /**Sets the software trigger as the signal source for the selected trigger. */
+        TriggerSource_Software = 0,
+        /**Sets the signal source for the selected trigger to 'line 1'. */
+        TriggerSource_Line1 = 1,
+        /**Sets the signal source for the selected trigger to 'line 2'. */
+        TriggerSource_Line2 = 2,
+        /**Sets the signal source for the selected trigger to 'line 3'. */
+        TriggerSource_Line3 = 3,
+        /**Sets the signal source for the selected trigger to 'line 4'. */
+        TriggerSource_Line4 = 4,
+        /**Selects the SoftwareSignal1 software command. */
+        TriggerSource_SoftwareSignal1 = 5,
+        /**Selects the SoftwareSignal2 software command. */
+        TriggerSource_SoftwareSignal2 = 6,
+        /**Selects the SoftwareSignal3 software command. */
+        TriggerSource_SoftwareSignal3 = 7;
+
+    /** Valid values for TriggerActivation */
+    /** enum Basler_UsbCameraParams::TriggerActivationEnums */
+    public static final int
+        /**Sets the selected trigger to become active on the rising edge of the source signal. */
+        TriggerActivation_RisingEdge = 0,
+        /**Sets the selected trigger to become active on the falling edge of the source signal. */
+        TriggerActivation_FallingEdge = 1,
+        /**Sets the selected trigger to become active on the falling or rising edge of the source signal. */
+        TriggerActivation_AnyEdge = 2,
+        /**Sets the selected trigger to become active when the source signal is high. */
+        TriggerActivation_LevelHigh = 3,
+        /**Sets the selected trigger to become active when the source signal is low. */
+        TriggerActivation_LevelLow = 4;
+
+    /** Valid values for AcquisitionStatusSelector */
+    /** enum Basler_UsbCameraParams::AcquisitionStatusSelectorEnums */
+    public static final int
+        /**Device is currently waiting for a trigger for the capture of one or many frames. */
+        AcquisitionStatusSelector_FrameBurstTriggerWait = 0,
+        /**Device is currently doing a frame burst of one or many frames. */
+        AcquisitionStatusSelector_FrameBurstTriggerActive = 1,
+        /**Device is currently transferring a frame burst of one or many frames. */
+        AcquisitionStatusSelector_FrameBurstTriggerTransfer = 2,
+        /**Device is currently waiting for a Frame trigger. */
+        AcquisitionStatusSelector_FrameTriggerWait = 3,
+        /**Device is currently doing the capture of a frame. */
+        AcquisitionStatusSelector_FrameActive = 4,
+        /**Device is currently transferring a frame. */
+        AcquisitionStatusSelector_FrameTransfer = 5,
+        /**Device is doing the exposure of a frame. */
+        AcquisitionStatusSelector_ExposureActive = 6;
+
+    /** Valid values for AutoFunctionProfile */
+    /** enum Basler_UsbCameraParams::AutoFunctionProfileEnums */
+    public static final int
+        /**Keeps gain at minimum. */
+        AutoFunctionProfile_MinimizeGain = 0,
+        /**Keeps exposure time at minimum. */
+        AutoFunctionProfile_MinimizeExposureTime = 1,
+        //!<
+        AutoFunctionProfile_Smart = 2,
+        //!<
+        AutoFunctionProfile_AntiFlicker50Hz = 3,
+        //!<
+        AutoFunctionProfile_AntiFlicker60Hz = 4;
+
+    /** Valid values for AutoFunctionROISelector */
+    /** enum Basler_UsbCameraParams::AutoFunctionROISelectorEnums */
+    public static final int
+        /**Selects Auto Function ROI 1. */
+        AutoFunctionROISelector_ROI1 = 0,
+        /**Selects Auto Function ROI 2. */
+        AutoFunctionROISelector_ROI2 = 1;
+
+    /** Valid values for AutoFunctionAOISelector */
+    /** enum Basler_UsbCameraParams::AutoFunctionAOISelectorEnums */
+    public static final int
+        /**Selects Auto Function AOI 1. */
+        AutoFunctionAOISelector_AOI1 = 0,
+        /**Selects Auto Function AOI 2. */
+        AutoFunctionAOISelector_AOI2 = 1;
+
+    /** Valid values for LUTSelector */
+    /** enum Basler_UsbCameraParams::LUTSelectorEnums */
+    public static final int
+        /**Selects the luminance LUT for configuration */
+        LUTSelector_Luminance = 0;
+
+    /** Valid values for LineSelector */
+    /** enum Basler_UsbCameraParams::LineSelectorEnums */
+    public static final int
+        /**Selects line 1 for configuration. */
+        LineSelector_Line1 = 0,
+        /**Selects line 2 for configuration. */
+        LineSelector_Line2 = 1,
+        /**Selects line 3 for configuration. */
+        LineSelector_Line3 = 2,
+        /**Selects line 4 for configuration. */
+        LineSelector_Line4 = 3;
+
+    /** Valid values for LineMode */
+    /** enum Basler_UsbCameraParams::LineModeEnums */
+    public static final int
+        /**Sets the mode for the selected line to 'input'. */
+        LineMode_Input = 0,
+        /**Sets the mode for the selected line to 'output'. */
+        LineMode_Output = 1;
+
+    /** Valid values for LineFormat */
+    /** enum Basler_UsbCameraParams::LineFormatEnums */
+    public static final int
+        /**Sets the electrical configuration of the selected line to 'not connected'. */
+        LineFormat_NoConnect = 0,
+        /**Sets the electrical configuration of the selected line to 'tri-state'. */
+        LineFormat_TriState = 1,
+        /**Sets the electrical configuration of the selected line to 'TTL'. */
+        LineFormat_TTL = 2,
+        /**Sets the electrical configuration of the selected line to 'LVDS'. */
+        LineFormat_LVDS = 3,
+        /**Sets the electrical configuration of the selected line to 'RS-422'. */
+        LineFormat_RS422 = 4,
+        /**Sets the electrical configuration of the selected line to 'opto-coupled'. */
+        LineFormat_OptoCoupled = 5,
+        /**The line is currently accepting or sending LVTTL level signals. */
+        LineFormat_LVTTL = 6;
+
+    /** Valid values for LineLogic */
+    /** enum Basler_UsbCameraParams::LineLogicEnums */
+    public static final int
+        /**Positive line logic */
+        LineLogic_Positive = 0,
+        /**Negative line logic */
+        LineLogic_Negative = 1;
+
+    /** Valid values for LineSource */
+    /** enum Basler_UsbCameraParams::LineSourceEnums */
+    public static final int
+        /**Sets the source signal for the selected output line to 'off'. */
+        LineSource_Off = 0,
+        /**Sets the source signal for the selected output line to 'exposure active'. */
+        LineSource_ExposureActive = 1,
+        /**Associates the 'Frame Trigger Wait' status with the selected output line. */
+        LineSource_FrameTriggerWait = 2,
+        /**Associates the 'Frame Burst Trigger Wait' status with the selected output line. */
+        LineSource_FrameBurstTriggerWait = 3,
+        /**Sets the source signal for the selected output line to timer 1 active */
+        LineSource_Timer1Active = 4,
+        /**Sets the source signal for the selected output line to user settable output signal 0. */
+        LineSource_UserOutput0 = 5,
+        /**Sets the source signal for the selected output line to user settable output signal 1. */
+        LineSource_UserOutput1 = 6,
+        /**Sets the source signal for the selected output line to user settable output signal 2. */
+        LineSource_UserOutput2 = 7,
+        /**Sets the source signal for the selected output line to user settable output signal 3. */
+        LineSource_UserOutput3 = 8,
+        /**Flash Window signal as a line source. */
+        LineSource_FlashWindow = 9;
+
+    /** Valid values for UserOutputSelector */
+    /** enum Basler_UsbCameraParams::UserOutputSelectorEnums */
+    public static final int
+        /**Selects user settable output signal 0 for configuration. */
+        UserOutputSelector_UserOutput0 = 0,
+        /**Selects user settable output signal 1 for configuration. */
+        UserOutputSelector_UserOutput1 = 1,
+        /**Selects user settable output signal 2 for configuration. */
+        UserOutputSelector_UserOutput2 = 2,
+        /**Selects user settable output signal 3 for configuration. */
+        UserOutputSelector_UserOutput3 = 3;
+
+    /** Valid values for SoftwareSignalSelector */
+    /** enum Basler_UsbCameraParams::SoftwareSignalSelectorEnums */
+    public static final int
+        //!<
+        SoftwareSignalSelector_SoftwareSignal1 = 0,
+        //!<
+        SoftwareSignalSelector_SoftwareSignal2 = 1,
+        //!<
+        SoftwareSignalSelector_SoftwareSignal3 = 2,
+        //!<
+        SoftwareSignalSelector_SoftwareSignal4 = 3;
+
+    /** Valid values for TimerSelector */
+    /** enum Basler_UsbCameraParams::TimerSelectorEnums */
+    public static final int
+        /**Selects Timer 1 for configuration. */
+        TimerSelector_Timer1 = 0;
+
+    /** Valid values for TimerTriggerSource */
+    /** enum Basler_UsbCameraParams::TimerTriggerSourceEnums */
+    public static final int
+        /**Starts with the reception of the Exposure Start. */
+        TimerTriggerSource_ExposureStart = 0,
+        /**Starts with the reception of the flash window start. */
+        TimerTriggerSource_FlashWindowStart = 1;
+
+    /** Valid values for CounterSelector */
+    /** enum Basler_UsbCameraParams::CounterSelectorEnums */
+    public static final int
+        /**Selects Counter 1 for configuration. */
+        CounterSelector_Counter1 = 0,
+        /**Selects Counter 2 for configuration. */
+        CounterSelector_Counter2 = 1;
+
+    /** Valid values for CounterEventSource */
+    /** enum Basler_UsbCameraParams::CounterEventSourceEnums */
+    public static final int
+        /**Counts the number of Frame Triggers. */
+        CounterEventSource_FrameTrigger = 0,
+        /**Counts the number of Frame Start. */
+        CounterEventSource_FrameStart = 1,
+        /**Counts the number of Counter End. */
+        CounterEventSource_Counter1End = 2,
+        /**Counts the number of Counter End. */
+        CounterEventSource_Counter2End = 3,
+        /**Counts the number of Counter End. */
+        CounterEventSource_Counter3End = 4;
+
+    /** Valid values for CounterResetSource */
+    /** enum Basler_UsbCameraParams::CounterResetSourceEnums */
+    public static final int
+        /**Disable the Counter Reset trigger */
+        CounterResetSource_Off = 0,
+        /**Selects software command as the source for counter reset */
+        CounterResetSource_Software = 1,
+        /**Selects line 1 as the source for counter reset */
+        CounterResetSource_Line1 = 2,
+        /**Selects line 2 as the source for counter reset */
+        CounterResetSource_Line2 = 3,
+        /**Selects line 3 as the source for counter reset */
+        CounterResetSource_Line3 = 4,
+        /**Selects line 4 as the source for counter reset */
+        CounterResetSource_Line4 = 5,
+        /**Selects counter 1 end as the source for counter reset */
+        CounterResetSource_Counter1End = 6,
+        /**Selects counter 2 end as the source for counter reset */
+        CounterResetSource_Counter2End = 7,
+        /**Selects counter 3 end as the source for counter reset */
+        CounterResetSource_Counter3End = 8,
+        /**Selects counter 4 end as the source for counter reset */
+        CounterResetSource_Counter4End = 9;
+
+    /** Valid values for CounterResetActivation */
+    /** enum Basler_UsbCameraParams::CounterResetActivationEnums */
+    public static final int
+        /**Resets the counter on the rising edge of the signal */
+        CounterResetActivation_RisingEdge = 0,
+        /**Resets the counter on the falling edge of the signal */
+        CounterResetActivation_FallingEdge = 1,
+        /**Resets the counter on the falling or rising edge of the selected signal */
+        CounterResetActivation_AnyEdge = 2,
+        /**Resets the counter as long as the selected signal level is high */
+        CounterResetActivation_LevelHigh = 3,
+        /**Resets the counter as long as the selected signal level is low */
+        CounterResetActivation_LevelLow = 4;
+
+    /** Valid values for UserSetSelector */
+    /** enum Basler_UsbCameraParams::UserSetSelectorEnums */
+    public static final int
+        /**Selects the default user set. */
+        UserSetSelector_Default = 0,
+        /**High gain factory set */
+        UserSetSelector_HighGain = 1,
+        /**Factory set using auto functions */
+        UserSetSelector_AutoFunctions = 2,
+        /**Factory set enabling color adjustments */
+        UserSetSelector_Color = 3,
+        /**Factory set disabling color adjustments */
+        UserSetSelector_ColorRaw = 4,
+        /**Selects the user set 1 configuration set. */
+        UserSetSelector_UserSet1 = 5,
+        /**Selects the user set 2 configuration set. */
+        UserSetSelector_UserSet2 = 6,
+        /**Selects the user set 3 configuration set. */
+        UserSetSelector_UserSet3 = 7;
+
+    /** Valid values for UserSetDefault */
+    /** enum Basler_UsbCameraParams::UserSetDefaultEnums */
+    public static final int
+        /**Selects the default user set as the default startup set. */
+        UserSetDefault_Default = 0,
+        /**Selects the high gain user set as the default startup set. */
+        UserSetDefault_HighGain = 1,
+        /**Selects the auto function user set as the default startup set. */
+        UserSetDefault_AutoFunctions = 2,
+        /**Selects the color user set as the default startup set. */
+        UserSetDefault_Color = 3,
+        /**Selects the color raw user set as the default startup set. */
+        UserSetDefault_ColorRaw = 4,
+        /**Selects user set 1 as the default startup set. */
+        UserSetDefault_UserSet1 = 5,
+        /**Selects user set 2 as the default startup set. */
+        UserSetDefault_UserSet2 = 6,
+        /**Selects user set 3 as the default startup set. */
+        UserSetDefault_UserSet3 = 7;
+
+    /** Valid values for ChunkSelector */
+    /** enum Basler_UsbCameraParams::ChunkSelectorEnums */
+    public static final int
+        /**Selects the image chunk for enabling. */
+        ChunkSelector_Image = 0,
+        /**Selects the gain chunk for enabling. */
+        ChunkSelector_Gain = 1,
+        /**Selects the exposure time chunk for enabling. */
+        ChunkSelector_ExposureTime = 2,
+        /**Selects the timestamp chunk for enabling. */
+        ChunkSelector_Timestamp = 3,
+        /**Selects the line status all chunk for enabling. */
+        ChunkSelector_LineStatusAll = 4,
+        /**Selects the counter value chunk for configuration */
+        ChunkSelector_CounterValue = 5,
+        /**Selects the sequencer set active chunk for configuration */
+        ChunkSelector_SequencerSetActive = 6,
+        /**Selects the CRC checksum chunk for configuration */
+        ChunkSelector_PayloadCRC16 = 7;
+
+    /** Valid values for ChunkGainSelector */
+    /** enum Basler_UsbCameraParams::ChunkGainSelectorEnums */
+    public static final int
+        /**Gain will be applied to all channels or taps */
+        ChunkGainSelector_All = 0;
+
+    /** Valid values for ChunkCounterSelector */
+    /** enum Basler_UsbCameraParams::ChunkCounterSelectorEnums */
+    public static final int
+        /**Select counter 1 */
+        ChunkCounterSelector_Counter1 = 0,
+        /**Select counter 2 */
+        ChunkCounterSelector_Counter2 = 1;
+
+    /** Valid values for EventSelector */
+    /** enum Basler_UsbCameraParams::EventSelectorEnums */
+    public static final int
+        /**Device just completed the exposure of one Frame. */
+        EventSelector_ExposureEnd = 0,
+        /**Device just started the capture of one frame. */
+        EventSelector_FrameStart = 1,
+        /**Device just started the capture of a frame burst. */
+        EventSelector_FrameBurstStart = 2,
+        /**Selects the frame start overtrigger event for enabling. */
+        EventSelector_FrameStartOvertrigger = 3,
+        /**Selects the frame burst start overtrigger event for enabling. */
+        EventSelector_FrameBurstStartOvertrigger = 4,
+        /**Selects the critical temperature event for enabling. */
+        EventSelector_CriticalTemperature = 5,
+        /**Selects the over temperature event for enabling. */
+        EventSelector_OverTemperature = 6;
+
+    /** Valid values for EventNotification */
+    /** enum Basler_UsbCameraParams::EventNotificationEnums */
+    public static final int
+        /**The selected Event notification is disabled. */
+        EventNotification_Off = 0,
+        /**The selected Event notification is enabled. */
+        EventNotification_On = 1;
+
+    /** Valid values for BslUSBSpeedMode */
+    /** enum Basler_UsbCameraParams::BslUSBSpeedModeEnums */
+    public static final int
+        //!<
+        BslUSBSpeedMode_LowSpeed = 0,
+        //!<
+        BslUSBSpeedMode_FullSpeed = 1,
+        /**Indicates the USB 'Hi-Speed' speed mode. */
+        BslUSBSpeedMode_HighSpeed = 2,
+        /**Indicates the USB 'Super Speed' speed mode. */
+        BslUSBSpeedMode_SuperSpeed = 3;
+
+    /** Valid values for DeviceScanType */
+    /** enum Basler_UsbCameraParams::DeviceScanTypeEnums */
+    public static final int
+        /**Indicates that the device has an area scan type of sensor. */
+        DeviceScanType_Areascan = 0,
+        /**Indicates that the device has an Line scan type of sensor. */
+        DeviceScanType_Linescan = 1;
+
+    /** Valid values for DeviceLinkThroughputLimitMode */
+    /** enum Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums */
+    public static final int
+        /**Disables the device link throughput limit feature. */
+        DeviceLinkThroughputLimitMode_Off = 0,
+        /**Enables the device link throughput limit feature. */
+        DeviceLinkThroughputLimitMode_On = 1;
+
+    /** Valid values for DeviceTemperatureSelector */
+    /** enum Basler_UsbCameraParams::DeviceTemperatureSelectorEnums */
+    public static final int
+        /**Temperature on sensor board */
+        DeviceTemperatureSelector_Sensorboard = 0,
+        /**Temperature on core board */
+        DeviceTemperatureSelector_Coreboard = 1,
+        /**Temperature on framegrabber board */
+        DeviceTemperatureSelector_Framegrabberboard = 2;
+
+    /** Valid values for TemperatureState */
+    /** enum Basler_UsbCameraParams::TemperatureStateEnums */
+    public static final int
+        /**Ok */
+        TemperatureState_Ok = 0,
+        /**Critical */
+        TemperatureState_Critical = 1,
+        /**Error */
+        TemperatureState_Error = 2;
+
+    /** Valid values for UserDefinedValueSelector */
+    /** enum Basler_UsbCameraParams::UserDefinedValueSelectorEnums */
+    public static final int
+        /**Selects Value1. */
+        UserDefinedValueSelector_Value1 = 0,
+        /**Selects Value2. */
+        UserDefinedValueSelector_Value2 = 1,
+        /**Selects Value3. */
+        UserDefinedValueSelector_Value3 = 2,
+        /**Selects Value4. */
+        UserDefinedValueSelector_Value4 = 3,
+        /**Selects Value5. */
+        UserDefinedValueSelector_Value5 = 4;
+
+    /** Valid values for RemoveParameterLimitSelector */
+    /** enum Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums */
+    public static final int
+        /**Selects the gain limits for configuration */
+        RemoveParameterLimitSelector_Gain = 0,
+        /**Selects the blacklevel limits for configuration */
+        RemoveParameterLimitSelector_BlackLevel = 1,
+        /**Selects the exposure time limits for configuration */
+        RemoveParameterLimitSelector_ExposureTime = 2,
+        /**Selects the target gray value for atuofunc */
+        RemoveParameterLimitSelector_AutoTargetValue = 3,
+        /**Selects the exposure overhead limits for configuration */
+        RemoveParameterLimitSelector_ExposureOverhead = 4;
+
+    /** Valid values for ExpertFeatureAccessSelector */
+    /** enum Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums */
+    public static final int
+        /**Selects the Expert Feature 1 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature1 = 0,
+        /**Selects the Expert Feature 2 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature2 = 1,
+        /**Selects the Expert Feature 3 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature3 = 2,
+        /**Selects the Expert Feature 4 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature4 = 3,
+        /**Selects the Expert Feature 5 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature5 = 4,
+        /**Selects the Expert Feature 6 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature6 = 5,
+        /**Selects the Expert Feature 7 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature7 = 6,
+        /**Selects the Expert Feature 8 for configuration */
+        ExpertFeatureAccessSelector_ExpertFeature8 = 7;
+
+    /** Valid values for FileSelector */
+    /** enum Basler_UsbCameraParams::FileSelectorEnums */
+    public static final int
+        /**Selects the file 'User Data' */
+        FileSelector_UserData = 0,
+        /**Selects the file 'User Set 1' */
+        FileSelector_UserSet1 = 1,
+        /**Selects the file 'User Set 2' */
+        FileSelector_UserSet2 = 2,
+        /**Selects the file 'User Set 3' */
+        FileSelector_UserSet3 = 3,
+        /**Selects the file 'User Gain Shading 1' */
+        FileSelector_UserGainShading1 = 4,
+        /**Selects the file 'User Gain Shading 2' */
+        FileSelector_UserGainShading2 = 5,
+        /**Selects the file 'User Offset Shading 1' */
+        FileSelector_UserOffsetShading1 = 6,
+        /**Selects the file 'User Offset Shading 2' */
+        FileSelector_UserOffsetShading2 = 7,
+        /**Selects the file 'Expert Feature 7 File' */
+        FileSelector_ExpertFeature7File = 8;
+
+    /** Valid values for FileOperationSelector */
+    /** enum Basler_UsbCameraParams::FileOperationSelectorEnums */
+    public static final int
+        /**Opens the file selected by FileSelector */
+        FileOperationSelector_Open = 0,
+        /**Closes the file selected by FileSelector */
+        FileOperationSelector_Close = 1,
+        /**Reads data from the selected file */
+        FileOperationSelector_Read = 2,
+        /**Writes data to the selected file */
+        FileOperationSelector_Write = 3;
+
+    /** Valid values for FileOpenMode */
+    /** enum Basler_UsbCameraParams::FileOpenModeEnums */
+    public static final int
+        /**Selects read-only open mode */
+        FileOpenMode_Read = 0,
+        /**Selects write-only open mode */
+        FileOpenMode_Write = 1;
+
+    /** Valid values for FileOperationStatus */
+    /** enum Basler_UsbCameraParams::FileOperationStatusEnums */
+    public static final int
+        /**Successful file operation */
+        FileOperationStatus_Success = 0,
+        /**Failing file operation */
+        FileOperationStatus_Failure = 1;
+
+    /** Valid values for TestPattern */
+    /** enum Basler_UsbCameraParams::TestPatternEnums */
+    public static final int
+        /**No test pattern. Displays the original image. */
+        TestPattern_Off = 0,
+        //!<
+        TestPattern_GreyDiagonalSawtooth8 = 1,
+        //!<
+        TestPattern_ColorDiagonalSawtooth8 = 2;
+
+    /** Valid values for SensorShutterMode */
+    /** enum Basler_UsbCameraParams::SensorShutterModeEnums */
+    public static final int
+        /**The shutter opens and closes at the same time for all pixels. */
+        SensorShutterMode_Global = 0,
+        /**The shutter opens and closes sequentially for groups (typically lines) of pixels. */
+        SensorShutterMode_Rolling = 1,
+        /**The shutter opens at the same time for all pixels but ends in a sequential manner. */
+        SensorShutterMode_GlobalReset = 2;
+
+    /** Valid values for OverlapMode */
+    /** enum Basler_UsbCameraParams::OverlapModeEnums */
+    public static final int
+        /**Overlapping exposure and image readout. */
+        OverlapMode_On = 0,
+        /**Non-overlapping exposure and image readout. */
+        OverlapMode_Off = 1;
+
+    /** Valid values for DefectPixelCorrectionMode */
+    /** enum Basler_UsbCameraParams::DefectPixelCorrectionModeEnums */
+    public static final int
+        //!<
+        DefectPixelCorrectionMode_Off = 0,
+        //!<
+        DefectPixelCorrectionMode_On = 1;
+
+    /** Valid values for DeviceIndicatorMode */
+    /** enum Basler_UsbCameraParams::DeviceIndicatorModeEnums */
+    public static final int
+        /**Indicators are inactive (off). */
+        DeviceIndicatorMode_Inactive = 0,
+        /**Indicators are active showing their respective status. */
+        DeviceIndicatorMode_Active = 1;
+
+
+    //**************************************************************************************************
+    // Parameter class
+    //**************************************************************************************************
+    
+
+    /** Basler USB3Vision camera interface */
+    @Namespace("Basler_UsbCameraParams") @NoOffset public static class CUsbCameraParams_Params extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CUsbCameraParams_Params(Pointer p) { super(p); }
+    
+        
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Enables or disables the sequencer for image acquisition. Applies to: ace
+        <p>
+        Enables or disables the sequencer for image acquisition.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_SequencerModeEnums SequencerMode(); public native CUsbCameraParams_Params SequencerMode(IEnumerationT_SequencerModeEnums SequencerMode);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the index number of the currently active sequencer set. Applies to: ace
+        <p>
+        Indicates the index number of the current set, i.e. of the sequencer set whose parameter values are currently present in the active set.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger SequencerSetActive(); public native CUsbCameraParams_Params SequencerSetActive(IInteger SequencerSetActive);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Enables or disables the sequencer for configuration. Applies to: ace
+        <p>
+        Enables or disables the sequencer for configuration.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_SequencerConfigurationModeEnums SequencerConfigurationMode(); public native CUsbCameraParams_Params SequencerConfigurationMode(IEnumerationT_SequencerConfigurationModeEnums SequencerConfigurationMode);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Sequencer set that will be used with the first frame start trigger after SequencerMode was set to On. Applies to: ace
+        <p>
+        Sequencer set that will be used with the first frame start trigger after SequencerMode was set to On. Only sequencer set 0 is available.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger SequencerSetStart(); public native CUsbCameraParams_Params SequencerSetStart(IInteger SequencerSetStart);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the sequencer set index number. Applies to: ace
+        <p>
+        Selects the sequencer set index number.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger SequencerSetSelector(); public native CUsbCameraParams_Params SequencerSetSelector(IInteger SequencerSetSelector);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Loads the parameter values of a sequencer set into the the active set. Applies to: ace
+        <p>
+        Loads the parameter values of a sequencer set into the the active set. The sequencer set will then be the currrent set.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef ICommand SequencerSetLoad(); public native CUsbCameraParams_Params SequencerSetLoad(ICommand SequencerSetLoad);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Saves the sequencer parameter values that are currently in the active set. Applies to: ace
+        <p>
+        Saves the sequencer parameter values that are currently in the active set. The values will be saved for the sequencer set whose sequencer set index number is currently selected.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef ICommand SequencerSetSave(); public native CUsbCameraParams_Params SequencerSetSave(ICommand SequencerSetSave);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the sequencer path. Applies to: ace
+        <p>
+        Selects a sequencer path by selecting its number.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger SequencerPathSelector(); public native CUsbCameraParams_Params SequencerPathSelector(IInteger SequencerPathSelector);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Specifies the next sequencer set to follow after the current one. Applies to: ace
+        <p>
+        The parameter selects, for the selected sequencer set and path, the sequencer set that can be loaded after the current sequencer set.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : SequencerPathSelector
+    
+    */
+    public native @ByRef IInteger SequencerSetNext(); public native CUsbCameraParams_Params SequencerSetNext(IInteger SequencerSetNext);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the trigger source for sequencer set advance. Applies to: ace
+        <p>
+        Selects, for the currently selected path, the trigger source for sequencer set advance.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : SequencerPathSelector
+    
+    */
+    public native @ByRef IEnumerationT_SequencerTriggerSourceEnums SequencerTriggerSource(); public native CUsbCameraParams_Params SequencerTriggerSource(IEnumerationT_SequencerTriggerSourceEnums SequencerTriggerSource);
+    
+    //@}
+    
+
+    /** \name SequencerControl - This category includes sequencer controls. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the level for the trigger source. Applies to: ace
+        <p>
+        Selects, for the currently selected path and trigger source, the effective logical level for sequencer set advance. Only LevelHigh is available.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : SequencerPathSelector
+    
+    */
+    public native @ByRef IEnumerationT_SequencerTriggerActivationEnums SequencerTriggerActivation(); public native CUsbCameraParams_Params SequencerTriggerActivation(IEnumerationT_SequencerTriggerActivationEnums SequencerTriggerActivation);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the width of the camera's sensor in pixels. Applies to: ace, dart, pulse
+        <p>
+        This is a read only parameter. It is of integer type and indicates the actual width of the camera's sensor in pixels.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger SensorWidth(); public native CUsbCameraParams_Params SensorWidth(IInteger SensorWidth);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the height of the camera's sensor in pixels. Applies to: ace, dart, pulse
+        <p>
+        This is a read only parameter. It is of integer type and indicates the actual height of the camera's sensor in pixels.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger SensorHeight(); public native CUsbCameraParams_Params SensorHeight(IInteger SensorHeight);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the camera's maximum allowed width of the area of interest (AOI) in pixels. Applies to: ace, dart, pulse
+        <p>
+        This is a read only parameter. It is of integer type and indicates the maximum allowed width of the camera's area of interest (AOI) in pixels. It takes into account any function that may limit the maximum width.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger WidthMax(); public native CUsbCameraParams_Params WidthMax(IInteger WidthMax);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the camera's maximum allowed height of the area of interest (AOI) in pixels. Applies to: ace, dart, pulse
+        <p>
+        This is a read only parameter. It is of integer type and indicates the maximum allowed height of the camera's area of interest (AOI) in pixels. It takes into account any function that may limit the maximum height.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger HeightMax(); public native CUsbCameraParams_Params HeightMax(IInteger HeightMax);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the width of the camera's area of interest (AOI) in pixels. Applies to: ace, dart, pulse
+        <p>
+        This parameter is of integer type and determines the width of the camera's area of interest (AOI) in pixels. Depending on the camera model, the parameter can be set in different increments.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger Width(); public native CUsbCameraParams_Params Width(IInteger Width);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the height of the camera's area of interest (AOI) in pixels. Applies to: ace, dart, pulse
+        <p>
+        This parameter is of integer type and determines the height of the camera's area of interest (AOI) in pixels. Depending on the camera model, the parameter can be set in different increments.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger Height(); public native CUsbCameraParams_Params Height(IInteger Height);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the X offset (left offset) of the area of interest (AOI) in pixels. Applies to: ace, dart, pulse
+        <p>
+        The Offset X parameter determines the position of the area of interest (AOI) in the x direction. Since the position of the AOI is referenced to the top left corner of the sensor array, the Offset X parameter sets the distance in pixels between the left side of the sensor and the left side of the AOI.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger OffsetX(); public native CUsbCameraParams_Params OffsetX(IInteger OffsetX);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the Y offset (top offset) of the area of interest (AOI) in pixels. Applies to: ace, dart, pulse
+        <p>
+        The Offset Y parameter determines the position of the area of interest (AOI) in the y direction. Since the position of the AOI is referenced to the top left corner of the sensor array, the Offset Y parameter sets the distance in pixels between the top of the sensor and the top of the AOI.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger OffsetY(); public native CUsbCameraParams_Params OffsetY(IInteger OffsetY);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Align output image data to multiples of 4 bytes. Applies to: ace
+        <p>
+        Align output image data to multiples of 4 bytes.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IBoolean LinePitchEnable(); public native CUsbCameraParams_Params LinePitchEnable(IBoolean LinePitchEnable);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief The number of bytes separating the starting pixels of two consecutive lines. Applies to: ace
+        <p>
+        The number of bytes separating the starting pixels of two consecutive lines. This feature is used to facilitate alignment of image data.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger LinePitch(); public native CUsbCameraParams_Params LinePitch(IInteger LinePitch);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Enables the horizontal centering of the image. Applies to: ace
+        <p>
+        This feature is used to center the image horizontally.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IBoolean CenterX(); public native CUsbCameraParams_Params CenterX(IBoolean CenterX);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Enables the vertical centering of the image. Applies to: ace
+        <p>
+        This feature is used to center the image vertically.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IBoolean CenterY(); public native CUsbCameraParams_Params CenterY(IBoolean CenterY);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Enables the horizontal mirroring of the image. Applies to: ace, dart, pulse
+        <p>
+        This feature is used to mirror the captured image horizontally. The pixel values for each line in a captured image will be swapped end-for-end about the line's center. You can use the AOI feature when using the reverse X feature. Note that the position of the AOI relative to the sensor remains the same.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IBoolean ReverseX(); public native CUsbCameraParams_Params ReverseX(IBoolean ReverseX);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Enables the vertical mirroring of the image. Applies to: ace, dart, pulse
+        <p>
+        This feature is used to mirror the captured image vertically. The pixel values for each row in a captured image will be swapped end-for-end about the row's center. You can use the AOI feature when using the reverse Y feature. Note that the position of the AOI relative to the sensor remains the same.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IBoolean ReverseY(); public native CUsbCameraParams_Params ReverseY(IBoolean ReverseY);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the horizontal binning mode. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the horizontal binning mode.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_BinningHorizontalModeEnums BinningHorizontalMode(); public native CUsbCameraParams_Params BinningHorizontalMode(IEnumerationT_BinningHorizontalModeEnums BinningHorizontalMode);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the number of adjacent horizontal pixels to be summed. Applies to: ace, dart, pulse
+        <p>
+        Binning increases the camera's response to light by summing the charges from adjacent pixels into one pixel. The Binning Horizontal parameter sets the number of adjacent horizontal pixels to be summed. Their summed charges will be reported out of the camera as a single pixel.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger BinningHorizontal(); public native CUsbCameraParams_Params BinningHorizontal(IInteger BinningHorizontal);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the vertical binning mode. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the vertical binning mode.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_BinningVerticalModeEnums BinningVerticalMode(); public native CUsbCameraParams_Params BinningVerticalMode(IEnumerationT_BinningVerticalModeEnums BinningVerticalMode);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the number of adjacent vertical pixels to be summed. Applies to: ace, dart, pulse
+        <p>
+        Binning increases the camera's response to light by summing the charges from adjacent pixels into one pixel. The Binning Vertical parameter sets the number of adjacent vertical pixels to be summed. Their summed charges will be reported out of the camera as a single pixel.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger BinningVertical(); public native CUsbCameraParams_Params BinningVertical(IInteger BinningVertical);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets horizontal sub-sampling. Applies to: ace
+        <p>
+        Horizontal sub-sampling of the image. This has the net effect of reducing the horizontal resolution (width) of the image by the specified horizontal decimation factor. A value of 1 indicates that the camera performs no horizontal decimation.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger DecimationHorizontal(); public native CUsbCameraParams_Params DecimationHorizontal(IInteger DecimationHorizontal);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets vertical sub-sampling. Applies to: ace
+        <p>
+        Vertical sub-sampling of the image. This has the net effect of reducing the vertical resolution (height) of the image by the specified vertical decimation factor. A value of 1 indicates that the camera performs no vertical decimation.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger DecimationVertical(); public native CUsbCameraParams_Params DecimationVertical(IInteger DecimationVertical);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the horizontal scaling factor. Applies to: ace
+        <p>
+        This is a float value that sets the horizontal scaling factor of the image.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ScalingHorizontal(); public native CUsbCameraParams_Params ScalingHorizontal(IFloat ScalingHorizontal);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the vertical scaling factor. Applies to: ace
+        <p>
+        This is a float value that sets the vertical scaling factor of the image.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ScalingVertical(); public native CUsbCameraParams_Params ScalingVertical(IFloat ScalingVertical);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the format of the pixel data transmitted for acquired images. Applies to: ace, dart, pulse
+        <p>
+        The Pixel Format parameter determines the format (layout) of the image data that will be output from the camera. The available pixel formats depend on the camera model and whether the camera is monochrome or color.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IEnumerationT_PixelFormatEnums PixelFormat(); public native CUsbCameraParams_Params PixelFormat(IEnumerationT_PixelFormatEnums PixelFormat);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the depth of the pixel values in the image in bits per pixel. Applies to: ace, dart, pulse
+        <p>
+        This is a read only feature. This enumeration provides a list of values that indicate the depth of the pixel values in the acquired images in bits per pixel. This value will always be coherent with the pixel format setting.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_PixelSizeEnums PixelSize(); public native CUsbCameraParams_Params PixelSize(IEnumerationT_PixelSizeEnums PixelSize);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the current alignment of the camera's Bayer filter to the pixels in the acquired images. Applies to: ace, dart, pulse
+        <p>
+        This is a read only feature. This enumeration provides a list of values that indicate the current alignment of the camera's Bayer filter to the pixels in the acquired images. The alignment of the Bayer filter depends on the camera model.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_PixelColorFilterEnums PixelColorFilter(); public native CUsbCameraParams_Params PixelColorFilter(IEnumerationT_PixelColorFilterEnums PixelColorFilter);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the minimum possible pixel value that could be transferred from the camera. Applies to: ace, dart, pulse
+        <p>
+        This a read only feature. The Dynamic Range Min parameter indicates the minimum possible pixel value that could be transferred from the camera.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger PixelDynamicRangeMin(); public native CUsbCameraParams_Params PixelDynamicRangeMin(IInteger PixelDynamicRangeMin);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Indicates the maximum possible pixel value that could be transferred from the camera. Applies to: ace, dart, pulse
+        <p>
+        This a read only feature. The Dynamic Range Max parameter indicates the maximum possible pixel value that could be transferred from the camera.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger PixelDynamicRangeMax(); public native CUsbCameraParams_Params PixelDynamicRangeMax(IInteger PixelDynamicRangeMax);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selecting a test image from the list will output the test image. Applies to: ace
+        <p>
+        The Test Image Selector is used to set the camera to output a test image. You can set the value of the Test Image Selector to one of the test images or to 'test image off'.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_TestImageSelectorEnums TestImageSelector(); public native CUsbCameraParams_Params TestImageSelector(IEnumerationT_TestImageSelectorEnums TestImageSelector);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Adjusts the Gain Raw parameter value automatically. Applies to: ace, dart, pulse
+        <p>
+        The gain auto function is the 'automatic' counterpart to manually setting the Gain Raw parameter. It allows to adjust the Gain Raw parameter value automatically within set limits until a target average gray value for the pixel data from the related Auto Function AOI is reached.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_GainAutoEnums GainAuto(); public native CUsbCameraParams_Params GainAuto(IEnumerationT_GainAutoEnums GainAuto);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Selects the gain control to configure. Applies to: ace, dart, pulse
+        <p>
+        The Gain Selector parameter is used to select the gain control to configure. Once a gain control has been selected, all changes to the gain settings will be applied to the selected control.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_GainSelectorEnums GainSelector(); public native CUsbCameraParams_Params GainSelector(IEnumerationT_GainSelectorEnums GainSelector);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Sets the selected gain control in dB. Applies to: ace, dart, pulse
+        <p>
+        This is a float value that sets the selected gain control in dB.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : GainSelector
+    
+    */
+    public native @ByRef IFloat Gain(); public native CUsbCameraParams_Params Gain(IFloat Gain);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Selcts a black level control to configure. Applies to: ace, dart, pulse
+        <p>
+        This enumeration selects the black level control to configure. Once a black level control has been selected, all changes to the black level settings will be applied to the selected control.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_BlackLevelSelectorEnums BlackLevelSelector(); public native CUsbCameraParams_Params BlackLevelSelector(IEnumerationT_BlackLevelSelectorEnums BlackLevelSelector);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Sets the value of the selected black level control as a float. Applies to: ace, dart, pulse
+        <p>
+        This value sets the selected black level control as a float value. Adjusting the camera's black level will result in an offset to the pixel values output by the camera.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : BlackLevelSelector
+    
+    */
+    public native @ByRef IFloat BlackLevel(); public native CUsbCameraParams_Params BlackLevel(IFloat BlackLevel);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Performs gamma correction of pixel intensity. Applies to: ace, dart, pulse
+        <p>
+        The gamma correction feature lets you modify the brightness of the pixel values output by the camera's sensor to account for a non-linearity in the human perception of brightness.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat Gamma(); public native CUsbCameraParams_Params Gamma(IFloat Gamma);
+    
+    //@}
+    
+
+    /** \name AnalogControl -  */
+    //@{
+    /**
+        \brief Sets the value of the selected digital shift control. Applies to: ace
+        <p>
+        This value sets the selected digital shift control
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger DigitalShift(); public native CUsbCameraParams_Params DigitalShift(IInteger DigitalShift);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Selects the light source preset. Applies to: ace, dart, pulse
+        <p>
+        This parameter determines the light source preset. The colors in the image will be corrected so that they are appropriate for the selected light source.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IEnumerationT_LightSourcePresetEnums LightSourcePreset(); public native CUsbCameraParams_Params LightSourcePreset(IEnumerationT_LightSourcePresetEnums LightSourcePreset);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Currently effective color space. Applies to: ace
+        <p>
+        Reports the currently effective color space (read only). When no light source preset is selected, the camera delivers colors in accord with the RGB color space. RGB is reported as the currently effective color space. When a light source preset is selected the colors are automatically corrected to bring them in accord with the sRGB color space. sRGB is reported as the currently effective color space.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_ColorSpaceEnums ColorSpace(); public native CUsbCameraParams_Params ColorSpace(IEnumerationT_ColorSpaceEnums ColorSpace);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Adjusts the white balance setting automatically. Applies to: ace, dart, pulse
+        <p>
+        Balance White Auto is the 'automatic' counterpart to manually setting the white balance. Automatic white balancing is a two-step process. First, the Balance Ratio Abs parameter values for red, green, and blue are each set to 1.5. Then, assuming a 'gray world' model, the Balance Ratio Abs parameter values are automatically adjusted such that the average values for the 'red' and 'blue' pixels match the average value for the 'green' pixels.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_BalanceWhiteAutoEnums BalanceWhiteAuto(); public native CUsbCameraParams_Params BalanceWhiteAuto(IEnumerationT_BalanceWhiteAutoEnums BalanceWhiteAuto);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Selects a balance ratio to configure. Applies to: ace, dart, pulse
+        <p>
+        This enumeration selects a balance ratio control to configure. Once a balance ratio control has been selected, all changes to the balance ratio settings will be applied to the selected control.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_BalanceRatioSelectorEnums BalanceRatioSelector(); public native CUsbCameraParams_Params BalanceRatioSelector(IEnumerationT_BalanceRatioSelectorEnums BalanceRatioSelector);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Sets the value of the selected balance ratio control as a float. Applies to: ace, dart, pulse
+        <p>
+        This value sets the selected balance ratio control as a float value.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : BalanceRatioSelector
+    
+    */
+    public native @ByRef IFloat BalanceRatio(); public native CUsbCameraParams_Params BalanceRatio(IFloat BalanceRatio);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Selects the color for color adjustment. Applies to: ace
+        <p>
+        Selects the color for color adjustment.
+Those colors in the image will be adjusted where the selected color predominates.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_ColorAdjustmentSelectorEnums ColorAdjustmentSelector(); public native CUsbCameraParams_Params ColorAdjustmentSelector(IEnumerationT_ColorAdjustmentSelectorEnums ColorAdjustmentSelector);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Adjustment of hue of the selected color (float). Applies to: ace
+        <p>
+        Sets a floating point value for the adjustment of hue of the selected color.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : ColorAdjustmentSelector
+    
+    */
+    public native @ByRef IFloat ColorAdjustmentHue(); public native CUsbCameraParams_Params ColorAdjustmentHue(IFloat ColorAdjustmentHue);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Adjustment of saturation of the selected color (float). Applies to: ace
+        <p>
+        Sets a floating point value for the adjustment of saturation of the selected color.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : ColorAdjustmentSelector
+    
+    */
+    public native @ByRef IFloat ColorAdjustmentSaturation(); public native CUsbCameraParams_Params ColorAdjustmentSaturation(IFloat ColorAdjustmentSaturation);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Selects the matrix color transformation between color spaces. Applies to: ace
+        <p>
+        Selects the matrix color transformation between color spaces.
+Generally, the related color spaces are used for internal processing: The color signals provided by the sensor are transformed to the RGB color space to allow further transformations (to account for the type of light source, for color adjustment, for white balance, etc.).
+The color transformation selected here does not refer to the color space selected for the transmission of image data out of the camera.
+    
+        <p>
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_ColorTransformationSelectorEnums ColorTransformationSelector(); public native CUsbCameraParams_Params ColorTransformationSelector(IEnumerationT_ColorTransformationSelectorEnums ColorTransformationSelector);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Selects the element to be entered in the color transformation matrix. Applies to: ace
+        <p>
+        Selects the element to be entered in the 3 x 3 color transformation matrix for custom matrix color transformation.
+Note: Depending on the camera model, some elements in the color transformation matrix may be preset and can not be changed.
+    
+        <p>
+    
+        \b Visibility = Guru
+    
+        \b Selected by : ColorTransformationSelector
+    
+    */
+    public native @ByRef IEnumerationT_ColorTransformationValueSelectorEnums ColorTransformationValueSelector(); public native CUsbCameraParams_Params ColorTransformationValueSelector(IEnumerationT_ColorTransformationValueSelectorEnums ColorTransformationValueSelector);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Sets a floating point value for the selected element in the color transformation matrix. Applies to: ace
+        <p>
+        Sets a floating point value for the selected element in the color transformation matrix.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : ColorTransformationSelector, ColorTransformationValueSelector
+    
+    */
+    public native @ByRef IFloat ColorTransformationValue(); public native CUsbCameraParams_Params ColorTransformationValue(IFloat ColorTransformationValue);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the image acquisition mode. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the image acquisition mode. 
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_AcquisitionModeEnums AcquisitionMode(); public native CUsbCameraParams_Params AcquisitionMode(IEnumerationT_AcquisitionModeEnums AcquisitionMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Starts the acquisition of images. Applies to: ace, dart, pulse
+        <p>
+        This command starts the acquisition of images. If the camera is set for single frame acquisition, it will start acquisition of one frame. If the camera is set for continuous frame acquisition, it will start continuous acquisition of frames.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef ICommand AcquisitionStart(); public native CUsbCameraParams_Params AcquisitionStart(ICommand AcquisitionStart);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Stops the acquisition of images. Applies to: ace, dart, pulse
+        <p>
+        If the camera is set for continuous image acquisition and acquisition has been started, this command stops the acquisition of images.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef ICommand AcquisitionStop(); public native CUsbCameraParams_Params AcquisitionStop(ICommand AcquisitionStop);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the shutter mode. Applies to: ace
+        <p>
+        This enumeration sets the shutter mode.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_ShutterModeEnums ShutterMode(); public native CUsbCameraParams_Params ShutterMode(IEnumerationT_ShutterModeEnums ShutterMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Adjusts the Auto Exposure Time Abs parameter value automatically. Applies to: ace, dart, pulse
+        <p>
+        Exposure Auto is the 'automatic' counterpart to manually setting the Exposure Time Abs parameter. It adjusts the Exposure Time Abs parameter value automatically within set limits until a target average gray value for the pixel data of the related Auto Function AOI is reached.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_ExposureAutoEnums ExposureAuto(); public native CUsbCameraParams_Params ExposureAuto(IEnumerationT_ExposureAutoEnums ExposureAuto);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the exposure mode. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the exposure mode.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_ExposureModeEnums ExposureMode(); public native CUsbCameraParams_Params ExposureMode(IEnumerationT_ExposureModeEnums ExposureMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the camera's exposure time directly in microseconds. Applies to: ace, dart, pulse
+        <p>
+        This float value sets the camera's exposure time in microseconds.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ExposureTime(); public native CUsbCameraParams_Params ExposureTime(IFloat ExposureTime);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Selects the Exposure Overlap Time Mode. Applies to: ace
+        <p>
+        Selects the manual or automatic control of the maximum overlap between immediately succeeding image acquisitions.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_ExposureOverlapTimeModeEnums ExposureOverlapTimeMode(); public native CUsbCameraParams_Params ExposureOverlapTimeMode(IEnumerationT_ExposureOverlapTimeModeEnums ExposureOverlapTimeMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the maximum overlap time of the sensor exposure with sensor readout in trigger width exposure mode in microseconds. Applies to: ace
+        <p>
+        This float value sets the maximum overlap time (in microseconds) of the sensor exposure with sensor readout in trigger width exposure mode.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IFloat ExposureOverlapTimeMax(); public native CUsbCameraParams_Params ExposureOverlapTimeMax(IFloat ExposureOverlapTimeMax);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the readout mode of the device. Applies to: ace
+        <p>
+        Sets the readout mode of the device
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_SensorReadoutModeEnums SensorReadoutMode(); public native CUsbCameraParams_Params SensorReadoutMode(IEnumerationT_SensorReadoutModeEnums SensorReadoutMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Number of frames to acquire for each FrameBurstStart trigger. Applies to: ace
+        <p>
+        Number of frames to acquire for each FrameBurstStart trigger
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger AcquisitionBurstFrameCount(); public native CUsbCameraParams_Params AcquisitionBurstFrameCount(IInteger AcquisitionBurstFrameCount);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Selects the trigger type to configure. Applies to: ace, dart, pulse
+        <p>
+        This enumeration selects the trigger type to configure. Once a trigger type has been selected, all changes to the trigger settings will be applied to the selected trigger.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_TriggerSelectorEnums TriggerSelector(); public native CUsbCameraParams_Params TriggerSelector(IEnumerationT_TriggerSelectorEnums TriggerSelector);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the mode for the selected trigger. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the trigger mode for the selected trigger.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : TriggerSelector
+    
+    */
+    public native @ByRef IEnumerationT_TriggerModeEnums TriggerMode(); public native CUsbCameraParams_Params TriggerMode(IEnumerationT_TriggerModeEnums TriggerMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Generates a software trigger signal that is used when the trigger source is set to 'software trigger'. Applies to: ace, dart, pulse
+        <p>
+        This command generates a software trigger signal. The software trigger signal will be used when the trigger source is set to 'software trigger'.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : TriggerSelector
+    
+    */
+    public native @ByRef ICommand TriggerSoftware(); public native CUsbCameraParams_Params TriggerSoftware(ICommand TriggerSoftware);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the signal source for the selected trigger. Applies to: ace, dart, pulse
+        <p>
+        The Trigger Source parameter specifies the source signal that will act as the frame start trigger signal.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : TriggerSelector
+    
+    */
+    public native @ByRef IEnumerationT_TriggerSourceEnums TriggerSource(); public native CUsbCameraParams_Params TriggerSource(IEnumerationT_TriggerSourceEnums TriggerSource);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the signal transition needed to activate the selected trigger. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the signal transition needed to activate the selected trigger.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : TriggerSelector
+    
+    */
+    public native @ByRef IEnumerationT_TriggerActivationEnums TriggerActivation(); public native CUsbCameraParams_Params TriggerActivation(IEnumerationT_TriggerActivationEnums TriggerActivation);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the trigger delay time in microseconds. Applies to: ace
+        <p>
+        This float value sets the absolute trigger delay in microseconds to apply after the trigger reception before effectively activating it.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IFloat TriggerDelay(); public native CUsbCameraParams_Params TriggerDelay(IFloat TriggerDelay);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Enables setting the camera's acquisition frame rate to a specified value. Applies to: ace
+        <p>
+        This boolean value enables setting the camera's acquisition frame rate to a specified value.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IBoolean AcquisitionFrameRateEnable(); public native CUsbCameraParams_Params AcquisitionFrameRateEnable(IBoolean AcquisitionFrameRateEnable);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the camera's acquisition frame rate in frames per second. Applies to: ace, dart, pulse
+        <p>
+        The Acquisition Frame Rate parameter sets the 'absolute' value of the acquisition frame rate. The 'absolute' value is a float value that sets the acquisition frame rate in frames per second.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IFloat AcquisitionFrameRate(); public native CUsbCameraParams_Params AcquisitionFrameRate(IFloat AcquisitionFrameRate);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Indicates the maximum allowed frame acquisition rate. Applies to: ace
+        <p>
+        The Resulting Frame Rate parameter indicates the 'absolute' value of the maximum allowed acquisition frame rate. The 'absolute' value is a float value that indicates the maximum allowed acquisition frame rate in frames per second given the current settings for the area of interest, exposure time, and bandwidth.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ResultingFrameRate(); public native CUsbCameraParams_Params ResultingFrameRate(IFloat ResultingFrameRate);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Indicates the sensor readout time given the current settings. Applies to: ace
+        <p>
+        The Sensor Readout Time parameter indicates the sensor readout time given the current settings.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IFloat SensorReadoutTime(); public native CUsbCameraParams_Params SensorReadoutTime(IFloat SensorReadoutTime);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Selects which internal acquisition signal to read using the Acquisition Status parameter. Applies to: ace
+        <p>
+        This enumeration is used to select which internal acquisition signal to read using Acquisition Status parameter.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_AcquisitionStatusSelectorEnums AcquisitionStatusSelector(); public native CUsbCameraParams_Params AcquisitionStatusSelector(IEnumerationT_AcquisitionStatusSelectorEnums AcquisitionStatusSelector);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Reports the selected acquisition status. Applies to: ace
+        <p>
+        This feature is used to read the state (true or false) of the internal acquisition signal selected using the Acquisition Status Selector parameter.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : AcquisitionStatusSelector
+    
+    */
+    public native @ByRef IBoolean AcquisitionStatus(); public native CUsbCameraParams_Params AcquisitionStatus(IBoolean AcquisitionStatus);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the target average brightness for the gain auto function and the exposure auto function. Applies to: ace, dart, pulse
+        <p>
+        This float value sets the target average brightness for the gain auto function and the exposure auto function.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat AutoTargetBrightness(); public native CUsbCameraParams_Params AutoTargetBrightness(IFloat AutoTargetBrightness);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selects the strategy for controlling gain and shutter simultaneously. Applies to: ace, dart, pulse
+        <p>
+        The auto function profile specifies whether the gain or the exposure time will be kept as low as possible when the camera is making automatic adjustments to achieve a target average gray value for the pixel data from the Auto Function AOI that was related to the gain auto and the exposure auto function. By default, the auto function profile feature minimizes gain.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_AutoFunctionProfileEnums AutoFunctionProfile(); public native CUsbCameraParams_Params AutoFunctionProfile(IEnumerationT_AutoFunctionProfileEnums AutoFunctionProfile);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the lower limit of the Gain parameter. Applies to: ace, dart, pulse
+        <p>
+        This float value sets the lower limit of the Gain parameter.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat AutoGainLowerLimit(); public native CUsbCameraParams_Params AutoGainLowerLimit(IFloat AutoGainLowerLimit);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the upper limit of the Gain parameter. Applies to: ace, dart, pulse
+        <p>
+        This float value sets the upper limit of the Gain parameter.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat AutoGainUpperLimit(); public native CUsbCameraParams_Params AutoGainUpperLimit(IFloat AutoGainUpperLimit);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the lower limit of the Exposure Time parameter. Applies to: ace, dart, pulse
+        <p>
+        This float value sets the lower limit of the Exposure Time parameter.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat AutoExposureTimeLowerLimit(); public native CUsbCameraParams_Params AutoExposureTimeLowerLimit(IFloat AutoExposureTimeLowerLimit);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the upper limit of the Exposure Time parameter. Applies to: ace, dart, pulse
+        <p>
+        This float value sets the upper limit of the Exposure Time parameter.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat AutoExposureTimeUpperLimit(); public native CUsbCameraParams_Params AutoExposureTimeUpperLimit(IFloat AutoExposureTimeUpperLimit);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selects the Auto Function ROI. Applies to: ace, dart, pulse
+        <p>
+        Selects the Auto Function ROI.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_AutoFunctionROISelectorEnums AutoFunctionROISelector(); public native CUsbCameraParams_Params AutoFunctionROISelector(IEnumerationT_AutoFunctionROISelectorEnums AutoFunctionROISelector);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the width of the auto function region of interest in pixels. Applies to: ace, dart, pulse
+        <p>
+        This value sets the width of the auto function region of interest in pixels.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : AutoFunctionROISelector
+    
+    */
+    public native @ByRef IInteger AutoFunctionROIWidth(); public native CUsbCameraParams_Params AutoFunctionROIWidth(IInteger AutoFunctionROIWidth);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the height of the auto function region of interest in pixels. Applies to: ace, dart, pulse
+        <p>
+        This value sets the height of the auto function region of interest in pixels.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : AutoFunctionROISelector
+    
+    */
+    public native @ByRef IInteger AutoFunctionROIHeight(); public native CUsbCameraParams_Params AutoFunctionROIHeight(IInteger AutoFunctionROIHeight);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the starting column of the auto function region of interest in pixels. Applies to: ace, dart, pulse
+        <p>
+        The Offset X parameter determines the position of the auto function region of interest in the x direction.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : AutoFunctionROISelector
+    
+    */
+    public native @ByRef IInteger AutoFunctionROIOffsetX(); public native CUsbCameraParams_Params AutoFunctionROIOffsetX(IInteger AutoFunctionROIOffsetX);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the starting line of the auto function region of interest in pixels. Applies to: ace, dart, pulse
+        <p>
+        The Offset Y parameter determines the position of the auto function region of interest in the y direction.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : AutoFunctionROISelector
+    
+    */
+    public native @ByRef IInteger AutoFunctionROIOffsetY(); public native CUsbCameraParams_Params AutoFunctionROIOffsetY(IInteger AutoFunctionROIOffsetY);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selects brightness to be adjusted by an auto function. Applies to: ace, dart, pulse
+        <p>
+        For the selected Auto Function ROI, brightness will be adjusted by an auto function. Depending on the Auto Function Profile setting, the adjustment will be done either by the Gain Auto or by the Exposure Auto auto function. 
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : AutoFunctionROISelector
+    
+    */
+    public native @ByRef IBoolean AutoFunctionROIUseBrightness(); public native CUsbCameraParams_Params AutoFunctionROIUseBrightness(IBoolean AutoFunctionROIUseBrightness);
+    
+    //@}
+    
+
+    /** \name AutoFunctionROIControl - Selects and configures Auto Function ROIs. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selects white balance to be adjusted by the related auto function. Applies to: ace, dart, pulse
+        <p>
+        For the selected Auto Function ROI, white balance will be adjusted by the Balance White Auto auto function.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : AutoFunctionROISelector
+    
+    */
+    public native @ByRef IBoolean AutoFunctionROIUseWhiteBalance(); public native CUsbCameraParams_Params AutoFunctionROIUseWhiteBalance(IBoolean AutoFunctionROIUseWhiteBalance);
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Selects the Auto Function AOI.
+        <p>
+        Selects the Auto Function AOI.
+    
+        \b Visibility = Invisible
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IEnumerationT_AutoFunctionAOISelectorEnums AutoFunctionAOISelector(); public native CUsbCameraParams_Params AutoFunctionAOISelector(IEnumerationT_AutoFunctionAOISelectorEnums AutoFunctionAOISelector);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Sets the width of the auto function area of interest in pixels.
+        <p>
+        This value sets the width of the auto function area of interest in pixels.
+    
+        \b Visibility = Invisible
+    
+        \b Selected by : AutoFunctionAOISelector
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IInteger AutoFunctionAOIWidth(); public native CUsbCameraParams_Params AutoFunctionAOIWidth(IInteger AutoFunctionAOIWidth);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Sets the height of the auto function area of interest in pixels.
+        <p>
+        This value sets the height of the auto function area of interest in pixels.
+    
+        \b Visibility = Invisible
+    
+        \b Selected by : AutoFunctionAOISelector
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IInteger AutoFunctionAOIHeight(); public native CUsbCameraParams_Params AutoFunctionAOIHeight(IInteger AutoFunctionAOIHeight);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Sets the starting column of the auto function area of interest in pixels.
+        <p>
+        The Offset X parameter determines the position of the auto function area of interest in the x direction.
+    
+        \b Visibility = Invisible
+    
+        \b Selected by : AutoFunctionAOISelector
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IInteger AutoFunctionAOIOffsetX(); public native CUsbCameraParams_Params AutoFunctionAOIOffsetX(IInteger AutoFunctionAOIOffsetX);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Sets the starting line of the auto function area of interest in pixels.
+        <p>
+        The Offset Y parameter determines the position of the auto function area of interest in the y direction.
+    
+        \b Visibility = Invisible
+    
+        \b Selected by : AutoFunctionAOISelector
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IInteger AutoFunctionAOIOffsetY(); public native CUsbCameraParams_Params AutoFunctionAOIOffsetY(IInteger AutoFunctionAOIOffsetY);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Selects brightness to be adjusted by an auto function.
+        <p>
+        For the selected Auto Function AOI, brightness will be adjusted by an auto function. Depending on the Auto Function Profile setting, the adjustment will be done either by the Gain Auto or by the Exposure Auto auto function. 
+    
+        \b Visibility = Invisible
+    
+        \b Selected by : AutoFunctionAOISelector
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IBoolean AutoFunctionAOIUseBrightness(); public native CUsbCameraParams_Params AutoFunctionAOIUseBrightness(IBoolean AutoFunctionAOIUseBrightness);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name AutoFunctionAOIControl - Selects and configures Auto Function AOIs */
+    //@{
+    /**
+        \brief This feature has been \b deprecated. Selects white balance to be adjusted by the related auto function.
+        <p>
+        For the selected Auto Function AOI, white balance will be adjusted by the Balance White Auto auto function.
+    
+        \b Visibility = Invisible
+    
+        \b Selected by : AutoFunctionAOISelector
+    
+    */
+    
+// #if defined (_MSC_VER)
+// #   pragma warning(push)
+// #   pragma warning(disable: 4996) // name has been marked as deprecated
+// #endif
+
+    public native @ByRef IBoolean AutoFunctionAOIUseWhiteBalance(); public native CUsbCameraParams_Params AutoFunctionAOIUseWhiteBalance(IBoolean AutoFunctionAOIUseWhiteBalance);
+    
+// #if defined (_MSC_VER)	
+// #   pragma warning(pop)
+// #endif
+    
+    //@}
+    
+
+    /** \name LUTControl - This category includes items used to control the operation of the camera's lookup table (LUT). Applies to: ace */
+    //@{
+    /**
+        \brief Selects the lookup table (LUT) to configure. Once a LUT has been selected, all changes to the LUT settings will be applied to the selected LUT. Applies to: ace
+        <p>
+        This enumeration the lookup table (LUT) to configure. Once a LUT has been selected, all changes to the LUT settings will be applied to the selected LUT.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_LUTSelectorEnums LUTSelector(); public native CUsbCameraParams_Params LUTSelector(IEnumerationT_LUTSelectorEnums LUTSelector);
+    
+    //@}
+    
+
+    /** \name LUTControl - This category includes items used to control the operation of the camera's lookup table (LUT). Applies to: ace */
+    //@{
+    /**
+        \brief Enables the selected LUT. Applies to: ace
+        <p>
+        This boolean value enables the selected LUT.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : LUTSelector
+    
+    */
+    public native @ByRef IBoolean LUTEnable(); public native CUsbCameraParams_Params LUTEnable(IBoolean LUTEnable);
+    
+    //@}
+    
+
+    /** \name LUTControl - This category includes items used to control the operation of the camera's lookup table (LUT). Applies to: ace */
+    //@{
+    /**
+        \brief Sets the LUT element to access. Applies to: ace
+        <p>
+        This value sets the LUT element to access. This value is used to index into a LUT array.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : LUTSelector
+    
+    */
+    public native @ByRef IInteger LUTIndex(); public native CUsbCameraParams_Params LUTIndex(IInteger LUTIndex);
+    
+    //@}
+    
+
+    /** \name LUTControl - This category includes items used to control the operation of the camera's lookup table (LUT). Applies to: ace */
+    //@{
+    /**
+        \brief Sets the value of the LUT element at the LUT index. Applies to: ace
+        <p>
+        This value sets the value of the LUT element at the LUT index.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : LUTSelector, LUTIndex
+    
+    */
+    public native @ByRef IInteger LUTValue(); public native CUsbCameraParams_Params LUTValue(IInteger LUTValue);
+    
+    //@}
+    
+
+    /** \name LUTControl - This category includes items used to control the operation of the camera's lookup table (LUT). Applies to: ace */
+    //@{
+    /**
+        \brief Accesses the entire content of the selected LUT in one chunk access. Applies to: ace
+        <p>
+        Accesses the entire content of the selected LUT in one chunk access
+    
+        \b Visibility = Guru
+    
+        \b Selected by : LUTSelector
+    
+    */
+    public native @ByRef IRegister LUTValueAll(); public native CUsbCameraParams_Params LUTValueAll(IRegister LUTValueAll);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Selects the I/O line to configure. Applies to: ace, dart
+        <p>
+        This enumeration selects the I/O line to configure. Once a line has been selected, all changes to the line settings will be applied to the selected line.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_LineSelectorEnums LineSelector(); public native CUsbCameraParams_Params LineSelector(IEnumerationT_LineSelectorEnums LineSelector);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Sets the mode for the selected line. Applies to: ace, dart
+        <p>
+        This feature controls whether the physical line is used to input or output a signal. When a line supports input and output mode, the default state is 'input' to avoid possible electrical contention. The Line Mode parameter can take any of the following values: Input: The selected physical line is used to input an electrical signal. Output: The selected physical line is used to output an electrical signal.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IEnumerationT_LineModeEnums LineMode(); public native CUsbCameraParams_Params LineMode(IEnumerationT_LineModeEnums LineMode);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Reports the electrical configuration of the selected line. Applies to: ace, dart
+        <p>
+        This feature reports the current electrical format of the selected physical input or output line. The Line Format parameter can take any of the following values: No Connect: The line is not connected. Tri-state: The line is currently in tri-state mode (not driven). TTL: The line is currently accepting or sending TTL level signals. LVDS: The line is currently accepting or sending LVDS level signals. RS-422: The line is currently accepting or sending RS-422 level signals. Opto-coupled: The line is opto-coupled.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IEnumerationT_LineFormatEnums LineFormat(); public native CUsbCameraParams_Params LineFormat(IEnumerationT_LineFormatEnums LineFormat);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Reports the line logic of the selected line. Applies to: ace
+        <p>
+        Reports the line logic of the selected line. The line logic can be positive or negative.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IEnumerationT_LineLogicEnums LineLogic(); public native CUsbCameraParams_Params LineLogic(IEnumerationT_LineLogicEnums LineLogic);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Sets the source signal for the selected line (if the selected line is an output). Applies to: ace, dart
+        <p>
+        This enumeration selects the internally generated camera signal (source signal) for the selected line when the selected line is an output. 
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IEnumerationT_LineSourceEnums LineSource(); public native CUsbCameraParams_Params LineSource(IEnumerationT_LineSourceEnums LineSource);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Enables the signal inverter function for the selected input or output line. Applies to: ace, dart
+        <p>
+        This boolean value enables the signal inverter function for the selected input or output line.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IBoolean LineInverter(); public native CUsbCameraParams_Params LineInverter(IBoolean LineInverter);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Sets the absolute value of the selected line debouncer time in microseconds. Applies to: ace, dart
+        <p>
+        This float value sets the absolute value of the selected line debouncer time in microseconds.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IFloat LineDebouncerTime(); public native CUsbCameraParams_Params LineDebouncerTime(IFloat LineDebouncerTime);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Sets the absolute value (in microseconds) for the minimum signal width of an output signal. Applies to: ace
+        <p>
+        This float value sets the absolute value (in microseconds) for the minimum signal width of a signal that is received from the frequency converter or from the shaft encoder module and that is associated with a digital output line.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IFloat LineMinimumOutputPulseWidth(); public native CUsbCameraParams_Params LineMinimumOutputPulseWidth(IFloat LineMinimumOutputPulseWidth);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Indicates that an overload condition was detected on the selected line. Applies to: ace
+        <p>
+        This boolean value indicates that an overload condition was detected on the selected line.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IBoolean LineOverloadStatus(); public native CUsbCameraParams_Params LineOverloadStatus(IBoolean LineOverloadStatus);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Resets the overload status of the selected line. Applies to: ace
+        <p>
+        This command resets the overload status of the selected line. Should the overload condition still persist then the overload status will be set again immediately.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef ICommand LineOverloadReset(); public native CUsbCameraParams_Params LineOverloadReset(ICommand LineOverloadReset);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Indicates the current logical state for the selected line. Applies to: ace, dart
+        <p>
+        This boolean value indicates the current logical state for the selected line at the time of polling.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : LineSelector
+    
+    */
+    public native @ByRef IBoolean LineStatus(); public native CUsbCameraParams_Params LineStatus(IBoolean LineStatus);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief A single bitfield indicating the current logical state of all available line signals at time of polling. Applies to: ace, dart
+        <p>
+        This integer value is a single bitfield that indicates the current logical state of all available lines at time of polling.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger LineStatusAll(); public native CUsbCameraParams_Params LineStatusAll(IInteger LineStatusAll);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Selects the user settable output signal to configure. Applies to: ace, dart
+        <p>
+        This enumeration selects the user settable output signal to configure. Once a user settable output signal has been selected, all changes to the user settable output signal settings will be applied to the selected user settable output signal.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_UserOutputSelectorEnums UserOutputSelector(); public native CUsbCameraParams_Params UserOutputSelector(IEnumerationT_UserOutputSelectorEnums UserOutputSelector);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief Sets the state of the selected user settable output signal. Applies to: ace, dart
+        <p>
+        This boolean value sets the state of the selected user settable output signal.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : UserOutputSelector
+    
+    */
+    public native @ByRef IBoolean UserOutputValue(); public native CUsbCameraParams_Params UserOutputValue(IBoolean UserOutputValue);
+    
+    //@}
+    
+
+    /** \name DigitalIOControl - This category includes items used to control the operation of the camera's digital I/O lines. Applies to: ace, dart */
+    //@{
+    /**
+        \brief A single bitfield that sets the state of all user settable output signals in one access. Applies to: ace
+        <p>
+        This integer value is a single bitfield that sets the state of all user settable output signals in one access.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger UserOutputValueAll(); public native CUsbCameraParams_Params UserOutputValueAll(IInteger UserOutputValueAll);
+    
+    //@}
+    
+
+    /** \name SoftwareSignalControl -  */
+    //@{
+    /**
+        \brief Selects the software signal to control. Applies to: ace
+        <p>
+        Selects the software signal to control.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IEnumerationT_SoftwareSignalSelectorEnums SoftwareSignalSelector(); public native CUsbCameraParams_Params SoftwareSignalSelector(IEnumerationT_SoftwareSignalSelectorEnums SoftwareSignalSelector);
+    
+    //@}
+    
+
+    /** \name SoftwareSignalControl -  */
+    //@{
+    /**
+        \brief Generates a signal that can be used as a software trigger. Applies to: ace
+        <p>
+        Generates a signal that can be used as a software trigger.
+    
+        \b Visibility = Beginner
+    
+        \b Selected by : SoftwareSignalSelector
+    
+    */
+    public native @ByRef ICommand SoftwareSignalPulse(); public native CUsbCameraParams_Params SoftwareSignalPulse(ICommand SoftwareSignalPulse);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Selects which Timer to configure. Applies to: ace
+        <p>
+        Selects which Timer to configure.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_TimerSelectorEnums TimerSelector(); public native CUsbCameraParams_Params TimerSelector(IEnumerationT_TimerSelectorEnums TimerSelector);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Sets the duration (in microseconds) of the Timer pulse. Applies to: ace
+        <p>
+        Sets the duration (in microseconds) of the Timer pulse.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : TimerSelector
+    
+    */
+    public native @ByRef IFloat TimerDuration(); public native CUsbCameraParams_Params TimerDuration(IFloat TimerDuration);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Sets the delay (in microseconds) of the Timer pulse. Applies to: ace
+        <p>
+        Sets the delay (in microseconds) of the Timer pulse.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : TimerSelector
+    
+    */
+    public native @ByRef IFloat TimerDelay(); public native CUsbCameraParams_Params TimerDelay(IFloat TimerDelay);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the source of the trigger to start the Timer. Applies to: ace
+        <p>
+        Selects the source of the trigger to start the Timer.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : TimerSelector
+    
+    */
+    public native @ByRef IEnumerationT_TimerTriggerSourceEnums TimerTriggerSource(); public native CUsbCameraParams_Params TimerTriggerSource(IEnumerationT_TimerTriggerSourceEnums TimerTriggerSource);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Selects which Counter to configure. Applies to: ace
+        <p>
+        Selects which Counter to configure.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_CounterSelectorEnums CounterSelector(); public native CUsbCameraParams_Params CounterSelector(IEnumerationT_CounterSelectorEnums CounterSelector);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Select the events that will be the source to increment the Counter. Applies to: ace
+        <p>
+        Select the events that will be the source to increment the Counter.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : CounterSelector
+    
+    */
+    public native @ByRef IEnumerationT_CounterEventSourceEnums CounterEventSource(); public native CUsbCameraParams_Params CounterEventSource(IEnumerationT_CounterEventSourceEnums CounterEventSource);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the signals that will be the source to reset the Counter. Applies to: ace
+        <p>
+        Selects the signals that will be the source to reset the Counter.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : CounterSelector
+    
+    */
+    public native @ByRef IEnumerationT_CounterResetSourceEnums CounterResetSource(); public native CUsbCameraParams_Params CounterResetSource(IEnumerationT_CounterResetSourceEnums CounterResetSource);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the Activation mode of the Counter Reset Source signal. Applies to: ace
+        <p>
+        Selects the Activation mode of the Counter Reset Source signal.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : CounterSelector
+    
+    */
+    public native @ByRef IEnumerationT_CounterResetActivationEnums CounterResetActivation(); public native CUsbCameraParams_Params CounterResetActivation(IEnumerationT_CounterResetActivationEnums CounterResetActivation);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Does a software reset of the selected counter. Applies to: ace
+        <p>
+        Does a software reset of the selected counter.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : CounterSelector
+    
+    */
+    public native @ByRef ICommand CounterReset(); public native CUsbCameraParams_Params CounterReset(ICommand CounterReset);
+    
+    //@}
+    
+
+    /** \name CounterAndTimerControl - This category contains the Counter and Timer control features. Applies to: ace */
+    //@{
+    /**
+        \brief Sets the duration (or number of events) before the CounterEnd event is generated. Applies to: ace
+        <p>
+        Sets the duration (or number of events) before the CounterEnd event is generated.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger CounterDuration(); public native CUsbCameraParams_Params CounterDuration(IInteger CounterDuration);
+    
+    //@}
+    
+
+    /** \name UserSetControl - This category includes items that control the user sets feature that is used to save sets of parameters in the camera. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selects the user set to load, save, or configure. Applies to: ace, dart, pulse
+        <p>
+        This enumeration selects the user set to load, save, or configure. Once a user set has been selected, all changes to the user set settings will be applied to the selected user set.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_UserSetSelectorEnums UserSetSelector(); public native CUsbCameraParams_Params UserSetSelector(IEnumerationT_UserSetSelectorEnums UserSetSelector);
+    
+    //@}
+    
+
+    /** \name UserSetControl - This category includes items that control the user sets feature that is used to save sets of parameters in the camera. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Loads the selected configuration into the camera's volatile memory and makes it the active user set. Applies to: ace, dart, pulse
+        <p>
+        This command loads the selected user set from the non-volatile memory in the camera to the volatile memory and makes the selected set the active user set. Once the selected set is loaded, the parameters in the selected set will control the camera.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : UserSetSelector
+    
+    */
+    public native @ByRef ICommand UserSetLoad(); public native CUsbCameraParams_Params UserSetLoad(ICommand UserSetLoad);
+    
+    //@}
+    
+
+    /** \name UserSetControl - This category includes items that control the user sets feature that is used to save sets of parameters in the camera. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Saves the current active user set into the selected user set. Applies to: ace, dart, pulse
+        <p>
+        This command copies the parameters in the current active user set into the selected user set in the camera's non-volatile memory.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : UserSetSelector
+    
+    */
+    public native @ByRef ICommand UserSetSave(); public native CUsbCameraParams_Params UserSetSave(ICommand UserSetSave);
+    
+    //@}
+    
+
+    /** \name UserSetControl - This category includes items that control the user sets feature that is used to save sets of parameters in the camera. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the user set to be used as the default startup set. Applies to: ace, dart, pulse
+        <p>
+        This enumeration sets the user set to be used as the default startup set. The user set that has been selected as the default startup set will be loaded as the active set whenever the camera is powered on or reset.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_UserSetDefaultEnums UserSetDefault(); public native CUsbCameraParams_Params UserSetDefault(IEnumerationT_UserSetDefaultEnums UserSetDefault);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Enables the chunk mode. Applies to: ace
+        <p>
+        This boolean value enables the camera's chunk mode.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IBoolean ChunkModeActive(); public native CUsbCameraParams_Params ChunkModeActive(IBoolean ChunkModeActive);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Selects chunks for enabling. Applies to: ace
+        <p>
+        This enumeration selects chunks for enabling.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_ChunkSelectorEnums ChunkSelector(); public native CUsbCameraParams_Params ChunkSelector(IEnumerationT_ChunkSelectorEnums ChunkSelector);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Enables the inclusion of the selected chunk in the payload data. Applies to: ace
+        <p>
+        This boolean value enables the inclusion of the selected chunk in the payload data.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : ChunkSelector
+    
+    */
+    public native @ByRef IBoolean ChunkEnable(); public native CUsbCameraParams_Params ChunkEnable(IBoolean ChunkEnable);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Selects which Gain to retrieve data from. Applies to: ace
+        <p>
+        Selects which Gain to retrieve data from.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_ChunkGainSelectorEnums ChunkGainSelector(); public native CUsbCameraParams_Params ChunkGainSelector(IEnumerationT_ChunkGainSelectorEnums ChunkGainSelector);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the gain used to capture the image. Applies to: ace
+        <p>
+        Returns the gain used to capture the image.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : ChunkGainSelector
+    
+    */
+    public native @ByRef IFloat ChunkGain(); public native CUsbCameraParams_Params ChunkGain(IFloat ChunkGain);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the exposure time used to capture the image. Applies to: ace
+        <p>
+        Returns the exposure time used to capture the image.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ChunkExposureTime(); public native CUsbCameraParams_Params ChunkExposureTime(IFloat ChunkExposureTime);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the value of the timestamp when the image was acquired. Applies to: ace
+        <p>
+        This integer indicates the value of the timestamp when the image was acquired.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkTimestamp(); public native CUsbCameraParams_Params ChunkTimestamp(IInteger ChunkTimestamp);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief A bit field that indicates the status of all of the camera's input and output lines when the image was acquired. Applies to: ace
+        <p>
+        This value is a bit field that indicates the status of all of the camera's input and output lines when the image was acquired.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkLineStatusAll(); public native CUsbCameraParams_Params ChunkLineStatusAll(IInteger ChunkLineStatusAll);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Selects which counter to retrieve data from. Applies to: ace
+        <p>
+        Selects which counter to retrieve data from.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_ChunkCounterSelectorEnums ChunkCounterSelector(); public native CUsbCameraParams_Params ChunkCounterSelector(IEnumerationT_ChunkCounterSelectorEnums ChunkCounterSelector);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the value of the selected Chunk counter. Applies to: ace
+        <p>
+        Indicates the value of the selected Chunk counter.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : ChunkCounterSelector
+    
+    */
+    public native @ByRef IInteger ChunkCounterValue(); public native CUsbCameraParams_Params ChunkCounterValue(IInteger ChunkCounterValue);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Return the index of the active set of the running sequencer included in the payload. Applies to: ace
+        <p>
+        Return the index of the active set of the running sequencer included in the payload
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkSequencerSetActive(); public native CUsbCameraParams_Params ChunkSequencerSetActive(IInteger ChunkSequencerSetActive);
+    
+    //@}
+    
+
+    /** \name ChunkDataControl - This category includes items that control the chunk features available on the camera. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the value of CRC checksum. Applies to: ace
+        <p>
+        This integer indicates the value of CRC checksum.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkPayloadCRC16(); public native CUsbCameraParams_Params ChunkPayloadCRC16(IInteger ChunkPayloadCRC16);
+    
+    //@}
+    
+
+    /** \name EventControl - This category contains Event control features. Applies to: ace */
+    //@{
+    /**
+        \brief Selects which Event to signal to the host application. Applies to: ace
+        <p>
+        Selects which Event to signal to the host application.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_EventSelectorEnums EventSelector(); public native CUsbCameraParams_Params EventSelector(IEnumerationT_EventSelectorEnums EventSelector);
+    
+    //@}
+    
+
+    /** \name EventControl - This category contains Event control features. Applies to: ace */
+    //@{
+    /**
+        \brief Activate or deactivate the notification to the host application of the occurrence of the selected
+Event. Applies to: ace
+        <p>
+        Activate or deactivate the notification to the host application of the occurrence of the selected
+Event.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : EventSelector
+    
+    */
+    public native @ByRef IEnumerationT_EventNotificationEnums EventNotification(); public native CUsbCameraParams_Params EventNotification(IEnumerationT_EventNotificationEnums EventNotification);
+    
+    //@}
+    
+
+    /** \name EventControl - This category contains Event control features. Applies to: ace */
+    //@{
+    /**
+        \brief Triggers a test event for EventTest.
+        <p>
+        Triggers a test event for EventTest. Event notification must be set to 'On'.
+    
+        \b Visibility = Invisible
+    
+    */
+    public native @ByRef ICommand TriggerEventTest(); public native CUsbCameraParams_Params TriggerEventTest(ICommand TriggerEventTest);
+    
+    //@}
+    
+
+    /** \name EventExposureEndData - This category includes items available for an exposure end event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique identifier of the ExposureEnd type of Event. Applies to: ace
+        <p>
+        Returns the unique identifier of the ExposureEnd type of Event. This feature can be used to register a callback function to be notified of the event occurrence. Its value uniquely identifies the type of event that will be received.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventExposureEnd(); public native CUsbCameraParams_Params EventExposureEnd(IInteger EventExposureEnd);
+    
+    //@}
+    
+
+    /** \name EventExposureEndData - This category includes items available for an exposure end event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for an exposure end event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for an exposure end event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventExposureEndTimestamp(); public native CUsbCameraParams_Params EventExposureEndTimestamp(IInteger EventExposureEndTimestamp);
+    
+    //@}
+    
+
+    /** \name EventExposureEndData - This category includes items available for an exposure end event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the frame ID for an exposure end event. Applies to: ace
+        <p>
+        This enumeration value indicates the frame ID for an exposure end event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventExposureEndFrameID(); public native CUsbCameraParams_Params EventExposureEndFrameID(IInteger EventExposureEndFrameID);
+    
+    //@}
+    
+
+    /** \name EventFrameStartData - This category includes items available for a frame start event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique identifier of the FrameStart type of Event. Applies to: ace
+        <p>
+        Returns the unique identifier of the FrameStart type of Event. This feature can be used to register a callback function to be notified of the event occurrence. Its value uniquely identifies the type of event that will be received.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameStart(); public native CUsbCameraParams_Params EventFrameStart(IInteger EventFrameStart);
+    
+    //@}
+    
+
+    /** \name EventFrameStartData - This category includes items available for a frame start event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for a frame start event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for a frame start event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameStartTimestamp(); public native CUsbCameraParams_Params EventFrameStartTimestamp(IInteger EventFrameStartTimestamp);
+    
+    //@}
+    
+
+    /** \name EventFrameStartData - This category includes items available for a frame start event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the frame ID for a frame start event. Applies to: ace
+        <p>
+        This enumeration value indicates the frame ID for a frame start event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameStartFrameID(); public native CUsbCameraParams_Params EventFrameStartFrameID(IInteger EventFrameStartFrameID);
+    
+    //@}
+    
+
+    /** \name EventFrameBurstStartData - This category includes items available for a frame burst start event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique identifier of the FrameBurstStart type of Event. Applies to: ace
+        <p>
+        Returns the unique identifier of the FrameBurstStart type of Event. This feature can be used to register a callback function to be notified of the event occurrence. Its value uniquely identifies the type of event that will be received.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameBurstStart(); public native CUsbCameraParams_Params EventFrameBurstStart(IInteger EventFrameBurstStart);
+    
+    //@}
+    
+
+    /** \name EventFrameBurstStartData - This category includes items available for a frame burst start event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for a frame burst start event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for a frame burst start event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameBurstStartTimestamp(); public native CUsbCameraParams_Params EventFrameBurstStartTimestamp(IInteger EventFrameBurstStartTimestamp);
+    
+    //@}
+    
+
+    /** \name EventFrameBurstStartData - This category includes items available for a frame burst start event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the frame ID for a frame burst start event. Applies to: ace
+        <p>
+        This enumeration value indicates the frame ID for a frame burst start event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameBurstStartFrameID(); public native CUsbCameraParams_Params EventFrameBurstStartFrameID(IInteger EventFrameBurstStartFrameID);
+    
+    //@}
+    
+
+    /** \name EventFrameStartOvertriggerData - This category includes items available for a frame start overtrigger event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique identifier of the FrameOvertriggerStart type of Event. Applies to: ace
+        <p>
+        Returns the unique identifier of the FrameStartOvertrigger type of Event. This feature can be used to register a callback function to be notified of the event occurrence. Its value uniquely identifies the type of event that will be received.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameStartOvertrigger(); public native CUsbCameraParams_Params EventFrameStartOvertrigger(IInteger EventFrameStartOvertrigger);
+    
+    //@}
+    
+
+    /** \name EventFrameStartOvertriggerData - This category includes items available for a frame start overtrigger event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for a frame start overtrigger event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for a frame start overtrigger event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameStartOvertriggerTimestamp(); public native CUsbCameraParams_Params EventFrameStartOvertriggerTimestamp(IInteger EventFrameStartOvertriggerTimestamp);
+    
+    //@}
+    
+
+    /** \name EventFrameStartOvertriggerData - This category includes items available for a frame start overtrigger event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the frame ID for a frame start overtrigger event. Applies to: ace
+        <p>
+        This enumeration value indicates the frame ID for a frame start overtrigger event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameStartOvertriggerFrameID(); public native CUsbCameraParams_Params EventFrameStartOvertriggerFrameID(IInteger EventFrameStartOvertriggerFrameID);
+    
+    //@}
+    
+
+    /** \name EventFrameBurstStartOvertriggerData - This category includes items available for a frame burst start overtrigger event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique identifier of the FrameBurstOvertriggerStart type of Event. Applies to: ace
+        <p>
+        Returns the unique identifier of the FrameBurstStartOvertrigger type of Event. This feature can be used to register a callback function to be notified of the event occurrence. Its value uniquely identifies the type of event that will be received.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameBurstStartOvertrigger(); public native CUsbCameraParams_Params EventFrameBurstStartOvertrigger(IInteger EventFrameBurstStartOvertrigger);
+    
+    //@}
+    
+
+    /** \name EventFrameBurstStartOvertriggerData - This category includes items available for a frame burst start overtrigger event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for a frame burst start overtrigger event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for a frame burst start overtrigger event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameBurstStartOvertriggerTimestamp(); public native CUsbCameraParams_Params EventFrameBurstStartOvertriggerTimestamp(IInteger EventFrameBurstStartOvertriggerTimestamp);
+    
+    //@}
+    
+
+    /** \name EventFrameBurstStartOvertriggerData - This category includes items available for a frame burst start overtrigger event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the frame ID for a frame burst start overtrigger event. Applies to: ace
+        <p>
+        This enumeration value indicates the frame ID for a frame burst start overtrigger event.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger EventFrameBurstStartOvertriggerFrameID(); public native CUsbCameraParams_Params EventFrameBurstStartOvertriggerFrameID(IInteger EventFrameBurstStartOvertriggerFrameID);
+    
+    //@}
+    
+
+    /** \name EventTestData - This category includes items available for a test event */
+    //@{
+    /**
+        \brief Returns the unique event ID.
+        <p>
+        Returns the unique event ID for the EventTest test event.
+    
+        \b Visibility = Invisible
+    
+    */
+    public native @ByRef IInteger EventTest(); public native CUsbCameraParams_Params EventTest(IInteger EventTest);
+    
+    //@}
+    
+
+    /** \name EventTestData - This category includes items available for a test event */
+    //@{
+    /**
+        \brief Timestamp of EventTest event.
+        <p>
+        Provides the Timestamp of an EventTest test event.
+    
+        \b Visibility = Invisible
+    
+    */
+    public native @ByRef IInteger EventTestTimestamp(); public native CUsbCameraParams_Params EventTestTimestamp(IInteger EventTestTimestamp);
+    
+    //@}
+    
+
+    /** \name EventCriticalTemperatureData - This category includes items available for a critical temperature event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique event ID. Applies to: ace
+        <p>
+        Returns the unique event ID for the critical temperature event.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger EventCriticalTemperature(); public native CUsbCameraParams_Params EventCriticalTemperature(IInteger EventCriticalTemperature);
+    
+    //@}
+    
+
+    /** \name EventCriticalTemperatureData - This category includes items available for a critical temperature event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for a critical temperature event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for a critical temperature event.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger EventCriticalTemperatureTimestamp(); public native CUsbCameraParams_Params EventCriticalTemperatureTimestamp(IInteger EventCriticalTemperatureTimestamp);
+    
+    //@}
+    
+
+    /** \name EventOverTemperatureData - This category includes items available for an over temperature event. Applies to: ace */
+    //@{
+    /**
+        \brief Returns the unique identifier of the OverTemperature type of Event. Applies to: ace
+        <p>
+        Returns the unique identifier of the OverTemperature type of Event. This feature can be used to register a callback function to be notified of the event occurrence. Its value uniquely identifies the type of event that will be received.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger EventOverTemperature(); public native CUsbCameraParams_Params EventOverTemperature(IInteger EventOverTemperature);
+    
+    //@}
+    
+
+    /** \name EventOverTemperatureData - This category includes items available for an over temperature event. Applies to: ace */
+    //@{
+    /**
+        \brief Indicates the time stamp for an over temperature event. Applies to: ace
+        <p>
+        This enumeration value indicates the time stamp for an over temperature event.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger EventOverTemperatureTimestamp(); public native CUsbCameraParams_Params EventOverTemperatureTimestamp(IInteger EventOverTemperatureTimestamp);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Size of the payload in bytes. Applies to: ace, dart, pulse
+        <p>
+        Size of the payload in bytes. This is the total number of bytes sent in the payload. 
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger PayloadSize(); public native CUsbCameraParams_Params PayloadSize(IInteger PayloadSize);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Informs about the USB speed mode. Applies to: ace, dart, pulse
+        <p>
+        Informs about the current USB speed mode.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IEnumerationT_BslUSBSpeedModeEnums BslUSBSpeedMode(); public native CUsbCameraParams_Params BslUSBSpeedMode(IEnumerationT_BslUSBSpeedModeEnums BslUSBSpeedMode);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Expected Size of a single Payload Transfer. Applies to: ace
+        <p>
+        Expected Size of a single Payload Transfer.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger SIPayloadTransferSize(); public native CUsbCameraParams_Params SIPayloadTransferSize(IInteger SIPayloadTransferSize);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Expected Number of Payload Transfers. Applies to: ace
+        <p>
+        Expected Number of Payload Transfers.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger SIPayloadTransferCount(); public native CUsbCameraParams_Params SIPayloadTransferCount(IInteger SIPayloadTransferCount);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Size of first final Payload Transfer. Applies to: ace
+        <p>
+        Size of first final Payload Transfer.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger SIPayloadFinalTransfer1Size(); public native CUsbCameraParams_Params SIPayloadFinalTransfer1Size(IInteger SIPayloadFinalTransfer1Size);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Size of second final Payload Transfer. Applies to: ace
+        <p>
+        Size of second final Payload Transfer.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger SIPayloadFinalTransfer2Size(); public native CUsbCameraParams_Params SIPayloadFinalTransfer2Size(IInteger SIPayloadFinalTransfer2Size);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Test PENDING_ACK feature. Applies to: dart, pulse
+        <p>
+        On write, the device waits a time period of TestPendingAck ms before acknowledging the write.
+If this time period is longer than the value in the Maximum Device Response Time register, the device must use PENDING_ACK during the completion of this request.
+On reads the device returns the current value without any additional wait time.
+    
+        \b Visibility = Invisible
+    
+    */
+    public native @ByRef IInteger TestPendingAck(); public native CUsbCameraParams_Params TestPendingAck(IInteger TestPendingAck);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief 
+        <p>
+        This parameter takes effect only when the sequencer mode is set to On. The parameter can only be set when the sequencer configuration mode is set to On.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger PayloadTransferBlockDelay(); public native CUsbCameraParams_Params PayloadTransferBlockDelay(IInteger PayloadTransferBlockDelay);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the name of the device's vendor. Applies to: ace
+        <p>
+        This is a read only element. It is a text description that indicates the name of the device's vendor.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IString DeviceVendorName(); public native CUsbCameraParams_Params DeviceVendorName(IString DeviceVendorName);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the model name of the device. Applies to: ace
+        <p>
+        This is a read only element. It is a text description that indicates the model name of the device.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IString DeviceModelName(); public native CUsbCameraParams_Params DeviceModelName(IString DeviceModelName);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Provides additional information from the vendor about the device. Applies to: ace
+        <p>
+        This is a read only element. It is a string that provides additional information from the vendor about the camera.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IString DeviceManufacturerInfo(); public native CUsbCameraParams_Params DeviceManufacturerInfo(IString DeviceManufacturerInfo);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the version of the device. Applies to: ace
+        <p>
+        This is a read only element. It is a string that indicates the version of the device.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IString DeviceVersion(); public native CUsbCameraParams_Params DeviceVersion(IString DeviceVersion);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the version of the device's firmware and software. Applies to: ace
+        <p>
+        This is a read only element. It is a string that indicates the version of the device's firmware and software.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IString DeviceFirmwareVersion(); public native CUsbCameraParams_Params DeviceFirmwareVersion(IString DeviceFirmwareVersion);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the serial number of the device. Applies to: ace
+        <p>
+        This is a read only element. It is a string that indicates the serial number of the device.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IString DeviceSerialNumber(); public native CUsbCameraParams_Params DeviceSerialNumber(IString DeviceSerialNumber);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the scan type of the device's sensor. Applies to: ace, dart, pulse
+        <p>
+        This enumeration lists the possible scan types for the sensor in the device.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IEnumerationT_DeviceScanTypeEnums DeviceScanType(); public native CUsbCameraParams_Params DeviceScanType(IEnumerationT_DeviceScanTypeEnums DeviceScanType);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Latches the current timestamp counter into TimestampLatchValue. Applies to: ace
+        <p>
+        Latches the current timestamp counter into TimestampLatchValue.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef ICommand TimestampLatch(); public native CUsbCameraParams_Params TimestampLatch(ICommand TimestampLatch);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Returns the latched value of the timestamp counter. Applies to: ace
+        <p>
+        Returns the latched value of the timestamp counter.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger TimestampLatchValue(); public native CUsbCameraParams_Params TimestampLatchValue(IInteger TimestampLatchValue);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief A device ID that is user programmable. Applies to: ace
+        <p>
+        This is a read/write element. It is a user programmable string.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IString DeviceUserID(); public native CUsbCameraParams_Params DeviceUserID(IString DeviceUserID);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Selects the link of the device to control. Applies to: ace, dart, pulse
+        <p>
+        The Device Link Selector parameter is of type integer and selects the link of the device to control.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger DeviceLinkSelector(); public native CUsbCameraParams_Params DeviceLinkSelector(IInteger DeviceLinkSelector);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the speed of transmission negotiated on the selected link. Applies to: ace, dart, pulse
+        <p>
+        The Device Link Speed parameter is of type integer and indicates the speed of transmission negotiated on the selected link.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : DeviceLinkSelector
+    
+    */
+    public native @ByRef IInteger DeviceLinkSpeed(); public native CUsbCameraParams_Params DeviceLinkSpeed(IInteger DeviceLinkSpeed);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Controls if the device link throughput limit is active. Applies to: ace, dart, pulse
+        <p>
+        Controls if the device link throughput limit is active. When disabled, lower level throughput limit specific features are expected to control the throughput. When enabled, the device link throughput limit controls the overall throughput.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : DeviceLinkSelector
+    
+    */
+    public native @ByRef IEnumerationT_DeviceLinkThroughputLimitModeEnums DeviceLinkThroughputLimitMode(); public native CUsbCameraParams_Params DeviceLinkThroughputLimitMode(IEnumerationT_DeviceLinkThroughputLimitModeEnums DeviceLinkThroughputLimitMode);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Limits the average stream interface bandwidth to device link throughput limit bytes per second. Applies to: ace, dart, pulse
+        <p>
+        The Device Link Throughput Limit parameter is of type integer and sets the limit of the average stream interface bandwidth to device link throughput limit bytes per second.
+    
+        \b Visibility = Beginner
+    
+        \b Selected by : DeviceLinkSelector
+    
+    */
+    public native @ByRef IInteger DeviceLinkThroughputLimit(); public native CUsbCameraParams_Params DeviceLinkThroughputLimit(IInteger DeviceLinkThroughputLimit);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Indicates the actual bandwidth the camera will use. Applies to: ace
+        <p>
+        This value indicates the actual bandwidth (in bytes per second) that the camera will use to transmit image data and chunk data given the current AOI settings, chunk feature settings, and the pixel format setting.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : DeviceLinkSelector
+    
+    */
+    public native @ByRef IInteger DeviceLinkCurrentThroughput(); public native CUsbCameraParams_Params DeviceLinkCurrentThroughput(IInteger DeviceLinkCurrentThroughput);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Lists the temperature sources available for readout. Applies to: ace
+        <p>
+        This enumeration lists the temperature sources available for readout.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_DeviceTemperatureSelectorEnums DeviceTemperatureSelector(); public native CUsbCameraParams_Params DeviceTemperatureSelector(IEnumerationT_DeviceTemperatureSelectorEnums DeviceTemperatureSelector);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Shows the current temperature of the selected target in degrees centigrade. Applies to: ace
+        <p>
+        This float value shows the current temperature of the selected target in degrees centigrade.
+    
+        \b Visibility = Expert
+    
+        \b Selected by : DeviceTemperatureSelector
+    
+    */
+    public native @ByRef IFloat DeviceTemperature(); public native CUsbCameraParams_Params DeviceTemperature(IFloat DeviceTemperature);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Temperature State. Applies to: ace
+        <p>
+        Temperature State
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_TemperatureStateEnums TemperatureState(); public native CUsbCameraParams_Params TemperatureState(IEnumerationT_TemperatureStateEnums TemperatureState);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Immediately resets and reboots the device. Applies to: ace, dart, pulse
+        <p>
+        This is a command that immediately resets and reboots the device.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef ICommand DeviceReset(); public native CUsbCameraParams_Params DeviceReset(ICommand DeviceReset);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Major version of the underlying SFNC. Applies to: ace, dart, pulse
+        <p>
+        Indicates the Major version of the Standard Features Naming Convention (SFNC) that was used for the camera's GenICam XML file.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger DeviceSFNCVersionMajor(); public native CUsbCameraParams_Params DeviceSFNCVersionMajor(IInteger DeviceSFNCVersionMajor);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Minor version of the underlying SFNC. Applies to: ace, dart, pulse
+        <p>
+        Indicates the Minor version of the Standard Features Naming Convention (SFNC) that was used for the camera's GenICam XML file.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger DeviceSFNCVersionMinor(); public native CUsbCameraParams_Params DeviceSFNCVersionMinor(IInteger DeviceSFNCVersionMinor);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief SubMinor version of the underlying SFNC. Applies to: ace, dart, pulse
+        <p>
+        Indicates the SubMinor version of the Standard Features Naming Convention (SFNC) that was used for the camera's GenICam XML file.
+    
+        \b Visibility = Beginner
+    
+    */
+    public native @ByRef IInteger DeviceSFNCVersionSubMinor(); public native CUsbCameraParams_Params DeviceSFNCVersionSubMinor(IInteger DeviceSFNCVersionSubMinor);
+    
+    //@}
+    
+
+    /** \name UserDefinedValueControl - Controls for the User Defined Values feature. Applies to: ace */
+    //@{
+    /**
+        \brief Selects a User Defined Value. Applies to: ace
+        <p>
+        Selects a User Defined Value.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_UserDefinedValueSelectorEnums UserDefinedValueSelector(); public native CUsbCameraParams_Params UserDefinedValueSelector(IEnumerationT_UserDefinedValueSelectorEnums UserDefinedValueSelector);
+    
+    //@}
+    
+
+    /** \name UserDefinedValueControl - Controls for the User Defined Values feature. Applies to: ace */
+    //@{
+    /**
+        \brief Sets a value for a User Defined Value. Applies to: ace
+        <p>
+        Sets a parameter value for the currently selected User Defined Value.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : UserDefinedValueSelector
+    
+    */
+    public native @ByRef IInteger UserDefinedValue(); public native CUsbCameraParams_Params UserDefinedValue(IInteger UserDefinedValue);
+    
+    //@}
+    
+
+    /** \name RemoveParameterLimitControl - This category includes items that allow removing the limits of camera parameters. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the parameter to configure. Once a parameter has been selected, all changes made using the Remove Limits feature will be applied to the selected parameter. Applies to: ace
+        <p>
+        This enumeration selects the parameter to configure. Selects the parameter to configure. Once a parameter has been selected, all changes made using the Remove Limits feature will be applied to the selected parameter
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_RemoveParameterLimitSelectorEnums RemoveParameterLimitSelector(); public native CUsbCameraParams_Params RemoveParameterLimitSelector(IEnumerationT_RemoveParameterLimitSelectorEnums RemoveParameterLimitSelector);
+    
+    //@}
+    
+
+    /** \name RemoveParameterLimitControl - This category includes items that allow removing the limits of camera parameters. Applies to: ace */
+    //@{
+    /**
+        \brief Removes the factory-set limits of the selected parameter. Applies to: ace
+        <p>
+        Removes the factory-set limits of the selected parameter. Having removed the factory-set limits you may set the parameter within extended limits. These are only defined by technical restrictions. Note:  Inferior image quality may result.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : RemoveParameterLimitSelector
+    
+    */
+    public native @ByRef IBoolean RemoveParameterLimit(); public native CUsbCameraParams_Params RemoveParameterLimit(IBoolean RemoveParameterLimit);
+    
+    //@}
+    
+
+    /** \name ExpertFeatureAccess -  */
+    //@{
+    /**
+        \brief Selects the feature to configure. Once a feature has been selected, all changes made using the feature enable feature will be applied to the selected feature. Applies to: ace
+        <p>
+        Selects the feature to configure. Once a feature has been selected, all changes made using the feature enable feature will be applied to the selected feature
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_ExpertFeatureAccessSelectorEnums ExpertFeatureAccessSelector(); public native CUsbCameraParams_Params ExpertFeatureAccessSelector(IEnumerationT_ExpertFeatureAccessSelectorEnums ExpertFeatureAccessSelector);
+    
+    //@}
+    
+
+    /** \name ExpertFeatureAccess -  */
+    //@{
+    /**
+        \brief Sets the key to access the selected feature. Applies to: ace
+        <p>
+        Sets the key to access the selected feature
+    
+        \b Visibility = Guru
+    
+        \b Selected by : ExpertFeatureAccessSelector
+    
+    */
+    public native @ByRef IInteger ExpertFeatureAccessKey(); public native CUsbCameraParams_Params ExpertFeatureAccessKey(IInteger ExpertFeatureAccessKey);
+    
+    //@}
+    
+
+    /** \name ExpertFeatureAccess -  */
+    //@{
+    /**
+        \brief Enable the selected Feature. Applies to: ace
+        <p>
+        Enable the selected Feature
+    
+        \b Visibility = Guru
+    
+        \b Selected by : ExpertFeatureAccessSelector
+    
+    */
+    public native @ByRef IBoolean ExpertFeatureEnable(); public native CUsbCameraParams_Params ExpertFeatureEnable(IBoolean ExpertFeatureEnable);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief This feature selects the target file in the device. Applies to: ace
+        <p>
+        The File Selector feature selects the target file in the device.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_FileSelectorEnums FileSelector(); public native CUsbCameraParams_Params FileSelector(IEnumerationT_FileSelectorEnums FileSelector);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the target operation for the selected file. Applies to: ace
+        <p>
+        The File Operation Selector feature selects the target operation for the selected file in the device. This Operation is executed when the FileOperationExecute feature is called.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector
+    
+    */
+    public native @ByRef IEnumerationT_FileOperationSelectorEnums FileOperationSelector(); public native CUsbCameraParams_Params FileOperationSelector(IEnumerationT_FileOperationSelectorEnums FileOperationSelector);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Selects the access mode in which a file is opened. Applies to: ace
+        <p>
+        The File Open Mode feature selects the access mode in which a file is opened in the device.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector
+    
+    */
+    public native @ByRef IEnumerationT_FileOpenModeEnums FileOpenMode(); public native CUsbCameraParams_Params FileOpenMode(IEnumerationT_FileOpenModeEnums FileOpenMode);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Defines the intermediate access buffer. Applies to: ace
+        <p>
+        The File Access Buffer feature defines the intermediate access buffer that allows the exchange of data between the device file storage and the application.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector
+    
+    */
+    public native @ByRef IRegister FileAccessBuffer(); public native CUsbCameraParams_Params FileAccessBuffer(IRegister FileAccessBuffer);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Controls the mapping between the device file storage and the FileAccessBuffer. Applies to: ace
+        <p>
+        This feature controls the mapping between the device file storage and the FileAccessBuffer.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector, FileOperationSelector
+    
+    */
+    public native @ByRef IInteger FileAccessOffset(); public native CUsbCameraParams_Params FileAccessOffset(IInteger FileAccessOffset);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Controls the mapping between the device file storage and the FileAccessBuffer. Applies to: ace
+        <p>
+        This feature controls the mapping between the device file storage and the FileAccessBuffer.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector, FileOperationSelector
+    
+    */
+    public native @ByRef IInteger FileAccessLength(); public native CUsbCameraParams_Params FileAccessLength(IInteger FileAccessLength);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Represents the file operation execution status. Applies to: ace
+        <p>
+        The File Operation Status feature represents the file operation execution status.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector, FileOperationSelector
+    
+    */
+    public native @ByRef IEnumerationT_FileOperationStatusEnums FileOperationStatus(); public native CUsbCameraParams_Params FileOperationStatus(IEnumerationT_FileOperationStatusEnums FileOperationStatus);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Represents the file operation result. Applies to: ace
+        <p>
+        The File Operation Result feature represents the file operation result. For Read or Write operations, the number of successfully read/written bytes is returned.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector, FileOperationSelector
+    
+    */
+    public native @ByRef IInteger FileOperationResult(); public native CUsbCameraParams_Params FileOperationResult(IInteger FileOperationResult);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Represents the size of the selected file. Applies to: ace
+        <p>
+        The File Size feature represents the size of the selected file in bytes.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector
+    
+    */
+    public native @ByRef IInteger FileSize(); public native CUsbCameraParams_Params FileSize(IInteger FileSize);
+    
+    //@}
+    
+
+    /** \name FileAccessControl - This category includes items used to conduct file operations. Applies to: ace */
+    //@{
+    /**
+        \brief Executes the selected operation. Applies to: ace
+        <p>
+        The File Operation Execute feature is the command that executes the operation selected by FileOperationSelector on the selected file.
+    
+        \b Visibility = Guru
+    
+        \b Selected by : FileSelector, FileOperationSelector
+    
+    */
+    public native @ByRef ICommand FileOperationExecute(); public native CUsbCameraParams_Params FileOperationExecute(ICommand FileOperationExecute);
+    
+    //@}
+    
+
+    /** \name ImageFormatControl - This category includes image format controls. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Selects the type of image test pattern that is generated by the device. Applies to: dart, pulse
+        <p>
+        Selects the type of image test pattern that is generated by the device.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_TestPatternEnums TestPattern(); public native CUsbCameraParams_Params TestPattern(IEnumerationT_TestPatternEnums TestPattern);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Sets the shutter mode of the device. Applies to: dart, pulse
+        <p>
+        Sets the shutter mode of the device.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IEnumerationT_SensorShutterModeEnums SensorShutterMode(); public native CUsbCameraParams_Params SensorShutterMode(IEnumerationT_SensorShutterModeEnums SensorShutterMode);
+    
+    //@}
+    
+
+    /** \name AcquisitionControl -  */
+    //@{
+    /**
+        \brief Configures overlapping exposure and image readout. Applies to: dart, pulse
+        <p>
+        Configures overlapping exposure and image readout.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_OverlapModeEnums OverlapMode(); public native CUsbCameraParams_Params OverlapMode(IEnumerationT_OverlapModeEnums OverlapMode);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Increases the contrast by setting the darkest regions of the image to black. Applies to: dart, pulse
+        <p>
+        Increases the contrast by setting the darkest regions of the image to black. A digital gain is applied to the remaining pixels to maintain the original saturation level.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ContrastEnhancement(); public native CUsbCameraParams_Params ContrastEnhancement(IFloat ContrastEnhancement);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Identifies outlier pixels and adjusts their intensity value. Applies to: dart, pulse
+        <p>
+        Identifies pixels that have a significantly greater or lesser intensity value than its neighboring pixels (outlier pixels) and adjusts their intensity value.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_DefectPixelCorrectionModeEnums DefectPixelCorrectionMode(); public native CUsbCameraParams_Params DefectPixelCorrectionMode(IEnumerationT_DefectPixelCorrectionModeEnums DefectPixelCorrectionMode);
+    
+    //@}
+    
+
+    /** \name AutoFunctionControl - This category includes items that parameterize the Auto Functions. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Sets the backlight compensation. Applies to: dart, pulse
+        <p>
+        Sets the backlight compensation that allows the camera to compensate for underexposure. This is done by excluding a given percentage of the brightest pixels in the image from the target average gray value calculations.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IFloat AutoBacklightCompensation(); public native CUsbCameraParams_Params AutoBacklightCompensation(IFloat AutoBacklightCompensation);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Payload Transfer Size. Applies to: dart, pulse
+        <p>
+        Payload Transfer Size
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger PayloadTransferSize(); public native CUsbCameraParams_Params PayloadTransferSize(IInteger PayloadTransferSize);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Payload Transfer Count. Applies to: dart, pulse
+        <p>
+        Payload Transfer Count
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger PayloadTransferCount(); public native CUsbCameraParams_Params PayloadTransferCount(IInteger PayloadTransferCount);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Payload Final Transfer 1 Size. Applies to: dart, pulse
+        <p>
+        Payload Final Transfer 1 Size
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger PayloadFinalTransfer1Size(); public native CUsbCameraParams_Params PayloadFinalTransfer1Size(IInteger PayloadFinalTransfer1Size);
+    
+    //@}
+    
+
+    /** \name TransportLayerControl - This category includes items related to the USB3 Vision transport layer. Applies to: ace, dart, pulse */
+    //@{
+    /**
+        \brief Payload Final Transfer 2 Size. Applies to: dart, pulse
+        <p>
+        Payload Final Transfer 2 Size
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger PayloadFinalTransfer2Size(); public native CUsbCameraParams_Params PayloadFinalTransfer2Size(IInteger PayloadFinalTransfer2Size);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Controls the behavior of the indicators (such as LEDs) showing the status of the device. Applies to: dart
+        <p>
+        Controls the behavior of the indicators (such as LEDs) showing the status of the device.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IEnumerationT_DeviceIndicatorModeEnums DeviceIndicatorMode(); public native CUsbCameraParams_Params DeviceIndicatorMode(IEnumerationT_DeviceIndicatorModeEnums DeviceIndicatorMode);
+    
+    //@}
+    
+
+    /** \name ImageQualityControl -  */
+    //@{
+    /**
+        \brief Increases the sharpness of the captured images. Applies to: dart, pulse
+        <p>
+        Increases the sharpness of the captured images. The higher the sharpness, the more distinct the image subject's contours will be.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat SharpnessEnhancement(); public native CUsbCameraParams_Params SharpnessEnhancement(IFloat SharpnessEnhancement);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Prepare the device for registers streaming without checking for consistency. Applies to: dart, pulse
+        <p>
+        Prepare the device for registers streaming without checking for consistency.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef ICommand DeviceRegistersStreamingStart(); public native CUsbCameraParams_Params DeviceRegistersStreamingStart(ICommand DeviceRegistersStreamingStart);
+    
+    //@}
+    
+
+    /** \name DeviceControl -  */
+    //@{
+    /**
+        \brief Announce the end of registers streaming. Applies to: dart, pulse
+        <p>
+        Announce the end of registers streaming.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef ICommand DeviceRegistersStreamingEnd(); public native CUsbCameraParams_Params DeviceRegistersStreamingEnd(ICommand DeviceRegistersStreamingEnd);
+    }
+
+
+    //**************************************************************************************************
+    // Parameter class implementation
+    //**************************************************************************************************
+
+    /** \cond HIDE_CLASS_METHODS */
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /** \endcond */
+
+ // namespace Basler_UsbCameraParams
+
+// #undef GENAPI_DEPRECATED_FEATURE
+// #endif // Basler_UsbCameraParams_PARAMS_H
+
+
 // Parsed from <GenApi/IEnumerationT.h>
 
 //-----------------------------------------------------------------------------
@@ -8119,6 +12936,2958 @@ public static final int PIXEL_COLOR = 0x02000000;
         public native IEnumEntry GetCurrentEntry();
 
     }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SequencerModeEnums>") public static class IEnumerationT_SequencerModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SequencerModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SequencerModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SequencerModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SequencerModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SequencerModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SequencerModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SequencerConfigurationModeEnums>") public static class IEnumerationT_SequencerConfigurationModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SequencerConfigurationModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerConfigurationModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerConfigurationModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SequencerConfigurationModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SequencerConfigurationModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SequencerConfigurationModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SequencerConfigurationModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SequencerConfigurationModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SequencerTriggerSourceEnums>") public static class IEnumerationT_SequencerTriggerSourceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SequencerTriggerSourceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerTriggerSourceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerTriggerSourceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SequencerTriggerSourceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SequencerTriggerSourceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SequencerTriggerSourceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SequencerTriggerSourceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SequencerTriggerSourceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SequencerTriggerActivationEnums>") public static class IEnumerationT_SequencerTriggerActivationEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SequencerTriggerActivationEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerTriggerActivationEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SequencerTriggerActivationEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SequencerTriggerActivationEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SequencerTriggerActivationEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SequencerTriggerActivationEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SequencerTriggerActivationEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SequencerTriggerActivationEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::BinningHorizontalModeEnums>") public static class IEnumerationT_BinningHorizontalModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_BinningHorizontalModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BinningHorizontalModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BinningHorizontalModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::BinningHorizontalModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::BinningHorizontalModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::BinningHorizontalModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::BinningHorizontalModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::BinningHorizontalModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::BinningVerticalModeEnums>") public static class IEnumerationT_BinningVerticalModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_BinningVerticalModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BinningVerticalModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BinningVerticalModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::BinningVerticalModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::BinningVerticalModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::BinningVerticalModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::BinningVerticalModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::BinningVerticalModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::PixelFormatEnums>") public static class IEnumerationT_PixelFormatEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_PixelFormatEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::PixelFormatEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::PixelFormatEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::PixelFormatEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::PixelFormatEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::PixelFormatEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::PixelFormatEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::PixelFormatEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::PixelSizeEnums>") public static class IEnumerationT_PixelSizeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_PixelSizeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::PixelSizeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::PixelSizeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::PixelSizeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::PixelSizeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::PixelSizeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::PixelSizeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::PixelSizeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::PixelColorFilterEnums>") public static class IEnumerationT_PixelColorFilterEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_PixelColorFilterEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::PixelColorFilterEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::PixelColorFilterEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::PixelColorFilterEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::PixelColorFilterEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::PixelColorFilterEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::PixelColorFilterEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::PixelColorFilterEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TestImageSelectorEnums>") public static class IEnumerationT_TestImageSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TestImageSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TestImageSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TestImageSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TestImageSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TestImageSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TestImageSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TestImageSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TestImageSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::GainAutoEnums>") public static class IEnumerationT_GainAutoEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_GainAutoEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::GainAutoEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::GainAutoEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::GainAutoEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::GainAutoEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::GainAutoEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::GainAutoEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::GainAutoEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::GainSelectorEnums>") public static class IEnumerationT_GainSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_GainSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::GainSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::GainSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::GainSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::GainSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::GainSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::GainSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::GainSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::BlackLevelSelectorEnums>") public static class IEnumerationT_BlackLevelSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_BlackLevelSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BlackLevelSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BlackLevelSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::BlackLevelSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::BlackLevelSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::BlackLevelSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::BlackLevelSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::BlackLevelSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LightSourcePresetEnums>") public static class IEnumerationT_LightSourcePresetEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LightSourcePresetEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LightSourcePresetEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LightSourcePresetEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LightSourcePresetEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LightSourcePresetEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LightSourcePresetEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LightSourcePresetEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LightSourcePresetEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ColorSpaceEnums>") public static class IEnumerationT_ColorSpaceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ColorSpaceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorSpaceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorSpaceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ColorSpaceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ColorSpaceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ColorSpaceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ColorSpaceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ColorSpaceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::BalanceWhiteAutoEnums>") public static class IEnumerationT_BalanceWhiteAutoEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_BalanceWhiteAutoEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BalanceWhiteAutoEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BalanceWhiteAutoEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::BalanceWhiteAutoEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::BalanceWhiteAutoEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::BalanceWhiteAutoEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::BalanceWhiteAutoEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::BalanceWhiteAutoEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::BalanceRatioSelectorEnums>") public static class IEnumerationT_BalanceRatioSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_BalanceRatioSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BalanceRatioSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BalanceRatioSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::BalanceRatioSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::BalanceRatioSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::BalanceRatioSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::BalanceRatioSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::BalanceRatioSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ColorAdjustmentSelectorEnums>") public static class IEnumerationT_ColorAdjustmentSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ColorAdjustmentSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ColorAdjustmentSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ColorTransformationSelectorEnums>") public static class IEnumerationT_ColorTransformationSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ColorTransformationSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorTransformationSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorTransformationSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ColorTransformationSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ColorTransformationSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ColorTransformationSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ColorTransformationSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ColorTransformationSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ColorTransformationValueSelectorEnums>") public static class IEnumerationT_ColorTransformationValueSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ColorTransformationValueSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ColorTransformationValueSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::AcquisitionModeEnums>") public static class IEnumerationT_AcquisitionModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_AcquisitionModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AcquisitionModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AcquisitionModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::AcquisitionModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::AcquisitionModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::AcquisitionModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::AcquisitionModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::AcquisitionModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ShutterModeEnums>") public static class IEnumerationT_ShutterModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ShutterModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ShutterModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ShutterModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ShutterModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ShutterModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ShutterModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ShutterModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ShutterModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ExposureAutoEnums>") public static class IEnumerationT_ExposureAutoEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ExposureAutoEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExposureAutoEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExposureAutoEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ExposureAutoEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ExposureAutoEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ExposureAutoEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ExposureAutoEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ExposureAutoEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ExposureModeEnums>") public static class IEnumerationT_ExposureModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ExposureModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExposureModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExposureModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ExposureModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ExposureModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ExposureModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ExposureModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ExposureModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ExposureOverlapTimeModeEnums>") public static class IEnumerationT_ExposureOverlapTimeModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ExposureOverlapTimeModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ExposureOverlapTimeModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SensorReadoutModeEnums>") public static class IEnumerationT_SensorReadoutModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SensorReadoutModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SensorReadoutModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SensorReadoutModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SensorReadoutModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SensorReadoutModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SensorReadoutModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SensorReadoutModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SensorReadoutModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TriggerSelectorEnums>") public static class IEnumerationT_TriggerSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TriggerSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TriggerSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TriggerSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TriggerSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TriggerSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TriggerSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TriggerModeEnums>") public static class IEnumerationT_TriggerModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TriggerModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TriggerModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TriggerModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TriggerModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TriggerModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TriggerModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TriggerSourceEnums>") public static class IEnumerationT_TriggerSourceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TriggerSourceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerSourceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerSourceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TriggerSourceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TriggerSourceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TriggerSourceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TriggerSourceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TriggerSourceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TriggerActivationEnums>") public static class IEnumerationT_TriggerActivationEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TriggerActivationEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerActivationEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TriggerActivationEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TriggerActivationEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TriggerActivationEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TriggerActivationEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TriggerActivationEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TriggerActivationEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::AcquisitionStatusSelectorEnums>") public static class IEnumerationT_AcquisitionStatusSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_AcquisitionStatusSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::AcquisitionStatusSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::AutoFunctionProfileEnums>") public static class IEnumerationT_AutoFunctionProfileEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_AutoFunctionProfileEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AutoFunctionProfileEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AutoFunctionProfileEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::AutoFunctionProfileEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionProfileEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionProfileEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionProfileEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::AutoFunctionProfileEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::AutoFunctionROISelectorEnums>") public static class IEnumerationT_AutoFunctionROISelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_AutoFunctionROISelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AutoFunctionROISelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AutoFunctionROISelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::AutoFunctionROISelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionROISelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionROISelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionROISelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::AutoFunctionROISelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LUTSelectorEnums>") public static class IEnumerationT_LUTSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LUTSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LUTSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LUTSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LUTSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LUTSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LUTSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LUTSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LUTSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LineSelectorEnums>") public static class IEnumerationT_LineSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LineSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LineSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LineSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LineSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LineSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LineSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LineModeEnums>") public static class IEnumerationT_LineModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LineModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LineModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LineModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LineModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LineModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LineModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LineFormatEnums>") public static class IEnumerationT_LineFormatEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LineFormatEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineFormatEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineFormatEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LineFormatEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LineFormatEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LineFormatEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LineFormatEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LineFormatEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LineLogicEnums>") public static class IEnumerationT_LineLogicEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LineLogicEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineLogicEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineLogicEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LineLogicEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LineLogicEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LineLogicEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LineLogicEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LineLogicEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::LineSourceEnums>") public static class IEnumerationT_LineSourceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_LineSourceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineSourceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::LineSourceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::LineSourceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::LineSourceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::LineSourceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::LineSourceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::LineSourceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::UserOutputSelectorEnums>") public static class IEnumerationT_UserOutputSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_UserOutputSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserOutputSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserOutputSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::UserOutputSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::UserOutputSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::UserOutputSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::UserOutputSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::UserOutputSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SoftwareSignalSelectorEnums>") public static class IEnumerationT_SoftwareSignalSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SoftwareSignalSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SoftwareSignalSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SoftwareSignalSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SoftwareSignalSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SoftwareSignalSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SoftwareSignalSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SoftwareSignalSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SoftwareSignalSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TimerSelectorEnums>") public static class IEnumerationT_TimerSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TimerSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TimerSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TimerSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TimerSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TimerSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TimerSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TimerSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TimerSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TimerTriggerSourceEnums>") public static class IEnumerationT_TimerTriggerSourceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TimerTriggerSourceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TimerTriggerSourceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TimerTriggerSourceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TimerTriggerSourceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TimerTriggerSourceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TimerTriggerSourceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TimerTriggerSourceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TimerTriggerSourceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::CounterSelectorEnums>") public static class IEnumerationT_CounterSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_CounterSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::CounterSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::CounterSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::CounterSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::CounterSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::CounterSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::CounterEventSourceEnums>") public static class IEnumerationT_CounterEventSourceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_CounterEventSourceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterEventSourceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterEventSourceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::CounterEventSourceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::CounterEventSourceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::CounterEventSourceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::CounterEventSourceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::CounterEventSourceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::CounterResetSourceEnums>") public static class IEnumerationT_CounterResetSourceEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_CounterResetSourceEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterResetSourceEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterResetSourceEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::CounterResetSourceEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::CounterResetSourceEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::CounterResetSourceEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::CounterResetSourceEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::CounterResetSourceEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::CounterResetActivationEnums>") public static class IEnumerationT_CounterResetActivationEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_CounterResetActivationEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterResetActivationEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::CounterResetActivationEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::CounterResetActivationEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::CounterResetActivationEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::CounterResetActivationEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::CounterResetActivationEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::CounterResetActivationEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::UserSetSelectorEnums>") public static class IEnumerationT_UserSetSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_UserSetSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserSetSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserSetSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::UserSetSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::UserSetSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::UserSetSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::UserSetSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::UserSetSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::UserSetDefaultEnums>") public static class IEnumerationT_UserSetDefaultEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_UserSetDefaultEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserSetDefaultEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserSetDefaultEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::UserSetDefaultEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::UserSetDefaultEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::UserSetDefaultEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::UserSetDefaultEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::UserSetDefaultEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ChunkSelectorEnums>") public static class IEnumerationT_ChunkSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ChunkSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ChunkSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ChunkSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ChunkSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ChunkSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ChunkSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ChunkSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ChunkSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ChunkGainSelectorEnums>") public static class IEnumerationT_ChunkGainSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ChunkGainSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ChunkGainSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ChunkGainSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ChunkGainSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ChunkGainSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ChunkGainSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ChunkGainSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ChunkGainSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ChunkCounterSelectorEnums>") public static class IEnumerationT_ChunkCounterSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ChunkCounterSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ChunkCounterSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ChunkCounterSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ChunkCounterSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ChunkCounterSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ChunkCounterSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ChunkCounterSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ChunkCounterSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::EventSelectorEnums>") public static class IEnumerationT_EventSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_EventSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::EventSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::EventSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::EventSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::EventSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::EventSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::EventSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::EventSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::EventNotificationEnums>") public static class IEnumerationT_EventNotificationEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_EventNotificationEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::EventNotificationEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::EventNotificationEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::EventNotificationEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::EventNotificationEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::EventNotificationEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::EventNotificationEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::EventNotificationEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::BslUSBSpeedModeEnums>") public static class IEnumerationT_BslUSBSpeedModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_BslUSBSpeedModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BslUSBSpeedModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::BslUSBSpeedModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::BslUSBSpeedModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::BslUSBSpeedModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::BslUSBSpeedModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::BslUSBSpeedModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::BslUSBSpeedModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::DeviceScanTypeEnums>") public static class IEnumerationT_DeviceScanTypeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_DeviceScanTypeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceScanTypeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceScanTypeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::DeviceScanTypeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::DeviceScanTypeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::DeviceScanTypeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::DeviceScanTypeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::DeviceScanTypeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums>") public static class IEnumerationT_DeviceLinkThroughputLimitModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_DeviceLinkThroughputLimitModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::DeviceLinkThroughputLimitModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::DeviceTemperatureSelectorEnums>") public static class IEnumerationT_DeviceTemperatureSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_DeviceTemperatureSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::DeviceTemperatureSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TemperatureStateEnums>") public static class IEnumerationT_TemperatureStateEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TemperatureStateEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TemperatureStateEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TemperatureStateEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TemperatureStateEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TemperatureStateEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TemperatureStateEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TemperatureStateEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TemperatureStateEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::UserDefinedValueSelectorEnums>") public static class IEnumerationT_UserDefinedValueSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_UserDefinedValueSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserDefinedValueSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::UserDefinedValueSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::UserDefinedValueSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::UserDefinedValueSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::UserDefinedValueSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::UserDefinedValueSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::UserDefinedValueSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums>") public static class IEnumerationT_RemoveParameterLimitSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_RemoveParameterLimitSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::RemoveParameterLimitSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums>") public static class IEnumerationT_ExpertFeatureAccessSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_ExpertFeatureAccessSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::ExpertFeatureAccessSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::FileSelectorEnums>") public static class IEnumerationT_FileSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_FileSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::FileSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::FileSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::FileSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::FileSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::FileSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::FileOperationSelectorEnums>") public static class IEnumerationT_FileOperationSelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_FileOperationSelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileOperationSelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileOperationSelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::FileOperationSelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::FileOperationSelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::FileOperationSelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::FileOperationSelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::FileOperationSelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::FileOpenModeEnums>") public static class IEnumerationT_FileOpenModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_FileOpenModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileOpenModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileOpenModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::FileOpenModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::FileOpenModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::FileOpenModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::FileOpenModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::FileOpenModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::FileOperationStatusEnums>") public static class IEnumerationT_FileOperationStatusEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_FileOperationStatusEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileOperationStatusEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::FileOperationStatusEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::FileOperationStatusEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::FileOperationStatusEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::FileOperationStatusEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::FileOperationStatusEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::FileOperationStatusEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::TestPatternEnums>") public static class IEnumerationT_TestPatternEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_TestPatternEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TestPatternEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::TestPatternEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::TestPatternEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::TestPatternEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::TestPatternEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::TestPatternEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::TestPatternEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::SensorShutterModeEnums>") public static class IEnumerationT_SensorShutterModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_SensorShutterModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SensorShutterModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::SensorShutterModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::SensorShutterModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::SensorShutterModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::SensorShutterModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::SensorShutterModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::SensorShutterModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::OverlapModeEnums>") public static class IEnumerationT_OverlapModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_OverlapModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::OverlapModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::OverlapModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::OverlapModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::OverlapModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::OverlapModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::OverlapModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::OverlapModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::DefectPixelCorrectionModeEnums>") public static class IEnumerationT_DefectPixelCorrectionModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_DefectPixelCorrectionModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::DefectPixelCorrectionModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::DeviceIndicatorModeEnums>") public static class IEnumerationT_DeviceIndicatorModeEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_DeviceIndicatorModeEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceIndicatorModeEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::DeviceIndicatorModeEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::DeviceIndicatorModeEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::DeviceIndicatorModeEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::DeviceIndicatorModeEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::DeviceIndicatorModeEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::DeviceIndicatorModeEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
+    @Name("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::AutoFunctionAOISelectorEnums>") public static class IEnumerationT_AutoFunctionAOISelectorEnums extends IEnumeration {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public IEnumerationT_AutoFunctionAOISelectorEnums(Pointer p) { super(p); }
+    
+        /** Set node value
+        /**
+        @param Value The value to set
+        @param Verify Enables AccessMode and Range verification (default = true)
+        */
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") int Value, @Cast("bool") boolean Verify/*=true*/);
+        public native void SetValue(@Cast("Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") int Value);
+
+        /** Set node value */
+        public native @ByRef @Name("operator =") IEnumeration put(@Cast("Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") int Value);
+
+        /** Get node value
+        /**
+        @param Verify Enables Range verification (default = false). The AccessMode is always checked
+        @param IgnoreCache If true the value is read ignoring any caches (default = false)
+        @return The value read
+        */
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") int GetValue(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") int GetValue();
+
+        /** Get node value */
+        public native @Cast("Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") @Name("operator ()") int apply();
+
+        /** Set node value
+        /** Note : the operator= is not inherited thus the operator= versions
+        from IEnumeration must be implemented again */
+        public native @ByRef @Name("operator =") IEnumeration put(@Const @ByRef gcstring ValueStr);
+
+        /** returns the EnumEntry object belonging to the Value */
+        public native IEnumEntry GetEntry(@Cast("const Basler_UsbCameraParams::AutoFunctionAOISelectorEnums") int Value);
+
+        /** Get the current entry */
+        public native IEnumEntry GetCurrentEntry(@Cast("bool") boolean Verify/*=false*/, @Cast("bool") boolean IgnoreCache/*=false*/);
+        public native IEnumEntry GetCurrentEntry();
+
+    }
 
     //*************************************************************
     // CEnumerationTRef class
@@ -8137,6 +15906,1184 @@ public static final int PIXEL_COLOR = 0x02000000;
 
 
 // #endif // ifndef GENAPI_IENUMERATIONT_H
+
+
+// Parsed from <pylon/usb/BaslerUsbDeviceInfo.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2011-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  AH
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief    Definition of the CBaslerUsbDeviceInfo class
+*/
+
+// #ifndef INCLUDED_BASLERUSBDEVICEINFO_H_8532831
+// #define INCLUDED_BASLERUSBDEVICEINFO_H_8532831
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/PylonBase.h>
+// #include <pylon/DeviceInfo.h>
+        
+        
+        
+        
+        
+        
+        
+        // Internal use only
+        
+        // Internal use only
+        
+        // Internal use only
+        
+    
+
+
+    /**
+    \ingroup Pylon_TransportLayer
+    \class CBaslerUsbDeviceInfo
+    \brief PylonUsb specific Device Info object.
+    */
+    @Namespace("Pylon") public static class CBaslerUsbDeviceInfo extends CDeviceInfo {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbDeviceInfo(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbDeviceInfo(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbDeviceInfo position(int position) {
+            return (CBaslerUsbDeviceInfo)super.position(position);
+        }
+    
+        public CBaslerUsbDeviceInfo() { super((Pointer)null); allocate(); }
+        private native void allocate();
+        public CBaslerUsbDeviceInfo(@Const @ByRef CDeviceInfo di) { super((Pointer)null); allocate(di); }
+        private native void allocate(@Const @ByRef CDeviceInfo di);
+
+        /**Retrieves the device GUID.
+         * This property is identified by Key::DeviceGUID. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetDeviceGUID();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsDeviceGUIDAvailable();
+
+        /**Retrieves the manufacturer info.
+         * This property is identified by Key::ManufacturerInfo. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetManufacturerInfo();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsManufacturerInfoAvailable();
+
+        /**Retrieves the device index. For internal use only.
+         * This property is identified by Key::DeviceIdx. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetDeviceIdx();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsDeviceIdxAvailable();
+
+        /**Retrieves the product ID. For internal use only.
+         * This property is identified by Key::DeviceIdx. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetProductId();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsProductIdAvailable();
+
+        /**Retrieves the vendor ID. For internal use only.
+         * This property is identified by Key::DeviceIdx. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetVendorId();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsVendorIdAvailable();
+
+        /**Retrieves the driver key name. For internal use only.
+         * This property is identified by Key::DriverKeyName. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetDriverKeyName();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsDriverKeyNameAvailable();
+
+        /**Retrieves the usb driver type. For internal use only.
+         * This property is identified by Key::UsbDriverTypeKey. */
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetUsbDriverType();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsUsbDriverTypeAvailable();
+
+        /**Retrieves the transfer mode. For internal use only.
+         * This property is identified by Key::TransferModeKey */
+        // Returns either dtx or btx (direct vs. buffered transfer)
+        public native @ByVal @Cast("Pylon::String_t*") gcstring GetTransferMode();
+        /**Returns true if the above property is available. */
+        public native @Cast("bool") boolean IsTransferModeAvailable();
+    }
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_BASLERUSBDEVICEINFO_H_8532831 */
+
+
+// Parsed from <pylon/usb/BaslerUsbConfigurationEventHandler.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains the configuration event handler base class.
+*/
+
+// #ifndef INCLUDED_BASLERUSBCONFIGURATIONEVENTHANDLERH_01627755
+// #define INCLUDED_BASLERUSBCONFIGURATIONEVENTHANDLERH_01627755
+
+// #include <pylon/stdinclude.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #if _MSC_VER
+// #   pragma warning( push)
+// #   pragma warning( disable : 4100) //warning C4100: 'identifier' : unreferenced formal parameter
+// #endif
+    @Namespace("Pylon") @Opaque public static class CBaslerUsbInstantCamera extends Pointer {
+        /** Empty constructor. Calls {@code super((Pointer)null)}. */
+        public CBaslerUsbInstantCamera() { super((Pointer)null); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbInstantCamera(Pointer p) { super(p); }
+    }
+
+    /** \addtogroup Pylon_InstantCameraApiUsb
+     * \{
+     */
+
+    /**
+    \class  CBaslerUsbConfigurationEventHandler
+    \brief The configuration event handler base class.
+    */
+    @Namespace("Pylon") @NoOffset public static class CBaslerUsbConfigurationEventHandler extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbConfigurationEventHandler(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbConfigurationEventHandler(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbConfigurationEventHandler position(int position) {
+            return (CBaslerUsbConfigurationEventHandler)super.position(position);
+        }
+    
+        /**
+        \brief This method is called before a %Pylon Device (Pylon::IPylonDevice) is attached by calling the Instant Camera object's Attach() method.
+        <p>
+        This method can not be used for detecting that a camera device has been attached to the PC.
+        The camera's Attach() method must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnAttach( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after a %Pylon Device (Pylon::IPylonDevice) has been attached by calling the Instant Camera object's Attach() method.
+        <p>
+        This method can not be used for detecting that a camera device has been attached to the PC.
+        The camera's Attach() method must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnAttached( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called before the attached %Pylon Device is detached from the Instant Camera object.
+        <p>
+        The camera's Detach() method  must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnDetach( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after the attached %Pylon Device has been detached from the Instant Camera object.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnDetached( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called before the attached %Pylon Device is destroyed.
+        <p>
+        Camera DestroyDevice must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnDestroy( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after the attached %Pylon Device has been destroyed.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnDestroyed( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called before the attached %Pylon Device is opened.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            Exceptions from this call will propagate through. The notification of event handlers stops when an exception is triggered.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnOpen( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after the attached %Pylon Device has been opened.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            Exceptions from this call will propagate through. The notification of event handlers stops when an exception is triggered.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnOpened( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called before the attached %Pylon Device is closed.
+        <p>
+        Camera Close must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnClose( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after the attached %Pylon Device has been closed.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnClosed( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called before a grab session is started.
+        <p>
+        Camera StartGrabbing must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            Exceptions from this call will propagate through. The notification of event handlers stops when an exception is triggered.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnGrabStart( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after a grab session has been started.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            Exceptions from this call will propagate through. The notification of event handlers stops when an exception is triggered.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnGrabStarted( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called before a grab session is stopped.
+        <p>
+        Camera StopGrabbing must not be called from here or from subsequent calls to avoid infinite recursion.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnGrabStop( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called after a grab session has been stopped.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnGrabStopped( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called when an exception has been triggered during grabbing.
+        <p>
+        An exception has been triggered by a grab thread. The grab will be stopped after this event call.
+        <p>
+        @param [in]  camera The source of the call.
+        @param [in]  errorMessage The message of the exception that signaled an error during grabbing.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnGrabError( @ByRef CBaslerUsbInstantCamera camera, @Cast("const char*") BytePointer errorMessage);
+        public native void OnGrabError( @ByRef CBaslerUsbInstantCamera camera, String errorMessage);
+
+        /**
+        \brief This method is called when a camera device removal from the PC has been detected.
+        <p>
+        The %Pylon Device attached to the Instant Camera is not operable after this event.
+        After it is made sure that no access to the %Pylon Device or any of its node maps is made anymore
+        the %Pylon Device should be destroyed using InstantCamera::DeviceDestroy().
+        The access to the %Pylon Device can be protected using the lock provided by GetLock(), e.g. when accessing parameters.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        <p>
+        \threading
+            This method is called inside the lock of the camera object from an additional thread.
+        */
+        public native void OnCameraDeviceRemoved( @ByRef CBaslerUsbInstantCamera camera);
+
+
+        /**
+        \brief This method is called when the configuration event handler has been registered.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            Exceptions from this call will propagate through.
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnConfigurationRegistered( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called when the configuration event handler has been deregistered.
+        <p>
+        The configuration event handler is automatically deregistered when the Instant Camera object
+        is destroyed.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored.
+        \threading
+            This method is called inside the lock of the camera object.
+        */
+        public native void OnConfigurationDeregistered( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief Destroys the configuration event handler.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored.
+        */
+        public native void DestroyConfiguration();
+
+        /** Create. */
+        public CBaslerUsbConfigurationEventHandler() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Copy. */
+        public CBaslerUsbConfigurationEventHandler(@Const @ByRef CBaslerUsbConfigurationEventHandler arg0) { super((Pointer)null); allocate(arg0); }
+        private native void allocate(@Const @ByRef CBaslerUsbConfigurationEventHandler arg0);
+
+        /** Assign. */
+        public native @ByRef @Name("operator =") CBaslerUsbConfigurationEventHandler put(@Const @ByRef CBaslerUsbConfigurationEventHandler arg0);
+
+        /** Destruct. */
+
+        // Internal use only. Subject to change without notice.
+        public native long DebugGetEventHandlerRegistrationCount();
+    }
+
+    /**
+     * \}
+     */
+
+
+// #if _MSC_VER
+// #   pragma warning( pop)
+// #endif
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_BASLERUSBCONFIGURATIONEVENTHANDLERH_01627755 */
+
+
+// Parsed from <pylon/usb/BaslerUsbImageEventHandler.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains the image event handler base class.
+*/
+
+// #ifndef INCLUDED_BASLERUSBIMAGEEVENTHANDLER_H_8866388
+// #define INCLUDED_BASLERUSBIMAGEEVENTHANDLER_H_8866388
+
+// #include <pylon/stdinclude.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <pylon/usb/BaslerUsbGrabResultPtr.h>
+
+// #if _MSC_VER
+// #   pragma warning( push)
+// #   pragma warning( disable : 4100) //warning C4100: 'identifier' : unreferenced formal parameter
+// #endif
+
+    /** \addtogroup Pylon_InstantCameraApiUsb
+     * \{
+     */
+
+    /**
+    \class  CBaslerUsbImageEventHandler
+    \brief  The image event handler base class.
+    */
+    @Namespace("Pylon") @NoOffset public static class CBaslerUsbImageEventHandler extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbImageEventHandler(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbImageEventHandler(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbImageEventHandler position(int position) {
+            return (CBaslerUsbImageEventHandler)super.position(position);
+        }
+    
+
+        /**
+        \brief This method is called when images have been skipped using the GrabStrategy_LatestImageOnly strategy or the GrabStrategy_LatestImages strategy.
+        <p>
+        @param [in]  camera The source of the call.
+        @param [in]  countOfSkippedImages The number of images skipped. This \c countOfSkippedImages does not include the number of images lost in the case of a buffer under run in the driver.
+        <p>
+        \error
+            Exceptions from this call will propagate through. The notification of event handlers stops when an exception is triggered.
+        <p>
+        \threading
+            This method is called outside the lock of the camera object but inside the lock of the image event handler registry.
+        */
+        public native void OnImagesSkipped( @ByRef CBaslerUsbInstantCamera camera, @Cast("size_t") int countOfSkippedImages);
+
+        /**
+        \brief This method is called when an image has been grabbed.
+        <p>
+        The grab result smart pointer passed does always reference a grab result data object.
+        The status of the grab needs to be checked before accessing the grab result data.
+        See CGrabResultData::GrabSucceeded(), CGrabResultData::GetErrorCode() and
+        CGrabResultData::GetErrorDescription() for more information.
+        <p>
+        @param [in]  camera The source of the call.
+        @param [in]  grabResult The grab result data.
+        <p>
+        \error
+            Exceptions from this call will propagate through. The notification of event handlers stops when an exception is triggered.
+        <p>
+        \threading
+            This method is called outside the lock of the camera object but inside the lock of the image event handler registry.
+        */
+        
+
+        /**
+        \brief This method is called when the image event handler has been registered.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            Exceptions from this call will propagate through.
+        \threading
+            This method is called inside the lock of the image event handler registry.
+        */
+        public native void OnImageEventHandlerRegistered( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief This method is called when the image event handler has been deregistered.
+        <p>
+        The image event handler is automatically deregistered when the Instant Camera object
+        is destroyed.
+        <p>
+        @param [in]  camera The source of the call.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored.
+        \threading
+            This method is called inside the lock of the image event handler registry.
+        */
+        public native void OnImageEventHandlerDeregistered( @ByRef CBaslerUsbInstantCamera camera);
+
+        /**
+        \brief Destroys the image event handler.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored.
+        */
+        public native void DestroyImageEventHandler();
+
+        /** Create. */
+        public CBaslerUsbImageEventHandler() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Copy. */
+        public CBaslerUsbImageEventHandler(@Const @ByRef CBaslerUsbImageEventHandler arg0) { super((Pointer)null); allocate(arg0); }
+        private native void allocate(@Const @ByRef CBaslerUsbImageEventHandler arg0);
+
+        /** Assign. */
+        public native @ByRef @Name("operator =") CBaslerUsbImageEventHandler put(@Const @ByRef CBaslerUsbImageEventHandler arg0);
+
+        /** Destruct. */
+
+        // Internal use only. Subject to change without notice.
+        public native long DebugGetEventHandlerRegistrationCount();
+    }
+
+    /**
+     * \}
+     */
+
+
+// #if _MSC_VER
+// #   pragma warning( pop)
+// #endif
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_BASLERUSBIMAGEEVENTHANDLER_H_8866388 */
+
+
+// Parsed from <pylon/usb/BaslerUsbCameraEventHandler.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains the camera event handler base class.
+*/
+
+// #ifndef INCLUDED_BASLERUSBCAMERAEVENTHANDLER_H_3102315
+// #define INCLUDED_BASLERUSBCAMERAEVENTHANDLER_H_3102315
+
+// #include <pylon/stdinclude.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <GenApi/INode.h>
+
+// #if _MSC_VER
+// #   pragma warning( push)
+// #   pragma warning( disable : 4100) //warning C4100: 'identifier' : unreferenced formal parameter
+// #endif
+
+    /** \addtogroup Pylon_InstantCameraApiUsb
+     * \{
+     */
+
+    /**
+    \class  CBaslerUsbCameraEventHandler
+    \brief  The camera event handler base class.
+    */
+    @Namespace("Pylon") @NoOffset public static class CBaslerUsbCameraEventHandler extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbCameraEventHandler(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbCameraEventHandler(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbCameraEventHandler position(int position) {
+            return (CBaslerUsbCameraEventHandler)super.position(position);
+        }
+    
+
+        /**
+        \brief This method is called when a camera event has been received.
+        <p>
+        Only very short processing tasks should be performed by this method. Otherwise, the event notification will block the
+        processing of images.
+        <p>
+        @param [in]  camera The source of the call.
+        @param [in]  userProvidedId  The ID passed when registering for the event. It can be used to distinguish between different events.
+        @param [in]  pNode The node identified by node name when registering.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored. All event handlers are notified.
+        \threading
+            This method is called outside the lock of the camera object, outside the lock of the node map, and inside the lock of the camera event handler registry.
+        */
+        public native void OnCameraEvent( @ByRef CBaslerUsbInstantCamera camera, @Cast("intptr_t") long userProvidedId, INode pNode);
+
+        /**
+        \brief This method is called when the camera event handler has been registered.
+        <p>
+        @param [in]  camera The source of the call.
+        @param [in]  nodeName  The name of the event data node updated on camera event, e.g. "ExposureEndEventTimestamp" for exposure end event.
+        @param [in]  userProvidedId  This ID is passed as a parameter in CBaslerUsbCameraEventHandler::OnCameraEvent and can be used to distinguish between different events.
+        <p>
+        \error
+            Exceptions from this call will propagate through.
+        \threading
+            This method is called inside the lock of the camera event handler registry.
+        */
+        public native void OnCameraEventHandlerRegistered( @ByRef CBaslerUsbInstantCamera camera, @Cast("const Pylon::String_t*") @ByRef gcstring nodeName, @Cast("intptr_t") long userProvidedId);
+
+        /**
+        \brief This method is called when the camera event handler has been deregistered.
+        <p>
+        The camera event handler is automatically deregistered when the Instant Camera object
+        is destroyed.
+        <p>
+        @param [in]  camera The source of the call.
+        @param [in]  nodeName  The name of the event data node updated on camera event, e.g. "ExposureEndEventTimestamp" for exposure end event.
+        @param [in]  userProvidedId  This ID is passed as a parameter in CBaslerUsbCameraEventHandler::OnCameraEvent and can be used to distinguish between different events.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored.
+        \threading
+            This method is called inside the lock of the camera event handler registry.
+        */
+        public native void OnCameraEventHandlerDeregistered( @ByRef CBaslerUsbInstantCamera camera, @Cast("const Pylon::String_t*") @ByRef gcstring nodeName, @Cast("intptr_t") long userProvidedId);
+
+        /**
+        \brief Destroys the camera event handler.
+        <p>
+        \error
+            C++ exceptions from this call will be caught and ignored.
+        */
+        public native void DestroyCameraEventHandler();
+
+        /** Create. */
+        public CBaslerUsbCameraEventHandler() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Copy. */
+        public CBaslerUsbCameraEventHandler(@Const @ByRef CBaslerUsbCameraEventHandler arg0) { super((Pointer)null); allocate(arg0); }
+        private native void allocate(@Const @ByRef CBaslerUsbCameraEventHandler arg0);
+
+        /** Assign. */
+        public native @ByRef @Name("operator =") CBaslerUsbCameraEventHandler put(@Const @ByRef CBaslerUsbCameraEventHandler arg0);
+
+        /** Destruct. */
+
+        // Internal use only. Subject to change without notice.
+        public native long DebugGetEventHandlerRegistrationCount();
+    }
+
+    /**
+     * \}
+     */
+
+
+// #if _MSC_VER
+// #   pragma warning( pop)
+// #endif
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif /* INCLUDED_BASLERUSBCAMERAEVENTHANDLER_H_3102315 */
+
+
+// Parsed from <pylon/usb/_UsbEventParams.h>
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  (c) 2004-2008 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Interface to the PylonUsb Event Grabber parameters
+*/
+
+//-----------------------------------------------------------------------------
+//  This file is generated automatically
+//  Do not modify!
+//-----------------------------------------------------------------------------
+
+
+
+// #ifndef Basler_UsbEventParams_PARAMS_H
+// #define Basler_UsbEventParams_PARAMS_H
+
+// #ifdef __GNUC__
+// #define GENAPI_DEPRECATED_FEATURE __attribute__((deprecated))
+// #elif defined(_MSC_VER)
+// #define GENAPI_DEPRECATED_FEATURE __declspec(deprecated)
+// #else
+// #define GENAPI_DEPRECATED_FEATURE
+// #endif
+
+// #include <GenApi/IEnumerationT.h>
+// #include <GenApi/NodeMapRef.h>
+// #include <GenApi/DLLLoad.h>
+
+
+// common node types
+// #include <GenApi/IBoolean.h>
+// #include <GenApi/ICategory.h>
+// #include <GenApi/ICommand.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/IFloat.h>
+// #include <GenApi/IInteger.h>
+// #include <GenApi/IString.h>
+// #include <GenApi/IRegister.h>
+
+
+/** The namespace containing the device's control interface and related enumeration types */
+
+    //**************************************************************************************************
+    // Enumerations
+    //**************************************************************************************************
+    
+    /** Valid values for Status */
+    /** enum Basler_UsbEventParams::StatusEnums */
+    public static final int
+        /**The low level event grabber is closed. */
+        Status_Closed = 0,
+        /**The low level event grabber is open. */
+        Status_Open = 1;
+
+
+    //**************************************************************************************************
+    // Parameter class
+    //**************************************************************************************************
+    
+
+    /** Interface to the PylonUsb Event Grabber parameters */
+    @Namespace("Basler_UsbEventParams") @NoOffset public static class CUsbEventParams_Params extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CUsbEventParams_Params(Pointer p) { super(p); }
+    
+        
+    /** \name Root - USB event grabber parameters. */
+    //@{
+    /**
+        \brief Number of buffers to be used.
+        <p>
+        Number of Buffers that are going to be used receiving events.
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger NumBuffer(); public native CUsbEventParams_Params NumBuffer(IInteger NumBuffer);
+    
+    //@}
+    
+
+    /** \name Root - USB event grabber parameters. */
+    //@{
+    /**
+        \brief The maximum number of requests to be enqueued to the driver.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger NumMaxQueuedUrbs(); public native CUsbEventParams_Params NumMaxQueuedUrbs(IInteger NumMaxQueuedUrbs);
+    
+    //@}
+    
+
+    /** \name Root - USB event grabber parameters. */
+    //@{
+    /**
+        \brief The priority of the thread that handles USB requests of the event stream interface.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger TransferLoopThreadPriority(); public native CUsbEventParams_Params TransferLoopThreadPriority(IInteger TransferLoopThreadPriority);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The total count of processed events.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Total_Event_Count(); public native CUsbEventParams_Params Statistic_Total_Event_Count(IInteger Statistic_Total_Event_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The count of processed events with an error status.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Failed_Event_Count(); public native CUsbEventParams_Params Statistic_Failed_Event_Count(IInteger Statistic_Failed_Event_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The status code of the last failed event buffer.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Last_Failed_Event_Buffer_Status(); public native CUsbEventParams_Params Statistic_Last_Failed_Event_Buffer_Status(IInteger Statistic_Last_Failed_Event_Buffer_Status);
+    }
+
+
+    //**************************************************************************************************
+    // Parameter class implementation
+    //**************************************************************************************************
+
+    /** \cond HIDE_CLASS_METHODS */
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /** \endcond */
+
+ // namespace Basler_UsbEventParams
+
+// #undef GENAPI_DEPRECATED_FEATURE
+// #endif // Basler_UsbEventParams_PARAMS_H
+
+
+// Parsed from <pylon/usb/_UsbTLParams.h>
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  (c) 2004-2008 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Interface to the USB transport layer specific parameters.
+*/
+
+//-----------------------------------------------------------------------------
+//  This file is generated automatically
+//  Do not modify!
+//-----------------------------------------------------------------------------
+
+
+
+// #ifndef Basler_UsbTLParams_PARAMS_H
+// #define Basler_UsbTLParams_PARAMS_H
+
+// #ifdef __GNUC__
+// #define GENAPI_DEPRECATED_FEATURE __attribute__((deprecated))
+// #elif defined(_MSC_VER)
+// #define GENAPI_DEPRECATED_FEATURE __declspec(deprecated)
+// #else
+// #define GENAPI_DEPRECATED_FEATURE
+// #endif
+
+// #include <GenApi/IEnumerationT.h>
+// #include <GenApi/NodeMapRef.h>
+// #include <GenApi/DLLLoad.h>
+
+
+// common node types
+// #include <GenApi/IBoolean.h>
+// #include <GenApi/ICategory.h>
+// #include <GenApi/ICommand.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/IFloat.h>
+// #include <GenApi/IInteger.h>
+// #include <GenApi/IString.h>
+// #include <GenApi/IRegister.h>
+
+
+/** The namespace containing the device's control interface and related enumeration types */
+
+    //**************************************************************************************************
+    // Enumerations
+    //**************************************************************************************************
+    
+
+    //**************************************************************************************************
+    // Parameter class
+    //**************************************************************************************************
+    
+
+    /** Interface to the USB transport layer specific parameters. */
+    @Namespace("Basler_UsbTLParams") @NoOffset public static class CUsbTLParams_Params extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CUsbTLParams_Params(Pointer p) { super(p); }
+    
+        
+    /** \name Root - Transport layer-specific parameters. */
+    //@{
+    /**
+        \brief Maps certain SFNC1.X node names to compatible nodes when enabled.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IBoolean MigrationModeEnable(); public native CUsbTLParams_Params MigrationModeEnable(IBoolean MigrationModeEnable);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The total count of read pipe resets.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Read_Pipe_Reset_Count(); public native CUsbTLParams_Params Statistic_Read_Pipe_Reset_Count(IInteger Statistic_Read_Pipe_Reset_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The total count of write pipe resets.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Write_Pipe_Reset_Count(); public native CUsbTLParams_Params Statistic_Write_Pipe_Reset_Count(IInteger Statistic_Write_Pipe_Reset_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The total count of failed read operations.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Read_Operations_Failed_Count(); public native CUsbTLParams_Params Statistic_Read_Operations_Failed_Count(IInteger Statistic_Read_Operations_Failed_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The total count of failed write operations.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Write_Operations_Failed_Count(); public native CUsbTLParams_Params Statistic_Write_Operations_Failed_Count(IInteger Statistic_Write_Operations_Failed_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The last error status for a read or write operation.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Last_Error_Status(); public native CUsbTLParams_Params Statistic_Last_Error_Status(IInteger Statistic_Last_Error_Status);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The message text of the last error status for a read or write operation.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IString Statistic_Last_Error_Status_Text(); public native CUsbTLParams_Params Statistic_Last_Error_Status_Text(IString Statistic_Last_Error_Status_Text);
+    }
+
+
+    //**************************************************************************************************
+    // Parameter class implementation
+    //**************************************************************************************************
+
+    /** \cond HIDE_CLASS_METHODS */
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /** \endcond */
+
+ // namespace Basler_UsbTLParams
+
+// #undef GENAPI_DEPRECATED_FEATURE
+// #endif // Basler_UsbTLParams_PARAMS_H
 
 
 }

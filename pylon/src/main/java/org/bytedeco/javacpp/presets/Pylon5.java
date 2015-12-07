@@ -82,25 +82,25 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/_ImageFormatConverterParams.h>",
                         "<pylon/ImageFormatConverter.h>",
 
-                        // <pylon/NodeMapProxy.h> cannot parse macro defining custom Node map proxy, l.33
-//                        "<pylon/NodeMapProxy.h>",
+                        "<pylon/NodeMapProxy.h>",
 
                         // USB camera
+                        // Ignore <pylon/usb/_UsbStreamParams.h> to avoid clash with expanded enum constants name the same as in <pylon/usb/_BaslerUsbCameraParams.h>
+//                        "<pylon/usb/_UsbChunkData.h>",
                         "<pylon/usb/_BaslerUsbCameraParams.h>",
                         "<GenApi/IEnumerationT.h>",
                         "<pylon/usb/BaslerUsbDeviceInfo.h>",
                         "<pylon/usb/BaslerUsbConfigurationEventHandler.h>",
-                        // Skip <pylon/usb/BaslerUsbGrabResultPtr.h>, it results in javacpp error "null:0: Unexpected token '?'"
-//                        "<pylon/usb/BaslerUsbGrabResultPtr.h>",
+                        "<pylon/private/DeviceSpecificGrabResultPtr.h>",
+                        "<pylon/usb/BaslerUsbGrabResultData.h>",
+                        "<pylon/usb/BaslerUsbGrabResultPtr.h>",
                         "<pylon/usb/BaslerUsbImageEventHandler.h>",
                         "<pylon/usb/BaslerUsbCameraEventHandler.h>",
-                        // <<pylon/private/DeviceSpecificInstantCamera.h>> cannot parse macro defining instant camera class, l.22
-//                        "<pylon/private/DeviceSpecificInstantCamera.h>",
+                        "<pylon/private/DeviceSpecificInstantCamera.h>",
                         "<pylon/usb/_UsbEventParams.h>",
                         // Ignore <pylon/usb/_UsbStreamParams.h> to avoid clash with expanded enum constants name the same as in <pylon/usb/_UsbEventParams.h>
 //                        "<pylon/usb/_UsbStreamParams.h>",
                         "<pylon/usb/_UsbTLParams.h>",
-                        // Skip <pylon/usb/BaslerUsbInstantCamera.h>, it results in javacpp error "null:0: Unexpected token '?'"
 //                        "<pylon/usb/BaslerUsbInstantCamera.h>",
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
@@ -172,8 +172,22 @@ public class Pylon5 implements InfoMapper {
                 /* EventHandlers intended for subclassing */
                 .put(new Info("Pylon::CConfigurationEventHandler").purify().virtualize());
 
+        /* Workaround for not being able to parse <pylon/usb/_UsbChunkData.h> due to duplicate enums*/
+        // TODO: report javacpp problems with enum leading to this issue
+        infoMap.put(new Info("Basler_UsbChunkData::CUsbChunkData_Params").cast().pointerTypes("Pointer"));
+
+//        // <pylon/usb/_UsbChunkData.h>
+//        final String[] usbChunkDataEnums = {
+//                "ChunkGainSelectorEnums", "ChunkCounterSelectorEnums",
+//        };
+//        for (String e : usbChunkDataEnums) {
+//            infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbChunkData::" + e + ">").pointerTypes("IEnumerationT_" + e).define());
+//        }
+
+
         /* <pylon/usb/_BaslerUsbCameraParams.h> */
         final String[] usbCameraParamsEnums = {
+                // <pylon/usb/_BaslerUsbCameraParams.h>
                 "SequencerModeEnums", "SequencerConfigurationModeEnums", "SequencerTriggerSourceEnums",
                 "SequencerTriggerActivationEnums", "BinningHorizontalModeEnums", "BinningVerticalModeEnums",
                 "PixelFormatEnums", "PixelSizeEnums", "PixelColorFilterEnums", "TestImageSelectorEnums",
@@ -194,25 +208,47 @@ public class Pylon5 implements InfoMapper {
                 "ExpertFeatureAccessSelectorEnums", "FileSelectorEnums", "FileOperationSelectorEnums",
                 "FileOpenModeEnums", "FileOperationStatusEnums", "TestPatternEnums", "SensorShutterModeEnums",
                 "OverlapModeEnums", "DefectPixelCorrectionModeEnums", "DeviceIndicatorModeEnums",
-                "AutoFunctionAOISelectorEnums",};
+                "AutoFunctionAOISelectorEnums",
+        };
         for (String e : usbCameraParamsEnums) {
             infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::" + e + ">").pointerTypes("IEnumerationT_" + e).define());
         }
 
+
         // <pylon/usb/BaslerUsbDeviceInfo.h> ignore incorrectly generated "const char* const"
+        // TODO: report javacpp problems leading to this issue
         final String[] keys = {
                 "DeviceGUIDKey", "ManufacturerInfoKey", "DeviceIdxKey", "VendorIdKey", "ProductIdKey",
                 "DriverKeyNameKey", "UsbDriverTypeKey", "UsbPortVersionBcdKey", "SpeedSupportBitmaskKey",
                 "TransferModeKey"};
-        for(String k:keys) infoMap.put(new Info("Pylon::Key::"+k).skip());
+        for (String k : keys) infoMap.put(new Info("Pylon::Key::" + k).skip());
 
         // <pylon/usb/BaslerUsbImageEventHandler.h>
         // Skip due to not parsing <pylon/usb/BaslerUsbGrabResultPtr.h>
         infoMap.put(new Info("Pylon::CBaslerUsbImageEventHandler::OnImageGrabbed").skip());
 
         /* Workaround for not being able to parse <pylon/private/DeviceSpecificInstantCamera.h>*/
-        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT").cast().pointerTypes("Pointer"));
+//        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT").cast().pointerTypes("Pointer"));
+        infoMap.put(new Info("Pylon::CDeviceSpecificGrabResultPtr<Pylon::CBaslerUsbGrabResultData>").pointerTypes("CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData").define());
 
+//        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>").pointerTypes("CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits").define());
+
+//        // <pylon/usb/BaslerUsbInstantCamera.h> Workaround for missing typedefs
+//        // typedef CBaslerUsbInstantCamera InstantCamera_t;
+//        // typedef Basler_UsbCameraParams::CUsbCameraParams_Params CameraParams_t;
+//        infoMap.put(new Info("Pylon::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+//        infoMap.put(new Info("CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+//
+//        // typedef IPylonDevice IPylonDevice_t;
+//        // typedef Pylon::CBaslerUsbDeviceInfo DeviceInfo_t;
+//        // typedef CNodeMapProxyT<Basler_UsbTLParams::CUsbTLParams_Params> TlParams_t;
+//        // typedef CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params> StreamGrabberParams_t;
+//        // typedef CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params> EventGrabberParams_t;
+//        // typedef CBaslerUsbConfigurationEventHandler ConfigurationEventHandler_t;
+//        // typedef CBaslerUsbImageEventHandler ImageEventHandler_t;
+//        // typedef CBaslerUsbCameraEventHandler CameraEventHandler_t;
+//        // typedef CBaslerUsbGrabResultData GrabResultData_t;
+//        // typedef CBaslerUsbGrabResultPtr GrabResultPtr_t;
 
     }
 }

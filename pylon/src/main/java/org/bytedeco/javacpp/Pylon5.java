@@ -2984,12 +2984,6 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #include <pylon/PylonBase.h>
 // #include <pylon/GrabResultData.h>
 // #include <pylon/Image.h>
-        @Namespace("Pylon::PylonPrivate") @Opaque public static class CGrabResultDataConverter extends Pointer {
-            /** Empty constructor. Calls {@code super((Pointer)null)}. */
-            public CGrabResultDataConverter() { super((Pointer)null); }
-            /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-            public CGrabResultDataConverter(Pointer p) { super(p); }
-        }
     
 
     /** \addtogroup Pylon_InstantCameraApiGeneric
@@ -7904,6 +7898,94 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #endif /* _MSC_VER */
 
 // #endif /* INCLUDED_IMAGEFORMATCONVERTER_H_1564142 */
+
+
+// Parsed from <pylon/NodeMapProxy.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2007-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  AH
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Pylon generic node map interface declaration
+<p>
+\ingroup PYLON_INTERNAL
+*/
+
+
+// #ifndef __PYLON_NODEMAPROXY__H__
+// #define __PYLON_NODEMAPROXY__H__
+
+// #if _MSC_VER > 1000
+// #pragma once
+// #endif
+
+// #include <pylon/Platform.h>
+
+// #ifdef _MSC_VER
+// #   pragma pack(push, PYLON_PACKING)
+// #endif /* _MSC_VER */
+
+// #include <Base/GCException.h>
+// #include <GenApi/INodeMap.h>
+// #include <GenApi/INode.h>
+
+/** Macro to define a custom Node map proxy */
+// #define PYLON_DEFINE_NODEMAP(ClassName, BaseClass)
+//     class ClassName : public BaseClass
+//     {
+//     public:
+//         /** \name Construction */
+//         /*@{*/
+//         /** \brief \copybrief Pylon::CNodeMapProxyT::CNodeMapProxyT()
+//        \copydetails Pylon::CNodeMapProxyT::CNodeMapProxyT()
+//        */
+//         ClassName() {};
+//         /** \brief \copybrief Pylon::CNodeMapProxyT::CNodeMapProxyT(GenApi::INodeMap*)
+//        \copydetails Pylon::CNodeMapProxyT::CNodeMapProxyT(GenApi::INodeMap*)
+//        */
+//         ClassName(GenApi::INodeMap* pNodeMap)
+//             : BaseClass(pNodeMap) {}
+//         /*@}*/
+//     };
+    //**************************************************************************************************
+    /** Implementation Detail: This class wraps programming interfaces that are generated from %GenICam parameter description files to provide native parameter access.
+    /**
+    @see \ref configuringcameras
+    <p>
+    \tparam TParams  The specific parameter class (auto generated from the parameter xml file)
+    \ingroup PYLON_INTERNAL
+    */
+    //************************************************************************************************** */
+
+
+    //**************************************************************************************************
+    // CPylonDeviceProxyT implementation
+    //**************************************************************************************************
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+// #ifdef _MSC_VER
+// #   pragma pack(pop)
+// #endif /* _MSC_VER */
+
+// #endif // __PYLON_NODEMAPROXY__H__
 
 
 // Parsed from <pylon/usb/_BaslerUsbCameraParams.h>
@@ -16381,6 +16463,369 @@ On reads the device returns the current value without any additional wait time.
 // #endif /* INCLUDED_BASLERUSBCONFIGURATIONEVENTHANDLERH_01627755 */
 
 
+// Parsed from <pylon/private/DeviceSpecificGrabResultPtr.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains a smart pointer that holds a reference to device specific grab result data.
+*/
+
+// #ifndef INCLUDED_DEVICESPECIFICGRABRESULTPTR_H_9329951
+// #define INCLUDED_DEVICESPECIFICGRABRESULTPTR_H_9329951
+
+// #include <pylon/GrabResultPtr.h>
+
+// #define PYLON_DEFINE_DEVICE_SPECIFIC_GRAB_RESULT_PTR(ClassName, ResultDataName)
+//     class ClassName : public CDeviceSpecificGrabResultPtr<ResultDataName>
+//     {
+//     public:
+//         /*!
+//            \copybrief Pylon::CGrabResultPtr::CGrabResultPtr()
+//            \copydetails Pylon::CGrabResultPtr::CGrabResultPtr()
+//        */
+//         ClassName()
+//         {
+//         }
+//         /*!
+//            \copybrief Pylon::CDeviceSpecificGrabResultPtr::CDeviceSpecificGrabResultPtr( const CGrabResultPtr& rhs)
+//            \copydetails Pylon::CDeviceSpecificGrabResultPtr::CDeviceSpecificGrabResultPtr( const CGrabResultPtr& rhs)
+//        */
+//         ClassName( const CGrabResultPtr& rhs)
+//             : CDeviceSpecificGrabResultPtr<ResultDataName>( rhs)
+//         {
+//         }
+//         /*!
+//            \copybrief Pylon::CGrabResultPtr::CGrabResultPtr( const CGrabResultPtr& rhs)
+//            \copydetails Pylon::CGrabResultPtr::CGrabResultPtr( const CGrabResultPtr& rhs)
+//        */
+//         ClassName( const ClassName& rhs)
+//             : CDeviceSpecificGrabResultPtr<ResultDataName>( rhs)
+//         {
+//         }
+//     };
+        // Internal use only. This is subject to change without notice.
+        @Namespace("Pylon::PylonPrivate") public static class CGrabResultDataConverter extends Pointer {
+            static { Loader.load(); }
+            /** Default native constructor. */
+            public CGrabResultDataConverter() { super((Pointer)null); allocate(); }
+            /** Native array allocator. Access with {@link Pointer#position(int)}. */
+            public CGrabResultDataConverter(int size) { super((Pointer)null); allocateArray(size); }
+            /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+            public CGrabResultDataConverter(Pointer p) { super(p); }
+            private native void allocate();
+            private native void allocateArray(int size);
+            @Override public CGrabResultDataConverter position(int position) {
+                return (CGrabResultDataConverter)super.position(position);
+            }
+        
+            // Internal use only. This is subject to change without notice.
+        }
+    
+
+    /**
+         \brief Implementation Detail: Header only implementation class for creating device specific grab result ptrs.
+         \copydetails Pylon::CGrabResultPtr
+    */
+    @Name("Pylon::CDeviceSpecificGrabResultPtr<Pylon::CBaslerUsbGrabResultData>") @NoOffset public static class CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData position(int position) {
+            return (CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData)super.position(position);
+        }
+    
+        /**
+            \copybrief Pylon::CGrabResultPtr::CGrabResultPtr
+            \copydetails Pylon::CGrabResultPtr::CGrabResultPtr
+        */
+        public CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+
+        /**
+        \brief Creates a copy of a smart pointer.
+        <p>
+        @param [in] rhs Another smart pointer, source of the result data to reference.
+        The data itself is not copied.
+        <p>
+        \post
+        <ul>
+        <li>Another reference to the grab result of the source is held if it references a grab result.
+        <li>No grab result is referenced if the source does not reference a grab result or if the result data is not convertible.
+        </ul>
+        <p>
+        \error
+            Still valid after error.
+        */
+        public CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData( @Const @ByRef CGrabResultPtr rhs) { super((Pointer)null); allocate(rhs); }
+        private native void allocate( @Const @ByRef CGrabResultPtr rhs);
+
+
+        /**
+        \brief Assignment of a smart pointer.
+        <p>
+        @param [in] rhs Another smart pointer, source of the result data to reference.
+        <p>
+        The data itself is not copied.
+        <p>
+        \post
+        <ul>
+        <li>The currently referenced data is released.
+        <li>Another reference to the grab result of the source is held if it references a grab result.
+        <li>No grab result is referenced if the source does not reference a grab result or if the result data is not convertible.
+        </ul>
+        <p>
+        \error
+            Still valid after error.
+        */
+        public native @ByRef @Name("operator =") CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData put( @Const @ByRef CGrabResultPtr rhs);
+
+
+        /**
+            \copybrief Pylon::CGrabResultPtr::CGrabResultPtr( const CGrabResultPtr& rhs)
+            \copydetails Pylon::CGrabResultPtr::CGrabResultPtr( const CGrabResultPtr& rhs)
+        */
+        public CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData( @Const @ByRef CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData rhs) { super((Pointer)null); allocate(rhs); }
+        private native void allocate( @Const @ByRef CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData rhs);
+
+
+        /**
+            \copybrief Pylon::CGrabResultPtr::operator=( const CGrabResultPtr& rhs)
+            \copydetails Pylon::CGrabResultPtr::operator=( const CGrabResultPtr& rhs)
+        */
+        public native @ByRef @Name("operator =") CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData put( @Const @ByRef CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData rhs);
+
+
+        /**
+            \copybrief Pylon::CGrabResultPtr::~CGrabResultPtr
+            \copydetails Pylon::CGrabResultPtr::~CGrabResultPtr
+        */
+
+
+        /**
+            \copybrief Pylon::CGrabResultPtr::operator->()
+            \copydetails Pylon::CGrabResultPtr::operator->()
+        */
+        public native @Name("operator ->") CBaslerUsbGrabResultData access();
+
+
+        /**
+            \copybrief Pylon::CGrabResultPtr::IsValid
+            \copydetails Pylon::CGrabResultPtr::IsValid
+        */
+        public native @Cast("bool") boolean IsValid();
+
+
+        /**
+        \brief Check whether data is referenced.
+        <p>
+        @return IsValid().
+        <p>
+        The overloaded bool operator can be used to check whether data is referenced.
+        Example:
+        <pre>{@code
+        if ( grabResult)
+        {
+            grabResult->GetStatus();
+        }
+        }</pre>
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Name("operator bool") boolean asBoolean();
+
+
+        /**
+        */
+        public native @ByVal @Name("operator Pylon::CGrabResultPtr") CGrabResultPtr asCGrabResultPtr();
+
+
+        /**
+        \brief Provides an IImage interface to the grab result.
+        <p>
+        This cast operator allows passing the grab result to saving functions or image format converter.
+        The returned image is invalid if the grab was not successful. See CGrabResultData::GrabSucceeded().
+        <p>
+        \attention The returned reference is only valid as long the grab result ptr is not destroyed.
+        <p>
+        \error
+            Still valid after error.
+        */
+        public native @ByRef @Name("operator Pylon::IImage&") IImage asIImage();
+
+
+        /**
+        \brief Indicates that the held grab result data and buffer are only referenced by this grab result.
+        <p>
+        @return Returns true if the held grab result data and buffer are only referenced by this grab result. Returns false if the grab result is invalid.
+        <p>
+        \error
+            Does not throw C++ exceptions.
+        */
+        public native @Cast("bool") boolean IsUnique();
+
+
+        /**
+            \copybrief Pylon::CGrabResultPtr::Release
+            \copydetails Pylon::CGrabResultPtr::Release
+        */
+        public native void Release();
+    }
+
+
+
+
+
+
+    // Implementation ----------------------------------------------------------
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+
+// #endif /* INCLUDED_DEVICESPECIFICGRABRESULTPTR_H_9329951 */
+
+
+// Parsed from <pylon/usb/BaslerUsbGrabResultData.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2012-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief USB specific grab result data class.
+*/
+// #ifndef INCLUDED_BASLERUSBGRABRESULTDATA_H_7474481
+// #define INCLUDED_BASLERUSBGRABRESULTDATA_H_7474481
+
+// #include <pylon/usb/_UsbChunkData.h>
+// #include <pylon/GrabResultData.h>
+    /** \addtogroup Pylon_InstantCameraApiUsb
+     * \{
+     */
+
+    /** The USB specific grab result data class. */
+    @Namespace("Pylon") public static class CBaslerUsbGrabResultData extends CGrabResultData {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbGrabResultData(Pointer p) { super(p); }
+        public Pointer asPointer() { return asPointer(this); }
+        @Namespace public static native @Name("static_cast<Basler_UsbChunkData::CUsbChunkData_Params*>") Pointer asPointer(CBaslerUsbGrabResultData pointer);
+    
+    }
+
+    /**
+     * \}
+     */
+
+
+// #endif /* INCLUDED_BASLERUSBGRABRESULTDATA_H_7474481 */
+
+
+// Parsed from <pylon/usb/BaslerUsbGrabResultPtr.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2012-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains the USB specific grab result ptr class.
+*/
+
+// #ifndef INCLUDED_BASLERUSBGRABRESULTPTR_H_03519839
+// #define INCLUDED_BASLERUSBGRABRESULTPTR_H_03519839
+
+// #include <pylon/usb/BaslerUsbGrabResultData.h>
+// #include <pylon/private/DeviceSpecificGrabResultPtr.h>
+    /** \addtogroup Pylon_InstantCameraApiUsb
+     * \{
+     */
+
+    /** The USB specific grab result smart pointer. */
+    @Namespace("Pylon") public static class CBaslerUsbGrabResultPtr extends CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbGrabResultPtr(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbGrabResultPtr(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbGrabResultPtr position(int position) {
+            return (CBaslerUsbGrabResultPtr)super.position(position);
+        }
+    
+        /**
+            \copybrief Pylon::CGrabResultPtr::CGrabResultPtr()
+            \copydetails Pylon::CGrabResultPtr::CGrabResultPtr()
+        */ public CBaslerUsbGrabResultPtr() { super((Pointer)null); allocate(); }
+private native void allocate();
+        /**
+            \copybrief Pylon::CDeviceSpecificGrabResultPtr::CDeviceSpecificGrabResultPtr( const CGrabResultPtr& rhs)
+            \copydetails Pylon::CDeviceSpecificGrabResultPtr::CDeviceSpecificGrabResultPtr( const CGrabResultPtr& rhs)
+        */ public CBaslerUsbGrabResultPtr( @Const @ByRef CGrabResultPtr rhs) { super((Pointer)null); allocate(rhs); }
+private native void allocate( @Const @ByRef CGrabResultPtr rhs);
+        /**
+            \copybrief Pylon::CGrabResultPtr::CGrabResultPtr( const CGrabResultPtr& rhs)
+            \copydetails Pylon::CGrabResultPtr::CGrabResultPtr( const CGrabResultPtr& rhs)
+        */ public CBaslerUsbGrabResultPtr( @Const @ByRef CBaslerUsbGrabResultPtr rhs) { super((Pointer)null); allocate(rhs); }
+private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
+    }
+
+     /**
+     * \}
+     */
+
+
+// #endif /* INCLUDED_BASLERUSBGRABRESULTPTR_H_03519839 */
+
+
 // Parsed from <pylon/usb/BaslerUsbImageEventHandler.h>
 
 //-----------------------------------------------------------------------------
@@ -16667,6 +17112,124 @@ On reads the device returns the current value without any additional wait time.
 // #endif /* _MSC_VER */
 
 // #endif /* INCLUDED_BASLERUSBCAMERAEVENTHANDLER_H_3102315 */
+
+
+// Parsed from <pylon/private/DeviceSpecificInstantCamera.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Template for device specific instant camera class.
+*/
+
+// #ifndef INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266
+// #define INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266
+
+// #include <pylon/stdinclude.h>
+// #include <pylon/InstantCamera.h>
+// #include <pylon/private/DeviceSpecificConfigurationEventHandlerTie.h>
+// #include <pylon/private/DeviceSpecificImageEventHandlerTie.h>
+// #include <pylon/private/DeviceSpecificCameraEventHandlerTie.h>
+
+/** Macro for defining a custom instant camera class. */
+// #define PYLON_DEFINE_INSTANT_CAMERA(ClassName, BaseClass)
+//     class ClassName : public BaseClass
+//     {
+//     public:
+//         /*!
+//            \copybrief CInstantCamera::CInstantCamera()
+//            \copydetails CInstantCamera::CInstantCamera()
+//        */
+//         ClassName() {}
+//         /*!
+//            \copybrief CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+//            \copydetails CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+//        */
+//         ClassName(IPylonDevice* pDevice, ECleanup cleanupProcedure = Cleanup_Delete)
+//             : BaseClass(pDevice, cleanupProcedure) {}
+//         /*!
+//            \copybrief CInstantCamera::~CInstantCamera
+//            \copydetails CInstantCamera::~CInstantCamera
+//        */
+//         ~ClassName()
+//         {
+//             Attach( NULL);
+//             InternalShutdownEventHandlers();
+//         }
+//     protected:
+//         /*Create device specific grab result data. This is subject to change without notice*/
+//         virtual CGrabResultData* CreateDeviceSpecificGrabResultData()
+//         {
+//             return new GrabResultData_t();
+//         }
+//     };
+    /**
+    \class  CDeviceSpecificInstantCameraT
+    \brief  Implementation Detail: Header only implementation class for creating device specific Instant Camera classes.
+    */
+
+
+
+
+
+
+    // Implementation ----------------------------------------------------------
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+
+
+    
+
+
+
+    
+
+    
+
+
+    
+
+    
+
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+ // namespace Pylon
+
+// #endif /* INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266 */
 
 
 // Parsed from <pylon/usb/_UsbEventParams.h>

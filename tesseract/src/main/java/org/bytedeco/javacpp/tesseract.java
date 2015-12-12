@@ -172,6 +172,7 @@ public static final int UNICHAR_LEN = 30;
 
 // A variable to indicate an invalid or uninitialized unichar id.
 @MemberGetter public static native int INVALID_UNICHAR_ID();
+public static final int INVALID_UNICHAR_ID = INVALID_UNICHAR_ID();
 // A special unichar that corresponds to INVALID_UNICHAR_ID.
 @MemberGetter public static native byte INVALID_UNICHAR(int i);
 @MemberGetter public static native @Cast("const char*") BytePointer INVALID_UNICHAR();
@@ -2025,12 +2026,24 @@ public static final int
                        @Cast("bool*") BoolPointer is_crown,
                        IntPointer first_line_indent);
   public native void ParagraphInfo(@Cast("tesseract::ParagraphJustification*") IntBuffer justification,
-                       @Cast("bool*") BoolPointer is_list_item,
-                       @Cast("bool*") BoolPointer is_crown,
+                       @Cast("bool*") boolean[] is_list_item,
+                       @Cast("bool*") boolean[] is_crown,
                        IntBuffer first_line_indent);
   public native void ParagraphInfo(@Cast("tesseract::ParagraphJustification*") int[] justification,
                        @Cast("bool*") BoolPointer is_list_item,
                        @Cast("bool*") BoolPointer is_crown,
+                       int[] first_line_indent);
+  public native void ParagraphInfo(@Cast("tesseract::ParagraphJustification*") IntPointer justification,
+                       @Cast("bool*") boolean[] is_list_item,
+                       @Cast("bool*") boolean[] is_crown,
+                       IntPointer first_line_indent);
+  public native void ParagraphInfo(@Cast("tesseract::ParagraphJustification*") IntBuffer justification,
+                       @Cast("bool*") BoolPointer is_list_item,
+                       @Cast("bool*") BoolPointer is_crown,
+                       IntBuffer first_line_indent);
+  public native void ParagraphInfo(@Cast("tesseract::ParagraphJustification*") int[] justification,
+                       @Cast("bool*") boolean[] is_list_item,
+                       @Cast("bool*") boolean[] is_crown,
                        int[] first_line_indent);
 
   // If the current WERD_RES (it_->word()) is not NULL, sets the BlamerBundle
@@ -2171,12 +2184,12 @@ public static final int
                                    @Cast("bool*") BoolPointer is_smallcaps,
                                    IntPointer pointsize,
                                    IntPointer font_id);
-  public native String WordFontAttributes(@Cast("bool*") BoolPointer is_bold,
-                                   @Cast("bool*") BoolPointer is_italic,
-                                   @Cast("bool*") BoolPointer is_underlined,
-                                   @Cast("bool*") BoolPointer is_monospace,
-                                   @Cast("bool*") BoolPointer is_serif,
-                                   @Cast("bool*") BoolPointer is_smallcaps,
+  public native String WordFontAttributes(@Cast("bool*") boolean[] is_bold,
+                                   @Cast("bool*") boolean[] is_italic,
+                                   @Cast("bool*") boolean[] is_underlined,
+                                   @Cast("bool*") boolean[] is_monospace,
+                                   @Cast("bool*") boolean[] is_serif,
+                                   @Cast("bool*") boolean[] is_smallcaps,
                                    IntBuffer pointsize,
                                    IntBuffer font_id);
   public native @Cast("const char*") BytePointer WordFontAttributes(@Cast("bool*") BoolPointer is_bold,
@@ -2185,6 +2198,30 @@ public static final int
                                    @Cast("bool*") BoolPointer is_monospace,
                                    @Cast("bool*") BoolPointer is_serif,
                                    @Cast("bool*") BoolPointer is_smallcaps,
+                                   int[] pointsize,
+                                   int[] font_id);
+  public native String WordFontAttributes(@Cast("bool*") boolean[] is_bold,
+                                   @Cast("bool*") boolean[] is_italic,
+                                   @Cast("bool*") boolean[] is_underlined,
+                                   @Cast("bool*") boolean[] is_monospace,
+                                   @Cast("bool*") boolean[] is_serif,
+                                   @Cast("bool*") boolean[] is_smallcaps,
+                                   IntPointer pointsize,
+                                   IntPointer font_id);
+  public native @Cast("const char*") BytePointer WordFontAttributes(@Cast("bool*") BoolPointer is_bold,
+                                   @Cast("bool*") BoolPointer is_italic,
+                                   @Cast("bool*") BoolPointer is_underlined,
+                                   @Cast("bool*") BoolPointer is_monospace,
+                                   @Cast("bool*") BoolPointer is_serif,
+                                   @Cast("bool*") BoolPointer is_smallcaps,
+                                   IntBuffer pointsize,
+                                   IntBuffer font_id);
+  public native String WordFontAttributes(@Cast("bool*") boolean[] is_bold,
+                                   @Cast("bool*") boolean[] is_italic,
+                                   @Cast("bool*") boolean[] is_underlined,
+                                   @Cast("bool*") boolean[] is_monospace,
+                                   @Cast("bool*") boolean[] is_serif,
+                                   @Cast("bool*") boolean[] is_smallcaps,
                                    int[] pointsize,
                                    int[] font_id);
 
@@ -3683,7 +3720,7 @@ public static final int TESSERACT_VERSION = 0x030400;
   public native @Cast("bool") boolean GetIntVariable(@Cast("const char*") BytePointer name, IntBuffer value);
   public native @Cast("bool") boolean GetIntVariable(String name, int[] value);
   public native @Cast("bool") boolean GetBoolVariable(@Cast("const char*") BytePointer name, @Cast("bool*") BoolPointer value);
-  public native @Cast("bool") boolean GetBoolVariable(String name, @Cast("bool*") BoolPointer value);
+  public native @Cast("bool") boolean GetBoolVariable(String name, @Cast("bool*") boolean[] value);
   public native @Cast("bool") boolean GetDoubleVariable(@Cast("const char*") BytePointer name, DoublePointer value);
   public native @Cast("bool") boolean GetDoubleVariable(String name, DoubleBuffer value);
   public native @Cast("bool") boolean GetDoubleVariable(@Cast("const char*") BytePointer name, double[] value);
@@ -4359,9 +4396,15 @@ public static final int TESSERACT_VERSION = 0x030400;
   public native void GetBlockTextOrientations(@ByPtrPtr IntPointer block_orientation,
                                   @Cast("bool**") @ByPtrPtr BoolPointer vertical_writing);
   public native void GetBlockTextOrientations(@ByPtrPtr IntBuffer block_orientation,
-                                  @Cast("bool**") @ByPtrPtr BoolPointer vertical_writing);
+                                  @Cast("bool**") @ByPtrPtr boolean[] vertical_writing);
   public native void GetBlockTextOrientations(@ByPtrPtr int[] block_orientation,
                                   @Cast("bool**") @ByPtrPtr BoolPointer vertical_writing);
+  public native void GetBlockTextOrientations(@ByPtrPtr IntPointer block_orientation,
+                                  @Cast("bool**") @ByPtrPtr boolean[] vertical_writing);
+  public native void GetBlockTextOrientations(@ByPtrPtr IntBuffer block_orientation,
+                                  @Cast("bool**") @ByPtrPtr BoolPointer vertical_writing);
+  public native void GetBlockTextOrientations(@ByPtrPtr int[] block_orientation,
+                                  @Cast("bool**") @ByPtrPtr boolean[] vertical_writing);
 
   /** Find lines from the image making the BLOCK_LIST. */
   public native BLOCK_LIST FindLinesCreateBlockList();

@@ -98,6 +98,7 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public StringVector(Pointer p) { super(p); }
     public StringVector(BytePointer ... array) { this(array.length); put(array); }
+    public StringVector(String ... array) { this(array.length); put(array); }
     public StringVector()       { allocate();  }
     public StringVector(long n) { allocate(n); }
     private native void allocate();
@@ -109,8 +110,17 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
 
     @Index public native @StdString BytePointer get(@Cast("size_t") long i);
     public native StringVector put(@Cast("size_t") long i, BytePointer value);
+    @ValueSetter @Index public native StringVector put(@Cast("size_t") long i, @StdString String value);
 
     public StringVector put(BytePointer ... array) {
+        if (size() != array.length) { resize(array.length); }
+        for (int i = 0; i < array.length; i++) {
+            put(i, array[i]);
+        }
+        return this;
+    }
+
+    public StringVector put(String ... array) {
         if (size() != array.length) { resize(array.length); }
         for (int i = 0; i < array.length; i++) {
             put(i, array[i]);
@@ -419,7 +429,7 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
     public native long size();
     public native void resize(@Cast("size_t") long n);
 
-    @Index public native boolean get(@Cast("size_t") long i);
+    @Index public native @Cast("bool") boolean get(@Cast("size_t") long i);
     public native BoolVector put(@Cast("size_t") long i, boolean value);
 
     public BoolVector put(boolean ... array) {
@@ -530,7 +540,6 @@ public class caffe extends org.bytedeco.javacpp.presets.caffe {
 // #include "caffe/util/benchmark.hpp"
 // #include "caffe/util/io.hpp"
 // #include "caffe/util/upgrade_proto.hpp"
-// #include "caffe/vision_layers.hpp"
 
 // #endif  // CAFFE_CAFFE_HPP_
 
@@ -877,6 +886,31 @@ public static final int
     @StdString BytePointer name, @Cast("caffe::ParamSpec_DimCheckMode*") IntBuffer value);
 @Namespace("caffe") public static native @Cast("bool") boolean ParamSpec_DimCheckMode_Parse(
     @StdString String name, @Cast("caffe::ParamSpec_DimCheckMode*") int[] value);
+/** enum caffe::LossParameter_NormalizationMode */
+public static final int
+  LossParameter_NormalizationMode_FULL = 0,
+  LossParameter_NormalizationMode_VALID = 1,
+  LossParameter_NormalizationMode_BATCH_SIZE = 2,
+  LossParameter_NormalizationMode_NONE = 3;
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_IsValid(int value);
+@Namespace("caffe") @MemberGetter public static native @Cast("const caffe::LossParameter_NormalizationMode") int LossParameter_NormalizationMode_NormalizationMode_MIN();
+@Namespace("caffe") @MemberGetter public static native @Cast("const caffe::LossParameter_NormalizationMode") int LossParameter_NormalizationMode_NormalizationMode_MAX();
+@Namespace("caffe") @MemberGetter public static native int LossParameter_NormalizationMode_NormalizationMode_ARRAYSIZE();
+
+@Namespace("caffe") public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer LossParameter_NormalizationMode_descriptor();
+@Namespace("caffe") public static native @StdString BytePointer LossParameter_NormalizationMode_Name(@Cast("caffe::LossParameter_NormalizationMode") int value);
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_Parse(
+    @StdString BytePointer name, @Cast("caffe::LossParameter_NormalizationMode*") IntPointer value);
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_Parse(
+    @StdString String name, @Cast("caffe::LossParameter_NormalizationMode*") IntBuffer value);
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_Parse(
+    @StdString BytePointer name, @Cast("caffe::LossParameter_NormalizationMode*") int[] value);
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_Parse(
+    @StdString String name, @Cast("caffe::LossParameter_NormalizationMode*") IntPointer value);
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_Parse(
+    @StdString BytePointer name, @Cast("caffe::LossParameter_NormalizationMode*") IntBuffer value);
+@Namespace("caffe") public static native @Cast("bool") boolean LossParameter_NormalizationMode_Parse(
+    @StdString String name, @Cast("caffe::LossParameter_NormalizationMode*") int[] value);
 /** enum caffe::ConvolutionParameter_Engine */
 public static final int
   ConvolutionParameter_Engine_DEFAULT = 0,
@@ -1425,6 +1459,7 @@ public static final int
   public native int dim_size();
   public native void clear_dim();
   @MemberGetter public static native int kDimFieldNumber();
+  public static final int kDimFieldNumber = kDimFieldNumber();
   public native @Cast("google::protobuf::int64") long dim(int index);
   public native void set_dim(int index, @Cast("google::protobuf::int64") long value);
   public native void add_dim(@Cast("google::protobuf::int64") long value);
@@ -1488,6 +1523,7 @@ public static final int
   public native @Cast("bool") boolean has_shape();
   public native void clear_shape();
   @MemberGetter public static native int kShapeFieldNumber();
+  public static final int kShapeFieldNumber = kShapeFieldNumber();
   public native @Const @ByRef BlobShape shape();
   public native BlobShape mutable_shape();
   public native BlobShape release_shape();
@@ -1497,6 +1533,7 @@ public static final int
   public native int data_size();
   public native void clear_data();
   @MemberGetter public static native int kDataFieldNumber();
+  public static final int kDataFieldNumber = kDataFieldNumber();
   public native float data(int index);
   public native void set_data(int index, float value);
   public native void add_data(float value);
@@ -1505,6 +1542,7 @@ public static final int
   public native int diff_size();
   public native void clear_diff();
   @MemberGetter public static native int kDiffFieldNumber();
+  public static final int kDiffFieldNumber = kDiffFieldNumber();
   public native float diff(int index);
   public native void set_diff(int index, float value);
   public native void add_diff(float value);
@@ -1513,6 +1551,7 @@ public static final int
   public native int double_data_size();
   public native void clear_double_data();
   @MemberGetter public static native int kDoubleDataFieldNumber();
+  public static final int kDoubleDataFieldNumber = kDoubleDataFieldNumber();
   public native double double_data(int index);
   public native void set_double_data(int index, double value);
   public native void add_double_data(double value);
@@ -1521,6 +1560,7 @@ public static final int
   public native int double_diff_size();
   public native void clear_double_diff();
   @MemberGetter public static native int kDoubleDiffFieldNumber();
+  public static final int kDoubleDiffFieldNumber = kDoubleDiffFieldNumber();
   public native double double_diff(int index);
   public native void set_double_diff(int index, double value);
   public native void add_double_diff(double value);
@@ -1529,6 +1569,7 @@ public static final int
   public native @Cast("bool") boolean has_num();
   public native void clear_num();
   @MemberGetter public static native int kNumFieldNumber();
+  public static final int kNumFieldNumber = kNumFieldNumber();
   public native @Cast("google::protobuf::int32") int num();
   public native void set_num(@Cast("google::protobuf::int32") int value);
 
@@ -1536,6 +1577,7 @@ public static final int
   public native @Cast("bool") boolean has_channels();
   public native void clear_channels();
   @MemberGetter public static native int kChannelsFieldNumber();
+  public static final int kChannelsFieldNumber = kChannelsFieldNumber();
   public native @Cast("google::protobuf::int32") int channels();
   public native void set_channels(@Cast("google::protobuf::int32") int value);
 
@@ -1543,6 +1585,7 @@ public static final int
   public native @Cast("bool") boolean has_height();
   public native void clear_height();
   @MemberGetter public static native int kHeightFieldNumber();
+  public static final int kHeightFieldNumber = kHeightFieldNumber();
   public native @Cast("google::protobuf::int32") int height();
   public native void set_height(@Cast("google::protobuf::int32") int value);
 
@@ -1550,6 +1593,7 @@ public static final int
   public native @Cast("bool") boolean has_width();
   public native void clear_width();
   @MemberGetter public static native int kWidthFieldNumber();
+  public static final int kWidthFieldNumber = kWidthFieldNumber();
   public native @Cast("google::protobuf::int32") int width();
   public native void set_width(@Cast("google::protobuf::int32") int value);
 }
@@ -1612,6 +1656,7 @@ public static final int
   public native int blobs_size();
   public native void clear_blobs();
   @MemberGetter public static native int kBlobsFieldNumber();
+  public static final int kBlobsFieldNumber = kBlobsFieldNumber();
   public native @Const @ByRef BlobProto blobs(int index);
   public native BlobProto mutable_blobs(int index);
   public native BlobProto add_blobs();
@@ -1675,6 +1720,7 @@ public static final int
   public native @Cast("bool") boolean has_channels();
   public native void clear_channels();
   @MemberGetter public static native int kChannelsFieldNumber();
+  public static final int kChannelsFieldNumber = kChannelsFieldNumber();
   public native @Cast("google::protobuf::int32") int channels();
   public native void set_channels(@Cast("google::protobuf::int32") int value);
 
@@ -1682,6 +1728,7 @@ public static final int
   public native @Cast("bool") boolean has_height();
   public native void clear_height();
   @MemberGetter public static native int kHeightFieldNumber();
+  public static final int kHeightFieldNumber = kHeightFieldNumber();
   public native @Cast("google::protobuf::int32") int height();
   public native void set_height(@Cast("google::protobuf::int32") int value);
 
@@ -1689,6 +1736,7 @@ public static final int
   public native @Cast("bool") boolean has_width();
   public native void clear_width();
   @MemberGetter public static native int kWidthFieldNumber();
+  public static final int kWidthFieldNumber = kWidthFieldNumber();
   public native @Cast("google::protobuf::int32") int width();
   public native void set_width(@Cast("google::protobuf::int32") int value);
 
@@ -1696,6 +1744,7 @@ public static final int
   public native @Cast("bool") boolean has_data();
   public native void clear_data();
   @MemberGetter public static native int kDataFieldNumber();
+  public static final int kDataFieldNumber = kDataFieldNumber();
   public native @StdString BytePointer data();
   public native void set_data(@StdString BytePointer value);
   public native void set_data(@StdString String value);
@@ -1708,6 +1757,7 @@ public static final int
   public native @Cast("bool") boolean has_label();
   public native void clear_label();
   @MemberGetter public static native int kLabelFieldNumber();
+  public static final int kLabelFieldNumber = kLabelFieldNumber();
   public native @Cast("google::protobuf::int32") int label();
   public native void set_label(@Cast("google::protobuf::int32") int value);
 
@@ -1715,6 +1765,7 @@ public static final int
   public native int float_data_size();
   public native void clear_float_data();
   @MemberGetter public static native int kFloatDataFieldNumber();
+  public static final int kFloatDataFieldNumber = kFloatDataFieldNumber();
   public native float float_data(int index);
   public native void set_float_data(int index, float value);
   public native void add_float_data(float value);
@@ -1723,6 +1774,7 @@ public static final int
   public native @Cast("bool") boolean has_encoded();
   public native void clear_encoded();
   @MemberGetter public static native int kEncodedFieldNumber();
+  public static final int kEncodedFieldNumber = kEncodedFieldNumber();
   public native @Cast("bool") boolean encoded();
   public native void set_encoded(@Cast("bool") boolean value);
 }
@@ -1779,12 +1831,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::FillerParameter::VarianceNorm") int FAN_IN();
+  public static final int FAN_IN = FAN_IN();
   @MemberGetter public static native @Cast("const caffe::FillerParameter::VarianceNorm") int FAN_OUT();
+  public static final int FAN_OUT = FAN_OUT();
   @MemberGetter public static native @Cast("const caffe::FillerParameter::VarianceNorm") int AVERAGE();
+  public static final int AVERAGE = AVERAGE();
   public static native @Cast("bool") boolean VarianceNorm_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::FillerParameter::VarianceNorm") int VarianceNorm_MIN();
+  public static final int VarianceNorm_MIN = VarianceNorm_MIN();
   @MemberGetter public static native @Cast("const caffe::FillerParameter::VarianceNorm") int VarianceNorm_MAX();
+  public static final int VarianceNorm_MAX = VarianceNorm_MAX();
   @MemberGetter public static native int VarianceNorm_ARRAYSIZE();
+  public static final int VarianceNorm_ARRAYSIZE = VarianceNorm_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer VarianceNorm_descriptor();
   public static native @StdString BytePointer VarianceNorm_Name(@Cast("caffe::FillerParameter::VarianceNorm") int value);
   public static native @Cast("bool") boolean VarianceNorm_Parse(@StdString BytePointer name,
@@ -1806,6 +1864,7 @@ public static final int
   public native @Cast("bool") boolean has_type();
   public native void clear_type();
   @MemberGetter public static native int kTypeFieldNumber();
+  public static final int kTypeFieldNumber = kTypeFieldNumber();
   public native @StdString BytePointer type();
   public native void set_type(@StdString BytePointer value);
   public native void set_type(@StdString String value);
@@ -1819,6 +1878,7 @@ public static final int
   public native @Cast("bool") boolean has_value();
   public native void clear_value();
   @MemberGetter public static native int kValueFieldNumber();
+  public static final int kValueFieldNumber = kValueFieldNumber();
   public native float value();
   public native void set_value(float value);
 
@@ -1826,6 +1886,7 @@ public static final int
   public native @Cast("bool") boolean has_min();
   public native void clear_min();
   @MemberGetter public static native int kMinFieldNumber();
+  public static final int kMinFieldNumber = kMinFieldNumber();
   public native float min();
   public native void set_min(float value);
 
@@ -1833,6 +1894,7 @@ public static final int
   public native @Cast("bool") boolean has_max();
   public native void clear_max();
   @MemberGetter public static native int kMaxFieldNumber();
+  public static final int kMaxFieldNumber = kMaxFieldNumber();
   public native float max();
   public native void set_max(float value);
 
@@ -1840,6 +1902,7 @@ public static final int
   public native @Cast("bool") boolean has_mean();
   public native void clear_mean();
   @MemberGetter public static native int kMeanFieldNumber();
+  public static final int kMeanFieldNumber = kMeanFieldNumber();
   public native float mean();
   public native void set_mean(float value);
 
@@ -1847,6 +1910,7 @@ public static final int
   public native @Cast("bool") boolean has_std();
   public native void clear_std();
   @MemberGetter public static native int kStdFieldNumber();
+  public static final int kStdFieldNumber = kStdFieldNumber();
   public native float std();
   public native void set_std(float value);
 
@@ -1854,6 +1918,7 @@ public static final int
   public native @Cast("bool") boolean has_sparse();
   public native void clear_sparse();
   @MemberGetter public static native int kSparseFieldNumber();
+  public static final int kSparseFieldNumber = kSparseFieldNumber();
   public native @Cast("google::protobuf::int32") int sparse();
   public native void set_sparse(@Cast("google::protobuf::int32") int value);
 
@@ -1861,6 +1926,7 @@ public static final int
   public native @Cast("bool") boolean has_variance_norm();
   public native void clear_variance_norm();
   @MemberGetter public static native int kVarianceNormFieldNumber();
+  public static final int kVarianceNormFieldNumber = kVarianceNormFieldNumber();
   public native @Cast("caffe::FillerParameter_VarianceNorm") int variance_norm();
   public native void set_variance_norm(@Cast("caffe::FillerParameter_VarianceNorm") int value);
 }
@@ -1923,6 +1989,7 @@ public static final int
   public native @Cast("bool") boolean has_name();
   public native void clear_name();
   @MemberGetter public static native int kNameFieldNumber();
+  public static final int kNameFieldNumber = kNameFieldNumber();
   public native @StdString BytePointer name();
   public native void set_name(@StdString BytePointer value);
   public native void set_name(@StdString String value);
@@ -1936,6 +2003,7 @@ public static final int
   public native int input_size();
   public native void clear_input();
   @MemberGetter public static native int kInputFieldNumber();
+  public static final int kInputFieldNumber = kInputFieldNumber();
   public native @StdString BytePointer input(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_input(int index);
   public native void set_input(int index, @StdString BytePointer value);
@@ -1952,6 +2020,7 @@ public static final int
   public native int input_shape_size();
   public native void clear_input_shape();
   @MemberGetter public static native int kInputShapeFieldNumber();
+  public static final int kInputShapeFieldNumber = kInputShapeFieldNumber();
   public native @Const @ByRef BlobShape input_shape(int index);
   public native BlobShape mutable_input_shape(int index);
   public native BlobShape add_input_shape();
@@ -1960,6 +2029,7 @@ public static final int
   public native int input_dim_size();
   public native void clear_input_dim();
   @MemberGetter public static native int kInputDimFieldNumber();
+  public static final int kInputDimFieldNumber = kInputDimFieldNumber();
   public native @Cast("google::protobuf::int32") int input_dim(int index);
   public native void set_input_dim(int index, @Cast("google::protobuf::int32") int value);
   public native void add_input_dim(@Cast("google::protobuf::int32") int value);
@@ -1968,6 +2038,7 @@ public static final int
   public native @Cast("bool") boolean has_force_backward();
   public native void clear_force_backward();
   @MemberGetter public static native int kForceBackwardFieldNumber();
+  public static final int kForceBackwardFieldNumber = kForceBackwardFieldNumber();
   public native @Cast("bool") boolean force_backward();
   public native void set_force_backward(@Cast("bool") boolean value);
 
@@ -1975,6 +2046,7 @@ public static final int
   public native @Cast("bool") boolean has_state();
   public native void clear_state();
   @MemberGetter public static native int kStateFieldNumber();
+  public static final int kStateFieldNumber = kStateFieldNumber();
   public native @Const @ByRef NetState state();
   public native NetState mutable_state();
   public native NetState release_state();
@@ -1984,6 +2056,7 @@ public static final int
   public native @Cast("bool") boolean has_debug_info();
   public native void clear_debug_info();
   @MemberGetter public static native int kDebugInfoFieldNumber();
+  public static final int kDebugInfoFieldNumber = kDebugInfoFieldNumber();
   public native @Cast("bool") boolean debug_info();
   public native void set_debug_info(@Cast("bool") boolean value);
 
@@ -1991,6 +2064,7 @@ public static final int
   public native int layer_size();
   public native void clear_layer();
   @MemberGetter public static native int kLayerFieldNumber();
+  public static final int kLayerFieldNumber = kLayerFieldNumber();
   public native @Const @ByRef LayerParameter layer(int index);
   public native LayerParameter mutable_layer(int index);
   public native LayerParameter add_layer();
@@ -1999,6 +2073,7 @@ public static final int
   public native int layers_size();
   public native void clear_layers();
   @MemberGetter public static native int kLayersFieldNumber();
+  public static final int kLayersFieldNumber = kLayersFieldNumber();
   public native @Const @ByRef V1LayerParameter layers(int index);
   public native V1LayerParameter mutable_layers(int index);
   public native V1LayerParameter add_layers();
@@ -2056,11 +2131,16 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SnapshotFormat") int HDF5();
+  public static final int HDF5 = HDF5();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SnapshotFormat") int BINARYPROTO();
+  public static final int BINARYPROTO = BINARYPROTO();
   public static native @Cast("bool") boolean SnapshotFormat_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SnapshotFormat") int SnapshotFormat_MIN();
+  public static final int SnapshotFormat_MIN = SnapshotFormat_MIN();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SnapshotFormat") int SnapshotFormat_MAX();
+  public static final int SnapshotFormat_MAX = SnapshotFormat_MAX();
   @MemberGetter public static native int SnapshotFormat_ARRAYSIZE();
+  public static final int SnapshotFormat_ARRAYSIZE = SnapshotFormat_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer SnapshotFormat_descriptor();
   public static native @StdString BytePointer SnapshotFormat_Name(@Cast("caffe::SolverParameter::SnapshotFormat") int value);
   public static native @Cast("bool") boolean SnapshotFormat_Parse(@StdString BytePointer name,
@@ -2076,11 +2156,16 @@ public static final int
   public static native @Cast("bool") boolean SnapshotFormat_Parse(@StdString String name,
         @Cast("caffe::SolverParameter::SnapshotFormat*") int[] value);
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverMode") int CPU();
+  public static final int CPU = CPU();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverMode") int GPU();
+  public static final int GPU = GPU();
   public static native @Cast("bool") boolean SolverMode_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverMode") int SolverMode_MIN();
+  public static final int SolverMode_MIN = SolverMode_MIN();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverMode") int SolverMode_MAX();
+  public static final int SolverMode_MAX = SolverMode_MAX();
   @MemberGetter public static native int SolverMode_ARRAYSIZE();
+  public static final int SolverMode_ARRAYSIZE = SolverMode_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer SolverMode_descriptor();
   public static native @StdString BytePointer SolverMode_Name(@Cast("caffe::SolverParameter::SolverMode") int value);
   public static native @Cast("bool") boolean SolverMode_Parse(@StdString BytePointer name,
@@ -2096,15 +2181,24 @@ public static final int
   public static native @Cast("bool") boolean SolverMode_Parse(@StdString String name,
         @Cast("caffe::SolverParameter::SolverMode*") int[] value);
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int SGD();
+  public static final int SGD = SGD();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int NESTEROV();
+  public static final int NESTEROV = NESTEROV();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int ADAGRAD();
+  public static final int ADAGRAD = ADAGRAD();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int RMSPROP();
+  public static final int RMSPROP = RMSPROP();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int ADADELTA();
+  public static final int ADADELTA = ADADELTA();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int ADAM();
+  public static final int ADAM = ADAM();
   public static native @Cast("bool") boolean SolverType_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int SolverType_MIN();
+  public static final int SolverType_MIN = SolverType_MIN();
   @MemberGetter public static native @Cast("const caffe::SolverParameter::SolverType") int SolverType_MAX();
+  public static final int SolverType_MAX = SolverType_MAX();
   @MemberGetter public static native int SolverType_ARRAYSIZE();
+  public static final int SolverType_ARRAYSIZE = SolverType_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer SolverType_descriptor();
   public static native @StdString BytePointer SolverType_Name(@Cast("caffe::SolverParameter::SolverType") int value);
   public static native @Cast("bool") boolean SolverType_Parse(@StdString BytePointer name,
@@ -2126,6 +2220,7 @@ public static final int
   public native @Cast("bool") boolean has_net();
   public native void clear_net();
   @MemberGetter public static native int kNetFieldNumber();
+  public static final int kNetFieldNumber = kNetFieldNumber();
   public native @StdString BytePointer net();
   public native void set_net(@StdString BytePointer value);
   public native void set_net(@StdString String value);
@@ -2139,6 +2234,7 @@ public static final int
   public native @Cast("bool") boolean has_net_param();
   public native void clear_net_param();
   @MemberGetter public static native int kNetParamFieldNumber();
+  public static final int kNetParamFieldNumber = kNetParamFieldNumber();
   public native @Const @ByRef NetParameter net_param();
   public native NetParameter mutable_net_param();
   public native NetParameter release_net_param();
@@ -2148,6 +2244,7 @@ public static final int
   public native @Cast("bool") boolean has_train_net();
   public native void clear_train_net();
   @MemberGetter public static native int kTrainNetFieldNumber();
+  public static final int kTrainNetFieldNumber = kTrainNetFieldNumber();
   public native @StdString BytePointer train_net();
   public native void set_train_net(@StdString BytePointer value);
   public native void set_train_net(@StdString String value);
@@ -2161,6 +2258,7 @@ public static final int
   public native int test_net_size();
   public native void clear_test_net();
   @MemberGetter public static native int kTestNetFieldNumber();
+  public static final int kTestNetFieldNumber = kTestNetFieldNumber();
   public native @StdString BytePointer test_net(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_test_net(int index);
   public native void set_test_net(int index, @StdString BytePointer value);
@@ -2177,6 +2275,7 @@ public static final int
   public native @Cast("bool") boolean has_train_net_param();
   public native void clear_train_net_param();
   @MemberGetter public static native int kTrainNetParamFieldNumber();
+  public static final int kTrainNetParamFieldNumber = kTrainNetParamFieldNumber();
   public native @Const @ByRef NetParameter train_net_param();
   public native NetParameter mutable_train_net_param();
   public native NetParameter release_train_net_param();
@@ -2186,6 +2285,7 @@ public static final int
   public native int test_net_param_size();
   public native void clear_test_net_param();
   @MemberGetter public static native int kTestNetParamFieldNumber();
+  public static final int kTestNetParamFieldNumber = kTestNetParamFieldNumber();
   public native @Const @ByRef NetParameter test_net_param(int index);
   public native NetParameter mutable_test_net_param(int index);
   public native NetParameter add_test_net_param();
@@ -2194,6 +2294,7 @@ public static final int
   public native @Cast("bool") boolean has_train_state();
   public native void clear_train_state();
   @MemberGetter public static native int kTrainStateFieldNumber();
+  public static final int kTrainStateFieldNumber = kTrainStateFieldNumber();
   public native @Const @ByRef NetState train_state();
   public native NetState mutable_train_state();
   public native NetState release_train_state();
@@ -2203,6 +2304,7 @@ public static final int
   public native int test_state_size();
   public native void clear_test_state();
   @MemberGetter public static native int kTestStateFieldNumber();
+  public static final int kTestStateFieldNumber = kTestStateFieldNumber();
   public native @Const @ByRef NetState test_state(int index);
   public native NetState mutable_test_state(int index);
   public native NetState add_test_state();
@@ -2211,6 +2313,7 @@ public static final int
   public native int test_iter_size();
   public native void clear_test_iter();
   @MemberGetter public static native int kTestIterFieldNumber();
+  public static final int kTestIterFieldNumber = kTestIterFieldNumber();
   public native @Cast("google::protobuf::int32") int test_iter(int index);
   public native void set_test_iter(int index, @Cast("google::protobuf::int32") int value);
   public native void add_test_iter(@Cast("google::protobuf::int32") int value);
@@ -2219,6 +2322,7 @@ public static final int
   public native @Cast("bool") boolean has_test_interval();
   public native void clear_test_interval();
   @MemberGetter public static native int kTestIntervalFieldNumber();
+  public static final int kTestIntervalFieldNumber = kTestIntervalFieldNumber();
   public native @Cast("google::protobuf::int32") int test_interval();
   public native void set_test_interval(@Cast("google::protobuf::int32") int value);
 
@@ -2226,6 +2330,7 @@ public static final int
   public native @Cast("bool") boolean has_test_compute_loss();
   public native void clear_test_compute_loss();
   @MemberGetter public static native int kTestComputeLossFieldNumber();
+  public static final int kTestComputeLossFieldNumber = kTestComputeLossFieldNumber();
   public native @Cast("bool") boolean test_compute_loss();
   public native void set_test_compute_loss(@Cast("bool") boolean value);
 
@@ -2233,6 +2338,7 @@ public static final int
   public native @Cast("bool") boolean has_test_initialization();
   public native void clear_test_initialization();
   @MemberGetter public static native int kTestInitializationFieldNumber();
+  public static final int kTestInitializationFieldNumber = kTestInitializationFieldNumber();
   public native @Cast("bool") boolean test_initialization();
   public native void set_test_initialization(@Cast("bool") boolean value);
 
@@ -2240,6 +2346,7 @@ public static final int
   public native @Cast("bool") boolean has_base_lr();
   public native void clear_base_lr();
   @MemberGetter public static native int kBaseLrFieldNumber();
+  public static final int kBaseLrFieldNumber = kBaseLrFieldNumber();
   public native float base_lr();
   public native void set_base_lr(float value);
 
@@ -2247,6 +2354,7 @@ public static final int
   public native @Cast("bool") boolean has_display();
   public native void clear_display();
   @MemberGetter public static native int kDisplayFieldNumber();
+  public static final int kDisplayFieldNumber = kDisplayFieldNumber();
   public native @Cast("google::protobuf::int32") int display();
   public native void set_display(@Cast("google::protobuf::int32") int value);
 
@@ -2254,6 +2362,7 @@ public static final int
   public native @Cast("bool") boolean has_average_loss();
   public native void clear_average_loss();
   @MemberGetter public static native int kAverageLossFieldNumber();
+  public static final int kAverageLossFieldNumber = kAverageLossFieldNumber();
   public native @Cast("google::protobuf::int32") int average_loss();
   public native void set_average_loss(@Cast("google::protobuf::int32") int value);
 
@@ -2261,6 +2370,7 @@ public static final int
   public native @Cast("bool") boolean has_max_iter();
   public native void clear_max_iter();
   @MemberGetter public static native int kMaxIterFieldNumber();
+  public static final int kMaxIterFieldNumber = kMaxIterFieldNumber();
   public native @Cast("google::protobuf::int32") int max_iter();
   public native void set_max_iter(@Cast("google::protobuf::int32") int value);
 
@@ -2268,6 +2378,7 @@ public static final int
   public native @Cast("bool") boolean has_iter_size();
   public native void clear_iter_size();
   @MemberGetter public static native int kIterSizeFieldNumber();
+  public static final int kIterSizeFieldNumber = kIterSizeFieldNumber();
   public native @Cast("google::protobuf::int32") int iter_size();
   public native void set_iter_size(@Cast("google::protobuf::int32") int value);
 
@@ -2275,6 +2386,7 @@ public static final int
   public native @Cast("bool") boolean has_lr_policy();
   public native void clear_lr_policy();
   @MemberGetter public static native int kLrPolicyFieldNumber();
+  public static final int kLrPolicyFieldNumber = kLrPolicyFieldNumber();
   public native @StdString BytePointer lr_policy();
   public native void set_lr_policy(@StdString BytePointer value);
   public native void set_lr_policy(@StdString String value);
@@ -2288,6 +2400,7 @@ public static final int
   public native @Cast("bool") boolean has_gamma();
   public native void clear_gamma();
   @MemberGetter public static native int kGammaFieldNumber();
+  public static final int kGammaFieldNumber = kGammaFieldNumber();
   public native float gamma();
   public native void set_gamma(float value);
 
@@ -2295,6 +2408,7 @@ public static final int
   public native @Cast("bool") boolean has_power();
   public native void clear_power();
   @MemberGetter public static native int kPowerFieldNumber();
+  public static final int kPowerFieldNumber = kPowerFieldNumber();
   public native float power();
   public native void set_power(float value);
 
@@ -2302,6 +2416,7 @@ public static final int
   public native @Cast("bool") boolean has_momentum();
   public native void clear_momentum();
   @MemberGetter public static native int kMomentumFieldNumber();
+  public static final int kMomentumFieldNumber = kMomentumFieldNumber();
   public native float momentum();
   public native void set_momentum(float value);
 
@@ -2309,6 +2424,7 @@ public static final int
   public native @Cast("bool") boolean has_weight_decay();
   public native void clear_weight_decay();
   @MemberGetter public static native int kWeightDecayFieldNumber();
+  public static final int kWeightDecayFieldNumber = kWeightDecayFieldNumber();
   public native float weight_decay();
   public native void set_weight_decay(float value);
 
@@ -2316,6 +2432,7 @@ public static final int
   public native @Cast("bool") boolean has_regularization_type();
   public native void clear_regularization_type();
   @MemberGetter public static native int kRegularizationTypeFieldNumber();
+  public static final int kRegularizationTypeFieldNumber = kRegularizationTypeFieldNumber();
   public native @StdString BytePointer regularization_type();
   public native void set_regularization_type(@StdString BytePointer value);
   public native void set_regularization_type(@StdString String value);
@@ -2329,6 +2446,7 @@ public static final int
   public native @Cast("bool") boolean has_stepsize();
   public native void clear_stepsize();
   @MemberGetter public static native int kStepsizeFieldNumber();
+  public static final int kStepsizeFieldNumber = kStepsizeFieldNumber();
   public native @Cast("google::protobuf::int32") int stepsize();
   public native void set_stepsize(@Cast("google::protobuf::int32") int value);
 
@@ -2336,6 +2454,7 @@ public static final int
   public native int stepvalue_size();
   public native void clear_stepvalue();
   @MemberGetter public static native int kStepvalueFieldNumber();
+  public static final int kStepvalueFieldNumber = kStepvalueFieldNumber();
   public native @Cast("google::protobuf::int32") int stepvalue(int index);
   public native void set_stepvalue(int index, @Cast("google::protobuf::int32") int value);
   public native void add_stepvalue(@Cast("google::protobuf::int32") int value);
@@ -2344,6 +2463,7 @@ public static final int
   public native @Cast("bool") boolean has_clip_gradients();
   public native void clear_clip_gradients();
   @MemberGetter public static native int kClipGradientsFieldNumber();
+  public static final int kClipGradientsFieldNumber = kClipGradientsFieldNumber();
   public native float clip_gradients();
   public native void set_clip_gradients(float value);
 
@@ -2351,6 +2471,7 @@ public static final int
   public native @Cast("bool") boolean has_snapshot();
   public native void clear_snapshot();
   @MemberGetter public static native int kSnapshotFieldNumber();
+  public static final int kSnapshotFieldNumber = kSnapshotFieldNumber();
   public native @Cast("google::protobuf::int32") int snapshot();
   public native void set_snapshot(@Cast("google::protobuf::int32") int value);
 
@@ -2358,6 +2479,7 @@ public static final int
   public native @Cast("bool") boolean has_snapshot_prefix();
   public native void clear_snapshot_prefix();
   @MemberGetter public static native int kSnapshotPrefixFieldNumber();
+  public static final int kSnapshotPrefixFieldNumber = kSnapshotPrefixFieldNumber();
   public native @StdString BytePointer snapshot_prefix();
   public native void set_snapshot_prefix(@StdString BytePointer value);
   public native void set_snapshot_prefix(@StdString String value);
@@ -2371,6 +2493,7 @@ public static final int
   public native @Cast("bool") boolean has_snapshot_diff();
   public native void clear_snapshot_diff();
   @MemberGetter public static native int kSnapshotDiffFieldNumber();
+  public static final int kSnapshotDiffFieldNumber = kSnapshotDiffFieldNumber();
   public native @Cast("bool") boolean snapshot_diff();
   public native void set_snapshot_diff(@Cast("bool") boolean value);
 
@@ -2378,6 +2501,7 @@ public static final int
   public native @Cast("bool") boolean has_snapshot_format();
   public native void clear_snapshot_format();
   @MemberGetter public static native int kSnapshotFormatFieldNumber();
+  public static final int kSnapshotFormatFieldNumber = kSnapshotFormatFieldNumber();
   public native @Cast("caffe::SolverParameter_SnapshotFormat") int snapshot_format();
   public native void set_snapshot_format(@Cast("caffe::SolverParameter_SnapshotFormat") int value);
 
@@ -2385,6 +2509,7 @@ public static final int
   public native @Cast("bool") boolean has_solver_mode();
   public native void clear_solver_mode();
   @MemberGetter public static native int kSolverModeFieldNumber();
+  public static final int kSolverModeFieldNumber = kSolverModeFieldNumber();
   public native @Cast("caffe::SolverParameter_SolverMode") int solver_mode();
   public native void set_solver_mode(@Cast("caffe::SolverParameter_SolverMode") int value);
 
@@ -2392,6 +2517,7 @@ public static final int
   public native @Cast("bool") boolean has_device_id();
   public native void clear_device_id();
   @MemberGetter public static native int kDeviceIdFieldNumber();
+  public static final int kDeviceIdFieldNumber = kDeviceIdFieldNumber();
   public native @Cast("google::protobuf::int32") int device_id();
   public native void set_device_id(@Cast("google::protobuf::int32") int value);
 
@@ -2399,6 +2525,7 @@ public static final int
   public native @Cast("bool") boolean has_random_seed();
   public native void clear_random_seed();
   @MemberGetter public static native int kRandomSeedFieldNumber();
+  public static final int kRandomSeedFieldNumber = kRandomSeedFieldNumber();
   public native @Cast("google::protobuf::int64") long random_seed();
   public native void set_random_seed(@Cast("google::protobuf::int64") long value);
 
@@ -2406,6 +2533,7 @@ public static final int
   public native @Cast("bool") boolean has_type();
   public native void clear_type();
   @MemberGetter public static native int kTypeFieldNumber();
+  public static final int kTypeFieldNumber = kTypeFieldNumber();
   public native @StdString BytePointer type();
   public native void set_type(@StdString BytePointer value);
   public native void set_type(@StdString String value);
@@ -2419,6 +2547,7 @@ public static final int
   public native @Cast("bool") boolean has_delta();
   public native void clear_delta();
   @MemberGetter public static native int kDeltaFieldNumber();
+  public static final int kDeltaFieldNumber = kDeltaFieldNumber();
   public native float delta();
   public native void set_delta(float value);
 
@@ -2426,6 +2555,7 @@ public static final int
   public native @Cast("bool") boolean has_momentum2();
   public native void clear_momentum2();
   @MemberGetter public static native int kMomentum2FieldNumber();
+  public static final int kMomentum2FieldNumber = kMomentum2FieldNumber();
   public native float momentum2();
   public native void set_momentum2(float value);
 
@@ -2433,6 +2563,7 @@ public static final int
   public native @Cast("bool") boolean has_rms_decay();
   public native void clear_rms_decay();
   @MemberGetter public static native int kRmsDecayFieldNumber();
+  public static final int kRmsDecayFieldNumber = kRmsDecayFieldNumber();
   public native float rms_decay();
   public native void set_rms_decay(float value);
 
@@ -2440,6 +2571,7 @@ public static final int
   public native @Cast("bool") boolean has_debug_info();
   public native void clear_debug_info();
   @MemberGetter public static native int kDebugInfoFieldNumber();
+  public static final int kDebugInfoFieldNumber = kDebugInfoFieldNumber();
   public native @Cast("bool") boolean debug_info();
   public native void set_debug_info(@Cast("bool") boolean value);
 
@@ -2447,6 +2579,7 @@ public static final int
   public native @Cast("bool") boolean has_snapshot_after_train();
   public native void clear_snapshot_after_train();
   @MemberGetter public static native int kSnapshotAfterTrainFieldNumber();
+  public static final int kSnapshotAfterTrainFieldNumber = kSnapshotAfterTrainFieldNumber();
   public native @Cast("bool") boolean snapshot_after_train();
   public native void set_snapshot_after_train(@Cast("bool") boolean value);
 
@@ -2454,6 +2587,7 @@ public static final int
   public native @Cast("bool") boolean has_solver_type();
   public native void clear_solver_type();
   @MemberGetter public static native int kSolverTypeFieldNumber();
+  public static final int kSolverTypeFieldNumber = kSolverTypeFieldNumber();
   public native @Cast("caffe::SolverParameter_SolverType") int solver_type();
   public native void set_solver_type(@Cast("caffe::SolverParameter_SolverType") int value);
 }
@@ -2516,6 +2650,7 @@ public static final int
   public native @Cast("bool") boolean has_iter();
   public native void clear_iter();
   @MemberGetter public static native int kIterFieldNumber();
+  public static final int kIterFieldNumber = kIterFieldNumber();
   public native @Cast("google::protobuf::int32") int iter();
   public native void set_iter(@Cast("google::protobuf::int32") int value);
 
@@ -2523,6 +2658,7 @@ public static final int
   public native @Cast("bool") boolean has_learned_net();
   public native void clear_learned_net();
   @MemberGetter public static native int kLearnedNetFieldNumber();
+  public static final int kLearnedNetFieldNumber = kLearnedNetFieldNumber();
   public native @StdString BytePointer learned_net();
   public native void set_learned_net(@StdString BytePointer value);
   public native void set_learned_net(@StdString String value);
@@ -2536,6 +2672,7 @@ public static final int
   public native int history_size();
   public native void clear_history();
   @MemberGetter public static native int kHistoryFieldNumber();
+  public static final int kHistoryFieldNumber = kHistoryFieldNumber();
   public native @Const @ByRef BlobProto history(int index);
   public native BlobProto mutable_history(int index);
   public native BlobProto add_history();
@@ -2544,6 +2681,7 @@ public static final int
   public native @Cast("bool") boolean has_current_step();
   public native void clear_current_step();
   @MemberGetter public static native int kCurrentStepFieldNumber();
+  public static final int kCurrentStepFieldNumber = kCurrentStepFieldNumber();
   public native @Cast("google::protobuf::int32") int current_step();
   public native void set_current_step(@Cast("google::protobuf::int32") int value);
 }
@@ -2606,6 +2744,7 @@ public static final int
   public native @Cast("bool") boolean has_phase();
   public native void clear_phase();
   @MemberGetter public static native int kPhaseFieldNumber();
+  public static final int kPhaseFieldNumber = kPhaseFieldNumber();
   public native @Cast("caffe::Phase") int phase();
   public native void set_phase(@Cast("caffe::Phase") int value);
 
@@ -2613,6 +2752,7 @@ public static final int
   public native @Cast("bool") boolean has_level();
   public native void clear_level();
   @MemberGetter public static native int kLevelFieldNumber();
+  public static final int kLevelFieldNumber = kLevelFieldNumber();
   public native @Cast("google::protobuf::int32") int level();
   public native void set_level(@Cast("google::protobuf::int32") int value);
 
@@ -2620,6 +2760,7 @@ public static final int
   public native int stage_size();
   public native void clear_stage();
   @MemberGetter public static native int kStageFieldNumber();
+  public static final int kStageFieldNumber = kStageFieldNumber();
   public native @StdString BytePointer stage(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_stage(int index);
   public native void set_stage(int index, @StdString BytePointer value);
@@ -2691,6 +2832,7 @@ public static final int
   public native @Cast("bool") boolean has_phase();
   public native void clear_phase();
   @MemberGetter public static native int kPhaseFieldNumber();
+  public static final int kPhaseFieldNumber = kPhaseFieldNumber();
   public native @Cast("caffe::Phase") int phase();
   public native void set_phase(@Cast("caffe::Phase") int value);
 
@@ -2698,6 +2840,7 @@ public static final int
   public native @Cast("bool") boolean has_min_level();
   public native void clear_min_level();
   @MemberGetter public static native int kMinLevelFieldNumber();
+  public static final int kMinLevelFieldNumber = kMinLevelFieldNumber();
   public native @Cast("google::protobuf::int32") int min_level();
   public native void set_min_level(@Cast("google::protobuf::int32") int value);
 
@@ -2705,6 +2848,7 @@ public static final int
   public native @Cast("bool") boolean has_max_level();
   public native void clear_max_level();
   @MemberGetter public static native int kMaxLevelFieldNumber();
+  public static final int kMaxLevelFieldNumber = kMaxLevelFieldNumber();
   public native @Cast("google::protobuf::int32") int max_level();
   public native void set_max_level(@Cast("google::protobuf::int32") int value);
 
@@ -2712,6 +2856,7 @@ public static final int
   public native int stage_size();
   public native void clear_stage();
   @MemberGetter public static native int kStageFieldNumber();
+  public static final int kStageFieldNumber = kStageFieldNumber();
   public native @StdString BytePointer stage(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_stage(int index);
   public native void set_stage(int index, @StdString BytePointer value);
@@ -2728,6 +2873,7 @@ public static final int
   public native int not_stage_size();
   public native void clear_not_stage();
   @MemberGetter public static native int kNotStageFieldNumber();
+  public static final int kNotStageFieldNumber = kNotStageFieldNumber();
   public native @StdString BytePointer not_stage(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_not_stage(int index);
   public native void set_not_stage(int index, @StdString BytePointer value);
@@ -2793,11 +2939,16 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::ParamSpec::DimCheckMode") int STRICT();
+  public static final int STRICT = STRICT();
   @MemberGetter public static native @Cast("const caffe::ParamSpec::DimCheckMode") int PERMISSIVE();
+  public static final int PERMISSIVE = PERMISSIVE();
   public static native @Cast("bool") boolean DimCheckMode_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::ParamSpec::DimCheckMode") int DimCheckMode_MIN();
+  public static final int DimCheckMode_MIN = DimCheckMode_MIN();
   @MemberGetter public static native @Cast("const caffe::ParamSpec::DimCheckMode") int DimCheckMode_MAX();
+  public static final int DimCheckMode_MAX = DimCheckMode_MAX();
   @MemberGetter public static native int DimCheckMode_ARRAYSIZE();
+  public static final int DimCheckMode_ARRAYSIZE = DimCheckMode_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer DimCheckMode_descriptor();
   public static native @StdString BytePointer DimCheckMode_Name(@Cast("caffe::ParamSpec::DimCheckMode") int value);
   public static native @Cast("bool") boolean DimCheckMode_Parse(@StdString BytePointer name,
@@ -2819,6 +2970,7 @@ public static final int
   public native @Cast("bool") boolean has_name();
   public native void clear_name();
   @MemberGetter public static native int kNameFieldNumber();
+  public static final int kNameFieldNumber = kNameFieldNumber();
   public native @StdString BytePointer name();
   public native void set_name(@StdString BytePointer value);
   public native void set_name(@StdString String value);
@@ -2832,6 +2984,7 @@ public static final int
   public native @Cast("bool") boolean has_share_mode();
   public native void clear_share_mode();
   @MemberGetter public static native int kShareModeFieldNumber();
+  public static final int kShareModeFieldNumber = kShareModeFieldNumber();
   public native @Cast("caffe::ParamSpec_DimCheckMode") int share_mode();
   public native void set_share_mode(@Cast("caffe::ParamSpec_DimCheckMode") int value);
 
@@ -2839,6 +2992,7 @@ public static final int
   public native @Cast("bool") boolean has_lr_mult();
   public native void clear_lr_mult();
   @MemberGetter public static native int kLrMultFieldNumber();
+  public static final int kLrMultFieldNumber = kLrMultFieldNumber();
   public native float lr_mult();
   public native void set_lr_mult(float value);
 
@@ -2846,6 +3000,7 @@ public static final int
   public native @Cast("bool") boolean has_decay_mult();
   public native void clear_decay_mult();
   @MemberGetter public static native int kDecayMultFieldNumber();
+  public static final int kDecayMultFieldNumber = kDecayMultFieldNumber();
   public native float decay_mult();
   public native void set_decay_mult(float value);
 }
@@ -2908,6 +3063,7 @@ public static final int
   public native @Cast("bool") boolean has_name();
   public native void clear_name();
   @MemberGetter public static native int kNameFieldNumber();
+  public static final int kNameFieldNumber = kNameFieldNumber();
   public native @StdString BytePointer name();
   public native void set_name(@StdString BytePointer value);
   public native void set_name(@StdString String value);
@@ -2921,6 +3077,7 @@ public static final int
   public native @Cast("bool") boolean has_type();
   public native void clear_type();
   @MemberGetter public static native int kTypeFieldNumber();
+  public static final int kTypeFieldNumber = kTypeFieldNumber();
   public native @StdString BytePointer type();
   public native void set_type(@StdString BytePointer value);
   public native void set_type(@StdString String value);
@@ -2934,6 +3091,7 @@ public static final int
   public native int bottom_size();
   public native void clear_bottom();
   @MemberGetter public static native int kBottomFieldNumber();
+  public static final int kBottomFieldNumber = kBottomFieldNumber();
   public native @StdString BytePointer bottom(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_bottom(int index);
   public native void set_bottom(int index, @StdString BytePointer value);
@@ -2950,6 +3108,7 @@ public static final int
   public native int top_size();
   public native void clear_top();
   @MemberGetter public static native int kTopFieldNumber();
+  public static final int kTopFieldNumber = kTopFieldNumber();
   public native @StdString BytePointer top(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_top(int index);
   public native void set_top(int index, @StdString BytePointer value);
@@ -2966,6 +3125,7 @@ public static final int
   public native @Cast("bool") boolean has_phase();
   public native void clear_phase();
   @MemberGetter public static native int kPhaseFieldNumber();
+  public static final int kPhaseFieldNumber = kPhaseFieldNumber();
   public native @Cast("caffe::Phase") int phase();
   public native void set_phase(@Cast("caffe::Phase") int value);
 
@@ -2973,6 +3133,7 @@ public static final int
   public native int loss_weight_size();
   public native void clear_loss_weight();
   @MemberGetter public static native int kLossWeightFieldNumber();
+  public static final int kLossWeightFieldNumber = kLossWeightFieldNumber();
   public native float loss_weight(int index);
   public native void set_loss_weight(int index, float value);
   public native void add_loss_weight(float value);
@@ -2981,6 +3142,7 @@ public static final int
   public native int param_size();
   public native void clear_param();
   @MemberGetter public static native int kParamFieldNumber();
+  public static final int kParamFieldNumber = kParamFieldNumber();
   public native @Const @ByRef ParamSpec param(int index);
   public native ParamSpec mutable_param(int index);
   public native ParamSpec add_param();
@@ -2989,6 +3151,7 @@ public static final int
   public native int blobs_size();
   public native void clear_blobs();
   @MemberGetter public static native int kBlobsFieldNumber();
+  public static final int kBlobsFieldNumber = kBlobsFieldNumber();
   public native @Const @ByRef BlobProto blobs(int index);
   public native BlobProto mutable_blobs(int index);
   public native BlobProto add_blobs();
@@ -2997,6 +3160,7 @@ public static final int
   public native int propagate_down_size();
   public native void clear_propagate_down();
   @MemberGetter public static native int kPropagateDownFieldNumber();
+  public static final int kPropagateDownFieldNumber = kPropagateDownFieldNumber();
   public native @Cast("bool") boolean propagate_down(int index);
   public native void set_propagate_down(int index, @Cast("bool") boolean value);
   public native void add_propagate_down(@Cast("bool") boolean value);
@@ -3005,6 +3169,7 @@ public static final int
   public native int include_size();
   public native void clear_include();
   @MemberGetter public static native int kIncludeFieldNumber();
+  public static final int kIncludeFieldNumber = kIncludeFieldNumber();
   public native @Const @ByRef NetStateRule include(int index);
   public native NetStateRule mutable_include(int index);
   public native NetStateRule add_include();
@@ -3013,6 +3178,7 @@ public static final int
   public native int exclude_size();
   public native void clear_exclude();
   @MemberGetter public static native int kExcludeFieldNumber();
+  public static final int kExcludeFieldNumber = kExcludeFieldNumber();
   public native @Const @ByRef NetStateRule exclude(int index);
   public native NetStateRule mutable_exclude(int index);
   public native NetStateRule add_exclude();
@@ -3021,6 +3187,7 @@ public static final int
   public native @Cast("bool") boolean has_transform_param();
   public native void clear_transform_param();
   @MemberGetter public static native int kTransformParamFieldNumber();
+  public static final int kTransformParamFieldNumber = kTransformParamFieldNumber();
   public native @Const @ByRef TransformationParameter transform_param();
   public native TransformationParameter mutable_transform_param();
   public native TransformationParameter release_transform_param();
@@ -3030,6 +3197,7 @@ public static final int
   public native @Cast("bool") boolean has_loss_param();
   public native void clear_loss_param();
   @MemberGetter public static native int kLossParamFieldNumber();
+  public static final int kLossParamFieldNumber = kLossParamFieldNumber();
   public native @Const @ByRef LossParameter loss_param();
   public native LossParameter mutable_loss_param();
   public native LossParameter release_loss_param();
@@ -3039,6 +3207,7 @@ public static final int
   public native @Cast("bool") boolean has_accuracy_param();
   public native void clear_accuracy_param();
   @MemberGetter public static native int kAccuracyParamFieldNumber();
+  public static final int kAccuracyParamFieldNumber = kAccuracyParamFieldNumber();
   public native @Const @ByRef AccuracyParameter accuracy_param();
   public native AccuracyParameter mutable_accuracy_param();
   public native AccuracyParameter release_accuracy_param();
@@ -3048,6 +3217,7 @@ public static final int
   public native @Cast("bool") boolean has_argmax_param();
   public native void clear_argmax_param();
   @MemberGetter public static native int kArgmaxParamFieldNumber();
+  public static final int kArgmaxParamFieldNumber = kArgmaxParamFieldNumber();
   public native @Const @ByRef ArgMaxParameter argmax_param();
   public native ArgMaxParameter mutable_argmax_param();
   public native ArgMaxParameter release_argmax_param();
@@ -3057,6 +3227,7 @@ public static final int
   public native @Cast("bool") boolean has_batch_norm_param();
   public native void clear_batch_norm_param();
   @MemberGetter public static native int kBatchNormParamFieldNumber();
+  public static final int kBatchNormParamFieldNumber = kBatchNormParamFieldNumber();
   public native @Const @ByRef BatchNormParameter batch_norm_param();
   public native BatchNormParameter mutable_batch_norm_param();
   public native BatchNormParameter release_batch_norm_param();
@@ -3066,6 +3237,7 @@ public static final int
   public native @Cast("bool") boolean has_concat_param();
   public native void clear_concat_param();
   @MemberGetter public static native int kConcatParamFieldNumber();
+  public static final int kConcatParamFieldNumber = kConcatParamFieldNumber();
   public native @Const @ByRef ConcatParameter concat_param();
   public native ConcatParameter mutable_concat_param();
   public native ConcatParameter release_concat_param();
@@ -3075,6 +3247,7 @@ public static final int
   public native @Cast("bool") boolean has_contrastive_loss_param();
   public native void clear_contrastive_loss_param();
   @MemberGetter public static native int kContrastiveLossParamFieldNumber();
+  public static final int kContrastiveLossParamFieldNumber = kContrastiveLossParamFieldNumber();
   public native @Const @ByRef ContrastiveLossParameter contrastive_loss_param();
   public native ContrastiveLossParameter mutable_contrastive_loss_param();
   public native ContrastiveLossParameter release_contrastive_loss_param();
@@ -3084,6 +3257,7 @@ public static final int
   public native @Cast("bool") boolean has_convolution_param();
   public native void clear_convolution_param();
   @MemberGetter public static native int kConvolutionParamFieldNumber();
+  public static final int kConvolutionParamFieldNumber = kConvolutionParamFieldNumber();
   public native @Const @ByRef ConvolutionParameter convolution_param();
   public native ConvolutionParameter mutable_convolution_param();
   public native ConvolutionParameter release_convolution_param();
@@ -3093,6 +3267,7 @@ public static final int
   public native @Cast("bool") boolean has_data_param();
   public native void clear_data_param();
   @MemberGetter public static native int kDataParamFieldNumber();
+  public static final int kDataParamFieldNumber = kDataParamFieldNumber();
   public native @Const @ByRef DataParameter data_param();
   public native DataParameter mutable_data_param();
   public native DataParameter release_data_param();
@@ -3102,6 +3277,7 @@ public static final int
   public native @Cast("bool") boolean has_dropout_param();
   public native void clear_dropout_param();
   @MemberGetter public static native int kDropoutParamFieldNumber();
+  public static final int kDropoutParamFieldNumber = kDropoutParamFieldNumber();
   public native @Const @ByRef DropoutParameter dropout_param();
   public native DropoutParameter mutable_dropout_param();
   public native DropoutParameter release_dropout_param();
@@ -3111,6 +3287,7 @@ public static final int
   public native @Cast("bool") boolean has_dummy_data_param();
   public native void clear_dummy_data_param();
   @MemberGetter public static native int kDummyDataParamFieldNumber();
+  public static final int kDummyDataParamFieldNumber = kDummyDataParamFieldNumber();
   public native @Const @ByRef DummyDataParameter dummy_data_param();
   public native DummyDataParameter mutable_dummy_data_param();
   public native DummyDataParameter release_dummy_data_param();
@@ -3120,6 +3297,7 @@ public static final int
   public native @Cast("bool") boolean has_eltwise_param();
   public native void clear_eltwise_param();
   @MemberGetter public static native int kEltwiseParamFieldNumber();
+  public static final int kEltwiseParamFieldNumber = kEltwiseParamFieldNumber();
   public native @Const @ByRef EltwiseParameter eltwise_param();
   public native EltwiseParameter mutable_eltwise_param();
   public native EltwiseParameter release_eltwise_param();
@@ -3129,6 +3307,7 @@ public static final int
   public native @Cast("bool") boolean has_embed_param();
   public native void clear_embed_param();
   @MemberGetter public static native int kEmbedParamFieldNumber();
+  public static final int kEmbedParamFieldNumber = kEmbedParamFieldNumber();
   public native @Const @ByRef EmbedParameter embed_param();
   public native EmbedParameter mutable_embed_param();
   public native EmbedParameter release_embed_param();
@@ -3138,6 +3317,7 @@ public static final int
   public native @Cast("bool") boolean has_exp_param();
   public native void clear_exp_param();
   @MemberGetter public static native int kExpParamFieldNumber();
+  public static final int kExpParamFieldNumber = kExpParamFieldNumber();
   public native @Const @ByRef ExpParameter exp_param();
   public native ExpParameter mutable_exp_param();
   public native ExpParameter release_exp_param();
@@ -3147,6 +3327,7 @@ public static final int
   public native @Cast("bool") boolean has_flatten_param();
   public native void clear_flatten_param();
   @MemberGetter public static native int kFlattenParamFieldNumber();
+  public static final int kFlattenParamFieldNumber = kFlattenParamFieldNumber();
   public native @Const @ByRef FlattenParameter flatten_param();
   public native FlattenParameter mutable_flatten_param();
   public native FlattenParameter release_flatten_param();
@@ -3156,6 +3337,7 @@ public static final int
   public native @Cast("bool") boolean has_hdf5_data_param();
   public native void clear_hdf5_data_param();
   @MemberGetter public static native int kHdf5DataParamFieldNumber();
+  public static final int kHdf5DataParamFieldNumber = kHdf5DataParamFieldNumber();
   public native @Const @ByRef HDF5DataParameter hdf5_data_param();
   public native HDF5DataParameter mutable_hdf5_data_param();
   public native HDF5DataParameter release_hdf5_data_param();
@@ -3165,6 +3347,7 @@ public static final int
   public native @Cast("bool") boolean has_hdf5_output_param();
   public native void clear_hdf5_output_param();
   @MemberGetter public static native int kHdf5OutputParamFieldNumber();
+  public static final int kHdf5OutputParamFieldNumber = kHdf5OutputParamFieldNumber();
   public native @Const @ByRef HDF5OutputParameter hdf5_output_param();
   public native HDF5OutputParameter mutable_hdf5_output_param();
   public native HDF5OutputParameter release_hdf5_output_param();
@@ -3174,6 +3357,7 @@ public static final int
   public native @Cast("bool") boolean has_hinge_loss_param();
   public native void clear_hinge_loss_param();
   @MemberGetter public static native int kHingeLossParamFieldNumber();
+  public static final int kHingeLossParamFieldNumber = kHingeLossParamFieldNumber();
   public native @Const @ByRef HingeLossParameter hinge_loss_param();
   public native HingeLossParameter mutable_hinge_loss_param();
   public native HingeLossParameter release_hinge_loss_param();
@@ -3183,6 +3367,7 @@ public static final int
   public native @Cast("bool") boolean has_image_data_param();
   public native void clear_image_data_param();
   @MemberGetter public static native int kImageDataParamFieldNumber();
+  public static final int kImageDataParamFieldNumber = kImageDataParamFieldNumber();
   public native @Const @ByRef ImageDataParameter image_data_param();
   public native ImageDataParameter mutable_image_data_param();
   public native ImageDataParameter release_image_data_param();
@@ -3192,6 +3377,7 @@ public static final int
   public native @Cast("bool") boolean has_infogain_loss_param();
   public native void clear_infogain_loss_param();
   @MemberGetter public static native int kInfogainLossParamFieldNumber();
+  public static final int kInfogainLossParamFieldNumber = kInfogainLossParamFieldNumber();
   public native @Const @ByRef InfogainLossParameter infogain_loss_param();
   public native InfogainLossParameter mutable_infogain_loss_param();
   public native InfogainLossParameter release_infogain_loss_param();
@@ -3201,6 +3387,7 @@ public static final int
   public native @Cast("bool") boolean has_inner_product_param();
   public native void clear_inner_product_param();
   @MemberGetter public static native int kInnerProductParamFieldNumber();
+  public static final int kInnerProductParamFieldNumber = kInnerProductParamFieldNumber();
   public native @Const @ByRef InnerProductParameter inner_product_param();
   public native InnerProductParameter mutable_inner_product_param();
   public native InnerProductParameter release_inner_product_param();
@@ -3210,6 +3397,7 @@ public static final int
   public native @Cast("bool") boolean has_log_param();
   public native void clear_log_param();
   @MemberGetter public static native int kLogParamFieldNumber();
+  public static final int kLogParamFieldNumber = kLogParamFieldNumber();
   public native @Const @ByRef LogParameter log_param();
   public native LogParameter mutable_log_param();
   public native LogParameter release_log_param();
@@ -3219,6 +3407,7 @@ public static final int
   public native @Cast("bool") boolean has_lrn_param();
   public native void clear_lrn_param();
   @MemberGetter public static native int kLrnParamFieldNumber();
+  public static final int kLrnParamFieldNumber = kLrnParamFieldNumber();
   public native @Const @ByRef LRNParameter lrn_param();
   public native LRNParameter mutable_lrn_param();
   public native LRNParameter release_lrn_param();
@@ -3228,6 +3417,7 @@ public static final int
   public native @Cast("bool") boolean has_memory_data_param();
   public native void clear_memory_data_param();
   @MemberGetter public static native int kMemoryDataParamFieldNumber();
+  public static final int kMemoryDataParamFieldNumber = kMemoryDataParamFieldNumber();
   public native @Const @ByRef MemoryDataParameter memory_data_param();
   public native MemoryDataParameter mutable_memory_data_param();
   public native MemoryDataParameter release_memory_data_param();
@@ -3237,6 +3427,7 @@ public static final int
   public native @Cast("bool") boolean has_mvn_param();
   public native void clear_mvn_param();
   @MemberGetter public static native int kMvnParamFieldNumber();
+  public static final int kMvnParamFieldNumber = kMvnParamFieldNumber();
   public native @Const @ByRef MVNParameter mvn_param();
   public native MVNParameter mutable_mvn_param();
   public native MVNParameter release_mvn_param();
@@ -3246,6 +3437,7 @@ public static final int
   public native @Cast("bool") boolean has_pooling_param();
   public native void clear_pooling_param();
   @MemberGetter public static native int kPoolingParamFieldNumber();
+  public static final int kPoolingParamFieldNumber = kPoolingParamFieldNumber();
   public native @Const @ByRef PoolingParameter pooling_param();
   public native PoolingParameter mutable_pooling_param();
   public native PoolingParameter release_pooling_param();
@@ -3255,6 +3447,7 @@ public static final int
   public native @Cast("bool") boolean has_power_param();
   public native void clear_power_param();
   @MemberGetter public static native int kPowerParamFieldNumber();
+  public static final int kPowerParamFieldNumber = kPowerParamFieldNumber();
   public native @Const @ByRef PowerParameter power_param();
   public native PowerParameter mutable_power_param();
   public native PowerParameter release_power_param();
@@ -3264,6 +3457,7 @@ public static final int
   public native @Cast("bool") boolean has_prelu_param();
   public native void clear_prelu_param();
   @MemberGetter public static native int kPreluParamFieldNumber();
+  public static final int kPreluParamFieldNumber = kPreluParamFieldNumber();
   public native @Const @ByRef PReLUParameter prelu_param();
   public native PReLUParameter mutable_prelu_param();
   public native PReLUParameter release_prelu_param();
@@ -3273,6 +3467,7 @@ public static final int
   public native @Cast("bool") boolean has_python_param();
   public native void clear_python_param();
   @MemberGetter public static native int kPythonParamFieldNumber();
+  public static final int kPythonParamFieldNumber = kPythonParamFieldNumber();
   public native @Const @ByRef PythonParameter python_param();
   public native PythonParameter mutable_python_param();
   public native PythonParameter release_python_param();
@@ -3282,6 +3477,7 @@ public static final int
   public native @Cast("bool") boolean has_reduction_param();
   public native void clear_reduction_param();
   @MemberGetter public static native int kReductionParamFieldNumber();
+  public static final int kReductionParamFieldNumber = kReductionParamFieldNumber();
   public native @Const @ByRef ReductionParameter reduction_param();
   public native ReductionParameter mutable_reduction_param();
   public native ReductionParameter release_reduction_param();
@@ -3291,6 +3487,7 @@ public static final int
   public native @Cast("bool") boolean has_relu_param();
   public native void clear_relu_param();
   @MemberGetter public static native int kReluParamFieldNumber();
+  public static final int kReluParamFieldNumber = kReluParamFieldNumber();
   public native @Const @ByRef ReLUParameter relu_param();
   public native ReLUParameter mutable_relu_param();
   public native ReLUParameter release_relu_param();
@@ -3300,6 +3497,7 @@ public static final int
   public native @Cast("bool") boolean has_reshape_param();
   public native void clear_reshape_param();
   @MemberGetter public static native int kReshapeParamFieldNumber();
+  public static final int kReshapeParamFieldNumber = kReshapeParamFieldNumber();
   public native @Const @ByRef ReshapeParameter reshape_param();
   public native ReshapeParameter mutable_reshape_param();
   public native ReshapeParameter release_reshape_param();
@@ -3309,6 +3507,7 @@ public static final int
   public native @Cast("bool") boolean has_sigmoid_param();
   public native void clear_sigmoid_param();
   @MemberGetter public static native int kSigmoidParamFieldNumber();
+  public static final int kSigmoidParamFieldNumber = kSigmoidParamFieldNumber();
   public native @Const @ByRef SigmoidParameter sigmoid_param();
   public native SigmoidParameter mutable_sigmoid_param();
   public native SigmoidParameter release_sigmoid_param();
@@ -3318,6 +3517,7 @@ public static final int
   public native @Cast("bool") boolean has_softmax_param();
   public native void clear_softmax_param();
   @MemberGetter public static native int kSoftmaxParamFieldNumber();
+  public static final int kSoftmaxParamFieldNumber = kSoftmaxParamFieldNumber();
   public native @Const @ByRef SoftmaxParameter softmax_param();
   public native SoftmaxParameter mutable_softmax_param();
   public native SoftmaxParameter release_softmax_param();
@@ -3327,6 +3527,7 @@ public static final int
   public native @Cast("bool") boolean has_spp_param();
   public native void clear_spp_param();
   @MemberGetter public static native int kSppParamFieldNumber();
+  public static final int kSppParamFieldNumber = kSppParamFieldNumber();
   public native @Const @ByRef SPPParameter spp_param();
   public native SPPParameter mutable_spp_param();
   public native SPPParameter release_spp_param();
@@ -3336,6 +3537,7 @@ public static final int
   public native @Cast("bool") boolean has_slice_param();
   public native void clear_slice_param();
   @MemberGetter public static native int kSliceParamFieldNumber();
+  public static final int kSliceParamFieldNumber = kSliceParamFieldNumber();
   public native @Const @ByRef SliceParameter slice_param();
   public native SliceParameter mutable_slice_param();
   public native SliceParameter release_slice_param();
@@ -3345,6 +3547,7 @@ public static final int
   public native @Cast("bool") boolean has_tanh_param();
   public native void clear_tanh_param();
   @MemberGetter public static native int kTanhParamFieldNumber();
+  public static final int kTanhParamFieldNumber = kTanhParamFieldNumber();
   public native @Const @ByRef TanHParameter tanh_param();
   public native TanHParameter mutable_tanh_param();
   public native TanHParameter release_tanh_param();
@@ -3354,6 +3557,7 @@ public static final int
   public native @Cast("bool") boolean has_threshold_param();
   public native void clear_threshold_param();
   @MemberGetter public static native int kThresholdParamFieldNumber();
+  public static final int kThresholdParamFieldNumber = kThresholdParamFieldNumber();
   public native @Const @ByRef ThresholdParameter threshold_param();
   public native ThresholdParameter mutable_threshold_param();
   public native ThresholdParameter release_threshold_param();
@@ -3363,6 +3567,7 @@ public static final int
   public native @Cast("bool") boolean has_tile_param();
   public native void clear_tile_param();
   @MemberGetter public static native int kTileParamFieldNumber();
+  public static final int kTileParamFieldNumber = kTileParamFieldNumber();
   public native @Const @ByRef TileParameter tile_param();
   public native TileParameter mutable_tile_param();
   public native TileParameter release_tile_param();
@@ -3372,6 +3577,7 @@ public static final int
   public native @Cast("bool") boolean has_window_data_param();
   public native void clear_window_data_param();
   @MemberGetter public static native int kWindowDataParamFieldNumber();
+  public static final int kWindowDataParamFieldNumber = kWindowDataParamFieldNumber();
   public native @Const @ByRef WindowDataParameter window_data_param();
   public native WindowDataParameter mutable_window_data_param();
   public native WindowDataParameter release_window_data_param();
@@ -3436,6 +3642,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -3443,6 +3650,7 @@ public static final int
   public native @Cast("bool") boolean has_mirror();
   public native void clear_mirror();
   @MemberGetter public static native int kMirrorFieldNumber();
+  public static final int kMirrorFieldNumber = kMirrorFieldNumber();
   public native @Cast("bool") boolean mirror();
   public native void set_mirror(@Cast("bool") boolean value);
 
@@ -3450,6 +3658,7 @@ public static final int
   public native @Cast("bool") boolean has_crop_size();
   public native void clear_crop_size();
   @MemberGetter public static native int kCropSizeFieldNumber();
+  public static final int kCropSizeFieldNumber = kCropSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int crop_size();
   public native void set_crop_size(@Cast("google::protobuf::uint32") int value);
 
@@ -3457,6 +3666,7 @@ public static final int
   public native @Cast("bool") boolean has_mean_file();
   public native void clear_mean_file();
   @MemberGetter public static native int kMeanFileFieldNumber();
+  public static final int kMeanFileFieldNumber = kMeanFileFieldNumber();
   public native @StdString BytePointer mean_file();
   public native void set_mean_file(@StdString BytePointer value);
   public native void set_mean_file(@StdString String value);
@@ -3470,6 +3680,7 @@ public static final int
   public native int mean_value_size();
   public native void clear_mean_value();
   @MemberGetter public static native int kMeanValueFieldNumber();
+  public static final int kMeanValueFieldNumber = kMeanValueFieldNumber();
   public native float mean_value(int index);
   public native void set_mean_value(int index, float value);
   public native void add_mean_value(float value);
@@ -3478,6 +3689,7 @@ public static final int
   public native @Cast("bool") boolean has_force_color();
   public native void clear_force_color();
   @MemberGetter public static native int kForceColorFieldNumber();
+  public static final int kForceColorFieldNumber = kForceColorFieldNumber();
   public native @Cast("bool") boolean force_color();
   public native void set_force_color(@Cast("bool") boolean value);
 
@@ -3485,6 +3697,7 @@ public static final int
   public native @Cast("bool") boolean has_force_gray();
   public native void clear_force_gray();
   @MemberGetter public static native int kForceGrayFieldNumber();
+  public static final int kForceGrayFieldNumber = kForceGrayFieldNumber();
   public native @Cast("bool") boolean force_gray();
   public native void set_force_gray(@Cast("bool") boolean value);
 }
@@ -3540,6 +3753,35 @@ public static final int
   public native @ByVal @Cast("google::protobuf::Metadata*") Pointer GetMetadata();
 
   // nested types ----------------------------------------------------
+  @MemberGetter public static native @Cast("const caffe::LossParameter::NormalizationMode") int FULL();
+  public static final int FULL = FULL();
+  @MemberGetter public static native @Cast("const caffe::LossParameter::NormalizationMode") int VALID();
+  public static final int VALID = VALID();
+  @MemberGetter public static native @Cast("const caffe::LossParameter::NormalizationMode") int BATCH_SIZE();
+  public static final int BATCH_SIZE = BATCH_SIZE();
+  @MemberGetter public static native @Cast("const caffe::LossParameter::NormalizationMode") int NONE();
+  public static final int NONE = NONE();
+  public static native @Cast("bool") boolean NormalizationMode_IsValid(int value);
+  @MemberGetter public static native @Cast("const caffe::LossParameter::NormalizationMode") int NormalizationMode_MIN();
+  public static final int NormalizationMode_MIN = NormalizationMode_MIN();
+  @MemberGetter public static native @Cast("const caffe::LossParameter::NormalizationMode") int NormalizationMode_MAX();
+  public static final int NormalizationMode_MAX = NormalizationMode_MAX();
+  @MemberGetter public static native int NormalizationMode_ARRAYSIZE();
+  public static final int NormalizationMode_ARRAYSIZE = NormalizationMode_ARRAYSIZE();
+  public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer NormalizationMode_descriptor();
+  public static native @StdString BytePointer NormalizationMode_Name(@Cast("caffe::LossParameter::NormalizationMode") int value);
+  public static native @Cast("bool") boolean NormalizationMode_Parse(@StdString BytePointer name,
+        @Cast("caffe::LossParameter::NormalizationMode*") IntPointer value);
+  public static native @Cast("bool") boolean NormalizationMode_Parse(@StdString String name,
+        @Cast("caffe::LossParameter::NormalizationMode*") IntBuffer value);
+  public static native @Cast("bool") boolean NormalizationMode_Parse(@StdString BytePointer name,
+        @Cast("caffe::LossParameter::NormalizationMode*") int[] value);
+  public static native @Cast("bool") boolean NormalizationMode_Parse(@StdString String name,
+        @Cast("caffe::LossParameter::NormalizationMode*") IntPointer value);
+  public static native @Cast("bool") boolean NormalizationMode_Parse(@StdString BytePointer name,
+        @Cast("caffe::LossParameter::NormalizationMode*") IntBuffer value);
+  public static native @Cast("bool") boolean NormalizationMode_Parse(@StdString String name,
+        @Cast("caffe::LossParameter::NormalizationMode*") int[] value);
 
   // accessors -------------------------------------------------------
 
@@ -3547,13 +3789,23 @@ public static final int
   public native @Cast("bool") boolean has_ignore_label();
   public native void clear_ignore_label();
   @MemberGetter public static native int kIgnoreLabelFieldNumber();
+  public static final int kIgnoreLabelFieldNumber = kIgnoreLabelFieldNumber();
   public native @Cast("google::protobuf::int32") int ignore_label();
   public native void set_ignore_label(@Cast("google::protobuf::int32") int value);
 
-  // optional bool normalize = 2 [default = true];
+  // optional .caffe.LossParameter.NormalizationMode normalization = 3 [default = VALID];
+  public native @Cast("bool") boolean has_normalization();
+  public native void clear_normalization();
+  @MemberGetter public static native int kNormalizationFieldNumber();
+  public static final int kNormalizationFieldNumber = kNormalizationFieldNumber();
+  public native @Cast("caffe::LossParameter_NormalizationMode") int normalization();
+  public native void set_normalization(@Cast("caffe::LossParameter_NormalizationMode") int value);
+
+  // optional bool normalize = 2;
   public native @Cast("bool") boolean has_normalize();
   public native void clear_normalize();
   @MemberGetter public static native int kNormalizeFieldNumber();
+  public static final int kNormalizeFieldNumber = kNormalizeFieldNumber();
   public native @Cast("bool") boolean normalize();
   public native void set_normalize(@Cast("bool") boolean value);
 }
@@ -3616,6 +3868,7 @@ public static final int
   public native @Cast("bool") boolean has_top_k();
   public native void clear_top_k();
   @MemberGetter public static native int kTopKFieldNumber();
+  public static final int kTopKFieldNumber = kTopKFieldNumber();
   public native @Cast("google::protobuf::uint32") int top_k();
   public native void set_top_k(@Cast("google::protobuf::uint32") int value);
 
@@ -3623,6 +3876,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -3630,6 +3884,7 @@ public static final int
   public native @Cast("bool") boolean has_ignore_label();
   public native void clear_ignore_label();
   @MemberGetter public static native int kIgnoreLabelFieldNumber();
+  public static final int kIgnoreLabelFieldNumber = kIgnoreLabelFieldNumber();
   public native @Cast("google::protobuf::int32") int ignore_label();
   public native void set_ignore_label(@Cast("google::protobuf::int32") int value);
 }
@@ -3692,6 +3947,7 @@ public static final int
   public native @Cast("bool") boolean has_out_max_val();
   public native void clear_out_max_val();
   @MemberGetter public static native int kOutMaxValFieldNumber();
+  public static final int kOutMaxValFieldNumber = kOutMaxValFieldNumber();
   public native @Cast("bool") boolean out_max_val();
   public native void set_out_max_val(@Cast("bool") boolean value);
 
@@ -3699,6 +3955,7 @@ public static final int
   public native @Cast("bool") boolean has_top_k();
   public native void clear_top_k();
   @MemberGetter public static native int kTopKFieldNumber();
+  public static final int kTopKFieldNumber = kTopKFieldNumber();
   public native @Cast("google::protobuf::uint32") int top_k();
   public native void set_top_k(@Cast("google::protobuf::uint32") int value);
 
@@ -3706,6 +3963,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 }
@@ -3768,6 +4026,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -3775,6 +4034,7 @@ public static final int
   public native @Cast("bool") boolean has_concat_dim();
   public native void clear_concat_dim();
   @MemberGetter public static native int kConcatDimFieldNumber();
+  public static final int kConcatDimFieldNumber = kConcatDimFieldNumber();
   public native @Cast("google::protobuf::uint32") int concat_dim();
   public native void set_concat_dim(@Cast("google::protobuf::uint32") int value);
 }
@@ -3837,6 +4097,7 @@ public static final int
   public native @Cast("bool") boolean has_use_global_stats();
   public native void clear_use_global_stats();
   @MemberGetter public static native int kUseGlobalStatsFieldNumber();
+  public static final int kUseGlobalStatsFieldNumber = kUseGlobalStatsFieldNumber();
   public native @Cast("bool") boolean use_global_stats();
   public native void set_use_global_stats(@Cast("bool") boolean value);
 
@@ -3844,6 +4105,7 @@ public static final int
   public native @Cast("bool") boolean has_moving_average_fraction();
   public native void clear_moving_average_fraction();
   @MemberGetter public static native int kMovingAverageFractionFieldNumber();
+  public static final int kMovingAverageFractionFieldNumber = kMovingAverageFractionFieldNumber();
   public native float moving_average_fraction();
   public native void set_moving_average_fraction(float value);
 
@@ -3851,6 +4113,7 @@ public static final int
   public native @Cast("bool") boolean has_eps();
   public native void clear_eps();
   @MemberGetter public static native int kEpsFieldNumber();
+  public static final int kEpsFieldNumber = kEpsFieldNumber();
   public native float eps();
   public native void set_eps(float value);
 }
@@ -3913,6 +4176,7 @@ public static final int
   public native @Cast("bool") boolean has_margin();
   public native void clear_margin();
   @MemberGetter public static native int kMarginFieldNumber();
+  public static final int kMarginFieldNumber = kMarginFieldNumber();
   public native float margin();
   public native void set_margin(float value);
 
@@ -3920,6 +4184,7 @@ public static final int
   public native @Cast("bool") boolean has_legacy_version();
   public native void clear_legacy_version();
   @MemberGetter public static native int kLegacyVersionFieldNumber();
+  public static final int kLegacyVersionFieldNumber = kLegacyVersionFieldNumber();
   public native @Cast("bool") boolean legacy_version();
   public native void set_legacy_version(@Cast("bool") boolean value);
 }
@@ -3976,12 +4241,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::ConvolutionParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::ConvolutionParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::ConvolutionParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::ConvolutionParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::ConvolutionParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::ConvolutionParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -4003,6 +4274,7 @@ public static final int
   public native @Cast("bool") boolean has_num_output();
   public native void clear_num_output();
   @MemberGetter public static native int kNumOutputFieldNumber();
+  public static final int kNumOutputFieldNumber = kNumOutputFieldNumber();
   public native @Cast("google::protobuf::uint32") int num_output();
   public native void set_num_output(@Cast("google::protobuf::uint32") int value);
 
@@ -4010,6 +4282,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_term();
   public native void clear_bias_term();
   @MemberGetter public static native int kBiasTermFieldNumber();
+  public static final int kBiasTermFieldNumber = kBiasTermFieldNumber();
   public native @Cast("bool") boolean bias_term();
   public native void set_bias_term(@Cast("bool") boolean value);
 
@@ -4017,6 +4290,7 @@ public static final int
   public native int pad_size();
   public native void clear_pad();
   @MemberGetter public static native int kPadFieldNumber();
+  public static final int kPadFieldNumber = kPadFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad(int index);
   public native void set_pad(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_pad(@Cast("google::protobuf::uint32") int value);
@@ -4025,6 +4299,7 @@ public static final int
   public native int kernel_size_size();
   public native void clear_kernel_size();
   @MemberGetter public static native int kKernelSizeFieldNumber();
+  public static final int kKernelSizeFieldNumber = kKernelSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernel_size(int index);
   public native void set_kernel_size(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_kernel_size(@Cast("google::protobuf::uint32") int value);
@@ -4033,6 +4308,7 @@ public static final int
   public native int stride_size();
   public native void clear_stride();
   @MemberGetter public static native int kStrideFieldNumber();
+  public static final int kStrideFieldNumber = kStrideFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride(int index);
   public native void set_stride(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_stride(@Cast("google::protobuf::uint32") int value);
@@ -4041,6 +4317,7 @@ public static final int
   public native @Cast("bool") boolean has_pad_h();
   public native void clear_pad_h();
   @MemberGetter public static native int kPadHFieldNumber();
+  public static final int kPadHFieldNumber = kPadHFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad_h();
   public native void set_pad_h(@Cast("google::protobuf::uint32") int value);
 
@@ -4048,6 +4325,7 @@ public static final int
   public native @Cast("bool") boolean has_pad_w();
   public native void clear_pad_w();
   @MemberGetter public static native int kPadWFieldNumber();
+  public static final int kPadWFieldNumber = kPadWFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad_w();
   public native void set_pad_w(@Cast("google::protobuf::uint32") int value);
 
@@ -4055,6 +4333,7 @@ public static final int
   public native @Cast("bool") boolean has_kernel_h();
   public native void clear_kernel_h();
   @MemberGetter public static native int kKernelHFieldNumber();
+  public static final int kKernelHFieldNumber = kKernelHFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernel_h();
   public native void set_kernel_h(@Cast("google::protobuf::uint32") int value);
 
@@ -4062,6 +4341,7 @@ public static final int
   public native @Cast("bool") boolean has_kernel_w();
   public native void clear_kernel_w();
   @MemberGetter public static native int kKernelWFieldNumber();
+  public static final int kKernelWFieldNumber = kKernelWFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernel_w();
   public native void set_kernel_w(@Cast("google::protobuf::uint32") int value);
 
@@ -4069,6 +4349,7 @@ public static final int
   public native @Cast("bool") boolean has_stride_h();
   public native void clear_stride_h();
   @MemberGetter public static native int kStrideHFieldNumber();
+  public static final int kStrideHFieldNumber = kStrideHFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride_h();
   public native void set_stride_h(@Cast("google::protobuf::uint32") int value);
 
@@ -4076,6 +4357,7 @@ public static final int
   public native @Cast("bool") boolean has_stride_w();
   public native void clear_stride_w();
   @MemberGetter public static native int kStrideWFieldNumber();
+  public static final int kStrideWFieldNumber = kStrideWFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride_w();
   public native void set_stride_w(@Cast("google::protobuf::uint32") int value);
 
@@ -4083,6 +4365,7 @@ public static final int
   public native @Cast("bool") boolean has_group();
   public native void clear_group();
   @MemberGetter public static native int kGroupFieldNumber();
+  public static final int kGroupFieldNumber = kGroupFieldNumber();
   public native @Cast("google::protobuf::uint32") int group();
   public native void set_group(@Cast("google::protobuf::uint32") int value);
 
@@ -4090,6 +4373,7 @@ public static final int
   public native @Cast("bool") boolean has_weight_filler();
   public native void clear_weight_filler();
   @MemberGetter public static native int kWeightFillerFieldNumber();
+  public static final int kWeightFillerFieldNumber = kWeightFillerFieldNumber();
   public native @Const @ByRef FillerParameter weight_filler();
   public native FillerParameter mutable_weight_filler();
   public native FillerParameter release_weight_filler();
@@ -4099,6 +4383,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_filler();
   public native void clear_bias_filler();
   @MemberGetter public static native int kBiasFillerFieldNumber();
+  public static final int kBiasFillerFieldNumber = kBiasFillerFieldNumber();
   public native @Const @ByRef FillerParameter bias_filler();
   public native FillerParameter mutable_bias_filler();
   public native FillerParameter release_bias_filler();
@@ -4108,6 +4393,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::ConvolutionParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::ConvolutionParameter_Engine") int value);
 
@@ -4115,6 +4401,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -4122,6 +4409,7 @@ public static final int
   public native @Cast("bool") boolean has_force_nd_im2col();
   public native void clear_force_nd_im2col();
   @MemberGetter public static native int kForceNdIm2ColFieldNumber();
+  public static final int kForceNdIm2ColFieldNumber = kForceNdIm2ColFieldNumber();
   public native @Cast("bool") boolean force_nd_im2col();
   public native void set_force_nd_im2col(@Cast("bool") boolean value);
 }
@@ -4178,11 +4466,16 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::DataParameter::DB") int LEVELDB();
+  public static final int LEVELDB = LEVELDB();
   @MemberGetter public static native @Cast("const caffe::DataParameter::DB") int LMDB();
+  public static final int LMDB = LMDB();
   public static native @Cast("bool") boolean DB_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::DataParameter::DB") int DB_MIN();
+  public static final int DB_MIN = DB_MIN();
   @MemberGetter public static native @Cast("const caffe::DataParameter::DB") int DB_MAX();
+  public static final int DB_MAX = DB_MAX();
   @MemberGetter public static native int DB_ARRAYSIZE();
+  public static final int DB_ARRAYSIZE = DB_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer DB_descriptor();
   public static native @StdString BytePointer DB_Name(@Cast("caffe::DataParameter::DB") int value);
   public static native @Cast("bool") boolean DB_Parse(@StdString BytePointer name,
@@ -4204,6 +4497,7 @@ public static final int
   public native @Cast("bool") boolean has_source();
   public native void clear_source();
   @MemberGetter public static native int kSourceFieldNumber();
+  public static final int kSourceFieldNumber = kSourceFieldNumber();
   public native @StdString BytePointer source();
   public native void set_source(@StdString BytePointer value);
   public native void set_source(@StdString String value);
@@ -4217,6 +4511,7 @@ public static final int
   public native @Cast("bool") boolean has_batch_size();
   public native void clear_batch_size();
   @MemberGetter public static native int kBatchSizeFieldNumber();
+  public static final int kBatchSizeFieldNumber = kBatchSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int batch_size();
   public native void set_batch_size(@Cast("google::protobuf::uint32") int value);
 
@@ -4224,6 +4519,7 @@ public static final int
   public native @Cast("bool") boolean has_rand_skip();
   public native void clear_rand_skip();
   @MemberGetter public static native int kRandSkipFieldNumber();
+  public static final int kRandSkipFieldNumber = kRandSkipFieldNumber();
   public native @Cast("google::protobuf::uint32") int rand_skip();
   public native void set_rand_skip(@Cast("google::protobuf::uint32") int value);
 
@@ -4231,6 +4527,7 @@ public static final int
   public native @Cast("bool") boolean has_backend();
   public native void clear_backend();
   @MemberGetter public static native int kBackendFieldNumber();
+  public static final int kBackendFieldNumber = kBackendFieldNumber();
   public native @Cast("caffe::DataParameter_DB") int backend();
   public native void set_backend(@Cast("caffe::DataParameter_DB") int value);
 
@@ -4238,6 +4535,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -4245,6 +4543,7 @@ public static final int
   public native @Cast("bool") boolean has_mean_file();
   public native void clear_mean_file();
   @MemberGetter public static native int kMeanFileFieldNumber();
+  public static final int kMeanFileFieldNumber = kMeanFileFieldNumber();
   public native @StdString BytePointer mean_file();
   public native void set_mean_file(@StdString BytePointer value);
   public native void set_mean_file(@StdString String value);
@@ -4258,6 +4557,7 @@ public static final int
   public native @Cast("bool") boolean has_crop_size();
   public native void clear_crop_size();
   @MemberGetter public static native int kCropSizeFieldNumber();
+  public static final int kCropSizeFieldNumber = kCropSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int crop_size();
   public native void set_crop_size(@Cast("google::protobuf::uint32") int value);
 
@@ -4265,6 +4565,7 @@ public static final int
   public native @Cast("bool") boolean has_mirror();
   public native void clear_mirror();
   @MemberGetter public static native int kMirrorFieldNumber();
+  public static final int kMirrorFieldNumber = kMirrorFieldNumber();
   public native @Cast("bool") boolean mirror();
   public native void set_mirror(@Cast("bool") boolean value);
 
@@ -4272,6 +4573,7 @@ public static final int
   public native @Cast("bool") boolean has_force_encoded_color();
   public native void clear_force_encoded_color();
   @MemberGetter public static native int kForceEncodedColorFieldNumber();
+  public static final int kForceEncodedColorFieldNumber = kForceEncodedColorFieldNumber();
   public native @Cast("bool") boolean force_encoded_color();
   public native void set_force_encoded_color(@Cast("bool") boolean value);
 
@@ -4279,6 +4581,7 @@ public static final int
   public native @Cast("bool") boolean has_prefetch();
   public native void clear_prefetch();
   @MemberGetter public static native int kPrefetchFieldNumber();
+  public static final int kPrefetchFieldNumber = kPrefetchFieldNumber();
   public native @Cast("google::protobuf::uint32") int prefetch();
   public native void set_prefetch(@Cast("google::protobuf::uint32") int value);
 }
@@ -4341,6 +4644,7 @@ public static final int
   public native @Cast("bool") boolean has_dropout_ratio();
   public native void clear_dropout_ratio();
   @MemberGetter public static native int kDropoutRatioFieldNumber();
+  public static final int kDropoutRatioFieldNumber = kDropoutRatioFieldNumber();
   public native float dropout_ratio();
   public native void set_dropout_ratio(float value);
 }
@@ -4403,6 +4707,7 @@ public static final int
   public native int data_filler_size();
   public native void clear_data_filler();
   @MemberGetter public static native int kDataFillerFieldNumber();
+  public static final int kDataFillerFieldNumber = kDataFillerFieldNumber();
   public native @Const @ByRef FillerParameter data_filler(int index);
   public native FillerParameter mutable_data_filler(int index);
   public native FillerParameter add_data_filler();
@@ -4411,6 +4716,7 @@ public static final int
   public native int shape_size();
   public native void clear_shape();
   @MemberGetter public static native int kShapeFieldNumber();
+  public static final int kShapeFieldNumber = kShapeFieldNumber();
   public native @Const @ByRef BlobShape shape(int index);
   public native BlobShape mutable_shape(int index);
   public native BlobShape add_shape();
@@ -4419,6 +4725,7 @@ public static final int
   public native int num_size();
   public native void clear_num();
   @MemberGetter public static native int kNumFieldNumber();
+  public static final int kNumFieldNumber = kNumFieldNumber();
   public native @Cast("google::protobuf::uint32") int num(int index);
   public native void set_num(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_num(@Cast("google::protobuf::uint32") int value);
@@ -4427,6 +4734,7 @@ public static final int
   public native int channels_size();
   public native void clear_channels();
   @MemberGetter public static native int kChannelsFieldNumber();
+  public static final int kChannelsFieldNumber = kChannelsFieldNumber();
   public native @Cast("google::protobuf::uint32") int channels(int index);
   public native void set_channels(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_channels(@Cast("google::protobuf::uint32") int value);
@@ -4435,6 +4743,7 @@ public static final int
   public native int height_size();
   public native void clear_height();
   @MemberGetter public static native int kHeightFieldNumber();
+  public static final int kHeightFieldNumber = kHeightFieldNumber();
   public native @Cast("google::protobuf::uint32") int height(int index);
   public native void set_height(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_height(@Cast("google::protobuf::uint32") int value);
@@ -4443,6 +4752,7 @@ public static final int
   public native int width_size();
   public native void clear_width();
   @MemberGetter public static native int kWidthFieldNumber();
+  public static final int kWidthFieldNumber = kWidthFieldNumber();
   public native @Cast("google::protobuf::uint32") int width(int index);
   public native void set_width(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_width(@Cast("google::protobuf::uint32") int value);
@@ -4500,12 +4810,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::EltwiseParameter::EltwiseOp") int PROD();
+  public static final int PROD = PROD();
   @MemberGetter public static native @Cast("const caffe::EltwiseParameter::EltwiseOp") int SUM();
+  public static final int SUM = SUM();
   @MemberGetter public static native @Cast("const caffe::EltwiseParameter::EltwiseOp") int MAX();
+  public static final int MAX = MAX();
   public static native @Cast("bool") boolean EltwiseOp_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::EltwiseParameter::EltwiseOp") int EltwiseOp_MIN();
+  public static final int EltwiseOp_MIN = EltwiseOp_MIN();
   @MemberGetter public static native @Cast("const caffe::EltwiseParameter::EltwiseOp") int EltwiseOp_MAX();
+  public static final int EltwiseOp_MAX = EltwiseOp_MAX();
   @MemberGetter public static native int EltwiseOp_ARRAYSIZE();
+  public static final int EltwiseOp_ARRAYSIZE = EltwiseOp_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer EltwiseOp_descriptor();
   public static native @StdString BytePointer EltwiseOp_Name(@Cast("caffe::EltwiseParameter::EltwiseOp") int value);
   public static native @Cast("bool") boolean EltwiseOp_Parse(@StdString BytePointer name,
@@ -4527,6 +4843,7 @@ public static final int
   public native @Cast("bool") boolean has_operation();
   public native void clear_operation();
   @MemberGetter public static native int kOperationFieldNumber();
+  public static final int kOperationFieldNumber = kOperationFieldNumber();
   public native @Cast("caffe::EltwiseParameter_EltwiseOp") int operation();
   public native void set_operation(@Cast("caffe::EltwiseParameter_EltwiseOp") int value);
 
@@ -4534,6 +4851,7 @@ public static final int
   public native int coeff_size();
   public native void clear_coeff();
   @MemberGetter public static native int kCoeffFieldNumber();
+  public static final int kCoeffFieldNumber = kCoeffFieldNumber();
   public native float coeff(int index);
   public native void set_coeff(int index, float value);
   public native void add_coeff(float value);
@@ -4542,6 +4860,7 @@ public static final int
   public native @Cast("bool") boolean has_stable_prod_grad();
   public native void clear_stable_prod_grad();
   @MemberGetter public static native int kStableProdGradFieldNumber();
+  public static final int kStableProdGradFieldNumber = kStableProdGradFieldNumber();
   public native @Cast("bool") boolean stable_prod_grad();
   public native void set_stable_prod_grad(@Cast("bool") boolean value);
 }
@@ -4604,6 +4923,7 @@ public static final int
   public native @Cast("bool") boolean has_num_output();
   public native void clear_num_output();
   @MemberGetter public static native int kNumOutputFieldNumber();
+  public static final int kNumOutputFieldNumber = kNumOutputFieldNumber();
   public native @Cast("google::protobuf::uint32") int num_output();
   public native void set_num_output(@Cast("google::protobuf::uint32") int value);
 
@@ -4611,6 +4931,7 @@ public static final int
   public native @Cast("bool") boolean has_input_dim();
   public native void clear_input_dim();
   @MemberGetter public static native int kInputDimFieldNumber();
+  public static final int kInputDimFieldNumber = kInputDimFieldNumber();
   public native @Cast("google::protobuf::uint32") int input_dim();
   public native void set_input_dim(@Cast("google::protobuf::uint32") int value);
 
@@ -4618,6 +4939,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_term();
   public native void clear_bias_term();
   @MemberGetter public static native int kBiasTermFieldNumber();
+  public static final int kBiasTermFieldNumber = kBiasTermFieldNumber();
   public native @Cast("bool") boolean bias_term();
   public native void set_bias_term(@Cast("bool") boolean value);
 
@@ -4625,6 +4947,7 @@ public static final int
   public native @Cast("bool") boolean has_weight_filler();
   public native void clear_weight_filler();
   @MemberGetter public static native int kWeightFillerFieldNumber();
+  public static final int kWeightFillerFieldNumber = kWeightFillerFieldNumber();
   public native @Const @ByRef FillerParameter weight_filler();
   public native FillerParameter mutable_weight_filler();
   public native FillerParameter release_weight_filler();
@@ -4634,6 +4957,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_filler();
   public native void clear_bias_filler();
   @MemberGetter public static native int kBiasFillerFieldNumber();
+  public static final int kBiasFillerFieldNumber = kBiasFillerFieldNumber();
   public native @Const @ByRef FillerParameter bias_filler();
   public native FillerParameter mutable_bias_filler();
   public native FillerParameter release_bias_filler();
@@ -4698,6 +5022,7 @@ public static final int
   public native @Cast("bool") boolean has_base();
   public native void clear_base();
   @MemberGetter public static native int kBaseFieldNumber();
+  public static final int kBaseFieldNumber = kBaseFieldNumber();
   public native float base();
   public native void set_base(float value);
 
@@ -4705,6 +5030,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -4712,6 +5038,7 @@ public static final int
   public native @Cast("bool") boolean has_shift();
   public native void clear_shift();
   @MemberGetter public static native int kShiftFieldNumber();
+  public static final int kShiftFieldNumber = kShiftFieldNumber();
   public native float shift();
   public native void set_shift(float value);
 }
@@ -4774,6 +5101,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -4781,6 +5109,7 @@ public static final int
   public native @Cast("bool") boolean has_end_axis();
   public native void clear_end_axis();
   @MemberGetter public static native int kEndAxisFieldNumber();
+  public static final int kEndAxisFieldNumber = kEndAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int end_axis();
   public native void set_end_axis(@Cast("google::protobuf::int32") int value);
 }
@@ -4843,6 +5172,7 @@ public static final int
   public native @Cast("bool") boolean has_source();
   public native void clear_source();
   @MemberGetter public static native int kSourceFieldNumber();
+  public static final int kSourceFieldNumber = kSourceFieldNumber();
   public native @StdString BytePointer source();
   public native void set_source(@StdString BytePointer value);
   public native void set_source(@StdString String value);
@@ -4856,6 +5186,7 @@ public static final int
   public native @Cast("bool") boolean has_batch_size();
   public native void clear_batch_size();
   @MemberGetter public static native int kBatchSizeFieldNumber();
+  public static final int kBatchSizeFieldNumber = kBatchSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int batch_size();
   public native void set_batch_size(@Cast("google::protobuf::uint32") int value);
 
@@ -4863,6 +5194,7 @@ public static final int
   public native @Cast("bool") boolean has_shuffle();
   public native void clear_shuffle();
   @MemberGetter public static native int kShuffleFieldNumber();
+  public static final int kShuffleFieldNumber = kShuffleFieldNumber();
   public native @Cast("bool") boolean shuffle();
   public native void set_shuffle(@Cast("bool") boolean value);
 }
@@ -4925,6 +5257,7 @@ public static final int
   public native @Cast("bool") boolean has_file_name();
   public native void clear_file_name();
   @MemberGetter public static native int kFileNameFieldNumber();
+  public static final int kFileNameFieldNumber = kFileNameFieldNumber();
   public native @StdString BytePointer file_name();
   public native void set_file_name(@StdString BytePointer value);
   public native void set_file_name(@StdString String value);
@@ -4987,11 +5320,16 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::HingeLossParameter::Norm") int L1();
+  public static final int L1 = L1();
   @MemberGetter public static native @Cast("const caffe::HingeLossParameter::Norm") int L2();
+  public static final int L2 = L2();
   public static native @Cast("bool") boolean Norm_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::HingeLossParameter::Norm") int Norm_MIN();
+  public static final int Norm_MIN = Norm_MIN();
   @MemberGetter public static native @Cast("const caffe::HingeLossParameter::Norm") int Norm_MAX();
+  public static final int Norm_MAX = Norm_MAX();
   @MemberGetter public static native int Norm_ARRAYSIZE();
+  public static final int Norm_ARRAYSIZE = Norm_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Norm_descriptor();
   public static native @StdString BytePointer Norm_Name(@Cast("caffe::HingeLossParameter::Norm") int value);
   public static native @Cast("bool") boolean Norm_Parse(@StdString BytePointer name,
@@ -5013,6 +5351,7 @@ public static final int
   public native @Cast("bool") boolean has_norm();
   public native void clear_norm();
   @MemberGetter public static native int kNormFieldNumber();
+  public static final int kNormFieldNumber = kNormFieldNumber();
   public native @Cast("caffe::HingeLossParameter_Norm") int norm();
   public native void set_norm(@Cast("caffe::HingeLossParameter_Norm") int value);
 }
@@ -5075,6 +5414,7 @@ public static final int
   public native @Cast("bool") boolean has_source();
   public native void clear_source();
   @MemberGetter public static native int kSourceFieldNumber();
+  public static final int kSourceFieldNumber = kSourceFieldNumber();
   public native @StdString BytePointer source();
   public native void set_source(@StdString BytePointer value);
   public native void set_source(@StdString String value);
@@ -5088,6 +5428,7 @@ public static final int
   public native @Cast("bool") boolean has_batch_size();
   public native void clear_batch_size();
   @MemberGetter public static native int kBatchSizeFieldNumber();
+  public static final int kBatchSizeFieldNumber = kBatchSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int batch_size();
   public native void set_batch_size(@Cast("google::protobuf::uint32") int value);
 
@@ -5095,6 +5436,7 @@ public static final int
   public native @Cast("bool") boolean has_rand_skip();
   public native void clear_rand_skip();
   @MemberGetter public static native int kRandSkipFieldNumber();
+  public static final int kRandSkipFieldNumber = kRandSkipFieldNumber();
   public native @Cast("google::protobuf::uint32") int rand_skip();
   public native void set_rand_skip(@Cast("google::protobuf::uint32") int value);
 
@@ -5102,6 +5444,7 @@ public static final int
   public native @Cast("bool") boolean has_shuffle();
   public native void clear_shuffle();
   @MemberGetter public static native int kShuffleFieldNumber();
+  public static final int kShuffleFieldNumber = kShuffleFieldNumber();
   public native @Cast("bool") boolean shuffle();
   public native void set_shuffle(@Cast("bool") boolean value);
 
@@ -5109,6 +5452,7 @@ public static final int
   public native @Cast("bool") boolean has_new_height();
   public native void clear_new_height();
   @MemberGetter public static native int kNewHeightFieldNumber();
+  public static final int kNewHeightFieldNumber = kNewHeightFieldNumber();
   public native @Cast("google::protobuf::uint32") int new_height();
   public native void set_new_height(@Cast("google::protobuf::uint32") int value);
 
@@ -5116,6 +5460,7 @@ public static final int
   public native @Cast("bool") boolean has_new_width();
   public native void clear_new_width();
   @MemberGetter public static native int kNewWidthFieldNumber();
+  public static final int kNewWidthFieldNumber = kNewWidthFieldNumber();
   public native @Cast("google::protobuf::uint32") int new_width();
   public native void set_new_width(@Cast("google::protobuf::uint32") int value);
 
@@ -5123,6 +5468,7 @@ public static final int
   public native @Cast("bool") boolean has_is_color();
   public native void clear_is_color();
   @MemberGetter public static native int kIsColorFieldNumber();
+  public static final int kIsColorFieldNumber = kIsColorFieldNumber();
   public native @Cast("bool") boolean is_color();
   public native void set_is_color(@Cast("bool") boolean value);
 
@@ -5130,6 +5476,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -5137,6 +5484,7 @@ public static final int
   public native @Cast("bool") boolean has_mean_file();
   public native void clear_mean_file();
   @MemberGetter public static native int kMeanFileFieldNumber();
+  public static final int kMeanFileFieldNumber = kMeanFileFieldNumber();
   public native @StdString BytePointer mean_file();
   public native void set_mean_file(@StdString BytePointer value);
   public native void set_mean_file(@StdString String value);
@@ -5150,6 +5498,7 @@ public static final int
   public native @Cast("bool") boolean has_crop_size();
   public native void clear_crop_size();
   @MemberGetter public static native int kCropSizeFieldNumber();
+  public static final int kCropSizeFieldNumber = kCropSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int crop_size();
   public native void set_crop_size(@Cast("google::protobuf::uint32") int value);
 
@@ -5157,6 +5506,7 @@ public static final int
   public native @Cast("bool") boolean has_mirror();
   public native void clear_mirror();
   @MemberGetter public static native int kMirrorFieldNumber();
+  public static final int kMirrorFieldNumber = kMirrorFieldNumber();
   public native @Cast("bool") boolean mirror();
   public native void set_mirror(@Cast("bool") boolean value);
 
@@ -5164,6 +5514,7 @@ public static final int
   public native @Cast("bool") boolean has_root_folder();
   public native void clear_root_folder();
   @MemberGetter public static native int kRootFolderFieldNumber();
+  public static final int kRootFolderFieldNumber = kRootFolderFieldNumber();
   public native @StdString BytePointer root_folder();
   public native void set_root_folder(@StdString BytePointer value);
   public native void set_root_folder(@StdString String value);
@@ -5232,6 +5583,7 @@ public static final int
   public native @Cast("bool") boolean has_source();
   public native void clear_source();
   @MemberGetter public static native int kSourceFieldNumber();
+  public static final int kSourceFieldNumber = kSourceFieldNumber();
   public native @StdString BytePointer source();
   public native void set_source(@StdString BytePointer value);
   public native void set_source(@StdString String value);
@@ -5300,6 +5652,7 @@ public static final int
   public native @Cast("bool") boolean has_num_output();
   public native void clear_num_output();
   @MemberGetter public static native int kNumOutputFieldNumber();
+  public static final int kNumOutputFieldNumber = kNumOutputFieldNumber();
   public native @Cast("google::protobuf::uint32") int num_output();
   public native void set_num_output(@Cast("google::protobuf::uint32") int value);
 
@@ -5307,6 +5660,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_term();
   public native void clear_bias_term();
   @MemberGetter public static native int kBiasTermFieldNumber();
+  public static final int kBiasTermFieldNumber = kBiasTermFieldNumber();
   public native @Cast("bool") boolean bias_term();
   public native void set_bias_term(@Cast("bool") boolean value);
 
@@ -5314,6 +5668,7 @@ public static final int
   public native @Cast("bool") boolean has_weight_filler();
   public native void clear_weight_filler();
   @MemberGetter public static native int kWeightFillerFieldNumber();
+  public static final int kWeightFillerFieldNumber = kWeightFillerFieldNumber();
   public native @Const @ByRef FillerParameter weight_filler();
   public native FillerParameter mutable_weight_filler();
   public native FillerParameter release_weight_filler();
@@ -5323,6 +5678,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_filler();
   public native void clear_bias_filler();
   @MemberGetter public static native int kBiasFillerFieldNumber();
+  public static final int kBiasFillerFieldNumber = kBiasFillerFieldNumber();
   public native @Const @ByRef FillerParameter bias_filler();
   public native FillerParameter mutable_bias_filler();
   public native FillerParameter release_bias_filler();
@@ -5332,6 +5688,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 }
@@ -5394,6 +5751,7 @@ public static final int
   public native @Cast("bool") boolean has_base();
   public native void clear_base();
   @MemberGetter public static native int kBaseFieldNumber();
+  public static final int kBaseFieldNumber = kBaseFieldNumber();
   public native float base();
   public native void set_base(float value);
 
@@ -5401,6 +5759,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -5408,6 +5767,7 @@ public static final int
   public native @Cast("bool") boolean has_shift();
   public native void clear_shift();
   @MemberGetter public static native int kShiftFieldNumber();
+  public static final int kShiftFieldNumber = kShiftFieldNumber();
   public native float shift();
   public native void set_shift(float value);
 }
@@ -5464,11 +5824,16 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::LRNParameter::NormRegion") int ACROSS_CHANNELS();
+  public static final int ACROSS_CHANNELS = ACROSS_CHANNELS();
   @MemberGetter public static native @Cast("const caffe::LRNParameter::NormRegion") int WITHIN_CHANNEL();
+  public static final int WITHIN_CHANNEL = WITHIN_CHANNEL();
   public static native @Cast("bool") boolean NormRegion_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::LRNParameter::NormRegion") int NormRegion_MIN();
+  public static final int NormRegion_MIN = NormRegion_MIN();
   @MemberGetter public static native @Cast("const caffe::LRNParameter::NormRegion") int NormRegion_MAX();
+  public static final int NormRegion_MAX = NormRegion_MAX();
   @MemberGetter public static native int NormRegion_ARRAYSIZE();
+  public static final int NormRegion_ARRAYSIZE = NormRegion_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer NormRegion_descriptor();
   public static native @StdString BytePointer NormRegion_Name(@Cast("caffe::LRNParameter::NormRegion") int value);
   public static native @Cast("bool") boolean NormRegion_Parse(@StdString BytePointer name,
@@ -5484,12 +5849,18 @@ public static final int
   public static native @Cast("bool") boolean NormRegion_Parse(@StdString String name,
         @Cast("caffe::LRNParameter::NormRegion*") int[] value);
   @MemberGetter public static native @Cast("const caffe::LRNParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::LRNParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::LRNParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::LRNParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::LRNParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::LRNParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -5511,6 +5882,7 @@ public static final int
   public native @Cast("bool") boolean has_local_size();
   public native void clear_local_size();
   @MemberGetter public static native int kLocalSizeFieldNumber();
+  public static final int kLocalSizeFieldNumber = kLocalSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int local_size();
   public native void set_local_size(@Cast("google::protobuf::uint32") int value);
 
@@ -5518,6 +5890,7 @@ public static final int
   public native @Cast("bool") boolean has_alpha();
   public native void clear_alpha();
   @MemberGetter public static native int kAlphaFieldNumber();
+  public static final int kAlphaFieldNumber = kAlphaFieldNumber();
   public native float alpha();
   public native void set_alpha(float value);
 
@@ -5525,6 +5898,7 @@ public static final int
   public native @Cast("bool") boolean has_beta();
   public native void clear_beta();
   @MemberGetter public static native int kBetaFieldNumber();
+  public static final int kBetaFieldNumber = kBetaFieldNumber();
   public native float beta();
   public native void set_beta(float value);
 
@@ -5532,6 +5906,7 @@ public static final int
   public native @Cast("bool") boolean has_norm_region();
   public native void clear_norm_region();
   @MemberGetter public static native int kNormRegionFieldNumber();
+  public static final int kNormRegionFieldNumber = kNormRegionFieldNumber();
   public native @Cast("caffe::LRNParameter_NormRegion") int norm_region();
   public native void set_norm_region(@Cast("caffe::LRNParameter_NormRegion") int value);
 
@@ -5539,6 +5914,7 @@ public static final int
   public native @Cast("bool") boolean has_k();
   public native void clear_k();
   @MemberGetter public static native int kKFieldNumber();
+  public static final int kKFieldNumber = kKFieldNumber();
   public native float k();
   public native void set_k(float value);
 
@@ -5546,6 +5922,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::LRNParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::LRNParameter_Engine") int value);
 }
@@ -5608,6 +5985,7 @@ public static final int
   public native @Cast("bool") boolean has_batch_size();
   public native void clear_batch_size();
   @MemberGetter public static native int kBatchSizeFieldNumber();
+  public static final int kBatchSizeFieldNumber = kBatchSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int batch_size();
   public native void set_batch_size(@Cast("google::protobuf::uint32") int value);
 
@@ -5615,6 +5993,7 @@ public static final int
   public native @Cast("bool") boolean has_channels();
   public native void clear_channels();
   @MemberGetter public static native int kChannelsFieldNumber();
+  public static final int kChannelsFieldNumber = kChannelsFieldNumber();
   public native @Cast("google::protobuf::uint32") int channels();
   public native void set_channels(@Cast("google::protobuf::uint32") int value);
 
@@ -5622,6 +6001,7 @@ public static final int
   public native @Cast("bool") boolean has_height();
   public native void clear_height();
   @MemberGetter public static native int kHeightFieldNumber();
+  public static final int kHeightFieldNumber = kHeightFieldNumber();
   public native @Cast("google::protobuf::uint32") int height();
   public native void set_height(@Cast("google::protobuf::uint32") int value);
 
@@ -5629,6 +6009,7 @@ public static final int
   public native @Cast("bool") boolean has_width();
   public native void clear_width();
   @MemberGetter public static native int kWidthFieldNumber();
+  public static final int kWidthFieldNumber = kWidthFieldNumber();
   public native @Cast("google::protobuf::uint32") int width();
   public native void set_width(@Cast("google::protobuf::uint32") int value);
 }
@@ -5691,6 +6072,7 @@ public static final int
   public native @Cast("bool") boolean has_normalize_variance();
   public native void clear_normalize_variance();
   @MemberGetter public static native int kNormalizeVarianceFieldNumber();
+  public static final int kNormalizeVarianceFieldNumber = kNormalizeVarianceFieldNumber();
   public native @Cast("bool") boolean normalize_variance();
   public native void set_normalize_variance(@Cast("bool") boolean value);
 
@@ -5698,6 +6080,7 @@ public static final int
   public native @Cast("bool") boolean has_across_channels();
   public native void clear_across_channels();
   @MemberGetter public static native int kAcrossChannelsFieldNumber();
+  public static final int kAcrossChannelsFieldNumber = kAcrossChannelsFieldNumber();
   public native @Cast("bool") boolean across_channels();
   public native void set_across_channels(@Cast("bool") boolean value);
 
@@ -5705,6 +6088,7 @@ public static final int
   public native @Cast("bool") boolean has_eps();
   public native void clear_eps();
   @MemberGetter public static native int kEpsFieldNumber();
+  public static final int kEpsFieldNumber = kEpsFieldNumber();
   public native float eps();
   public native void set_eps(float value);
 }
@@ -5761,12 +6145,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::PoolMethod") int MAX();
+  public static final int MAX = MAX();
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::PoolMethod") int AVE();
+  public static final int AVE = AVE();
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::PoolMethod") int STOCHASTIC();
+  public static final int STOCHASTIC = STOCHASTIC();
   public static native @Cast("bool") boolean PoolMethod_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::PoolMethod") int PoolMethod_MIN();
+  public static final int PoolMethod_MIN = PoolMethod_MIN();
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::PoolMethod") int PoolMethod_MAX();
+  public static final int PoolMethod_MAX = PoolMethod_MAX();
   @MemberGetter public static native int PoolMethod_ARRAYSIZE();
+  public static final int PoolMethod_ARRAYSIZE = PoolMethod_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer PoolMethod_descriptor();
   public static native @StdString BytePointer PoolMethod_Name(@Cast("caffe::PoolingParameter::PoolMethod") int value);
   public static native @Cast("bool") boolean PoolMethod_Parse(@StdString BytePointer name,
@@ -5782,12 +6172,18 @@ public static final int
   public static native @Cast("bool") boolean PoolMethod_Parse(@StdString String name,
         @Cast("caffe::PoolingParameter::PoolMethod*") int[] value);
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::PoolingParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::PoolingParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -5809,6 +6205,7 @@ public static final int
   public native @Cast("bool") boolean has_pool();
   public native void clear_pool();
   @MemberGetter public static native int kPoolFieldNumber();
+  public static final int kPoolFieldNumber = kPoolFieldNumber();
   public native @Cast("caffe::PoolingParameter_PoolMethod") int pool();
   public native void set_pool(@Cast("caffe::PoolingParameter_PoolMethod") int value);
 
@@ -5816,6 +6213,7 @@ public static final int
   public native @Cast("bool") boolean has_pad();
   public native void clear_pad();
   @MemberGetter public static native int kPadFieldNumber();
+  public static final int kPadFieldNumber = kPadFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad();
   public native void set_pad(@Cast("google::protobuf::uint32") int value);
 
@@ -5823,6 +6221,7 @@ public static final int
   public native @Cast("bool") boolean has_pad_h();
   public native void clear_pad_h();
   @MemberGetter public static native int kPadHFieldNumber();
+  public static final int kPadHFieldNumber = kPadHFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad_h();
   public native void set_pad_h(@Cast("google::protobuf::uint32") int value);
 
@@ -5830,6 +6229,7 @@ public static final int
   public native @Cast("bool") boolean has_pad_w();
   public native void clear_pad_w();
   @MemberGetter public static native int kPadWFieldNumber();
+  public static final int kPadWFieldNumber = kPadWFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad_w();
   public native void set_pad_w(@Cast("google::protobuf::uint32") int value);
 
@@ -5837,6 +6237,7 @@ public static final int
   public native @Cast("bool") boolean has_kernel_size();
   public native void clear_kernel_size();
   @MemberGetter public static native int kKernelSizeFieldNumber();
+  public static final int kKernelSizeFieldNumber = kKernelSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernel_size();
   public native void set_kernel_size(@Cast("google::protobuf::uint32") int value);
 
@@ -5844,6 +6245,7 @@ public static final int
   public native @Cast("bool") boolean has_kernel_h();
   public native void clear_kernel_h();
   @MemberGetter public static native int kKernelHFieldNumber();
+  public static final int kKernelHFieldNumber = kKernelHFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernel_h();
   public native void set_kernel_h(@Cast("google::protobuf::uint32") int value);
 
@@ -5851,6 +6253,7 @@ public static final int
   public native @Cast("bool") boolean has_kernel_w();
   public native void clear_kernel_w();
   @MemberGetter public static native int kKernelWFieldNumber();
+  public static final int kKernelWFieldNumber = kKernelWFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernel_w();
   public native void set_kernel_w(@Cast("google::protobuf::uint32") int value);
 
@@ -5858,6 +6261,7 @@ public static final int
   public native @Cast("bool") boolean has_stride();
   public native void clear_stride();
   @MemberGetter public static native int kStrideFieldNumber();
+  public static final int kStrideFieldNumber = kStrideFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride();
   public native void set_stride(@Cast("google::protobuf::uint32") int value);
 
@@ -5865,6 +6269,7 @@ public static final int
   public native @Cast("bool") boolean has_stride_h();
   public native void clear_stride_h();
   @MemberGetter public static native int kStrideHFieldNumber();
+  public static final int kStrideHFieldNumber = kStrideHFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride_h();
   public native void set_stride_h(@Cast("google::protobuf::uint32") int value);
 
@@ -5872,6 +6277,7 @@ public static final int
   public native @Cast("bool") boolean has_stride_w();
   public native void clear_stride_w();
   @MemberGetter public static native int kStrideWFieldNumber();
+  public static final int kStrideWFieldNumber = kStrideWFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride_w();
   public native void set_stride_w(@Cast("google::protobuf::uint32") int value);
 
@@ -5879,6 +6285,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::PoolingParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::PoolingParameter_Engine") int value);
 
@@ -5886,6 +6293,7 @@ public static final int
   public native @Cast("bool") boolean has_global_pooling();
   public native void clear_global_pooling();
   @MemberGetter public static native int kGlobalPoolingFieldNumber();
+  public static final int kGlobalPoolingFieldNumber = kGlobalPoolingFieldNumber();
   public native @Cast("bool") boolean global_pooling();
   public native void set_global_pooling(@Cast("bool") boolean value);
 }
@@ -5948,6 +6356,7 @@ public static final int
   public native @Cast("bool") boolean has_power();
   public native void clear_power();
   @MemberGetter public static native int kPowerFieldNumber();
+  public static final int kPowerFieldNumber = kPowerFieldNumber();
   public native float power();
   public native void set_power(float value);
 
@@ -5955,6 +6364,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -5962,6 +6372,7 @@ public static final int
   public native @Cast("bool") boolean has_shift();
   public native void clear_shift();
   @MemberGetter public static native int kShiftFieldNumber();
+  public static final int kShiftFieldNumber = kShiftFieldNumber();
   public native float shift();
   public native void set_shift(float value);
 }
@@ -6024,6 +6435,7 @@ public static final int
   public native @Cast("bool") boolean has_module();
   public native void clear_module();
   @MemberGetter public static native int kModuleFieldNumber();
+  public static final int kModuleFieldNumber = kModuleFieldNumber();
   public native @StdString BytePointer module();
   public native void set_module(@StdString BytePointer value);
   public native void set_module(@StdString String value);
@@ -6037,6 +6449,7 @@ public static final int
   public native @Cast("bool") boolean has_layer();
   public native void clear_layer();
   @MemberGetter public static native int kLayerFieldNumber();
+  public static final int kLayerFieldNumber = kLayerFieldNumber();
   public native @StdString BytePointer layer();
   public native void set_layer(@StdString BytePointer value);
   public native void set_layer(@StdString String value);
@@ -6050,6 +6463,7 @@ public static final int
   public native @Cast("bool") boolean has_param_str();
   public native void clear_param_str();
   @MemberGetter public static native int kParamStrFieldNumber();
+  public static final int kParamStrFieldNumber = kParamStrFieldNumber();
   public native @StdString BytePointer param_str();
   public native void set_param_str(@StdString BytePointer value);
   public native void set_param_str(@StdString String value);
@@ -6063,6 +6477,7 @@ public static final int
   public native @Cast("bool") boolean has_share_in_parallel();
   public native void clear_share_in_parallel();
   @MemberGetter public static native int kShareInParallelFieldNumber();
+  public static final int kShareInParallelFieldNumber = kShareInParallelFieldNumber();
   public native @Cast("bool") boolean share_in_parallel();
   public native void set_share_in_parallel(@Cast("bool") boolean value);
 }
@@ -6119,13 +6534,20 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::ReductionParameter::ReductionOp") int SUM();
+  public static final int SUM = SUM();
   @MemberGetter public static native @Cast("const caffe::ReductionParameter::ReductionOp") int ASUM();
+  public static final int ASUM = ASUM();
   @MemberGetter public static native @Cast("const caffe::ReductionParameter::ReductionOp") int SUMSQ();
+  public static final int SUMSQ = SUMSQ();
   @MemberGetter public static native @Cast("const caffe::ReductionParameter::ReductionOp") int MEAN();
+  public static final int MEAN = MEAN();
   public static native @Cast("bool") boolean ReductionOp_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::ReductionParameter::ReductionOp") int ReductionOp_MIN();
+  public static final int ReductionOp_MIN = ReductionOp_MIN();
   @MemberGetter public static native @Cast("const caffe::ReductionParameter::ReductionOp") int ReductionOp_MAX();
+  public static final int ReductionOp_MAX = ReductionOp_MAX();
   @MemberGetter public static native int ReductionOp_ARRAYSIZE();
+  public static final int ReductionOp_ARRAYSIZE = ReductionOp_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer ReductionOp_descriptor();
   public static native @StdString BytePointer ReductionOp_Name(@Cast("caffe::ReductionParameter::ReductionOp") int value);
   public static native @Cast("bool") boolean ReductionOp_Parse(@StdString BytePointer name,
@@ -6147,6 +6569,7 @@ public static final int
   public native @Cast("bool") boolean has_operation();
   public native void clear_operation();
   @MemberGetter public static native int kOperationFieldNumber();
+  public static final int kOperationFieldNumber = kOperationFieldNumber();
   public native @Cast("caffe::ReductionParameter_ReductionOp") int operation();
   public native void set_operation(@Cast("caffe::ReductionParameter_ReductionOp") int value);
 
@@ -6154,6 +6577,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -6161,6 +6585,7 @@ public static final int
   public native @Cast("bool") boolean has_coeff();
   public native void clear_coeff();
   @MemberGetter public static native int kCoeffFieldNumber();
+  public static final int kCoeffFieldNumber = kCoeffFieldNumber();
   public native float coeff();
   public native void set_coeff(float value);
 }
@@ -6217,12 +6642,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::ReLUParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::ReLUParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::ReLUParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::ReLUParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::ReLUParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::ReLUParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -6244,6 +6675,7 @@ public static final int
   public native @Cast("bool") boolean has_negative_slope();
   public native void clear_negative_slope();
   @MemberGetter public static native int kNegativeSlopeFieldNumber();
+  public static final int kNegativeSlopeFieldNumber = kNegativeSlopeFieldNumber();
   public native float negative_slope();
   public native void set_negative_slope(float value);
 
@@ -6251,6 +6683,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::ReLUParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::ReLUParameter_Engine") int value);
 }
@@ -6313,6 +6746,7 @@ public static final int
   public native @Cast("bool") boolean has_shape();
   public native void clear_shape();
   @MemberGetter public static native int kShapeFieldNumber();
+  public static final int kShapeFieldNumber = kShapeFieldNumber();
   public native @Const @ByRef BlobShape shape();
   public native BlobShape mutable_shape();
   public native BlobShape release_shape();
@@ -6322,6 +6756,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -6329,6 +6764,7 @@ public static final int
   public native @Cast("bool") boolean has_num_axes();
   public native void clear_num_axes();
   @MemberGetter public static native int kNumAxesFieldNumber();
+  public static final int kNumAxesFieldNumber = kNumAxesFieldNumber();
   public native @Cast("google::protobuf::int32") int num_axes();
   public native void set_num_axes(@Cast("google::protobuf::int32") int value);
 }
@@ -6385,12 +6821,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::SigmoidParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::SigmoidParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::SigmoidParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SigmoidParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::SigmoidParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::SigmoidParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -6412,6 +6854,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::SigmoidParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::SigmoidParameter_Engine") int value);
 }
@@ -6474,6 +6917,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -6481,6 +6925,7 @@ public static final int
   public native int slice_point_size();
   public native void clear_slice_point();
   @MemberGetter public static native int kSlicePointFieldNumber();
+  public static final int kSlicePointFieldNumber = kSlicePointFieldNumber();
   public native @Cast("google::protobuf::uint32") int slice_point(int index);
   public native void set_slice_point(int index, @Cast("google::protobuf::uint32") int value);
   public native void add_slice_point(@Cast("google::protobuf::uint32") int value);
@@ -6489,6 +6934,7 @@ public static final int
   public native @Cast("bool") boolean has_slice_dim();
   public native void clear_slice_dim();
   @MemberGetter public static native int kSliceDimFieldNumber();
+  public static final int kSliceDimFieldNumber = kSliceDimFieldNumber();
   public native @Cast("google::protobuf::uint32") int slice_dim();
   public native void set_slice_dim(@Cast("google::protobuf::uint32") int value);
 }
@@ -6545,12 +6991,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::SoftmaxParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::SoftmaxParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::SoftmaxParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SoftmaxParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::SoftmaxParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::SoftmaxParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -6572,6 +7024,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::SoftmaxParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::SoftmaxParameter_Engine") int value);
 
@@ -6579,6 +7032,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 }
@@ -6635,12 +7089,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::TanHParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::TanHParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::TanHParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::TanHParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::TanHParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::TanHParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -6662,6 +7122,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::TanHParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::TanHParameter_Engine") int value);
 }
@@ -6724,6 +7185,7 @@ public static final int
   public native @Cast("bool") boolean has_axis();
   public native void clear_axis();
   @MemberGetter public static native int kAxisFieldNumber();
+  public static final int kAxisFieldNumber = kAxisFieldNumber();
   public native @Cast("google::protobuf::int32") int axis();
   public native void set_axis(@Cast("google::protobuf::int32") int value);
 
@@ -6731,6 +7193,7 @@ public static final int
   public native @Cast("bool") boolean has_tiles();
   public native void clear_tiles();
   @MemberGetter public static native int kTilesFieldNumber();
+  public static final int kTilesFieldNumber = kTilesFieldNumber();
   public native @Cast("google::protobuf::int32") int tiles();
   public native void set_tiles(@Cast("google::protobuf::int32") int value);
 }
@@ -6793,6 +7256,7 @@ public static final int
   public native @Cast("bool") boolean has_threshold();
   public native void clear_threshold();
   @MemberGetter public static native int kThresholdFieldNumber();
+  public static final int kThresholdFieldNumber = kThresholdFieldNumber();
   public native float threshold();
   public native void set_threshold(float value);
 }
@@ -6855,6 +7319,7 @@ public static final int
   public native @Cast("bool") boolean has_source();
   public native void clear_source();
   @MemberGetter public static native int kSourceFieldNumber();
+  public static final int kSourceFieldNumber = kSourceFieldNumber();
   public native @StdString BytePointer source();
   public native void set_source(@StdString BytePointer value);
   public native void set_source(@StdString String value);
@@ -6868,6 +7333,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -6875,6 +7341,7 @@ public static final int
   public native @Cast("bool") boolean has_mean_file();
   public native void clear_mean_file();
   @MemberGetter public static native int kMeanFileFieldNumber();
+  public static final int kMeanFileFieldNumber = kMeanFileFieldNumber();
   public native @StdString BytePointer mean_file();
   public native void set_mean_file(@StdString BytePointer value);
   public native void set_mean_file(@StdString String value);
@@ -6888,6 +7355,7 @@ public static final int
   public native @Cast("bool") boolean has_batch_size();
   public native void clear_batch_size();
   @MemberGetter public static native int kBatchSizeFieldNumber();
+  public static final int kBatchSizeFieldNumber = kBatchSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int batch_size();
   public native void set_batch_size(@Cast("google::protobuf::uint32") int value);
 
@@ -6895,6 +7363,7 @@ public static final int
   public native @Cast("bool") boolean has_crop_size();
   public native void clear_crop_size();
   @MemberGetter public static native int kCropSizeFieldNumber();
+  public static final int kCropSizeFieldNumber = kCropSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int crop_size();
   public native void set_crop_size(@Cast("google::protobuf::uint32") int value);
 
@@ -6902,6 +7371,7 @@ public static final int
   public native @Cast("bool") boolean has_mirror();
   public native void clear_mirror();
   @MemberGetter public static native int kMirrorFieldNumber();
+  public static final int kMirrorFieldNumber = kMirrorFieldNumber();
   public native @Cast("bool") boolean mirror();
   public native void set_mirror(@Cast("bool") boolean value);
 
@@ -6909,6 +7379,7 @@ public static final int
   public native @Cast("bool") boolean has_fg_threshold();
   public native void clear_fg_threshold();
   @MemberGetter public static native int kFgThresholdFieldNumber();
+  public static final int kFgThresholdFieldNumber = kFgThresholdFieldNumber();
   public native float fg_threshold();
   public native void set_fg_threshold(float value);
 
@@ -6916,6 +7387,7 @@ public static final int
   public native @Cast("bool") boolean has_bg_threshold();
   public native void clear_bg_threshold();
   @MemberGetter public static native int kBgThresholdFieldNumber();
+  public static final int kBgThresholdFieldNumber = kBgThresholdFieldNumber();
   public native float bg_threshold();
   public native void set_bg_threshold(float value);
 
@@ -6923,6 +7395,7 @@ public static final int
   public native @Cast("bool") boolean has_fg_fraction();
   public native void clear_fg_fraction();
   @MemberGetter public static native int kFgFractionFieldNumber();
+  public static final int kFgFractionFieldNumber = kFgFractionFieldNumber();
   public native float fg_fraction();
   public native void set_fg_fraction(float value);
 
@@ -6930,6 +7403,7 @@ public static final int
   public native @Cast("bool") boolean has_context_pad();
   public native void clear_context_pad();
   @MemberGetter public static native int kContextPadFieldNumber();
+  public static final int kContextPadFieldNumber = kContextPadFieldNumber();
   public native @Cast("google::protobuf::uint32") int context_pad();
   public native void set_context_pad(@Cast("google::protobuf::uint32") int value);
 
@@ -6937,6 +7411,7 @@ public static final int
   public native @Cast("bool") boolean has_crop_mode();
   public native void clear_crop_mode();
   @MemberGetter public static native int kCropModeFieldNumber();
+  public static final int kCropModeFieldNumber = kCropModeFieldNumber();
   public native @StdString BytePointer crop_mode();
   public native void set_crop_mode(@StdString BytePointer value);
   public native void set_crop_mode(@StdString String value);
@@ -6950,6 +7425,7 @@ public static final int
   public native @Cast("bool") boolean has_cache_images();
   public native void clear_cache_images();
   @MemberGetter public static native int kCacheImagesFieldNumber();
+  public static final int kCacheImagesFieldNumber = kCacheImagesFieldNumber();
   public native @Cast("bool") boolean cache_images();
   public native void set_cache_images(@Cast("bool") boolean value);
 
@@ -6957,6 +7433,7 @@ public static final int
   public native @Cast("bool") boolean has_root_folder();
   public native void clear_root_folder();
   @MemberGetter public static native int kRootFolderFieldNumber();
+  public static final int kRootFolderFieldNumber = kRootFolderFieldNumber();
   public native @StdString BytePointer root_folder();
   public native void set_root_folder(@StdString BytePointer value);
   public native void set_root_folder(@StdString String value);
@@ -7019,12 +7496,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::SPPParameter::PoolMethod") int MAX();
+  public static final int MAX = MAX();
   @MemberGetter public static native @Cast("const caffe::SPPParameter::PoolMethod") int AVE();
+  public static final int AVE = AVE();
   @MemberGetter public static native @Cast("const caffe::SPPParameter::PoolMethod") int STOCHASTIC();
+  public static final int STOCHASTIC = STOCHASTIC();
   public static native @Cast("bool") boolean PoolMethod_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SPPParameter::PoolMethod") int PoolMethod_MIN();
+  public static final int PoolMethod_MIN = PoolMethod_MIN();
   @MemberGetter public static native @Cast("const caffe::SPPParameter::PoolMethod") int PoolMethod_MAX();
+  public static final int PoolMethod_MAX = PoolMethod_MAX();
   @MemberGetter public static native int PoolMethod_ARRAYSIZE();
+  public static final int PoolMethod_ARRAYSIZE = PoolMethod_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer PoolMethod_descriptor();
   public static native @StdString BytePointer PoolMethod_Name(@Cast("caffe::SPPParameter::PoolMethod") int value);
   public static native @Cast("bool") boolean PoolMethod_Parse(@StdString BytePointer name,
@@ -7040,12 +7523,18 @@ public static final int
   public static native @Cast("bool") boolean PoolMethod_Parse(@StdString String name,
         @Cast("caffe::SPPParameter::PoolMethod*") int[] value);
   @MemberGetter public static native @Cast("const caffe::SPPParameter::Engine") int DEFAULT();
+  public static final int DEFAULT = DEFAULT();
   @MemberGetter public static native @Cast("const caffe::SPPParameter::Engine") int CAFFE();
+  public static final int CAFFE = CAFFE();
   @MemberGetter public static native @Cast("const caffe::SPPParameter::Engine") int CUDNN();
+  public static final int CUDNN = CUDNN();
   public static native @Cast("bool") boolean Engine_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::SPPParameter::Engine") int Engine_MIN();
+  public static final int Engine_MIN = Engine_MIN();
   @MemberGetter public static native @Cast("const caffe::SPPParameter::Engine") int Engine_MAX();
+  public static final int Engine_MAX = Engine_MAX();
   @MemberGetter public static native int Engine_ARRAYSIZE();
+  public static final int Engine_ARRAYSIZE = Engine_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer Engine_descriptor();
   public static native @StdString BytePointer Engine_Name(@Cast("caffe::SPPParameter::Engine") int value);
   public static native @Cast("bool") boolean Engine_Parse(@StdString BytePointer name,
@@ -7067,6 +7556,7 @@ public static final int
   public native @Cast("bool") boolean has_pyramid_height();
   public native void clear_pyramid_height();
   @MemberGetter public static native int kPyramidHeightFieldNumber();
+  public static final int kPyramidHeightFieldNumber = kPyramidHeightFieldNumber();
   public native @Cast("google::protobuf::uint32") int pyramid_height();
   public native void set_pyramid_height(@Cast("google::protobuf::uint32") int value);
 
@@ -7074,6 +7564,7 @@ public static final int
   public native @Cast("bool") boolean has_pool();
   public native void clear_pool();
   @MemberGetter public static native int kPoolFieldNumber();
+  public static final int kPoolFieldNumber = kPoolFieldNumber();
   public native @Cast("caffe::SPPParameter_PoolMethod") int pool();
   public native void set_pool(@Cast("caffe::SPPParameter_PoolMethod") int value);
 
@@ -7081,6 +7572,7 @@ public static final int
   public native @Cast("bool") boolean has_engine();
   public native void clear_engine();
   @MemberGetter public static native int kEngineFieldNumber();
+  public static final int kEngineFieldNumber = kEngineFieldNumber();
   public native @Cast("caffe::SPPParameter_Engine") int engine();
   public native void set_engine(@Cast("caffe::SPPParameter_Engine") int value);
 }
@@ -7137,49 +7629,92 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int NONE();
+  public static final int NONE = NONE();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int ABSVAL();
+  public static final int ABSVAL = ABSVAL();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int ACCURACY();
+  public static final int ACCURACY = ACCURACY();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int ARGMAX();
+  public static final int ARGMAX = ARGMAX();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int BNLL();
+  public static final int BNLL = BNLL();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int CONCAT();
+  public static final int CONCAT = CONCAT();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int CONTRASTIVE_LOSS();
+  public static final int CONTRASTIVE_LOSS = CONTRASTIVE_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int CONVOLUTION();
+  public static final int CONVOLUTION = CONVOLUTION();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int DATA();
+  public static final int DATA = DATA();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int DECONVOLUTION();
+  public static final int DECONVOLUTION = DECONVOLUTION();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int DROPOUT();
+  public static final int DROPOUT = DROPOUT();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int DUMMY_DATA();
+  public static final int DUMMY_DATA = DUMMY_DATA();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int EUCLIDEAN_LOSS();
+  public static final int EUCLIDEAN_LOSS = EUCLIDEAN_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int ELTWISE();
+  public static final int ELTWISE = ELTWISE();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int EXP();
+  public static final int EXP = EXP();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int FLATTEN();
+  public static final int FLATTEN = FLATTEN();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int HDF5_DATA();
+  public static final int HDF5_DATA = HDF5_DATA();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int HDF5_OUTPUT();
+  public static final int HDF5_OUTPUT = HDF5_OUTPUT();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int HINGE_LOSS();
+  public static final int HINGE_LOSS = HINGE_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int IM2COL();
+  public static final int IM2COL = IM2COL();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int IMAGE_DATA();
+  public static final int IMAGE_DATA = IMAGE_DATA();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int INFOGAIN_LOSS();
+  public static final int INFOGAIN_LOSS = INFOGAIN_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int INNER_PRODUCT();
+  public static final int INNER_PRODUCT = INNER_PRODUCT();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int LRN();
+  public static final int LRN = LRN();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int MEMORY_DATA();
+  public static final int MEMORY_DATA = MEMORY_DATA();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int MULTINOMIAL_LOGISTIC_LOSS();
+  public static final int MULTINOMIAL_LOGISTIC_LOSS = MULTINOMIAL_LOGISTIC_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int MVN();
+  public static final int MVN = MVN();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int POOLING();
+  public static final int POOLING = POOLING();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int POWER();
+  public static final int POWER = POWER();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int RELU();
+  public static final int RELU = RELU();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SIGMOID();
+  public static final int SIGMOID = SIGMOID();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SIGMOID_CROSS_ENTROPY_LOSS();
+  public static final int SIGMOID_CROSS_ENTROPY_LOSS = SIGMOID_CROSS_ENTROPY_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SILENCE();
+  public static final int SILENCE = SILENCE();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SOFTMAX();
+  public static final int SOFTMAX = SOFTMAX();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SOFTMAX_LOSS();
+  public static final int SOFTMAX_LOSS = SOFTMAX_LOSS();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SPLIT();
+  public static final int SPLIT = SPLIT();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int SLICE();
+  public static final int SLICE = SLICE();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int TANH();
+  public static final int TANH = TANH();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int WINDOW_DATA();
+  public static final int WINDOW_DATA = WINDOW_DATA();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int THRESHOLD();
+  public static final int THRESHOLD = THRESHOLD();
   public static native @Cast("bool") boolean LayerType_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int LayerType_MIN();
+  public static final int LayerType_MIN = LayerType_MIN();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::LayerType") int LayerType_MAX();
+  public static final int LayerType_MAX = LayerType_MAX();
   @MemberGetter public static native int LayerType_ARRAYSIZE();
+  public static final int LayerType_ARRAYSIZE = LayerType_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer LayerType_descriptor();
   public static native @StdString BytePointer LayerType_Name(@Cast("caffe::V1LayerParameter::LayerType") int value);
   public static native @Cast("bool") boolean LayerType_Parse(@StdString BytePointer name,
@@ -7195,11 +7730,16 @@ public static final int
   public static native @Cast("bool") boolean LayerType_Parse(@StdString String name,
         @Cast("caffe::V1LayerParameter::LayerType*") int[] value);
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::DimCheckMode") int STRICT();
+  public static final int STRICT = STRICT();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::DimCheckMode") int PERMISSIVE();
+  public static final int PERMISSIVE = PERMISSIVE();
   public static native @Cast("bool") boolean DimCheckMode_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::DimCheckMode") int DimCheckMode_MIN();
+  public static final int DimCheckMode_MIN = DimCheckMode_MIN();
   @MemberGetter public static native @Cast("const caffe::V1LayerParameter::DimCheckMode") int DimCheckMode_MAX();
+  public static final int DimCheckMode_MAX = DimCheckMode_MAX();
   @MemberGetter public static native int DimCheckMode_ARRAYSIZE();
+  public static final int DimCheckMode_ARRAYSIZE = DimCheckMode_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer DimCheckMode_descriptor();
   public static native @StdString BytePointer DimCheckMode_Name(@Cast("caffe::V1LayerParameter::DimCheckMode") int value);
   public static native @Cast("bool") boolean DimCheckMode_Parse(@StdString BytePointer name,
@@ -7221,6 +7761,7 @@ public static final int
   public native int bottom_size();
   public native void clear_bottom();
   @MemberGetter public static native int kBottomFieldNumber();
+  public static final int kBottomFieldNumber = kBottomFieldNumber();
   public native @StdString BytePointer bottom(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_bottom(int index);
   public native void set_bottom(int index, @StdString BytePointer value);
@@ -7237,6 +7778,7 @@ public static final int
   public native int top_size();
   public native void clear_top();
   @MemberGetter public static native int kTopFieldNumber();
+  public static final int kTopFieldNumber = kTopFieldNumber();
   public native @StdString BytePointer top(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_top(int index);
   public native void set_top(int index, @StdString BytePointer value);
@@ -7253,6 +7795,7 @@ public static final int
   public native @Cast("bool") boolean has_name();
   public native void clear_name();
   @MemberGetter public static native int kNameFieldNumber();
+  public static final int kNameFieldNumber = kNameFieldNumber();
   public native @StdString BytePointer name();
   public native void set_name(@StdString BytePointer value);
   public native void set_name(@StdString String value);
@@ -7266,6 +7809,7 @@ public static final int
   public native int include_size();
   public native void clear_include();
   @MemberGetter public static native int kIncludeFieldNumber();
+  public static final int kIncludeFieldNumber = kIncludeFieldNumber();
   public native @Const @ByRef NetStateRule include(int index);
   public native NetStateRule mutable_include(int index);
   public native NetStateRule add_include();
@@ -7274,6 +7818,7 @@ public static final int
   public native int exclude_size();
   public native void clear_exclude();
   @MemberGetter public static native int kExcludeFieldNumber();
+  public static final int kExcludeFieldNumber = kExcludeFieldNumber();
   public native @Const @ByRef NetStateRule exclude(int index);
   public native NetStateRule mutable_exclude(int index);
   public native NetStateRule add_exclude();
@@ -7282,6 +7827,7 @@ public static final int
   public native @Cast("bool") boolean has_type();
   public native void clear_type();
   @MemberGetter public static native int kTypeFieldNumber();
+  public static final int kTypeFieldNumber = kTypeFieldNumber();
   public native @Cast("caffe::V1LayerParameter_LayerType") int type();
   public native void set_type(@Cast("caffe::V1LayerParameter_LayerType") int value);
 
@@ -7289,6 +7835,7 @@ public static final int
   public native int blobs_size();
   public native void clear_blobs();
   @MemberGetter public static native int kBlobsFieldNumber();
+  public static final int kBlobsFieldNumber = kBlobsFieldNumber();
   public native @Const @ByRef BlobProto blobs(int index);
   public native BlobProto mutable_blobs(int index);
   public native BlobProto add_blobs();
@@ -7297,6 +7844,7 @@ public static final int
   public native int param_size();
   public native void clear_param();
   @MemberGetter public static native int kParamFieldNumber();
+  public static final int kParamFieldNumber = kParamFieldNumber();
   public native @StdString BytePointer param(int index);
   public native @StdString @Cast({"char*", "std::string*"}) BytePointer mutable_param(int index);
   public native void set_param(int index, @StdString BytePointer value);
@@ -7313,6 +7861,7 @@ public static final int
   public native int blob_share_mode_size();
   public native void clear_blob_share_mode();
   @MemberGetter public static native int kBlobShareModeFieldNumber();
+  public static final int kBlobShareModeFieldNumber = kBlobShareModeFieldNumber();
   public native @Cast("caffe::V1LayerParameter_DimCheckMode") int blob_share_mode(int index);
   public native void set_blob_share_mode(int index, @Cast("caffe::V1LayerParameter_DimCheckMode") int value);
   public native void add_blob_share_mode(@Cast("caffe::V1LayerParameter_DimCheckMode") int value);
@@ -7321,6 +7870,7 @@ public static final int
   public native int blobs_lr_size();
   public native void clear_blobs_lr();
   @MemberGetter public static native int kBlobsLrFieldNumber();
+  public static final int kBlobsLrFieldNumber = kBlobsLrFieldNumber();
   public native float blobs_lr(int index);
   public native void set_blobs_lr(int index, float value);
   public native void add_blobs_lr(float value);
@@ -7329,6 +7879,7 @@ public static final int
   public native int weight_decay_size();
   public native void clear_weight_decay();
   @MemberGetter public static native int kWeightDecayFieldNumber();
+  public static final int kWeightDecayFieldNumber = kWeightDecayFieldNumber();
   public native float weight_decay(int index);
   public native void set_weight_decay(int index, float value);
   public native void add_weight_decay(float value);
@@ -7337,6 +7888,7 @@ public static final int
   public native int loss_weight_size();
   public native void clear_loss_weight();
   @MemberGetter public static native int kLossWeightFieldNumber();
+  public static final int kLossWeightFieldNumber = kLossWeightFieldNumber();
   public native float loss_weight(int index);
   public native void set_loss_weight(int index, float value);
   public native void add_loss_weight(float value);
@@ -7345,6 +7897,7 @@ public static final int
   public native @Cast("bool") boolean has_accuracy_param();
   public native void clear_accuracy_param();
   @MemberGetter public static native int kAccuracyParamFieldNumber();
+  public static final int kAccuracyParamFieldNumber = kAccuracyParamFieldNumber();
   public native @Const @ByRef AccuracyParameter accuracy_param();
   public native AccuracyParameter mutable_accuracy_param();
   public native AccuracyParameter release_accuracy_param();
@@ -7354,6 +7907,7 @@ public static final int
   public native @Cast("bool") boolean has_argmax_param();
   public native void clear_argmax_param();
   @MemberGetter public static native int kArgmaxParamFieldNumber();
+  public static final int kArgmaxParamFieldNumber = kArgmaxParamFieldNumber();
   public native @Const @ByRef ArgMaxParameter argmax_param();
   public native ArgMaxParameter mutable_argmax_param();
   public native ArgMaxParameter release_argmax_param();
@@ -7363,6 +7917,7 @@ public static final int
   public native @Cast("bool") boolean has_concat_param();
   public native void clear_concat_param();
   @MemberGetter public static native int kConcatParamFieldNumber();
+  public static final int kConcatParamFieldNumber = kConcatParamFieldNumber();
   public native @Const @ByRef ConcatParameter concat_param();
   public native ConcatParameter mutable_concat_param();
   public native ConcatParameter release_concat_param();
@@ -7372,6 +7927,7 @@ public static final int
   public native @Cast("bool") boolean has_contrastive_loss_param();
   public native void clear_contrastive_loss_param();
   @MemberGetter public static native int kContrastiveLossParamFieldNumber();
+  public static final int kContrastiveLossParamFieldNumber = kContrastiveLossParamFieldNumber();
   public native @Const @ByRef ContrastiveLossParameter contrastive_loss_param();
   public native ContrastiveLossParameter mutable_contrastive_loss_param();
   public native ContrastiveLossParameter release_contrastive_loss_param();
@@ -7381,6 +7937,7 @@ public static final int
   public native @Cast("bool") boolean has_convolution_param();
   public native void clear_convolution_param();
   @MemberGetter public static native int kConvolutionParamFieldNumber();
+  public static final int kConvolutionParamFieldNumber = kConvolutionParamFieldNumber();
   public native @Const @ByRef ConvolutionParameter convolution_param();
   public native ConvolutionParameter mutable_convolution_param();
   public native ConvolutionParameter release_convolution_param();
@@ -7390,6 +7947,7 @@ public static final int
   public native @Cast("bool") boolean has_data_param();
   public native void clear_data_param();
   @MemberGetter public static native int kDataParamFieldNumber();
+  public static final int kDataParamFieldNumber = kDataParamFieldNumber();
   public native @Const @ByRef DataParameter data_param();
   public native DataParameter mutable_data_param();
   public native DataParameter release_data_param();
@@ -7399,6 +7957,7 @@ public static final int
   public native @Cast("bool") boolean has_dropout_param();
   public native void clear_dropout_param();
   @MemberGetter public static native int kDropoutParamFieldNumber();
+  public static final int kDropoutParamFieldNumber = kDropoutParamFieldNumber();
   public native @Const @ByRef DropoutParameter dropout_param();
   public native DropoutParameter mutable_dropout_param();
   public native DropoutParameter release_dropout_param();
@@ -7408,6 +7967,7 @@ public static final int
   public native @Cast("bool") boolean has_dummy_data_param();
   public native void clear_dummy_data_param();
   @MemberGetter public static native int kDummyDataParamFieldNumber();
+  public static final int kDummyDataParamFieldNumber = kDummyDataParamFieldNumber();
   public native @Const @ByRef DummyDataParameter dummy_data_param();
   public native DummyDataParameter mutable_dummy_data_param();
   public native DummyDataParameter release_dummy_data_param();
@@ -7417,6 +7977,7 @@ public static final int
   public native @Cast("bool") boolean has_eltwise_param();
   public native void clear_eltwise_param();
   @MemberGetter public static native int kEltwiseParamFieldNumber();
+  public static final int kEltwiseParamFieldNumber = kEltwiseParamFieldNumber();
   public native @Const @ByRef EltwiseParameter eltwise_param();
   public native EltwiseParameter mutable_eltwise_param();
   public native EltwiseParameter release_eltwise_param();
@@ -7426,6 +7987,7 @@ public static final int
   public native @Cast("bool") boolean has_exp_param();
   public native void clear_exp_param();
   @MemberGetter public static native int kExpParamFieldNumber();
+  public static final int kExpParamFieldNumber = kExpParamFieldNumber();
   public native @Const @ByRef ExpParameter exp_param();
   public native ExpParameter mutable_exp_param();
   public native ExpParameter release_exp_param();
@@ -7435,6 +7997,7 @@ public static final int
   public native @Cast("bool") boolean has_hdf5_data_param();
   public native void clear_hdf5_data_param();
   @MemberGetter public static native int kHdf5DataParamFieldNumber();
+  public static final int kHdf5DataParamFieldNumber = kHdf5DataParamFieldNumber();
   public native @Const @ByRef HDF5DataParameter hdf5_data_param();
   public native HDF5DataParameter mutable_hdf5_data_param();
   public native HDF5DataParameter release_hdf5_data_param();
@@ -7444,6 +8007,7 @@ public static final int
   public native @Cast("bool") boolean has_hdf5_output_param();
   public native void clear_hdf5_output_param();
   @MemberGetter public static native int kHdf5OutputParamFieldNumber();
+  public static final int kHdf5OutputParamFieldNumber = kHdf5OutputParamFieldNumber();
   public native @Const @ByRef HDF5OutputParameter hdf5_output_param();
   public native HDF5OutputParameter mutable_hdf5_output_param();
   public native HDF5OutputParameter release_hdf5_output_param();
@@ -7453,6 +8017,7 @@ public static final int
   public native @Cast("bool") boolean has_hinge_loss_param();
   public native void clear_hinge_loss_param();
   @MemberGetter public static native int kHingeLossParamFieldNumber();
+  public static final int kHingeLossParamFieldNumber = kHingeLossParamFieldNumber();
   public native @Const @ByRef HingeLossParameter hinge_loss_param();
   public native HingeLossParameter mutable_hinge_loss_param();
   public native HingeLossParameter release_hinge_loss_param();
@@ -7462,6 +8027,7 @@ public static final int
   public native @Cast("bool") boolean has_image_data_param();
   public native void clear_image_data_param();
   @MemberGetter public static native int kImageDataParamFieldNumber();
+  public static final int kImageDataParamFieldNumber = kImageDataParamFieldNumber();
   public native @Const @ByRef ImageDataParameter image_data_param();
   public native ImageDataParameter mutable_image_data_param();
   public native ImageDataParameter release_image_data_param();
@@ -7471,6 +8037,7 @@ public static final int
   public native @Cast("bool") boolean has_infogain_loss_param();
   public native void clear_infogain_loss_param();
   @MemberGetter public static native int kInfogainLossParamFieldNumber();
+  public static final int kInfogainLossParamFieldNumber = kInfogainLossParamFieldNumber();
   public native @Const @ByRef InfogainLossParameter infogain_loss_param();
   public native InfogainLossParameter mutable_infogain_loss_param();
   public native InfogainLossParameter release_infogain_loss_param();
@@ -7480,6 +8047,7 @@ public static final int
   public native @Cast("bool") boolean has_inner_product_param();
   public native void clear_inner_product_param();
   @MemberGetter public static native int kInnerProductParamFieldNumber();
+  public static final int kInnerProductParamFieldNumber = kInnerProductParamFieldNumber();
   public native @Const @ByRef InnerProductParameter inner_product_param();
   public native InnerProductParameter mutable_inner_product_param();
   public native InnerProductParameter release_inner_product_param();
@@ -7489,6 +8057,7 @@ public static final int
   public native @Cast("bool") boolean has_lrn_param();
   public native void clear_lrn_param();
   @MemberGetter public static native int kLrnParamFieldNumber();
+  public static final int kLrnParamFieldNumber = kLrnParamFieldNumber();
   public native @Const @ByRef LRNParameter lrn_param();
   public native LRNParameter mutable_lrn_param();
   public native LRNParameter release_lrn_param();
@@ -7498,6 +8067,7 @@ public static final int
   public native @Cast("bool") boolean has_memory_data_param();
   public native void clear_memory_data_param();
   @MemberGetter public static native int kMemoryDataParamFieldNumber();
+  public static final int kMemoryDataParamFieldNumber = kMemoryDataParamFieldNumber();
   public native @Const @ByRef MemoryDataParameter memory_data_param();
   public native MemoryDataParameter mutable_memory_data_param();
   public native MemoryDataParameter release_memory_data_param();
@@ -7507,6 +8077,7 @@ public static final int
   public native @Cast("bool") boolean has_mvn_param();
   public native void clear_mvn_param();
   @MemberGetter public static native int kMvnParamFieldNumber();
+  public static final int kMvnParamFieldNumber = kMvnParamFieldNumber();
   public native @Const @ByRef MVNParameter mvn_param();
   public native MVNParameter mutable_mvn_param();
   public native MVNParameter release_mvn_param();
@@ -7516,6 +8087,7 @@ public static final int
   public native @Cast("bool") boolean has_pooling_param();
   public native void clear_pooling_param();
   @MemberGetter public static native int kPoolingParamFieldNumber();
+  public static final int kPoolingParamFieldNumber = kPoolingParamFieldNumber();
   public native @Const @ByRef PoolingParameter pooling_param();
   public native PoolingParameter mutable_pooling_param();
   public native PoolingParameter release_pooling_param();
@@ -7525,6 +8097,7 @@ public static final int
   public native @Cast("bool") boolean has_power_param();
   public native void clear_power_param();
   @MemberGetter public static native int kPowerParamFieldNumber();
+  public static final int kPowerParamFieldNumber = kPowerParamFieldNumber();
   public native @Const @ByRef PowerParameter power_param();
   public native PowerParameter mutable_power_param();
   public native PowerParameter release_power_param();
@@ -7534,6 +8107,7 @@ public static final int
   public native @Cast("bool") boolean has_relu_param();
   public native void clear_relu_param();
   @MemberGetter public static native int kReluParamFieldNumber();
+  public static final int kReluParamFieldNumber = kReluParamFieldNumber();
   public native @Const @ByRef ReLUParameter relu_param();
   public native ReLUParameter mutable_relu_param();
   public native ReLUParameter release_relu_param();
@@ -7543,6 +8117,7 @@ public static final int
   public native @Cast("bool") boolean has_sigmoid_param();
   public native void clear_sigmoid_param();
   @MemberGetter public static native int kSigmoidParamFieldNumber();
+  public static final int kSigmoidParamFieldNumber = kSigmoidParamFieldNumber();
   public native @Const @ByRef SigmoidParameter sigmoid_param();
   public native SigmoidParameter mutable_sigmoid_param();
   public native SigmoidParameter release_sigmoid_param();
@@ -7552,6 +8127,7 @@ public static final int
   public native @Cast("bool") boolean has_softmax_param();
   public native void clear_softmax_param();
   @MemberGetter public static native int kSoftmaxParamFieldNumber();
+  public static final int kSoftmaxParamFieldNumber = kSoftmaxParamFieldNumber();
   public native @Const @ByRef SoftmaxParameter softmax_param();
   public native SoftmaxParameter mutable_softmax_param();
   public native SoftmaxParameter release_softmax_param();
@@ -7561,6 +8137,7 @@ public static final int
   public native @Cast("bool") boolean has_slice_param();
   public native void clear_slice_param();
   @MemberGetter public static native int kSliceParamFieldNumber();
+  public static final int kSliceParamFieldNumber = kSliceParamFieldNumber();
   public native @Const @ByRef SliceParameter slice_param();
   public native SliceParameter mutable_slice_param();
   public native SliceParameter release_slice_param();
@@ -7570,6 +8147,7 @@ public static final int
   public native @Cast("bool") boolean has_tanh_param();
   public native void clear_tanh_param();
   @MemberGetter public static native int kTanhParamFieldNumber();
+  public static final int kTanhParamFieldNumber = kTanhParamFieldNumber();
   public native @Const @ByRef TanHParameter tanh_param();
   public native TanHParameter mutable_tanh_param();
   public native TanHParameter release_tanh_param();
@@ -7579,6 +8157,7 @@ public static final int
   public native @Cast("bool") boolean has_threshold_param();
   public native void clear_threshold_param();
   @MemberGetter public static native int kThresholdParamFieldNumber();
+  public static final int kThresholdParamFieldNumber = kThresholdParamFieldNumber();
   public native @Const @ByRef ThresholdParameter threshold_param();
   public native ThresholdParameter mutable_threshold_param();
   public native ThresholdParameter release_threshold_param();
@@ -7588,6 +8167,7 @@ public static final int
   public native @Cast("bool") boolean has_window_data_param();
   public native void clear_window_data_param();
   @MemberGetter public static native int kWindowDataParamFieldNumber();
+  public static final int kWindowDataParamFieldNumber = kWindowDataParamFieldNumber();
   public native @Const @ByRef WindowDataParameter window_data_param();
   public native WindowDataParameter mutable_window_data_param();
   public native WindowDataParameter release_window_data_param();
@@ -7597,6 +8177,7 @@ public static final int
   public native @Cast("bool") boolean has_transform_param();
   public native void clear_transform_param();
   @MemberGetter public static native int kTransformParamFieldNumber();
+  public static final int kTransformParamFieldNumber = kTransformParamFieldNumber();
   public native @Const @ByRef TransformationParameter transform_param();
   public native TransformationParameter mutable_transform_param();
   public native TransformationParameter release_transform_param();
@@ -7606,6 +8187,7 @@ public static final int
   public native @Cast("bool") boolean has_loss_param();
   public native void clear_loss_param();
   @MemberGetter public static native int kLossParamFieldNumber();
+  public static final int kLossParamFieldNumber = kLossParamFieldNumber();
   public native @Const @ByRef LossParameter loss_param();
   public native LossParameter mutable_loss_param();
   public native LossParameter release_loss_param();
@@ -7615,6 +8197,7 @@ public static final int
   public native @Cast("bool") boolean has_layer();
   public native void clear_layer();
   @MemberGetter public static native int kLayerFieldNumber();
+  public static final int kLayerFieldNumber = kLayerFieldNumber();
   public native @Const @ByRef V0LayerParameter layer();
   public native V0LayerParameter mutable_layer();
   public native V0LayerParameter release_layer();
@@ -7673,12 +8256,18 @@ public static final int
 
   // nested types ----------------------------------------------------
   @MemberGetter public static native @Cast("const caffe::V0LayerParameter::PoolMethod") int MAX();
+  public static final int MAX = MAX();
   @MemberGetter public static native @Cast("const caffe::V0LayerParameter::PoolMethod") int AVE();
+  public static final int AVE = AVE();
   @MemberGetter public static native @Cast("const caffe::V0LayerParameter::PoolMethod") int STOCHASTIC();
+  public static final int STOCHASTIC = STOCHASTIC();
   public static native @Cast("bool") boolean PoolMethod_IsValid(int value);
   @MemberGetter public static native @Cast("const caffe::V0LayerParameter::PoolMethod") int PoolMethod_MIN();
+  public static final int PoolMethod_MIN = PoolMethod_MIN();
   @MemberGetter public static native @Cast("const caffe::V0LayerParameter::PoolMethod") int PoolMethod_MAX();
+  public static final int PoolMethod_MAX = PoolMethod_MAX();
   @MemberGetter public static native int PoolMethod_ARRAYSIZE();
+  public static final int PoolMethod_ARRAYSIZE = PoolMethod_ARRAYSIZE();
   public static native @Cast("const google::protobuf::EnumDescriptor*") Pointer PoolMethod_descriptor();
   public static native @StdString BytePointer PoolMethod_Name(@Cast("caffe::V0LayerParameter::PoolMethod") int value);
   public static native @Cast("bool") boolean PoolMethod_Parse(@StdString BytePointer name,
@@ -7700,6 +8289,7 @@ public static final int
   public native @Cast("bool") boolean has_name();
   public native void clear_name();
   @MemberGetter public static native int kNameFieldNumber();
+  public static final int kNameFieldNumber = kNameFieldNumber();
   public native @StdString BytePointer name();
   public native void set_name(@StdString BytePointer value);
   public native void set_name(@StdString String value);
@@ -7713,6 +8303,7 @@ public static final int
   public native @Cast("bool") boolean has_type();
   public native void clear_type();
   @MemberGetter public static native int kTypeFieldNumber();
+  public static final int kTypeFieldNumber = kTypeFieldNumber();
   public native @StdString BytePointer type();
   public native void set_type(@StdString BytePointer value);
   public native void set_type(@StdString String value);
@@ -7726,6 +8317,7 @@ public static final int
   public native @Cast("bool") boolean has_num_output();
   public native void clear_num_output();
   @MemberGetter public static native int kNumOutputFieldNumber();
+  public static final int kNumOutputFieldNumber = kNumOutputFieldNumber();
   public native @Cast("google::protobuf::uint32") int num_output();
   public native void set_num_output(@Cast("google::protobuf::uint32") int value);
 
@@ -7733,6 +8325,7 @@ public static final int
   public native @Cast("bool") boolean has_biasterm();
   public native void clear_biasterm();
   @MemberGetter public static native int kBiastermFieldNumber();
+  public static final int kBiastermFieldNumber = kBiastermFieldNumber();
   public native @Cast("bool") boolean biasterm();
   public native void set_biasterm(@Cast("bool") boolean value);
 
@@ -7740,6 +8333,7 @@ public static final int
   public native @Cast("bool") boolean has_weight_filler();
   public native void clear_weight_filler();
   @MemberGetter public static native int kWeightFillerFieldNumber();
+  public static final int kWeightFillerFieldNumber = kWeightFillerFieldNumber();
   public native @Const @ByRef FillerParameter weight_filler();
   public native FillerParameter mutable_weight_filler();
   public native FillerParameter release_weight_filler();
@@ -7749,6 +8343,7 @@ public static final int
   public native @Cast("bool") boolean has_bias_filler();
   public native void clear_bias_filler();
   @MemberGetter public static native int kBiasFillerFieldNumber();
+  public static final int kBiasFillerFieldNumber = kBiasFillerFieldNumber();
   public native @Const @ByRef FillerParameter bias_filler();
   public native FillerParameter mutable_bias_filler();
   public native FillerParameter release_bias_filler();
@@ -7758,6 +8353,7 @@ public static final int
   public native @Cast("bool") boolean has_pad();
   public native void clear_pad();
   @MemberGetter public static native int kPadFieldNumber();
+  public static final int kPadFieldNumber = kPadFieldNumber();
   public native @Cast("google::protobuf::uint32") int pad();
   public native void set_pad(@Cast("google::protobuf::uint32") int value);
 
@@ -7765,6 +8361,7 @@ public static final int
   public native @Cast("bool") boolean has_kernelsize();
   public native void clear_kernelsize();
   @MemberGetter public static native int kKernelsizeFieldNumber();
+  public static final int kKernelsizeFieldNumber = kKernelsizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int kernelsize();
   public native void set_kernelsize(@Cast("google::protobuf::uint32") int value);
 
@@ -7772,6 +8369,7 @@ public static final int
   public native @Cast("bool") boolean has_group();
   public native void clear_group();
   @MemberGetter public static native int kGroupFieldNumber();
+  public static final int kGroupFieldNumber = kGroupFieldNumber();
   public native @Cast("google::protobuf::uint32") int group();
   public native void set_group(@Cast("google::protobuf::uint32") int value);
 
@@ -7779,6 +8377,7 @@ public static final int
   public native @Cast("bool") boolean has_stride();
   public native void clear_stride();
   @MemberGetter public static native int kStrideFieldNumber();
+  public static final int kStrideFieldNumber = kStrideFieldNumber();
   public native @Cast("google::protobuf::uint32") int stride();
   public native void set_stride(@Cast("google::protobuf::uint32") int value);
 
@@ -7786,6 +8385,7 @@ public static final int
   public native @Cast("bool") boolean has_pool();
   public native void clear_pool();
   @MemberGetter public static native int kPoolFieldNumber();
+  public static final int kPoolFieldNumber = kPoolFieldNumber();
   public native @Cast("caffe::V0LayerParameter_PoolMethod") int pool();
   public native void set_pool(@Cast("caffe::V0LayerParameter_PoolMethod") int value);
 
@@ -7793,6 +8393,7 @@ public static final int
   public native @Cast("bool") boolean has_dropout_ratio();
   public native void clear_dropout_ratio();
   @MemberGetter public static native int kDropoutRatioFieldNumber();
+  public static final int kDropoutRatioFieldNumber = kDropoutRatioFieldNumber();
   public native float dropout_ratio();
   public native void set_dropout_ratio(float value);
 
@@ -7800,6 +8401,7 @@ public static final int
   public native @Cast("bool") boolean has_local_size();
   public native void clear_local_size();
   @MemberGetter public static native int kLocalSizeFieldNumber();
+  public static final int kLocalSizeFieldNumber = kLocalSizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int local_size();
   public native void set_local_size(@Cast("google::protobuf::uint32") int value);
 
@@ -7807,6 +8409,7 @@ public static final int
   public native @Cast("bool") boolean has_alpha();
   public native void clear_alpha();
   @MemberGetter public static native int kAlphaFieldNumber();
+  public static final int kAlphaFieldNumber = kAlphaFieldNumber();
   public native float alpha();
   public native void set_alpha(float value);
 
@@ -7814,6 +8417,7 @@ public static final int
   public native @Cast("bool") boolean has_beta();
   public native void clear_beta();
   @MemberGetter public static native int kBetaFieldNumber();
+  public static final int kBetaFieldNumber = kBetaFieldNumber();
   public native float beta();
   public native void set_beta(float value);
 
@@ -7821,6 +8425,7 @@ public static final int
   public native @Cast("bool") boolean has_k();
   public native void clear_k();
   @MemberGetter public static native int kKFieldNumber();
+  public static final int kKFieldNumber = kKFieldNumber();
   public native float k();
   public native void set_k(float value);
 
@@ -7828,6 +8433,7 @@ public static final int
   public native @Cast("bool") boolean has_source();
   public native void clear_source();
   @MemberGetter public static native int kSourceFieldNumber();
+  public static final int kSourceFieldNumber = kSourceFieldNumber();
   public native @StdString BytePointer source();
   public native void set_source(@StdString BytePointer value);
   public native void set_source(@StdString String value);
@@ -7841,6 +8447,7 @@ public static final int
   public native @Cast("bool") boolean has_scale();
   public native void clear_scale();
   @MemberGetter public static native int kScaleFieldNumber();
+  public static final int kScaleFieldNumber = kScaleFieldNumber();
   public native float scale();
   public native void set_scale(float value);
 
@@ -7848,6 +8455,7 @@ public static final int
   public native @Cast("bool") boolean has_meanfile();
   public native void clear_meanfile();
   @MemberGetter public static native int kMeanfileFieldNumber();
+  public static final int kMeanfileFieldNumber = kMeanfileFieldNumber();
   public native @StdString BytePointer meanfile();
   public native void set_meanfile(@StdString BytePointer value);
   public native void set_meanfile(@StdString String value);
@@ -7861,6 +8469,7 @@ public static final int
   public native @Cast("bool") boolean has_batchsize();
   public native void clear_batchsize();
   @MemberGetter public static native int kBatchsizeFieldNumber();
+  public static final int kBatchsizeFieldNumber = kBatchsizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int batchsize();
   public native void set_batchsize(@Cast("google::protobuf::uint32") int value);
 
@@ -7868,6 +8477,7 @@ public static final int
   public native @Cast("bool") boolean has_cropsize();
   public native void clear_cropsize();
   @MemberGetter public static native int kCropsizeFieldNumber();
+  public static final int kCropsizeFieldNumber = kCropsizeFieldNumber();
   public native @Cast("google::protobuf::uint32") int cropsize();
   public native void set_cropsize(@Cast("google::protobuf::uint32") int value);
 
@@ -7875,6 +8485,7 @@ public static final int
   public native @Cast("bool") boolean has_mirror();
   public native void clear_mirror();
   @MemberGetter public static native int kMirrorFieldNumber();
+  public static final int kMirrorFieldNumber = kMirrorFieldNumber();
   public native @Cast("bool") boolean mirror();
   public native void set_mirror(@Cast("bool") boolean value);
 
@@ -7882,6 +8493,7 @@ public static final int
   public native int blobs_size();
   public native void clear_blobs();
   @MemberGetter public static native int kBlobsFieldNumber();
+  public static final int kBlobsFieldNumber = kBlobsFieldNumber();
   public native @Const @ByRef BlobProto blobs(int index);
   public native BlobProto mutable_blobs(int index);
   public native BlobProto add_blobs();
@@ -7890,6 +8502,7 @@ public static final int
   public native int blobs_lr_size();
   public native void clear_blobs_lr();
   @MemberGetter public static native int kBlobsLrFieldNumber();
+  public static final int kBlobsLrFieldNumber = kBlobsLrFieldNumber();
   public native float blobs_lr(int index);
   public native void set_blobs_lr(int index, float value);
   public native void add_blobs_lr(float value);
@@ -7898,6 +8511,7 @@ public static final int
   public native int weight_decay_size();
   public native void clear_weight_decay();
   @MemberGetter public static native int kWeightDecayFieldNumber();
+  public static final int kWeightDecayFieldNumber = kWeightDecayFieldNumber();
   public native float weight_decay(int index);
   public native void set_weight_decay(int index, float value);
   public native void add_weight_decay(float value);
@@ -7906,6 +8520,7 @@ public static final int
   public native @Cast("bool") boolean has_rand_skip();
   public native void clear_rand_skip();
   @MemberGetter public static native int kRandSkipFieldNumber();
+  public static final int kRandSkipFieldNumber = kRandSkipFieldNumber();
   public native @Cast("google::protobuf::uint32") int rand_skip();
   public native void set_rand_skip(@Cast("google::protobuf::uint32") int value);
 
@@ -7913,6 +8528,7 @@ public static final int
   public native @Cast("bool") boolean has_det_fg_threshold();
   public native void clear_det_fg_threshold();
   @MemberGetter public static native int kDetFgThresholdFieldNumber();
+  public static final int kDetFgThresholdFieldNumber = kDetFgThresholdFieldNumber();
   public native float det_fg_threshold();
   public native void set_det_fg_threshold(float value);
 
@@ -7920,6 +8536,7 @@ public static final int
   public native @Cast("bool") boolean has_det_bg_threshold();
   public native void clear_det_bg_threshold();
   @MemberGetter public static native int kDetBgThresholdFieldNumber();
+  public static final int kDetBgThresholdFieldNumber = kDetBgThresholdFieldNumber();
   public native float det_bg_threshold();
   public native void set_det_bg_threshold(float value);
 
@@ -7927,6 +8544,7 @@ public static final int
   public native @Cast("bool") boolean has_det_fg_fraction();
   public native void clear_det_fg_fraction();
   @MemberGetter public static native int kDetFgFractionFieldNumber();
+  public static final int kDetFgFractionFieldNumber = kDetFgFractionFieldNumber();
   public native float det_fg_fraction();
   public native void set_det_fg_fraction(float value);
 
@@ -7934,6 +8552,7 @@ public static final int
   public native @Cast("bool") boolean has_det_context_pad();
   public native void clear_det_context_pad();
   @MemberGetter public static native int kDetContextPadFieldNumber();
+  public static final int kDetContextPadFieldNumber = kDetContextPadFieldNumber();
   public native @Cast("google::protobuf::uint32") int det_context_pad();
   public native void set_det_context_pad(@Cast("google::protobuf::uint32") int value);
 
@@ -7941,6 +8560,7 @@ public static final int
   public native @Cast("bool") boolean has_det_crop_mode();
   public native void clear_det_crop_mode();
   @MemberGetter public static native int kDetCropModeFieldNumber();
+  public static final int kDetCropModeFieldNumber = kDetCropModeFieldNumber();
   public native @StdString BytePointer det_crop_mode();
   public native void set_det_crop_mode(@StdString BytePointer value);
   public native void set_det_crop_mode(@StdString String value);
@@ -7954,6 +8574,7 @@ public static final int
   public native @Cast("bool") boolean has_new_num();
   public native void clear_new_num();
   @MemberGetter public static native int kNewNumFieldNumber();
+  public static final int kNewNumFieldNumber = kNewNumFieldNumber();
   public native @Cast("google::protobuf::int32") int new_num();
   public native void set_new_num(@Cast("google::protobuf::int32") int value);
 
@@ -7961,6 +8582,7 @@ public static final int
   public native @Cast("bool") boolean has_new_channels();
   public native void clear_new_channels();
   @MemberGetter public static native int kNewChannelsFieldNumber();
+  public static final int kNewChannelsFieldNumber = kNewChannelsFieldNumber();
   public native @Cast("google::protobuf::int32") int new_channels();
   public native void set_new_channels(@Cast("google::protobuf::int32") int value);
 
@@ -7968,6 +8590,7 @@ public static final int
   public native @Cast("bool") boolean has_new_height();
   public native void clear_new_height();
   @MemberGetter public static native int kNewHeightFieldNumber();
+  public static final int kNewHeightFieldNumber = kNewHeightFieldNumber();
   public native @Cast("google::protobuf::int32") int new_height();
   public native void set_new_height(@Cast("google::protobuf::int32") int value);
 
@@ -7975,6 +8598,7 @@ public static final int
   public native @Cast("bool") boolean has_new_width();
   public native void clear_new_width();
   @MemberGetter public static native int kNewWidthFieldNumber();
+  public static final int kNewWidthFieldNumber = kNewWidthFieldNumber();
   public native @Cast("google::protobuf::int32") int new_width();
   public native void set_new_width(@Cast("google::protobuf::int32") int value);
 
@@ -7982,6 +8606,7 @@ public static final int
   public native @Cast("bool") boolean has_shuffle_images();
   public native void clear_shuffle_images();
   @MemberGetter public static native int kShuffleImagesFieldNumber();
+  public static final int kShuffleImagesFieldNumber = kShuffleImagesFieldNumber();
   public native @Cast("bool") boolean shuffle_images();
   public native void set_shuffle_images(@Cast("bool") boolean value);
 
@@ -7989,6 +8614,7 @@ public static final int
   public native @Cast("bool") boolean has_concat_dim();
   public native void clear_concat_dim();
   @MemberGetter public static native int kConcatDimFieldNumber();
+  public static final int kConcatDimFieldNumber = kConcatDimFieldNumber();
   public native @Cast("google::protobuf::uint32") int concat_dim();
   public native void set_concat_dim(@Cast("google::protobuf::uint32") int value);
 
@@ -7996,6 +8622,7 @@ public static final int
   public native @Cast("bool") boolean has_hdf5_output_param();
   public native void clear_hdf5_output_param();
   @MemberGetter public static native int kHdf5OutputParamFieldNumber();
+  public static final int kHdf5OutputParamFieldNumber = kHdf5OutputParamFieldNumber();
   public native @Const @ByRef HDF5OutputParameter hdf5_output_param();
   public native HDF5OutputParameter mutable_hdf5_output_param();
   public native HDF5OutputParameter release_hdf5_output_param();
@@ -8060,6 +8687,7 @@ public static final int
   public native @Cast("bool") boolean has_filler();
   public native void clear_filler();
   @MemberGetter public static native int kFillerFieldNumber();
+  public static final int kFillerFieldNumber = kFillerFieldNumber();
   public native @Const @ByRef FillerParameter filler();
   public native FillerParameter mutable_filler();
   public native FillerParameter release_filler();
@@ -8069,6 +8697,7 @@ public static final int
   public native @Cast("bool") boolean has_channel_shared();
   public native void clear_channel_shared();
   @MemberGetter public static native int kChannelSharedFieldNumber();
+  public static final int kChannelSharedFieldNumber = kChannelSharedFieldNumber();
   public native @Cast("bool") boolean channel_shared();
   public native void set_channel_shared(@Cast("bool") boolean value);
 }
@@ -9563,7 +10192,15 @@ public static final int
 
 
 
-// optional bool normalize = 2 [default = true];
+// optional .caffe.LossParameter.NormalizationMode normalization = 3 [default = VALID];
+
+
+
+
+
+
+
+// optional bool normalize = 2;
 
 
 
@@ -12194,14 +12831,6 @@ public static final int
 @Namespace("caffe") public static native @Name("caffe_cpu_strided_dot<double>") double caffe_cpu_strided_dot_double(int n, @Const double[] x, int incx,
     @Const double[] y, int incy);
 
-@Namespace("caffe") public static native @Name("caffe_cpu_hamming_distance<float>") int caffe_cpu_hamming_distance_float(int n, @Const FloatPointer x, @Const FloatPointer y);
-@Namespace("caffe") public static native @Name("caffe_cpu_hamming_distance<float>") int caffe_cpu_hamming_distance_float(int n, @Const FloatBuffer x, @Const FloatBuffer y);
-@Namespace("caffe") public static native @Name("caffe_cpu_hamming_distance<float>") int caffe_cpu_hamming_distance_float(int n, @Const float[] x, @Const float[] y);
-
-@Namespace("caffe") public static native @Name("caffe_cpu_hamming_distance<double>") int caffe_cpu_hamming_distance_double(int n, @Const DoublePointer x, @Const DoublePointer y);
-@Namespace("caffe") public static native @Name("caffe_cpu_hamming_distance<double>") int caffe_cpu_hamming_distance_double(int n, @Const DoubleBuffer x, @Const DoubleBuffer y);
-@Namespace("caffe") public static native @Name("caffe_cpu_hamming_distance<double>") int caffe_cpu_hamming_distance_double(int n, @Const double[] x, @Const double[] y);
-
 // Returns the sum of the absolute values of the elements of vector x
 @Namespace("caffe") public static native @Name("caffe_cpu_asum<float>") float caffe_cpu_asum_float(int n, @Const FloatPointer x);
 @Namespace("caffe") public static native @Name("caffe_cpu_asum<float>") float caffe_cpu_asum_float(int n, @Const FloatBuffer x);
@@ -12270,6 +12899,7 @@ public static final int
 // it improved stability for large models on many GPUs.
 @Namespace("caffe") public static native void CaffeMallocHost(@Cast("void**") PointerPointer ptr, @Cast("size_t") long size, @Cast("bool*") BoolPointer use_cuda);
 @Namespace("caffe") public static native void CaffeMallocHost(@Cast("void**") @ByPtrPtr Pointer ptr, @Cast("size_t") long size, @Cast("bool*") BoolPointer use_cuda);
+@Namespace("caffe") public static native void CaffeMallocHost(@Cast("void**") @ByPtrPtr Pointer ptr, @Cast("size_t") long size, @Cast("bool*") boolean[] use_cuda);
 
 @Namespace("caffe") public static native void CaffeFreeHost(Pointer ptr, @Cast("bool") boolean use_cuda);
 
@@ -13365,29 +13995,19 @@ out = skimage.transform.rescale(img, factor, mode='constant', cval=0)
 // #endif   // CAFFE_UTIL_HDF5_H_
 
 
-// Parsed from caffe/data_layers.hpp
+// Parsed from caffe/layers/base_data_layer.hpp
 
 // #ifndef CAFFE_DATA_LAYERS_HPP_
 // #define CAFFE_DATA_LAYERS_HPP_
 
-// #include <string>
-// #include <utility>
 // #include <vector>
-// #include "hdf5.h"
 
 // #include "caffe/blob.hpp"
-// #include "caffe/common.hpp"
-// #include "caffe/data_reader.hpp"
 // #include "caffe/data_transformer.hpp"
-// #include "caffe/filler.hpp"
 // #include "caffe/internal_thread.hpp"
 // #include "caffe/layer.hpp"
 // #include "caffe/proto/caffe.pb.h"
 // #include "caffe/util/blocking_queue.hpp"
-// #include "caffe/util/db.hpp"
-
-public static final String HDF5_DATA_DATASET_NAME = "data";
-public static final String HDF5_DATA_LABEL_NAME = "label";
 
 /**
  * \brief Provides base for data layers that feed blobs to the Net.
@@ -13501,6 +14121,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // Prefetches batches (asynchronously if to GPU memory)
   @MemberGetter public static native int PREFETCH_COUNT();
+  public static final int PREFETCH_COUNT = PREFETCH_COUNT();
   @Virtual(true) protected native void load_batch(FloatBatch batch);
 }
 
@@ -13524,8 +14145,30 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // Prefetches batches (asynchronously if to GPU memory)
   @MemberGetter public static native int PREFETCH_COUNT();
+  public static final int PREFETCH_COUNT = PREFETCH_COUNT();
   @Virtual(true) protected native void load_batch(DoubleBatch batch);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_DATA_LAYERS_HPP_
+
+
+// Parsed from caffe/layers/data_layer.hpp
+
+// #ifndef CAFFE_DATA_LAYER_HPP_
+// #define CAFFE_DATA_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/data_reader.hpp"
+// #include "caffe/data_transformer.hpp"
+// #include "caffe/internal_thread.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/layers/base_data_layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+// #include "caffe/util/db.hpp"
 
 @Name("caffe::DataLayer<float>") @NoOffset public static class FloatDataLayer extends FloatBasePrefetchingDataLayer {
     static { Loader.load(); }
@@ -13562,6 +14205,23 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native int MaxTopBlobs();
   @Virtual protected native void load_batch(DoubleBatch batch);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_DATA_LAYER_HPP_
+
+
+// Parsed from caffe/layers/dummy_data_layer.hpp
+
+// #ifndef CAFFE_DUMMY_DATA_LAYER_HPP_
+// #define CAFFE_DUMMY_DATA_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/filler.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Provides data to the Net generated by a Filler.
@@ -13618,6 +14278,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_DUMMY_DATA_LAYER_HPP_
+
+
+// Parsed from caffe/layers/hdf5_data_layer.hpp
+
+// #ifndef CAFFE_HDF5_DATA_LAYER_HPP_
+// #define CAFFE_HDF5_DATA_LAYER_HPP_
+
+// #include "hdf5.h"
+
+// #include <string>
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/base_data_layer.hpp"
 
 /**
  * \brief Provides data to the Net from HDF5 files.
@@ -13680,6 +14361,28 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
   @Virtual protected native void LoadHDF5FileData(@Cast("const char*") BytePointer filename);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_HDF5_DATA_LAYER_HPP_
+
+
+// Parsed from caffe/layers/hdf5_output_layer.hpp
+
+// #ifndef CAFFE_HDF5_OUTPUT_LAYER_HPP_
+// #define CAFFE_HDF5_OUTPUT_LAYER_HPP_
+
+// #include "hdf5.h"
+
+// #include <string>
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+public static final String HDF5_DATA_DATASET_NAME = "data";
+public static final String HDF5_DATA_LABEL_NAME = "label";
 
 /**
  * \brief Write blobs to disk as HDF5 files.
@@ -13749,6 +14452,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void SaveBlobs();
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_HDF5_OUTPUT_LAYER_HPP_
+
+
+// Parsed from caffe/layers/image_data_layer.hpp
+
+// #ifndef CAFFE_IMAGE_DATA_LAYER_HPP_
+// #define CAFFE_IMAGE_DATA_LAYER_HPP_
+
+// #include <string>
+// #include <utility>
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/data_transformer.hpp"
+// #include "caffe/internal_thread.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/layers/base_data_layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Provides data to the Net from image files.
  *
@@ -13786,6 +14510,25 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void ShuffleImages();
   @Virtual protected native void load_batch(DoubleBatch batch);
 }
+
+
+  // namespace caffe
+
+// #endif  // CAFFE_IMAGE_DATA_LAYER_HPP_
+
+
+// Parsed from caffe/layers/memory_data_layer.hpp
+
+// #ifndef CAFFE_MEMORY_DATA_LAYER_HPP_
+// #define CAFFE_MEMORY_DATA_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/base_data_layer.hpp"
 
 /**
  * \brief Provides data to the Net from memory.
@@ -13861,6 +14604,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef DoubleBlobVector top);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_MEMORY_DATA_LAYER_HPP_
+
+
+// Parsed from caffe/layers/window_data_layer.hpp
+
+// #ifndef CAFFE_WINDOW_DATA_LAYER_HPP_
+// #define CAFFE_WINDOW_DATA_LAYER_HPP_
+
+// #include <string>
+// #include <utility>
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/data_transformer.hpp"
+// #include "caffe/internal_thread.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/layers/base_data_layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Provides data to the Net from windows of images files, specified
  *        by a window data file.
@@ -13902,7 +14666,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // namespace caffe
 
-// #endif  // CAFFE_DATA_LAYERS_HPP_
+// #endif  // CAFFE_WINDOW_DATA_LAYER_HPP_
 
 
 // Parsed from caffe/layer_factory.hpp
@@ -13953,6 +14717,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #include <vector>
 
 // #include "caffe/common.hpp"
+// #include "caffe/layer.hpp"
 // #include "caffe/proto/caffe.pb.h"
 
 @Name("caffe::LayerRegistry<float>") public static class FloatLayerRegistry extends Pointer {
@@ -14643,21 +15408,18 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #endif  // CAFFE_LAYER_H_
 
 
-// Parsed from caffe/loss_layers.hpp
+// Parsed from caffe/layers/accuracy_layer.hpp
 
-// #ifndef CAFFE_LOSS_LAYERS_HPP_
-// #define CAFFE_LOSS_LAYERS_HPP_
+// #ifndef CAFFE_ACCURACY_LAYER_HPP_
+// #define CAFFE_ACCURACY_LAYER_HPP_
 
-// #include <string>
-// #include <utility>
 // #include <vector>
 
 // #include "caffe/blob.hpp"
 // #include "caffe/layer.hpp"
-// #include "caffe/neuron_layers.hpp"
 // #include "caffe/proto/caffe.pb.h"
 
-@Namespace("caffe") @MemberGetter public static native float kLOG_THRESHOLD();
+// #include "caffe/layers/loss_layer.hpp"
 
 /**
  * \brief Computes the classification accuracy for a one-of-many
@@ -14728,6 +15490,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_ACCURACY_LAYER_HPP_
+
+
+// Parsed from caffe/layers/loss_layer.hpp
+
+// #ifndef CAFFE_LOSS_LAYER_HPP_
+// #define CAFFE_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+@Namespace("caffe") @MemberGetter public static native float kLOG_THRESHOLD();
+
 /**
  * \brief An interface for Layer%s that take two Blob%s as input -- usually
  *        (1) predictions and (2) ground-truth labels -- and output a
@@ -14793,9 +15573,27 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native @Cast("bool") boolean AllowForceBackward(int bottom_index);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/contrastive_loss_layer.hpp
+
+// #ifndef CAFFE_CONTRASTIVE_LOSS_LAYER_HPP_
+// #define CAFFE_CONTRASTIVE_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
+
 /**
  * \brief Computes the contrastive loss \f$
- *          E = \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d +
+ *          E = \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d^2 +
  *              \left(1-y\right) \max \left(margin-d, 0\right)^2
  *          \f$ where \f$
  *          d = \left| \left| a_n - b_n \right| \right|_2 \f$. This can be
@@ -14811,7 +15609,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * @param top output Blob vector (length 1)
  *   -# \f$ (1 \times 1 \times 1 \times 1) \f$
  *      the computed contrastive loss: \f$ E =
- *          \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d +
+ *          \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d^2 +
  *          \left(1-y\right) \max \left(margin-d, 0\right)^2
  *          \f$ where \f$
  *          d = \left| \left| a_n - b_n \right| \right|_2 \f$.
@@ -14869,6 +15667,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_CONTRASTIVE_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/euclidean_loss_layer.hpp
+
+// #ifndef CAFFE_EUCLIDEAN_LOSS_LAYER_HPP_
+// #define CAFFE_EUCLIDEAN_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
 
 /**
  * \brief Computes the Euclidean (L2) loss \f$
@@ -14947,6 +15763,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_EUCLIDEAN_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/hinge_loss_layer.hpp
+
+// #ifndef CAFFE_HINGE_LOSS_LAYER_HPP_
+// #define CAFFE_HINGE_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
+
 /**
  * \brief Computes the hinge loss for a one-of-many classification task.
  *
@@ -15018,6 +15852,25 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_cpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+
+  // namespace caffe
+
+// #endif  // CAFFE_HINGE_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/infogain_loss_layer.hpp
+
+// #ifndef CAFFE_INFOGAIN_LOSS_LAYER_HPP_
+// #define CAFFE_INFOGAIN_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
 
 /**
  * \brief A generalization of MultinomialLogisticLossLayer that takes an
@@ -15102,6 +15955,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_INFOGAIN_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/multinomial_logistic_loss_layer.hpp
+
+// #ifndef CAFFE_MULTINOMIAL_LOGISTIC_LOSS_LAYER_HPP_
+// #define CAFFE_MULTINOMIAL_LOGISTIC_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
+
 /**
  * \brief Computes the multinomial logistic loss for a one-of-many
  *        classification task, directly taking a predicted probability
@@ -15163,6 +16034,25 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_cpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_MULTINOMIAL_LOGISTIC_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/sigmoid_cross_entropy_loss_layer.hpp
+
+// #ifndef CAFFE_SIGMOID_CROSS_ENTROPY_LOSS_LAYER_HPP_
+// #define CAFFE_SIGMOID_CROSS_ENTROPY_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
+// #include "caffe/layers/sigmoid_layer.hpp"
 
 /**
  * \brief Computes the cross-entropy (logistic) loss \f$
@@ -15234,7 +16124,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
-// Forward declare SoftmaxLayer for use in SoftmaxWithLossLayer.
+  // namespace caffe
+
+// #endif  // CAFFE_SIGMOID_CROSS_ENTROPY_LOSS_LAYER_HPP_
+
+
+// Parsed from caffe/layers/softmax_loss_layer.hpp
+
+// #ifndef CAFFE_SOFTMAX_WITH_LOSS_LAYER_HPP_
+// #define CAFFE_SOFTMAX_WITH_LOSS_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/loss_layer.hpp"
+// #include "caffe/layers/softmax_layer.hpp"
 
 /**
  * \brief Computes the multinomial logistic loss for a one-of-many
@@ -15296,6 +16203,8 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef FloatBlobVector bottom);
   @Virtual protected native void Backward_gpu(@Const @ByRef FloatBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef FloatBlobVector bottom);
+  @Virtual protected native float get_normalizer(
+        @Cast("caffe::LossParameter_NormalizationMode") int normalization_mode, int valid_count);
 }
 @Name("caffe::SoftmaxWithLossLayer<double>") @NoOffset public static class DoubleSoftmaxWithLossLayer extends DoubleLossLayer {
     static { Loader.load(); }
@@ -15329,24 +16238,23 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
+  @Virtual protected native double get_normalizer(
+        @Cast("caffe::LossParameter_NormalizationMode") int normalization_mode, int valid_count);
 }
 
   // namespace caffe
 
-// #endif  // CAFFE_LOSS_LAYERS_HPP_
+// #endif  // CAFFE_SOFTMAX_WITH_LOSS_LAYER_HPP_
 
 
-// Parsed from caffe/neuron_layers.hpp
+// Parsed from caffe/layers/neuron_layer.hpp
 
-// #ifndef CAFFE_NEURON_LAYERS_HPP_
-// #define CAFFE_NEURON_LAYERS_HPP_
+// #ifndef CAFFE_NEURON_LAYER_HPP_
+// #define CAFFE_NEURON_LAYER_HPP_
 
-// #include <string>
-// #include <utility>
 // #include <vector>
 
 // #include "caffe/blob.hpp"
-// #include "caffe/common.hpp"
 // #include "caffe/layer.hpp"
 // #include "caffe/proto/caffe.pb.h"
 
@@ -15382,6 +16290,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual public native int ExactNumBottomBlobs();
   @Virtual public native int ExactNumTopBlobs();
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_NEURON_LAYER_HPP_
+
+
+// Parsed from caffe/layers/absval_layer.hpp
+
+// #ifndef CAFFE_ABSVAL_LAYER_HPP_
+// #define CAFFE_ABSVAL_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief Computes \f$ y = |x| \f$
@@ -15438,6 +16364,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_ABSVAL_LAYER_HPP_
+
+
+// Parsed from caffe/layers/bnll_layer.hpp
+
+// #ifndef CAFFE_BNLL_LAYER_HPP_
+// #define CAFFE_BNLL_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+
 /**
  * \brief Computes \f$ y = x + \log(1 + \exp(-x)) \f$ if \f$ x > 0 \f$;
  *        \f$ y = \log(1 + \exp(x)) \f$ otherwise.
@@ -15491,6 +16435,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_BNLL_LAYER_HPP_
+
+
+// Parsed from caffe/layers/dropout_layer.hpp
+
+// #ifndef CAFFE_DROPOUT_LAYER_HPP_
+// #define CAFFE_DROPOUT_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief During training only, sets a random portion of \f$x\f$ to 0, adjusting
@@ -15560,6 +16522,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_DROPOUT_LAYER_HPP_
+
+
+// Parsed from caffe/layers/exp_layer.hpp
+
+// #ifndef CAFFE_EXP_LAYER_HPP_
+// #define CAFFE_EXP_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+
 /**
  * \brief Computes \f$ y = \gamma ^ {\alpha x + \beta} \f$,
  *        as specified by the scale \f$ \alpha \f$, shift \f$ \beta \f$,
@@ -15622,11 +16602,47 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_EXP_LAYER_HPP_
+
+
+// Parsed from caffe/layers/log_layer.hpp
+
+// #ifndef CAFFE_LOG_LAYER_HPP_
+// #define CAFFE_LOG_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+
 /**
  * \brief Computes \f$ y = log_{\gamma}(\alpha x + \beta) \f$,
  *        as specified by the scale \f$ \alpha \f$, shift \f$ \beta \f$,
  *        and base \f$ \gamma \f$.
  */
+
+  // namespace caffe
+
+// #endif  // CAFFE_LOG_LAYER_HPP_
+
+
+// Parsed from caffe/layers/power_layer.hpp
+
+// #ifndef CAFFE_POWER_LAYER_HPP_
+// #define CAFFE_POWER_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief Computes \f$ y = (\alpha x + \beta) ^ \gamma \f$,
@@ -15688,6 +16704,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_POWER_LAYER_HPP_
+
+
+// Parsed from caffe/layers/relu_layer.hpp
+
+// #ifndef CAFFE_RELU_LAYER_HPP_
+// #define CAFFE_RELU_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+
 /**
  * \brief Rectified Linear Unit non-linearity \f$ y = \max(0, x) \f$.
  *        The simple max is fast to compute, and the function does not saturate.
@@ -15741,11 +16775,45 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_RELU_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_relu_layer.hpp
+
+// #ifndef CAFFE_CUDNN_RELU_LAYER_HPP_
+// #define CAFFE_CUDNN_RELU_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+// #include "caffe/layers/relu_layer.hpp"
+
 // #ifdef USE_CUDNN
-/**
- * \brief CuDNN acceleration of ReLULayer.
- */
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_RELU_LAYER_HPP_
+
+
+// Parsed from caffe/layers/sigmoid_layer.hpp
+
+// #ifndef CAFFE_SIGMOID_LAYER_HPP_
+// #define CAFFE_SIGMOID_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief Sigmoid function non-linearity \f$
@@ -15792,11 +16860,45 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_SIGMOID_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_sigmoid_layer.hpp
+
+// #ifndef CAFFE_CUDNN_SIGMOID_LAYER_HPP_
+// #define CAFFE_CUDNN_SIGMOID_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+// #include "caffe/layers/sigmoid_layer.hpp"
+
 // #ifdef USE_CUDNN
-/**
- * \brief CuDNN acceleration of SigmoidLayer.
- */
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_SIGMOID_LAYER_HPP_
+
+
+// Parsed from caffe/layers/tanh_layer.hpp
+
+// #ifndef CAFFE_TANH_LAYER_HPP_
+// #define CAFFE_TANH_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief TanH hyperbolic tangent non-linearity \f$
@@ -15843,11 +16945,45 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_TANH_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_tanh_layer.hpp
+
+// #ifndef CAFFE_CUDNN_TANH_LAYER_HPP_
+// #define CAFFE_CUDNN_TANH_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
+// #include "caffe/layers/tanh_layer.hpp"
+
 // #ifdef USE_CUDNN
-/**
- * \brief CuDNN acceleration of TanHLayer.
- */
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_TANH_LAYER_HPP_
+
+
+// Parsed from caffe/layers/threshold_layer.hpp
+
+// #ifndef CAFFE_THRESHOLD_LAYER_HPP_
+// #define CAFFE_THRESHOLD_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief Tests whether the input exceeds a threshold: outputs 1 for inputs
@@ -15901,6 +17037,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_cpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_THRESHOLD_LAYER_HPP_
+
+
+// Parsed from caffe/layers/prelu_layer.hpp
+
+// #ifndef CAFFE_PRELU_LAYER_HPP_
+// #define CAFFE_PRELU_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/neuron_layer.hpp"
 
 /**
  * \brief Parameterized Rectified Linear Unit non-linearity \f$
@@ -15977,15 +17131,14 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // namespace caffe
 
-// #endif  // CAFFE_NEURON_LAYERS_HPP_
+// #endif  // CAFFE_PRELU_LAYER_HPP_
 
 
-// Parsed from caffe/common_layers.hpp
+// Parsed from caffe/layers/argmax_layer.hpp
 
-// #ifndef CAFFE_COMMON_LAYERS_HPP_
-// #define CAFFE_COMMON_LAYERS_HPP_
+// #ifndef CAFFE_ARGMAX_LAYER_HPP_
+// #define CAFFE_ARGMAX_LAYER_HPP_
 
-// #include <utility>
 // #include <vector>
 
 // #include "caffe/blob.hpp"
@@ -16068,6 +17221,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_ARGMAX_LAYER_HPP_
+
+
+// Parsed from caffe/layers/batch_norm_layer.hpp
+
+// #ifndef CAFFE_BATCHNORM_LAYER_HPP_
+// #define CAFFE_BATCHNORM_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Normalizes the input to have 0-mean and/or unit (1) variance across
  *        the batch.
@@ -16076,13 +17245,13 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * each channel in the data (i.e. axis 1), it subtracts the mean and divides
  * by the variance, where both statistics are computed across both spatial
  * dimensions and across the different examples in the batch.
- * 
+ *
  * By default, during training time, the network is computing global mean/
  * variance statistics via a running average, which is then used at test
  * time to allow deterministic outputs for each input.  You can manually
  * toggle whether the network is accumulating or using the statistics via the
  * use_global_stats option.  IMPORTANT: for this feature to work, you MUST
- * set the learning rate to zero for all three parameter blobs, i.e., 
+ * set the learning rate to zero for all three parameter blobs, i.e.,
  * param {lr_mult: 0} three times in the layer definition.
  *
  * Note that the original paper also included a per-channel learned bias and
@@ -16091,10 +17260,10 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
  * followed by a Convolution layer with output the same size as the current.
  * This produces a channel-specific value that can be added or multiplied by
  * the BatchNorm layer's output.
- * 
+ *
  * [1] S. Ioffe and C. Szegedy, "Batch Normalization: Accelerating Deep Network
- *     Training by Reducing Internal Covariate Shift." arXiv preprint 
- *     arXiv:1502.03167 (2015).  
+ *     Training by Reducing Internal Covariate Shift." arXiv preprint
+ *     arXiv:1502.03167 (2015).
  *
  * TODO(dox): thorough documentation for Forward, Backward, and proto params.
  */
@@ -16146,6 +17315,23 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
        @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_BATCHNORM_LAYER_HPP_
+
+
+// Parsed from caffe/layers/batch_reindex_layer.hpp
+
+// #ifndef CAFFE_BATCHREINDEX_LAYER_HPP_
+// #define CAFFE_BATCHREINDEX_LAYER_HPP_
+
+// #include <utility>
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Index into the input blob along its first axis.
@@ -16199,6 +17385,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_BATCHREINDEX_LAYER_HPP_
+
+
+// Parsed from caffe/layers/concat_layer.hpp
+
+// #ifndef CAFFE_CONCAT_LAYER_HPP_
+// #define CAFFE_CONCAT_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Takes at least two Blob%s and concatenates them along either the num
  *        or channel dimension, outputting the result.
@@ -16251,6 +17453,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_CONCAT_LAYER_HPP_
+
+
+// Parsed from caffe/layers/eltwise_layer.hpp
+
+// #ifndef CAFFE_ELTWISE_LAYER_HPP_
+// #define CAFFE_ELTWISE_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Compute elementwise operations, such as product and sum,
@@ -16306,6 +17524,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_ELTWISE_LAYER_HPP_
+
+
+// Parsed from caffe/layers/embed_layer.hpp
+
+// #ifndef CAFFE_EMBED_LAYER_HPP_
+// #define CAFFE_EMBED_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief A layer for learning "embeddings" of one-hot vector input.
@@ -16363,6 +17597,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_EMBED_LAYER_HPP_
+
+
+// Parsed from caffe/layers/filter_layer.hpp
+
+// #ifndef CAFFE_FILTER_LAYER_HPP_
+// #define CAFFE_FILTER_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Takes two+ Blobs, interprets last Blob as a selector and
  *  filter remaining Blobs accordingly with selector data (0 means that
@@ -16418,6 +17668,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
       @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_FILTER_LAYER_HPP_
+
+
+// Parsed from caffe/layers/flatten_layer.hpp
+
+// #ifndef CAFFE_FLATTEN_LAYER_HPP_
+// #define CAFFE_FLATTEN_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Reshapes the input Blob into flat vectors.
  *
@@ -16464,6 +17730,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_cpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_FLATTEN_LAYER_HPP_
+
+
+// Parsed from caffe/layers/inner_product_layer.hpp
+
+// #ifndef CAFFE_INNER_PRODUCT_LAYER_HPP_
+// #define CAFFE_INNER_PRODUCT_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Also known as a "fully-connected" layer, computes an inner product
@@ -16520,6 +17802,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_INNER_PRODUCT_LAYER_HPP_
+
+
+// Parsed from caffe/layers/mvn_layer.hpp
+
+// #ifndef CAFFE_MVN_LAYER_HPP_
+// #define CAFFE_MVN_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Normalizes the input to have 0-mean and/or unit (1) variance.
  *
@@ -16569,6 +17867,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
        @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_MVN_LAYER_HPP_
+
+
+// Parsed from caffe/layers/reshape_layer.hpp
+
+// #ifndef CAFFE_XXX_LAYER_HPP_
+// #define CAFFE_XXX_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /*
  * @brief Reshapes the input Blob into an arbitrary-sized output Blob.
@@ -16624,6 +17938,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_XXX_LAYER_HPP_
+
+
+// Parsed from caffe/layers/reduction_layer.hpp
+
+// #ifndef CAFFE_REDUCTION_LAYER_HPP_
+// #define CAFFE_REDUCTION_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Compute "reductions" -- operations that return a scalar output Blob
@@ -16681,6 +18011,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_REDUCTION_LAYER_HPP_
+
+
+// Parsed from caffe/layers/silence_layer.hpp
+
+// #ifndef CAFFE_SILENCE_LAYER_HPP_
+// #define CAFFE_SILENCE_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Ignores bottom blobs while producing no top blobs. (This is useful
  *        to suppress outputs during testing.)
@@ -16729,6 +18075,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_SILENCE_LAYER_HPP_
+
+
+// Parsed from caffe/layers/softmax_layer.hpp
+
+// #ifndef CAFFE_SOFTMAX_LAYER_HPP_
+// #define CAFFE_SOFTMAX_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Computes the softmax function.
@@ -16780,12 +18142,42 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
        @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_SOFTMAX_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_softmax_layer.hpp
+
+// #ifndef CAFFE_CUDNN_SOFTMAX_LAYER_HPP_
+// #define CAFFE_CUDNN_SOFTMAX_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/softmax_layer.hpp"
+
 // #ifdef USE_CUDNN
-/**
- * \brief cuDNN implementation of SoftmaxLayer.
- *        Fallback to SoftmaxLayer for CPU mode.
- */
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_SOFTMAX_LAYER_HPP_
+
+
+// Parsed from caffe/layers/split_layer.hpp
+
+// #ifndef CAFFE_SPLIT_LAYER_HPP_
+// #define CAFFE_SPLIT_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Creates a "split" path in the network by copying the bottom Blob
@@ -16837,6 +18229,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void Backward_gpu(@Const @ByRef DoubleBlobVector top,
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_SPLIT_LAYER_HPP_
+
+
+// Parsed from caffe/layers/slice_layer.hpp
+
+// #ifndef CAFFE_SLICE_LAYER_HPP_
+// #define CAFFE_SLICE_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Takes a Blob and slices it along either the num or channel dimension,
@@ -16893,6 +18301,22 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_SLICE_LAYER_HPP_
+
+
+// Parsed from caffe/layers/tile_layer.hpp
+
+// #ifndef CAFFE_TILE_LAYER_HPP_
+// #define CAFFE_TILE_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
 /**
  * \brief Copy a Blob along specified dimensions.
  */
@@ -16945,7 +18369,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // namespace caffe
 
-// #endif  // CAFFE_COMMON_LAYERS_HPP_
+// #endif  // CAFFE_TILE_LAYER_HPP_
 
 
 // Parsed from caffe/net.hpp
@@ -17484,6 +18908,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   // methods to restore the state from the appropriate snapshot type.
   public native void Restore(@Cast("const char*") BytePointer resume_file);
   public native void Restore(String resume_file);
+  // The Solver::Snapshot function implements the basic snapshotting utility
+  // that stores the learned net. You should implement the SnapshotSolverState()
+  // function that produces a SolverState protocol buffer that needs to be
+  // written to disk together with the learned net.
+  public native void Snapshot();
   public native @Const @ByRef SolverParameter param();
   public native @SharedPtr @ByVal FloatNet net();
   public native @Const @ByRef FloatNetSharedVector test_nets();
@@ -17530,6 +18959,11 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   // methods to restore the state from the appropriate snapshot type.
   public native void Restore(@Cast("const char*") BytePointer resume_file);
   public native void Restore(String resume_file);
+  // The Solver::Snapshot function implements the basic snapshotting utility
+  // that stores the learned net. You should implement the SnapshotSolverState()
+  // function that produces a SolverState protocol buffer that needs to be
+  // written to disk together with the learned net.
+  public native void Snapshot();
   public native @Const @ByRef SolverParameter param();
   public native @SharedPtr @ByVal DoubleNet net();
   public native @Const @ByRef DoubleNetSharedVector test_nets();
@@ -17953,23 +19387,17 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 // #endif  // CAFFE_SGD_SOLVERS_HPP_
 
 
-// Parsed from caffe/vision_layers.hpp
+// Parsed from caffe/layers/base_conv_layer.hpp
 
-// #ifndef CAFFE_VISION_LAYERS_HPP_
-// #define CAFFE_VISION_LAYERS_HPP_
+// #ifndef CAFFE_BASE_CONVOLUTION_LAYER_HPP_
+// #define CAFFE_BASE_CONVOLUTION_LAYER_HPP_
 
-// #include <string>
-// #include <utility>
 // #include <vector>
 
 // #include "caffe/blob.hpp"
-// #include "caffe/common.hpp"
-// #include "caffe/common_layers.hpp"
-// #include "caffe/data_layers.hpp"
 // #include "caffe/layer.hpp"
-// #include "caffe/loss_layers.hpp"
-// #include "caffe/neuron_layers.hpp"
 // #include "caffe/proto/caffe.pb.h"
+// #include "caffe/util/im2col.hpp"
 
 /**
  * \brief Abstract base class that factors out the BLAS code common to
@@ -18007,6 +19435,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual(true) protected native @Cast("bool") boolean reverse_dimensions();
   @Virtual(true) protected native void compute_output_shape();
 }
+
+  // namespace caffe
+
+// #endif  // CAFFE_BASE_CONVOLUTION_LAYER_HPP_
+
+
+// Parsed from caffe/layers/conv_layer.hpp
+
+// #ifndef CAFFE_CONV_LAYER_HPP_
+// #define CAFFE_CONV_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/base_conv_layer.hpp"
 
 /**
  * \brief Convolves the input image with a bank of learned filters,
@@ -18121,6 +19567,24 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void compute_output_shape();
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_CONV_LAYER_HPP_
+
+
+// Parsed from caffe/layers/deconv_layer.hpp
+
+// #ifndef CAFFE_DECONV_LAYER_HPP_
+// #define CAFFE_DECONV_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/base_conv_layer.hpp"
+
 /**
  * \brief Convolve the input with a bank of learned filters, and (optionally)
  *        add biases, treating filters and convolution parameters in the
@@ -18176,22 +19640,42 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
   @Virtual protected native void compute_output_shape();
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_DECONV_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_conv_layer.hpp
+
+// #ifndef CAFFE_CUDNN_CONV_LAYER_HPP_
+// #define CAFFE_CUDNN_CONV_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/conv_layer.hpp"
+
 // #ifdef USE_CUDNN
-/*
- * @brief cuDNN implementation of ConvolutionLayer.
- *        Fallback to ConvolutionLayer for CPU mode.
- *
- * cuDNN accelerates convolution through forward kernels for filtering and bias
- * plus backward kernels for the gradient w.r.t. the filters, biases, and
- * inputs. Caffe + cuDNN further speeds up the computation through forward
- * parallelism across groups and backward parallelism across gradients.
- *
- * The CUDNN engine does not have memory overhead for matrix buffers. For many
- * input and filter regimes the CUDNN engine is faster than the CAFFE engine,
- * but for fully-convolutional models and large inputs the CAFFE engine can be
- * faster as long as it fits in memory.
-*/
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_CONV_LAYER_HPP_
+
+
+// Parsed from caffe/layers/im2col_layer.hpp
+
+// #ifndef CAFFE_IM2COL_LAYER_HPP_
+// #define CAFFE_IM2COL_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief A helper for image operations that rearranges image regions into
@@ -18249,7 +19733,26 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
-// Forward declare PoolingLayer and SplitLayer for use in LRNLayer.
+  // namespace caffe
+
+// #endif  // CAFFE_IM2COL_LAYER_HPP_
+
+
+// Parsed from caffe/layers/lrn_layer.hpp
+
+// #ifndef CAFFE_LRN_LAYER_HPP_
+// #define CAFFE_LRN_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/eltwise_layer.hpp"
+// #include "caffe/layers/pooling_layer.hpp"
+// #include "caffe/layers/power_layer.hpp"
+// #include "caffe/layers/split_layer.hpp"
 
 /**
  * \brief Normalize the input in a local region across or within feature maps.
@@ -18331,9 +19834,64 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
-// #ifdef USE_CUDNN
+  // namespace caffe
 
+// #endif  // CAFFE_LRN_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_lrn_layer.hpp
+
+// #ifndef CAFFE_CUDNN_LRN_LAYER_HPP_
+// #define CAFFE_CUDNN_LRN_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/lrn_layer.hpp"
+
+// #ifdef USE_CUDNN
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_LRN_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_lcn_layer.hpp
+
+// #ifndef CAFFE_CUDNN_LCN_LAYER_HPP_
+// #define CAFFE_CUDNN_LCN_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/lrn_layer.hpp"
+// #include "caffe/layers/power_layer.hpp"
+
+// #ifdef USE_CUDNN
+// #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_LCN_LAYER_HPP_
+
+
+// Parsed from caffe/layers/pooling_layer.hpp
+
+// #ifndef CAFFE_POOLING_LAYER_HPP_
+// #define CAFFE_POOLING_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Pools the input image by taking the max, average, etc. within regions.
@@ -18395,12 +19953,42 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
         @Const @ByRef BoolVector propagate_down, @Const @ByRef DoubleBlobVector bottom);
 }
 
+  // namespace caffe
+
+// #endif  // CAFFE_POOLING_LAYER_HPP_
+
+
+// Parsed from caffe/layers/cudnn_pooling_layer.hpp
+
+// #ifndef CAFFE_CUDNN_POOLING_LAYER_HPP_
+// #define CAFFE_CUDNN_POOLING_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
+
+// #include "caffe/layers/pooling_layer.hpp"
+
 // #ifdef USE_CUDNN
-/*
- * @brief cuDNN implementation of PoolingLayer.
- *        Fallback to PoolingLayer for CPU mode.
-*/
 // #endif
+
+  // namespace caffe
+
+// #endif  // CAFFE_CUDNN_POOLING_LAYER_HPP_
+
+
+// Parsed from caffe/layers/spp_layer.hpp
+
+// #ifndef CAFFE_SPP_LAYER_HPP_
+// #define CAFFE_SPP_LAYER_HPP_
+
+// #include <vector>
+
+// #include "caffe/blob.hpp"
+// #include "caffe/layer.hpp"
+// #include "caffe/proto/caffe.pb.h"
 
 /**
  * \brief Does spatial pyramid pooling on the input image
@@ -18411,7 +19999,7 @@ public static final String HDF5_DATA_LABEL_NAME = "label";
 
   // namespace caffe
 
-// #endif  // CAFFE_VISION_LAYERS_HPP_
+// #endif  // CAFFE_SPP_LAYER_HPP_
 
 
 // Parsed from caffe/util/benchmark.hpp
@@ -18663,17 +20251,24 @@ public static final int READ = 0, WRITE = 1, NEW = 2;
 // #ifndef CAFFE_UTIL_IO_H_
 // #define CAFFE_UTIL_IO_H_
 
-// #include <unistd.h>
+// #include <boost/filesystem.hpp>
+// #include <iomanip>
+// #include <iostream>  // NOLINT(readability/streams)
 // #include <string>
 
 // #include "google/protobuf/message.h"
 
 // #include "caffe/common.hpp"
 // #include "caffe/proto/caffe.pb.h"
+// #include "caffe/util/format.hpp"
 
-@Namespace("caffe") public static native void MakeTempFilename(@StdString @Cast({"char*", "std::string*"}) BytePointer temp_filename);
+// #ifndef CAFFE_TMP_DIR_RETRIES
+public static final int CAFFE_TMP_DIR_RETRIES = 100;
+// #endif
 
 @Namespace("caffe") public static native void MakeTempDir(@StdString @Cast({"char*", "std::string*"}) BytePointer temp_dirname);
+
+@Namespace("caffe") public static native void MakeTempFilename(@StdString @Cast({"char*", "std::string*"}) BytePointer temp_filename);
 
 @Namespace("caffe") public static native @Cast("bool") boolean ReadProtoFromTextFile(@Cast("const char*") BytePointer filename, @Cast("google::protobuf::Message*") Pointer proto);
 @Namespace("caffe") public static native @Cast("bool") boolean ReadProtoFromTextFile(String filename, @Cast("google::protobuf::Message*") Pointer proto);
@@ -19324,6 +20919,16 @@ public static native void cblas_daxpby(int N, double alpha, @Const double[] X,
   // namespace caffe
 
 // #endif   // CAFFE_UTIL_UPGRADE_PROTO_H_
+
+
+// Parsed from caffe/util/cudnn.hpp
+
+// #ifndef CAFFE_UTIL_CUDNN_H_
+// #define CAFFE_UTIL_CUDNN_H_
+// #ifdef USE_CUDNN
+
+// #endif  // USE_CUDNN
+// #endif  // CAFFE_UTIL_CUDNN_H_
 
 
 }

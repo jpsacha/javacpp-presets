@@ -300,7 +300,7 @@ public class opencv_videostab extends org.bytedeco.javacpp.presets.opencv_videos
 
 /** \addtogroup videostab_marching
  *  \{
-
+<p>
 /** \brief Describes the Fast Marching Method implementation.
   <p>
   See http://iwi.eldoc.ub.rug.nl/FILES/root/2004/JGraphToolsTelea/2004JGraphToolsTelea.pdf
@@ -525,7 +525,7 @@ public class opencv_videostab extends org.bytedeco.javacpp.presets.opencv_videos
 
 /** \addtogroup videostab_motion
  *  \{
-
+<p>
 /** \brief Describes motion model between two point clouds.
  */
 /** enum cv::videostab::MotionModel */
@@ -769,7 +769,7 @@ public static final int
 
 /** \addtogroup videostab_motion
  *  \{
-
+<p>
 /** \brief Estimates best global motion between two 2D point clouds in the least-squares sense.
 <p>
 \note Works in-place and changes input point arrays.
@@ -844,6 +844,7 @@ public static final int
      */
     public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1);
+    public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 /** \brief Describes a robust RANSAC-based global 2D motion estimation method which minimizes L2 error.
@@ -866,6 +867,7 @@ public static final int
 
     public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1);
+    public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 /** \brief Describes a global 2D motion estimation method which minimizes L1 error.
@@ -884,6 +886,7 @@ public static final int
 
     public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1);
+    public native @ByVal Mat estimate(@ByVal Mat points0, @ByVal Mat points1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 /** \brief Base class for global 2D motion estimation methods which take frames as input.
@@ -899,6 +902,7 @@ public static final int
 
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1);
+    public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 @Namespace("cv::videostab") @NoOffset public static class FromFileMotionReader extends ImageMotionEstimatorBase {
@@ -913,6 +917,7 @@ public static final int
 
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1);
+    public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 @Namespace("cv::videostab") @NoOffset public static class ToFileMotionWriter extends ImageMotionEstimatorBase {
@@ -930,6 +935,7 @@ public static final int
 
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1);
+    public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 /** \brief Describes a global 2D motion estimation method which uses keypoints detection and optical flow for
@@ -957,6 +963,7 @@ matching.
 
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") BoolPointer ok/*=0*/);
     public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1);
+    public native @ByVal Mat estimate(@Const @ByRef Mat frame0, @Const @ByRef Mat frame1, @Cast("bool*") boolean[] ok/*=0*/);
 }
 
 // #if defined(HAVE_OPENCV_CUDAIMGPROC) && defined(HAVE_OPENCV_CUDAOPTFLOW)

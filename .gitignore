@@ -34,6 +34,8 @@
 /cuda/target/
 /tensorflow/cppbuild/
 /tensorflow/target/
+/pylon/cppbuild/
+/pylon/target/
 
 # Mac
 .DS_Store

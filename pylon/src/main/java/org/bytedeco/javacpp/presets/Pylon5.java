@@ -250,5 +250,8 @@ public class Pylon5 implements InfoMapper {
 //        // typedef CBaslerUsbGrabResultData GrabResultData_t;
 //        // typedef CBaslerUsbGrabResultPtr GrabResultPtr_t;
 
+        // Workaround lack of virtual destructor definitions in sub-classes
+        infoMap.put(new Info("Basler_InstantCameraParams::CInstantCameraParams_Params").flatten());
+        infoMap.put(new Info("Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params").flatten());
     }
 }

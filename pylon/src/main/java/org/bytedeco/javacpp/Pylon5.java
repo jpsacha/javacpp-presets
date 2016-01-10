@@ -4656,7 +4656,7 @@ public static final int PIXEL_COLOR = 0x02000000;
     <li> The Instant Camera class is extensible using derivation or by registering event handler objects.
     </ul>
     */
-    @Namespace("Pylon") @NoOffset public static class CInstantCamera extends CInstantCameraParams_Params {
+    @Namespace("Pylon") @NoOffset public static class CInstantCamera extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CInstantCamera(Pointer p) { super(p); }
@@ -4666,6 +4666,25 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CInstantCamera position(int position) {
             return (CInstantCamera)super.position(position);
         }
+        public CInstantCameraParams_Params asCInstantCameraParams_Params() { return asCInstantCameraParams_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_InstantCameraParams::CInstantCameraParams_Params*>") CInstantCameraParams_Params asCInstantCameraParams_Params(CInstantCamera pointer);
+            
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The maximum number of buffers that are allocated and used for grabbing.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger MaxNumBuffer(); public native CInstantCamera MaxNumBuffer(IInteger MaxNumBuffer);
+    
+    //@}
     
 
     /** \name Root - Instant camera parameters. */
@@ -7822,7 +7841,7 @@ public static final int PIXEL_COLOR = 0x02000000;
     \threading
         The CImageFormatConverter class is not thread-safe.
     */
-    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends CImageFormatConverterParams_Params {
+    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CImageFormatConverter(Pointer p) { super(p); }
@@ -7832,6 +7851,23 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CImageFormatConverter position(int position) {
             return (CImageFormatConverter)super.position(position);
         }
+        public CImageFormatConverterParams_Params asCImageFormatConverterParams_Params() { return asCImageFormatConverterParams_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params*>") CImageFormatConverterParams_Params asCImageFormatConverterParams_Params(CImageFormatConverter pointer);
+            
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the conversion method for monochrome images.
+        <p>
+        Sets the conversion method for monochrome images.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_MonoConversionMethodEnums MonoConversionMethod(); public native CImageFormatConverter MonoConversionMethod(IEnumerationT_MonoConversionMethodEnums MonoConversionMethod);
+    
+    //@}
     
 
     /** \name MonoConversion - Parameters for converting monochrome images. */

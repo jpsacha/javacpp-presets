@@ -102,7 +102,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/private/DeviceSpecificImageEventHandlerTie.h>",
                         "<pylon/private/DeviceSpecificCameraEventHandlerTie.h>",
                         "<pylon/private/DeviceSpecificInstantCamera.h>",
-//                        "<pylon/usb/BaslerUsbInstantCamera.h>",
+                        "<pylon/usb/BaslerUsbInstantCamera.h>",
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
@@ -122,10 +122,6 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 public class Pylon5 implements InfoMapper {
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("defined(WIN32) || defined(WIN64)").define())
-//                /* "<pylon/stdinclude.h>" - Fix missing definition > */
-//                .put(new Info("!defined(GENAPI_DLL_MANAGER_INVALID_HANDLE)").define(false))
-//                .put(new Info("!defined(GENAPI_DLL_MANAGER_INVALID_SYMBOL)").define(false))
-//                .put(new Info("GCSTRING_NPOS").skip())
                 .put(new Info("PYLON_FUNC").skip())
                 .put(new Info("GENAPI_DEPRECATED_FEATURE").skip())
                 /* "<pylon/PylonBase.h>" */
@@ -138,21 +134,14 @@ public class Pylon5 implements InfoMapper {
                 .put(new Info("PYLON_LINUX_BUILD").define(false).skip())
 
                 /* <pylon/Container.h> correct template wrapping. */
-//                .put(new Info("PYLONBASE_EXPORT_TEMPLATE").define())
-//                .put(new Info("Pylon::TList::iterator").skip())
-//                .put(new Info("Pylon::TList::const_iterator").skip())
                 .put(new Info("Pylon::TList<Pylon::CDeviceInfo>").pointerTypes("TList_CDeviceInfo"))
                 .put(new Info("Pylon::TList<Pylon::CTlInfo>").pointerTypes("TList_CTlInfo"))
                 .put(new Info("Pylon::TList<Pylon::CInterfaceInfo>").pointerTypes("TList_CInterfaceInfo"))
                 /* "<pylon/DeviceAccessMode.h>" */
                 .put(new Info("std::bitset<Pylon::_NumModes>").pointerTypes("BitSet__NumModes").define())
-//                /* ignore to avoid problem with "std::bitset<Pylon::_NumModes>" */
-//                .put(new Info("Pylon::CTlFactory::IsDeviceAccessible").skip())
 //
                 /* "<pylon/WaitObject.h>" */
                 .put(new Info("defined (PYLON_LINUX_BUILD)").define(false))
-                /* typedef void *HANDLE */
-//                .put(new Info("HANDLE").valueTypes("HANDLE").pointerTypes("@Cast(\"HANDLE*\") @ByPtrPtr HANDLE").define())
                 .put(new Info("HANDLE").cast().valueTypes("Pointer").pointerTypes("void"))
 
                 /* <pylon/ImagePersistence.h> */
@@ -234,24 +223,6 @@ public class Pylon5 implements InfoMapper {
         // both have the same named entries. JavaCPP would generate `int` constants with the same names, resulting in compilation error.
         infoMap.put(new Info("Basler_UsbStreamParams::StatusEnums").skip());
 
-/*
-//        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>").pointerTypes("CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits").define());
-
-//        // <pylon/usb/BaslerUsbInstantCamera.h> Workaround for missing typedefs
-//        // typedef CBaslerUsbInstantCamera InstantCamera_t;
-//        // typedef Basler_UsbCameraParams::CUsbCameraParams_Params CameraParams_t;
-//        infoMap.put(new Info("Pylon::CBaslerUsbInstantCameraTraits::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
-//
-//        // typedef IPylonDevice IPylonDevice_t;
-//        // typedef Pylon::CBaslerUsbDeviceInfo DeviceInfo_t;
-//        // typedef CNodeMapProxyT<Basler_UsbTLParams::CUsbTLParams_Params> TlParams_t;
-//        // typedef CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params> StreamGrabberParams_t;
-//        // typedef CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params> EventGrabberParams_t;
-//        // typedef CBaslerUsbConfigurationEventHandler ConfigurationEventHandler_t;
-//        // typedef CBaslerUsbImageEventHandler ImageEventHandler_t;
-//        // typedef CBaslerUsbCameraEventHandler CameraEventHandler_t;
-//        // typedef CBaslerUsbGrabResultData GrabResultData_t;
-//        // typedef CBaslerUsbGrabResultPtr GrabResultPtr_t;
 
         // Workaround lack of virtual destructor definitions in sub-classes
 //        infoMap.put(new Info("Basler_InstantCameraParams::CInstantCameraParams_Params").flatten());
@@ -259,8 +230,8 @@ public class Pylon5 implements InfoMapper {
 //        infoMap.put(new Info("Basler_UsbCameraParams::CUsbCameraParams_Params").flatten());
 
         final String[][] templateInstantiations = {
-//                {"Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>",
-//                        "CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits"},
+                {"Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>",
+                        "CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits"},
                 {"Pylon::CNodeMapProxyT<Basler_UsbTLParams::CUsbTLParams_Params>",
                         "CNodeMapProxyT_UsbTLParams_Params"},
                 {"Pylon::CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params>",
@@ -272,16 +243,15 @@ public class Pylon5 implements InfoMapper {
             infoMap.put(new Info(t[0]).pointerTypes(t[1]).define());
         }
 
-//        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>").flatten());
-//        infoMap.put(new Info("CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData").flatten());
         // `Pylon::CBaslerUsbInstantCameraTraits` is using typedefs that are not expanded by JavaCPP when instantiating template
         // `Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>`
         // Make equivalent of those typedefs here,
         // `CameraTraitsT` is the name of the template parameter of `CDeviceSpecificInstantCameraT`
         infoMap.put(new Info("CameraTraitsT::InstantCamera_t").pointerTypes("CBaslerUsbInstantCamera"));
-        // FIXME: Info for CameraTraitsT::CameraParams_t is not correct
+        // FIXME: Info for CameraTraitsT::CameraParams_t is not correct ?
 //        infoMap.put(new Info("CameraTraitsT::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
-        infoMap.put(new Info("CameraTraitsT::CameraParams_t").pointerTypes("CUsbCameraParams_Params").cast().cppTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+//        infoMap.put(new Info("CameraTraitsT::CameraParams_t").pointerTypes("CUsbCameraParams_Params").cast().cppTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+        infoMap.put(new Info("CameraTraitsT::CameraParams_t").pointerTypes("CUsbCameraParams_Params"));
         infoMap.put(new Info("CameraTraitsT::IPylonDevice_t").pointerTypes("IPylonDevice"));
         infoMap.put(new Info("CameraTraitsT::DeviceInfo_t").pointerTypes("CBaslerUsbDeviceInfo")); //Pylon::CBaslerUsbDeviceInfo
         infoMap.put(new Info("CameraTraitsT::TlParams_t").pointerTypes("CNodeMapProxyT_UsbTLParams_Params"));
@@ -292,8 +262,5 @@ public class Pylon5 implements InfoMapper {
         infoMap.put(new Info("CameraTraitsT::CameraEventHandler_t").pointerTypes("CBaslerUsbCameraEventHandler"));
         infoMap.put(new Info("CameraTraitsT::GrabResultData_t").pointerTypes("CBaslerUsbGrabResultData"));
         infoMap.put(new Info("CameraTraitsT::GrabResultPtr_t").pointerTypes("CBaslerUsbGrabResultPtr"));
-*/
-
-
     }
 }

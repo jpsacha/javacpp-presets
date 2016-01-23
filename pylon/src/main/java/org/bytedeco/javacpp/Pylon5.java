@@ -7960,6 +7960,192 @@ public static final int PIXEL_COLOR = 0x02000000;
     \ingroup PYLON_INTERNAL
     */
     //************************************************************************************************** */
+    @Name("Pylon::CNodeMapProxyT<Basler_UsbTLParams::CUsbTLParams_Params>") @NoOffset public static class CNodeMapProxyT_UsbTLParams_Params extends CUsbTLParams_Params {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CNodeMapProxyT_UsbTLParams_Params(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CNodeMapProxyT_UsbTLParams_Params(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CNodeMapProxyT_UsbTLParams_Params position(int position) {
+            return (CNodeMapProxyT_UsbTLParams_Params)super.position(position);
+        }
+    
+        /** \name Construction */
+        // \{
+
+        /** Creates a CNodeMapProxyT object that is not attached to a node map. Use the Attach() method to attach the pylon node map. */
+        public CNodeMapProxyT_UsbTLParams_Params() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Creates a CNodeMapProxyT object and attaches it to a pylon node map. */
+        public CNodeMapProxyT_UsbTLParams_Params(INodeMap arg0) { super((Pointer)null); allocate(arg0); }
+        private native void allocate(INodeMap arg0);
+
+        /** Destructor */
+        /** \name Some smart pointer functionality */
+        // \{
+
+        /** Attach a pylon node map */
+        public native void Attach(INodeMap arg0, @Cast("bool") boolean replace/*=false*/);
+        public native void Attach(INodeMap arg0);
+
+        /** Checks if a pylon node map is attached */
+        public native @Cast("bool") boolean IsAttached();
+
+        /** Returns the pylon node map interface pointer */
+        public native INodeMap GetNodeMap();
+        /** \name Partial implementation of the INodeMap interface
+         *  See GenApi::INodeMap for more details */
+        // \{
+        /** \brief \copybrief GenApi::INodeMap::GetNodes()
+            <p>
+            \copydetails GenApi::INodeMap::GetNodes()
+        */
+        public native void GetNodes(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Nodes);
+
+        /** \brief \copybrief GenApi::INodeMap::GetNode()
+        <p>
+        \copydetails GenApi::INodeMap::GetNode()
+        */
+        public native INode GetNode( @Const @ByRef gcstring Name);
+
+        /** \brief \copybrief GenApi::INodeMap::InvalidateNodes()
+        <p>
+        \copydetails GenApi::INodeMap::InvalidateNodes()
+        */
+        public native void InvalidateNodes();
+
+        /** \brief \copybrief GenApi::INodeMap::Poll()
+        <p>
+        \copydetails GenApi::INodeMap::Poll()
+        */
+        public native void Poll( @Cast("int64_t") long ElapsedTime );
+    }
+    @Name("Pylon::CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params>") @NoOffset public static class CNodeMapProxyT_CUsbStreamParams_Params extends CUsbStreamParams_Params {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CNodeMapProxyT_CUsbStreamParams_Params(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CNodeMapProxyT_CUsbStreamParams_Params(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CNodeMapProxyT_CUsbStreamParams_Params position(int position) {
+            return (CNodeMapProxyT_CUsbStreamParams_Params)super.position(position);
+        }
+    
+        /** \name Construction */
+        // \{
+
+        /** Creates a CNodeMapProxyT object that is not attached to a node map. Use the Attach() method to attach the pylon node map. */
+        public CNodeMapProxyT_CUsbStreamParams_Params() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Creates a CNodeMapProxyT object and attaches it to a pylon node map. */
+        public CNodeMapProxyT_CUsbStreamParams_Params(INodeMap arg0) { super((Pointer)null); allocate(arg0); }
+        private native void allocate(INodeMap arg0);
+
+        /** Destructor */
+        /** \name Some smart pointer functionality */
+        // \{
+
+        /** Attach a pylon node map */
+        public native void Attach(INodeMap arg0, @Cast("bool") boolean replace/*=false*/);
+        public native void Attach(INodeMap arg0);
+
+        /** Checks if a pylon node map is attached */
+        public native @Cast("bool") boolean IsAttached();
+
+        /** Returns the pylon node map interface pointer */
+        public native INodeMap GetNodeMap();
+        /** \name Partial implementation of the INodeMap interface
+         *  See GenApi::INodeMap for more details */
+        // \{
+        /** \brief \copybrief GenApi::INodeMap::GetNodes()
+            <p>
+            \copydetails GenApi::INodeMap::GetNodes()
+        */
+        public native void GetNodes(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Nodes);
+
+        /** \brief \copybrief GenApi::INodeMap::GetNode()
+        <p>
+        \copydetails GenApi::INodeMap::GetNode()
+        */
+        public native INode GetNode( @Const @ByRef gcstring Name);
+
+        /** \brief \copybrief GenApi::INodeMap::InvalidateNodes()
+        <p>
+        \copydetails GenApi::INodeMap::InvalidateNodes()
+        */
+        public native void InvalidateNodes();
+
+        /** \brief \copybrief GenApi::INodeMap::Poll()
+        <p>
+        \copydetails GenApi::INodeMap::Poll()
+        */
+        public native void Poll( @Cast("int64_t") long ElapsedTime );
+    }
+    @Name("Pylon::CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params>") @NoOffset public static class CNodeMapProxyT_CUsbEventParams_Params extends CUsbEventParams_Params {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CNodeMapProxyT_CUsbEventParams_Params(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CNodeMapProxyT_CUsbEventParams_Params(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CNodeMapProxyT_CUsbEventParams_Params position(int position) {
+            return (CNodeMapProxyT_CUsbEventParams_Params)super.position(position);
+        }
+    
+        /** \name Construction */
+        // \{
+
+        /** Creates a CNodeMapProxyT object that is not attached to a node map. Use the Attach() method to attach the pylon node map. */
+        public CNodeMapProxyT_CUsbEventParams_Params() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /** Creates a CNodeMapProxyT object and attaches it to a pylon node map. */
+        public CNodeMapProxyT_CUsbEventParams_Params(INodeMap arg0) { super((Pointer)null); allocate(arg0); }
+        private native void allocate(INodeMap arg0);
+
+        /** Destructor */
+        /** \name Some smart pointer functionality */
+        // \{
+
+        /** Attach a pylon node map */
+        public native void Attach(INodeMap arg0, @Cast("bool") boolean replace/*=false*/);
+        public native void Attach(INodeMap arg0);
+
+        /** Checks if a pylon node map is attached */
+        public native @Cast("bool") boolean IsAttached();
+
+        /** Returns the pylon node map interface pointer */
+        public native INodeMap GetNodeMap();
+        /** \name Partial implementation of the INodeMap interface
+         *  See GenApi::INodeMap for more details */
+        // \{
+        /** \brief \copybrief GenApi::INodeMap::GetNodes()
+            <p>
+            \copydetails GenApi::INodeMap::GetNodes()
+        */
+        public native void GetNodes(@Cast("GenApi_3_0_Basler_pylon_v5_0::NodeList_t*") @ByRef Pointer Nodes);
+
+        /** \brief \copybrief GenApi::INodeMap::GetNode()
+        <p>
+        \copydetails GenApi::INodeMap::GetNode()
+        */
+        public native INode GetNode( @Const @ByRef gcstring Name);
+
+        /** \brief \copybrief GenApi::INodeMap::InvalidateNodes()
+        <p>
+        \copydetails GenApi::INodeMap::InvalidateNodes()
+        */
+        public native void InvalidateNodes();
+
+        /** \brief \copybrief GenApi::INodeMap::Poll()
+        <p>
+        \copydetails GenApi::INodeMap::Poll()
+        */
+        public native void Poll( @Cast("int64_t") long ElapsedTime );
+    }
 
 
     //**************************************************************************************************
@@ -16382,12 +16568,6 @@ On reads the device returns the current value without any additional wait time.
 // #   pragma warning( push)
 // #   pragma warning( disable : 4100) //warning C4100: 'identifier' : unreferenced formal parameter
 // #endif
-    @Namespace("Pylon") @Opaque public static class CBaslerUsbInstantCamera extends Pointer {
-        /** Empty constructor. Calls {@code super((Pointer)null)}. */
-        public CBaslerUsbInstantCamera() { super((Pointer)null); }
-        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public CBaslerUsbInstantCamera(Pointer p) { super(p); }
-    }
 
     /** \addtogroup Pylon_InstantCameraApiUsb
      * \{
@@ -18245,6 +18425,204 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
     \brief  Implementation Detail: Header only implementation class for creating device specific Instant Camera classes.
     */
 
+    @Name("Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>") @NoOffset public static class CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits extends CInstantCamera {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits position(int position) {
+            return (CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits)super.position(position);
+        }
+        public CUsbCameraParams_Params asCUsbCameraParams_Params() { return asCUsbCameraParams_Params(this); }
+        @Namespace public static native @Name("static_cast<CameraTraitsT::CameraParams_t*>") CUsbCameraParams_Params asCUsbCameraParams_Params(CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits pointer);
+        public CBaslerUsbInstantCameraTraits asCBaslerUsbInstantCameraTraits() { return asCBaslerUsbInstantCameraTraits(this); }
+        @Namespace public static native @Name("static_cast<Pylon::CBaslerUsbInstantCameraTraits*>") CBaslerUsbInstantCameraTraits asCBaslerUsbInstantCameraTraits(CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits pointer);
+    
+        /**
+            \copybrief Pylon::CInstantCamera::CInstantCamera()
+            \copydetails Pylon::CInstantCamera::CInstantCamera()
+        */
+        public CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits() { super((Pointer)null); allocate(); }
+        private native void allocate();
+
+        /**
+            \copybrief Pylon::CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+            \copydetails Pylon::CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+        */
+        public CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits( IPylonDevice pDevice, @Cast("Pylon::ECleanup") int cleanupProcedure/*=Pylon::Cleanup_Delete*/) { super((Pointer)null); allocate(pDevice, cleanupProcedure); }
+        private native void allocate( IPylonDevice pDevice, @Cast("Pylon::ECleanup") int cleanupProcedure/*=Pylon::Cleanup_Delete*/);
+        public CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits( IPylonDevice pDevice) { super((Pointer)null); allocate(pDevice); }
+        private native void allocate( IPylonDevice pDevice);
+
+
+
+        /*
+            \copybrief Pylon::CInstantCamera::Attach
+            \copydetails Pylon::CInstantCamera::Attach
+        */
+        public native void Attach( IPylonDevice pDevice, @Cast("Pylon::ECleanup") int cleanupProcedure/*=Pylon::Cleanup_Delete*/);
+        public native void Attach( IPylonDevice pDevice);
+
+        /*
+            \copybrief Pylon::CInstantCamera::DestroyDevice
+            \copydetails Pylon::CInstantCamera::DestroyDevice
+        */
+        public native void DestroyDevice();
+
+        /*
+            \copybrief Pylon::CInstantCamera::DetachDevice
+            \copydetails Pylon::CInstantCamera::DetachDevice
+        */
+        public native IPylonDevice DetachDevice();
+
+
+
+        /*
+            \copybrief Pylon::CInstantCamera::Open
+            \copydetails Pylon::CInstantCamera::Open
+        */
+        public native void Open();
+
+        /*
+            \copybrief Pylon::CInstantCamera::Close
+            \copydetails Pylon::CInstantCamera::Close
+        */
+        public native void Close();
+
+
+
+        /**
+            \copybrief Pylon::CInstantCamera::RetrieveResult
+            \copydetails Pylon::CInstantCamera::RetrieveResult
+        */
+        public native @Cast("bool") boolean RetrieveResult( @Cast("unsigned int") int timeoutMs, @ByRef CBaslerUsbGrabResultPtr grabResult, @Cast("Pylon::ETimeoutHandling") int timeoutHandling/*=Pylon::TimeoutHandling_ThrowException*/);
+        public native @Cast("bool") boolean RetrieveResult( @Cast("unsigned int") int timeoutMs, @ByRef CBaslerUsbGrabResultPtr grabResult);
+
+        // Also available
+
+        /**
+            \copybrief Pylon::CInstantCamera::GrabOne
+            \copydetails Pylon::CInstantCamera::GrabOne
+        */
+        public native @Cast("bool") boolean GrabOne( @Cast("unsigned int") int timeoutMs, @ByRef CBaslerUsbGrabResultPtr grabResult, @Cast("Pylon::ETimeoutHandling") int timeoutHandling/*=Pylon::TimeoutHandling_ThrowException*/);
+        public native @Cast("bool") boolean GrabOne( @Cast("unsigned int") int timeoutMs, @ByRef CBaslerUsbGrabResultPtr grabResult);
+
+        // Also available
+
+
+
+        /**
+            \copybrief Pylon::CInstantCamera::RegisterConfiguration( CConfigurationEventHandler*, ERegistrationMode, ECleanup)
+            \copydetails Pylon::CInstantCamera::RegisterConfiguration( CConfigurationEventHandler*, ERegistrationMode, ECleanup)
+        */
+        public native void RegisterConfiguration( CBaslerUsbConfigurationEventHandler pConfigurator, @Cast("Pylon::ERegistrationMode") int mode, @Cast("Pylon::ECleanup") int cleanupProcedure);
+
+        // Also available
+
+        /**
+            \copybrief Pylon::CInstantCamera::DeregisterConfiguration( CConfigurationEventHandler*)
+            \copydetails Pylon::CInstantCamera::DeregisterConfiguration( CConfigurationEventHandler*)
+        */
+        public native @Cast("bool") boolean DeregisterConfiguration( CBaslerUsbConfigurationEventHandler configurator);
+
+        // Also available
+
+
+
+        /**
+            \copybrief Pylon::CInstantCamera::RegisterImageEventHandler( CImageEventHandler*, ERegistrationMode, ECleanup)
+            \copydetails Pylon::CInstantCamera::RegisterImageEventHandler( CImageEventHandler*, ERegistrationMode, ECleanup)
+        */
+        public native void RegisterImageEventHandler( CBaslerUsbImageEventHandler pImageEventHandler, @Cast("Pylon::ERegistrationMode") int mode, @Cast("Pylon::ECleanup") int cleanupProcedure);
+
+        // Also available
+
+        /**
+            \copybrief Pylon::CInstantCamera::DeregisterImageEventHandler( CImageEventHandler*)
+            \copydetails Pylon::CInstantCamera::DeregisterImageEventHandler( CImageEventHandler*)
+        */
+        public native @Cast("bool") boolean DeregisterImageEventHandler( CBaslerUsbImageEventHandler imageEventHandler);
+
+        // Also available
+
+
+
+        /**
+            \copybrief Pylon::CInstantCamera::RegisterCameraEventHandler( CCameraEventHandler*, const String_t&, intptr_t, ERegistrationMode, ECleanup, ECameraEventAvailability)
+            \copydetails Pylon::CInstantCamera::RegisterCameraEventHandler( CCameraEventHandler*, const String_t&, intptr_t, ERegistrationMode, ECleanup, ECameraEventAvailability)
+        */
+        public native void RegisterCameraEventHandler( CBaslerUsbCameraEventHandler pCameraEventHandler, @Cast("const Pylon::String_t*") @ByRef gcstring nodeName, @Cast("intptr_t") long userProvidedId, @Cast("Pylon::ERegistrationMode") int mode, @Cast("Pylon::ECleanup") int cleanupProcedure, @Cast("Pylon::ECameraEventAvailability") int availability/*=Pylon::CameraEventAvailability_Mandatory*/);
+        public native void RegisterCameraEventHandler( CBaslerUsbCameraEventHandler pCameraEventHandler, @Cast("const Pylon::String_t*") @ByRef gcstring nodeName, @Cast("intptr_t") long userProvidedId, @Cast("Pylon::ERegistrationMode") int mode, @Cast("Pylon::ECleanup") int cleanupProcedure);
+
+        // Also available
+
+        /**
+            \copybrief Pylon::CInstantCamera::DeregisterCameraEventHandler( CCameraEventHandler*, const String_t&)
+            \copydetails Pylon::CInstantCamera::DeregisterCameraEventHandler( CCameraEventHandler*, const String_t&)
+        */
+        public native @Cast("bool") boolean DeregisterCameraEventHandler( CBaslerUsbCameraEventHandler cameraEventHandler, @Cast("const Pylon::String_t*") @ByRef gcstring nodeName);
+
+        // Also available
+
+
+
+        /**
+            \copybrief Pylon::CInstantCamera::GetDeviceInfo
+            \copydetails Pylon::CInstantCamera::GetDeviceInfo
+        */
+        public native @Const @ByRef CBaslerUsbDeviceInfo GetDeviceInfo();
+
+
+        /**
+        \brief Provides access to the transport layer parameters of the attached %Pylon Device.
+        @return Reference to the transport layer parameters.
+        \pre A %Pylon Device is attached.
+        \error
+            The Instant Camera object is still valid after error.
+        \threading
+            This method is synchronized using the lock provided by GetLock().
+        */
+        public native @ByRef CNodeMapProxyT_UsbTLParams_Params GetTLParams();
+
+
+        /**
+        \brief Provides access to the stream grabber parameters of the attached %Pylon Device.
+        @return Reference to the stream grabber parameters.
+        \pre
+        <ul>
+        <li> A %Pylon Device is attached.
+        <li> The %Pylon Device is open.
+        </ul>
+        \error
+            The Instant Camera object is still valid after error.
+        \threading
+            This method is synchronized using the lock provided by GetLock().
+        */
+        public native @ByRef CNodeMapProxyT_CUsbStreamParams_Params GetStreamGrabberParams();
+
+
+        /**
+        \brief Provides access to the event grabber parameters of the attached %Pylon Device.
+        @return Reference to the event grabber parameters.
+        \pre
+        <ul>
+        <li> A %Pylon Device is attached.
+        <li> The %Pylon Device is open.
+        </ul>
+        \error
+            The Instant Camera object is still valid after error.
+        \threading
+            This method is synchronized using the lock provided by GetLock().
+        */
+        public native @ByRef CNodeMapProxyT_CUsbEventParams_Params GetEventGrabberParams();
+
+        // Types used by camera--------------------------------------------------
+
+        // Overload CInstantCamera type definitions
+    }
+
 
 
 
@@ -18302,6 +18680,112 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
  // namespace Pylon
 
 // #endif /* INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266 */
+
+
+// Parsed from <pylon/usb/BaslerUsbInstantCamera.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2012-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief USB Specific Instant Camera class for Basler USB devices.
+*/
+
+// #ifndef INCLUDED_BASLERUSBINSTANTCAMERA_H_6872827
+// #define INCLUDED_BASLERUSBINSTANTCAMERA_H_6872827
+
+// #include <pylon/usb/_BaslerUsbCameraParams.h>
+// #include <pylon/usb/BaslerUsbDeviceInfo.h>
+// #include <pylon/usb/BaslerUsbConfigurationEventHandler.h>
+// #include <pylon/usb/BaslerUsbImageEventHandler.h>
+// #include <pylon/usb/BaslerUsbCameraEventHandler.h>
+// #include <pylon/usb/BaslerUsbGrabResultPtr.h>
+// #include <pylon/private/DeviceSpecificInstantCamera.h>
+// #include <pylon/DeviceClass.h>
+// #include <pylon/NodeMapProxy.h>
+// #include <pylon/usb/_UsbStreamParams.h>
+// #include <pylon/usb/_UsbEventParams.h>
+// #include <pylon/usb/_UsbTLParams.h>
+    /** \addtogroup Pylon_InstantCameraApiUsb
+     * \{
+     */
+
+    /** Lists all the types used by the Device Specific Instant Camera class for USB. */
+    @Namespace("Pylon") public static class CBaslerUsbInstantCameraTraits extends Pointer {
+        static { Loader.load(); }
+        /** Default native constructor. */
+        public CBaslerUsbInstantCameraTraits() { super((Pointer)null); allocate(); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbInstantCameraTraits(int size) { super((Pointer)null); allocateArray(size); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbInstantCameraTraits(Pointer p) { super(p); }
+        private native void allocate();
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbInstantCameraTraits position(int position) {
+            return (CBaslerUsbInstantCameraTraits)super.position(position);
+        }
+    
+        /** The type of the final camera class. */
+        /** \copybrief Basler_UsbCameraParams::CUsbCameraParams_Params */
+        /** \copybrief Pylon::IPylonDevice */
+        /** \copybrief Pylon::CBaslerUsbDeviceInfo */
+        /** The parameters of the USB transport layer. */
+        /** The parameters of the USB stream grabber. */
+        /** The parameters of the USB event grabber. */
+        /** The USB specific configuration event handler class. */
+        /** The USB specific image event handler class. */
+        /** The USB specific camera event handler class. */
+        /** The USB specific grab result data. */
+        /** The USB specific grab result smart pointer. */
+
+        /** The name of this device class. Use this one for enumeration. */
+        public static native @ByVal @Cast("Pylon::String_t*") gcstring DeviceClass();
+    }
+
+
+    /**
+    \class  CBaslerUsbInstantCamera
+    \brief  Extends the CInstantCamera by USB specific parameter interface classes.
+    */
+    @Namespace("Pylon") public static class CBaslerUsbInstantCamera extends CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CBaslerUsbInstantCamera(Pointer p) { super(p); }
+        /** Native array allocator. Access with {@link Pointer#position(int)}. */
+        public CBaslerUsbInstantCamera(int size) { super((Pointer)null); allocateArray(size); }
+        private native void allocateArray(int size);
+        @Override public CBaslerUsbInstantCamera position(int position) {
+            return (CBaslerUsbInstantCamera)super.position(position);
+        }
+    
+        /**
+            \copybrief CInstantCamera::CInstantCamera()
+            \copydetails CInstantCamera::CInstantCamera()
+        */ public CBaslerUsbInstantCamera() { super((Pointer)null); allocate(); }
+private native void allocate();
+        /**
+            \copybrief CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+            \copydetails CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+        */ public CBaslerUsbInstantCamera(IPylonDevice pDevice, @Cast("Pylon::ECleanup") int cleanupProcedure/*=Pylon::Cleanup_Delete*/) { super((Pointer)null); allocate(pDevice, cleanupProcedure); }
+private native void allocate(IPylonDevice pDevice, @Cast("Pylon::ECleanup") int cleanupProcedure/*=Pylon::Cleanup_Delete*/);
+public CBaslerUsbInstantCamera(IPylonDevice pDevice) { super((Pointer)null); allocate(pDevice); }
+private native void allocate(IPylonDevice pDevice);
+        /**
+            \copybrief CInstantCamera::~CInstantCamera
+            \copydetails CInstantCamera::~CInstantCamera
+        */
+    }
+
+    /**
+     * \}
+     */
+ // namespace Pylon
+
+// #endif /* INCLUDED_BASLERUSBINSTANTCAMERA_H_6872827 */
 
 
 }

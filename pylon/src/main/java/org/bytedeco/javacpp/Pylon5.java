@@ -11,18 +11,18 @@ import static org.bytedeco.javacpp.GenICam3.*;
 public class Pylon5 extends org.bytedeco.javacpp.presets.Pylon5 {
     static { Loader.load(); }
 
-@Name("std::bitset<Pylon::_NumModes>") public static class BitSetNumModes extends Pointer {
+@Name("std::bitset<Pylon::_NumModes>") public static class BitSet__NumModes extends Pointer {
     static { Loader.load(); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-    public BitSetNumModes(Pointer p) { super(p); }
-    public BitSetNumModes()       { allocate();  }
+    public BitSet__NumModes(Pointer p) { super(p); }
+    public BitSet__NumModes()       { allocate();  }
     private native void allocate();
-    public native @Name("operator=") @ByRef BitSetNumModes put(@ByRef BitSetNumModes x);
+    public native @Name("operator=") @ByRef BitSet__NumModes put(@ByRef BitSet__NumModes x);
 
     public native long size();
 
     @Index public native @ByRef boolean get(@Cast("size_t") long i);
-    public native BitSetNumModes put(@Cast("size_t") long i, boolean value);
+    public native BitSet__NumModes put(@Cast("size_t") long i, boolean value);
 }
 
 // Parsed from <pylon/Platform.h>
@@ -1022,10 +1022,10 @@ public static final int PYLON_PACKING = 8;
     //  Based on the GenICam::gcstring_vector class.
     */
     // --------------------------------------------------------------------------- */
-    @Name("Pylon::TList<Pylon::CDeviceInfo>") @NoOffset public static class TListCDeviceInfo extends Pointer {
+    @Name("Pylon::TList<Pylon::CDeviceInfo>") @NoOffset public static class TList_CDeviceInfo extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public TListCDeviceInfo(Pointer p) { super(p); }
+        public TList_CDeviceInfo(Pointer p) { super(p); }
     
 
         // \brief Const iterator for the DeviceInfoList container.
@@ -1096,12 +1096,12 @@ public static final int PYLON_PACKING = 8;
             public native @ByRef @Name("operator []") CDeviceInfo get( @Cast("intptr_t") long iIndex );
             
         }
-        public TListCDeviceInfo( ) { super((Pointer)null); allocate(); }
+        public TList_CDeviceInfo( ) { super((Pointer)null); allocate(); }
         private native void allocate( );
-        public TListCDeviceInfo( @Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
+        public TList_CDeviceInfo( @Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
         private native void allocate( @Cast("size_t") int uiSize);
-        public TListCDeviceInfo( @Const @ByRef TListCDeviceInfo obj) { super((Pointer)null); allocate(obj); }
-        private native void allocate( @Const @ByRef TListCDeviceInfo obj);
+        public TList_CDeviceInfo( @Const @ByRef TList_CDeviceInfo obj) { super((Pointer)null); allocate(obj); }
+        private native void allocate( @Const @ByRef TList_CDeviceInfo obj);
         public native void assign( @Cast("size_t") int n, @Const @ByRef CDeviceInfo val );
         public native void clear( );
         public native @ByVal iterator erase( @ByVal iterator pos );
@@ -1123,15 +1123,15 @@ public static final int PYLON_PACKING = 8;
         // Do not use - only left in for backwards compatibility!
         public native void erase(@Cast("size_t") int uiIndex);
         public native void insert(@Cast("size_t") int uiIndex, @Const @ByRef CDeviceInfo val);
-        public native @ByRef @Name("operator =") TListCDeviceInfo put( @Const @ByRef TListCDeviceInfo obj );
+        public native @ByRef @Name("operator =") TList_CDeviceInfo put( @Const @ByRef TList_CDeviceInfo obj );
         public native @ByRef @Name("operator []") CDeviceInfo get( @Cast("size_t") int uiIndex );
         public native @Name("operator delete") void _delete( Pointer pWhere );
         public native @Name("operator new") Pointer _new( @Cast("size_t") int uiSize );
     }
-    @Name("Pylon::TList<Pylon::CTlInfo>") @NoOffset public static class TListCTlInfo extends Pointer {
+    @Name("Pylon::TList<Pylon::CTlInfo>") @NoOffset public static class TList_CTlInfo extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public TListCTlInfo(Pointer p) { super(p); }
+        public TList_CTlInfo(Pointer p) { super(p); }
     
 
         // \brief Const iterator for the DeviceInfoList container.
@@ -1202,12 +1202,12 @@ public static final int PYLON_PACKING = 8;
             public native @ByRef @Name("operator []") CTlInfo get( @Cast("intptr_t") long iIndex );
             
         }
-        public TListCTlInfo( ) { super((Pointer)null); allocate(); }
+        public TList_CTlInfo( ) { super((Pointer)null); allocate(); }
         private native void allocate( );
-        public TListCTlInfo( @Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
+        public TList_CTlInfo( @Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
         private native void allocate( @Cast("size_t") int uiSize);
-        public TListCTlInfo( @Const @ByRef TListCTlInfo obj) { super((Pointer)null); allocate(obj); }
-        private native void allocate( @Const @ByRef TListCTlInfo obj);
+        public TList_CTlInfo( @Const @ByRef TList_CTlInfo obj) { super((Pointer)null); allocate(obj); }
+        private native void allocate( @Const @ByRef TList_CTlInfo obj);
         public native void assign( @Cast("size_t") int n, @Const @ByRef CTlInfo val );
         public native void clear( );
         public native @ByVal iterator erase( @ByVal iterator pos );
@@ -1229,15 +1229,15 @@ public static final int PYLON_PACKING = 8;
         // Do not use - only left in for backwards compatibility!
         public native void erase(@Cast("size_t") int uiIndex);
         public native void insert(@Cast("size_t") int uiIndex, @Const @ByRef CTlInfo val);
-        public native @ByRef @Name("operator =") TListCTlInfo put( @Const @ByRef TListCTlInfo obj );
+        public native @ByRef @Name("operator =") TList_CTlInfo put( @Const @ByRef TList_CTlInfo obj );
         public native @ByRef @Name("operator []") CTlInfo get( @Cast("size_t") int uiIndex );
         public native @Name("operator delete") void _delete( Pointer pWhere );
         public native @Name("operator new") Pointer _new( @Cast("size_t") int uiSize );
     }
-    @Name("Pylon::TList<Pylon::CInterfaceInfo>") @NoOffset public static class TListCInterfaceInfo extends Pointer {
+    @Name("Pylon::TList<Pylon::CInterfaceInfo>") @NoOffset public static class TList_CInterfaceInfo extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-        public TListCInterfaceInfo(Pointer p) { super(p); }
+        public TList_CInterfaceInfo(Pointer p) { super(p); }
     
 
         // \brief Const iterator for the DeviceInfoList container.
@@ -1308,12 +1308,12 @@ public static final int PYLON_PACKING = 8;
             public native @ByRef @Name("operator []") CInterfaceInfo get( @Cast("intptr_t") long iIndex );
             
         }
-        public TListCInterfaceInfo( ) { super((Pointer)null); allocate(); }
+        public TList_CInterfaceInfo( ) { super((Pointer)null); allocate(); }
         private native void allocate( );
-        public TListCInterfaceInfo( @Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
+        public TList_CInterfaceInfo( @Cast("size_t") int uiSize) { super((Pointer)null); allocate(uiSize); }
         private native void allocate( @Cast("size_t") int uiSize);
-        public TListCInterfaceInfo( @Const @ByRef TListCInterfaceInfo obj) { super((Pointer)null); allocate(obj); }
-        private native void allocate( @Const @ByRef TListCInterfaceInfo obj);
+        public TList_CInterfaceInfo( @Const @ByRef TList_CInterfaceInfo obj) { super((Pointer)null); allocate(obj); }
+        private native void allocate( @Const @ByRef TList_CInterfaceInfo obj);
         public native void assign( @Cast("size_t") int n, @Const @ByRef CInterfaceInfo val );
         public native void clear( );
         public native @ByVal iterator erase( @ByVal iterator pos );
@@ -1335,7 +1335,7 @@ public static final int PYLON_PACKING = 8;
         // Do not use - only left in for backwards compatibility!
         public native void erase(@Cast("size_t") int uiIndex);
         public native void insert(@Cast("size_t") int uiIndex, @Const @ByRef CInterfaceInfo val);
-        public native @ByRef @Name("operator =") TListCInterfaceInfo put( @Const @ByRef TListCInterfaceInfo obj );
+        public native @ByRef @Name("operator =") TList_CInterfaceInfo put( @Const @ByRef TList_CInterfaceInfo obj );
         public native @ByRef @Name("operator []") CInterfaceInfo get( @Cast("size_t") int uiIndex );
         public native @Name("operator delete") void _delete( Pointer pWhere );
         public native @Name("operator new") Pointer _new( @Cast("size_t") int uiSize );
@@ -1372,7 +1372,7 @@ public static final int PYLON_PACKING = 8;
     // \ingroup Pylon_TransportLayer
     */
     // --------------------------------------------------------------------------- */
-    @Namespace("Pylon") public static class DeviceInfoList extends TListCDeviceInfo {
+    @Namespace("Pylon") public static class DeviceInfoList extends TList_CDeviceInfo {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public DeviceInfoList(Pointer p) { super(p); }
@@ -1402,7 +1402,7 @@ public static final int PYLON_PACKING = 8;
     // \ingroup Pylon_TransportLayer
     */
     // ---------------------------------------------------------------------------
-    @Namespace("Pylon") public static class TlInfoList extends TListCTlInfo {
+    @Namespace("Pylon") public static class TlInfoList extends TList_CTlInfo {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public TlInfoList(Pointer p) { super(p); }
@@ -1434,7 +1434,7 @@ public static final int PYLON_PACKING = 8;
     //
     */
     // ---------------------------------------------------------------------------
-    @Namespace("Pylon") public static class InterfaceInfoList extends TListCInterfaceInfo {
+    @Namespace("Pylon") public static class InterfaceInfoList extends TList_CInterfaceInfo {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public InterfaceInfoList(Pointer p) { super(p); }
@@ -1532,7 +1532,7 @@ public static final int PYLON_PACKING = 8;
         two modes to a set.
         \ingroup Pylon_TransportLayer
     */
-    @Namespace("Pylon") public static class AccessModeSet extends BitSetNumModes {
+    @Namespace("Pylon") public static class AccessModeSet extends BitSet__NumModes {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public AccessModeSet(Pointer p) { super(p); }
@@ -4656,7 +4656,7 @@ public static final int PIXEL_COLOR = 0x02000000;
     <li> The Instant Camera class is extensible using derivation or by registering event handler objects.
     </ul>
     */
-    @Namespace("Pylon") @NoOffset public static class CInstantCamera extends Pointer {
+    @Namespace("Pylon") @NoOffset public static class CInstantCamera extends CInstantCameraParams_Params {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CInstantCamera(Pointer p) { super(p); }
@@ -4666,305 +4666,6 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CInstantCamera position(int position) {
             return (CInstantCamera)super.position(position);
         }
-        public CInstantCameraParams_Params asCInstantCameraParams_Params() { return asCInstantCameraParams_Params(this); }
-        @Namespace public static native @Name("static_cast<Basler_InstantCameraParams::CInstantCameraParams_Params*>") CInstantCameraParams_Params asCInstantCameraParams_Params(CInstantCamera pointer);
-            
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The maximum number of buffers that are allocated and used for grabbing.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IInteger MaxNumBuffer(); public native CInstantCamera MaxNumBuffer(IInteger MaxNumBuffer);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The maximum number of buffers that are queued in the stream grabber input queue.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IInteger MaxNumQueuedBuffer(); public native CInstantCamera MaxNumQueuedBuffer(IInteger MaxNumQueuedBuffer);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The maximum number of grab results available at any time during a grab session. This value can be limited to save resources. Furthermore, it can be used to check that the grab results are returned correctly.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IInteger MaxNumGrabResults(); public native CInstantCamera MaxNumGrabResults(IInteger MaxNumGrabResults);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief Enables/disables the use of a chunk node map for each grab result. Grab result chunk node maps can be disabled to save resources.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IBoolean ChunkNodeMapsEnable(); public native CInstantCamera ChunkNodeMapsEnable(IBoolean ChunkNodeMapsEnable);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief If larger than 0, a static chunk node map pool is used instead of dynamic chunk node map creation.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IInteger StaticChunkNodeMapPoolSize(); public native CInstantCamera StaticChunkNodeMapPoolSize(IInteger StaticChunkNodeMapPoolSize);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief Enables/disables the grabbing of camera events while images are grabbed. Is writable when the camera object is closed.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Expert
-    
-    */
-    public native @ByRef IBoolean GrabCameraEvents(); public native CInstantCamera GrabCameraEvents(IBoolean GrabCameraEvents);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The camera object is set to monitor mode when enabled, e.g. when using the GigE multicast feature. Is writable when the camera object is closed.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IBoolean MonitorModeActive(); public native CInstantCamera MonitorModeActive(IBoolean MonitorModeActive);
-    
-    //@}
-    
-
-    /** \name InternalGrabEngineThread - Parameters of the internal grab engine thread. */
-    //@{
-    /**
-        \brief If enabled, the user can set a custom priority for the internal grab engine thread operating the stream grabber. Otherwise the priority defaults to 25.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IBoolean InternalGrabEngineThreadPriorityOverride(); public native CInstantCamera InternalGrabEngineThreadPriorityOverride(IBoolean InternalGrabEngineThreadPriorityOverride);
-    
-    //@}
-    
-
-    /** \name InternalGrabEngineThread - Parameters of the internal grab engine thread. */
-    //@{
-    /**
-        \brief The internal grab engine thread priority.
-        <p>
-        This value sets the absolute thread priority for the internal grab engine thread operating the stream grabber.
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IInteger InternalGrabEngineThreadPriority(); public native CInstantCamera InternalGrabEngineThreadPriority(IInteger InternalGrabEngineThreadPriority);
-    
-    //@}
-    
-
-    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
-    //@{
-    /**
-        \brief If enabled, the user can set a custom timeout for the grab loop thread's call to RetrieveResult. RetrieveResult is configured to throw an exception on timeout, which will stop the grab session.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IBoolean GrabLoopThreadUseTimeout(); public native CInstantCamera GrabLoopThreadUseTimeout(IBoolean GrabLoopThreadUseTimeout);
-    
-    //@}
-    
-
-    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
-    //@{
-    /**
-        \brief A custom timeout for the grab loop thread's call to RetrieveResult. RetrieveResult is configured to throw an exception on timeout, which will stop the grab session.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IInteger GrabLoopThreadTimeout(); public native CInstantCamera GrabLoopThreadTimeout(IInteger GrabLoopThreadTimeout);
-    
-    //@}
-    
-
-    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
-    //@{
-    /**
-        \brief If enabled, the user can set a custom priority for the grab loop thread. Otherwise, the priority of the newly created thread is not changed.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IBoolean GrabLoopThreadPriorityOverride(); public native CInstantCamera GrabLoopThreadPriorityOverride(IBoolean GrabLoopThreadPriorityOverride);
-    
-    //@}
-    
-
-    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
-    //@{
-    /**
-        \brief The grab loop thread priority.
-        <p>
-        This value sets the absolute thread priority for the grab loop thread.
-    
-        \b Visibility = Guru
-    
-    */
-    public native @ByRef IInteger GrabLoopThreadPriority(); public native CInstantCamera GrabLoopThreadPriority(IInteger GrabLoopThreadPriority);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The number of buffers queued at Low Level API stream grabber.
-        
-        
-            <p>
-        
-        
-            This is the number of buffers that are queued for grabbing in the stream grabber.
-            The number is influenced by the number of available free buffers and the
-            maximum number of buffers that can be queued.
-            See also the MaxNumBuffer and MaxNumQueuedBuffer parameters.
-            <p>
-            This parameter can be used to check whether the number of buffers ready for grabbing
-            is stable, which means that the image processing is fast enough to keep up with the
-            rate of incoming images when using the GrabStrategy_OneByOne grab strategy.
-        
-        
-    
-        \b Visibility = Expert
-    
-    */
-    public native @ByRef IInteger NumQueuedBuffers(); public native CInstantCamera NumQueuedBuffers(IInteger NumQueuedBuffers);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The number of grab result buffers in the output queue that are ready for retrieval.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Expert
-    
-    */
-    public native @ByRef IInteger NumReadyBuffers(); public native CInstantCamera NumReadyBuffers(IInteger NumReadyBuffers);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The number of empty buffers that are not used for grabbing yet.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Expert
-    
-    */
-    public native @ByRef IInteger NumEmptyBuffers(); public native CInstantCamera NumEmptyBuffers(IInteger NumEmptyBuffers);
-    
-    //@}
-    
-
-    /** \name Root - Instant camera parameters. */
-    //@{
-    /**
-        \brief The size of the grab result buffer output queue.
-        
-    
-        <p>
-        
-    
-        \b Visibility = Expert
-    
-    */
-    public native @ByRef IInteger OutputQueueSize(); public native CInstantCamera OutputQueueSize(IInteger OutputQueueSize);
     
         //Creation and life time------------------------------------------------
 
@@ -7841,7 +7542,7 @@ public static final int PIXEL_COLOR = 0x02000000;
     \threading
         The CImageFormatConverter class is not thread-safe.
     */
-    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends Pointer {
+    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends CImageFormatConverterParams_Params {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CImageFormatConverter(Pointer p) { super(p); }
@@ -7851,117 +7552,6 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CImageFormatConverter position(int position) {
             return (CImageFormatConverter)super.position(position);
         }
-        public CImageFormatConverterParams_Params asCImageFormatConverterParams_Params() { return asCImageFormatConverterParams_Params(this); }
-        @Namespace public static native @Name("static_cast<Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params*>") CImageFormatConverterParams_Params asCImageFormatConverterParams_Params(CImageFormatConverter pointer);
-            
-    /** \name MonoConversion - Parameters for converting monochrome images. */
-    //@{
-    /**
-        \brief Sets the conversion method for monochrome images.
-        <p>
-        Sets the conversion method for monochrome images.
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IEnumerationT_MonoConversionMethodEnums MonoConversionMethod(); public native CImageFormatConverter MonoConversionMethod(IEnumerationT_MonoConversionMethodEnums MonoConversionMethod);
-    
-    //@}
-    
-
-    /** \name MonoConversion - Parameters for converting monochrome images. */
-    //@{
-    /**
-        \brief Sets the gamma value for converting monochrome images.
-        <p>
-        Sets the gamma value for converting monochrome images.	The image data is converted using a lookup table. The values of the lookup table are computed using the following formula: valueOut = min((((valueIn ^ Gamma) / (valueInMax ^ Gamma)) * valueOutMax), valueOutMax).
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IFloat Gamma(); public native CImageFormatConverter Gamma(IFloat Gamma);
-    
-    //@}
-    
-
-    /** \name MonoConversion - Parameters for converting monochrome images. */
-    //@{
-    /**
-        \brief Sets the value for additional shifting when converting monochrome images in Truncate mode.
-        <p>
-        Sets the value for additional shifting when converting monochrome images in Truncate mode. The image data is converted using a lookup table if the parameter value differs from zero. Shifted values exceeding the maximum output value boundary are set to the maximum allowed value. Negative values are treated as right shifted values.
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IInteger AdditionalLeftShift(); public native CImageFormatConverter AdditionalLeftShift(IInteger AdditionalLeftShift);
-    
-    //@}
-    
-
-    /** \name Root - Image Format Converter parameters. */
-    //@{
-    /**
-        \brief The number of additional data bytes at the end of each line.
-        <p>
-        The number of additional data bytes at the end of each line. These bytes are set to zero during the conversion.
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IInteger OutputPaddingX(); public native CImageFormatConverter OutputPaddingX(IInteger OutputPaddingX);
-    
-    //@}
-    
-
-    /** \name Root - Image Format Converter parameters. */
-    //@{
-    /**
-        \brief Defines the vertical orientation of the output image in memory.
-        <p>
-        Defines the vertical orientation of the output image in memory.
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IEnumerationT_OutputOrientationEnums OutputOrientation(); public native CImageFormatConverter OutputOrientation(IEnumerationT_OutputOrientationEnums OutputOrientation);
-    
-    //@}
-    
-
-    /** \name Root - Image Format Converter parameters. */
-    //@{
-    /**
-        \brief Sets the handling for rows and columns that cannot be converted.
-        <p>
-        Sets the handling for rows and columns that cannot be converted.
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IEnumerationT_InconvertibleEdgeHandlingEnums InconvertibleEdgeHandling(); public native CImageFormatConverter InconvertibleEdgeHandling(IEnumerationT_InconvertibleEdgeHandlingEnums InconvertibleEdgeHandling);
-    
-    //@}
-    
-
-    /** \name Root - Image Format Converter parameters. */
-    //@{
-    /**
-        \brief Controls the alignment of the bits in the target pixel type.
-        <p>
-        Controls the alignment of the bits in the target pixel type if the target value has more bits than the source value.
-    
-        \b Visibility = Beginner
-        
-    
-    */
-    public native @ByRef IEnumerationT_OutputBitAlignmentEnums OutputBitAlignment(); public native CImageFormatConverter OutputBitAlignment(IEnumerationT_OutputBitAlignmentEnums OutputBitAlignment);
     
 
         /**
@@ -8396,6 +7986,253 @@ public static final int PIXEL_COLOR = 0x02000000;
 // #endif /* _MSC_VER */
 
 // #endif // __PYLON_NODEMAPROXY__H__
+
+
+// Parsed from <pylon/usb/_UsbChunkData.h>
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  (c) 2004-2008 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Basler USB3Vision camera interface
+*/
+
+//-----------------------------------------------------------------------------
+//  This file is generated automatically
+//  Do not modify!
+//-----------------------------------------------------------------------------
+
+
+
+// #ifndef Basler_UsbChunkData_PARAMS_H
+// #define Basler_UsbChunkData_PARAMS_H
+
+// #ifdef __GNUC__
+// #define GENAPI_DEPRECATED_FEATURE __attribute__((deprecated))
+// #elif defined(_MSC_VER)
+// #define GENAPI_DEPRECATED_FEATURE __declspec(deprecated)
+// #else
+// #define GENAPI_DEPRECATED_FEATURE
+// #endif
+
+// #include <GenApi/IEnumerationT.h>
+// #include <GenApi/NodeMapRef.h>
+// #include <GenApi/DLLLoad.h>
+
+
+// common node types
+// #include <GenApi/IBoolean.h>
+// #include <GenApi/ICategory.h>
+// #include <GenApi/ICommand.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/IFloat.h>
+// #include <GenApi/IInteger.h>
+// #include <GenApi/IString.h>
+// #include <GenApi/IRegister.h>
+
+
+/** The namespace containing the device's control interface and related enumeration types */
+
+    //**************************************************************************************************
+    // Enumerations
+    //**************************************************************************************************
+    
+    /** Valid values for ChunkGainSelector */
+    
+
+    /** Valid values for ChunkCounterSelector */
+    
+
+
+    //**************************************************************************************************
+    // Parameter class
+    //**************************************************************************************************
+    
+
+    /** Basler USB3Vision camera interface */
+    @Namespace("Basler_UsbChunkData") @NoOffset public static class CUsbChunkData_Params extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CUsbChunkData_Params(Pointer p) { super(p); }
+    
+        
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Selects which Gain to retrieve data from. Applies to: ace
+        <p>
+        Selects which Gain to retrieve data from.
+    
+        \b Visibility = Expert
+    
+    */
+    
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Returns the gain used to capture the image. Applies to: ace
+        <p>
+        Returns the gain used to capture the image.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : ChunkGainSelector
+    
+    */
+    public native @ByRef IFloat ChunkGain(); public native CUsbChunkData_Params ChunkGain(IFloat ChunkGain);
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Returns the exposure time used to capture the image. Applies to: ace
+        <p>
+        Returns the exposure time used to capture the image.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat ChunkExposureTime(); public native CUsbChunkData_Params ChunkExposureTime(IFloat ChunkExposureTime);
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Indicates the value of the timestamp when the image was acquired. Applies to: ace
+        <p>
+        This integer indicates the value of the timestamp when the image was acquired.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkTimestamp(); public native CUsbChunkData_Params ChunkTimestamp(IInteger ChunkTimestamp);
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief A bit field that indicates the status of all of the camera's input and output lines when the image was acquired. Applies to: ace
+        <p>
+        This value is a bit field that indicates the status of all of the camera's input and output lines when the image was acquired.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkLineStatusAll(); public native CUsbChunkData_Params ChunkLineStatusAll(IInteger ChunkLineStatusAll);
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Selects which counter to retrieve data from. Applies to: ace
+        <p>
+        Selects which counter to retrieve data from.
+    
+        \b Visibility = Expert
+    
+    */
+    
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Indicates the value of the selected Chunk counter. Applies to: ace
+        <p>
+        Indicates the value of the selected Chunk counter.
+    
+        \b Visibility = Beginner
+        
+    
+        \b Selected by : ChunkCounterSelector
+    
+    */
+    public native @ByRef IInteger ChunkCounterValue(); public native CUsbChunkData_Params ChunkCounterValue(IInteger ChunkCounterValue);
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Return the index of the active set of the running sequencer included in the payload. Applies to: ace
+        <p>
+        Return the index of the active set of the running sequencer included in the payload
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkSequencerSetActive(); public native CUsbChunkData_Params ChunkSequencerSetActive(IInteger ChunkSequencerSetActive);
+    
+    //@}
+    
+
+    /** \name ChunkData - This category includes items related to the chunk data that can be appended to the image data */
+    //@{
+    /**
+        \brief Indicates the value of CRC checksum. Applies to: ace
+        <p>
+        This integer indicates the value of CRC checksum.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger ChunkPayloadCRC16(); public native CUsbChunkData_Params ChunkPayloadCRC16(IInteger ChunkPayloadCRC16);
+    }
+
+
+    //**************************************************************************************************
+    // Parameter class implementation
+    //**************************************************************************************************
+
+    /** \cond HIDE_CLASS_METHODS */
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /** \endcond */
+
+ // namespace Basler_UsbChunkData
+
+// #undef GENAPI_DEPRECATED_FEATURE
+// #endif // Basler_UsbChunkData_PARAMS_H
 
 
 // Parsed from <pylon/usb/_BaslerUsbCameraParams.h>
@@ -17164,8 +17001,8 @@ On reads the device returns the current value without any additional wait time.
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CBaslerUsbGrabResultData(Pointer p) { super(p); }
-        public Pointer asPointer() { return asPointer(this); }
-        @Namespace public static native @Name("static_cast<Basler_UsbChunkData::CUsbChunkData_Params*>") Pointer asPointer(CBaslerUsbGrabResultData pointer);
+        public CUsbChunkData_Params asCUsbChunkData_Params() { return asCUsbChunkData_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_UsbChunkData::CUsbChunkData_Params*>") CUsbChunkData_Params asCUsbChunkData_Params(CBaslerUsbGrabResultData pointer);
     
     }
 
@@ -17316,7 +17153,7 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
         \threading
             This method is called outside the lock of the camera object but inside the lock of the image event handler registry.
         */
-        
+        public native void OnImageGrabbed( @ByRef CBaslerUsbInstantCamera camera, @Const @ByRef CBaslerUsbGrabResultPtr grabResult);
 
         /**
         \brief This method is called when the image event handler has been registered.
@@ -17524,124 +17361,6 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
 // #endif /* INCLUDED_BASLERUSBCAMERAEVENTHANDLER_H_3102315 */
 
 
-// Parsed from <pylon/private/DeviceSpecificInstantCamera.h>
-
-//-----------------------------------------------------------------------------
-//  Basler pylon SDK
-//  Copyright (c) 2010-2015 Basler AG
-//  http://www.baslerweb.com
-//  Author:  Andreas Gau
-//-----------------------------------------------------------------------------
-/**
-\file
-\brief Template for device specific instant camera class.
-*/
-
-// #ifndef INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266
-// #define INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266
-
-// #include <pylon/stdinclude.h>
-// #include <pylon/InstantCamera.h>
-// #include <pylon/private/DeviceSpecificConfigurationEventHandlerTie.h>
-// #include <pylon/private/DeviceSpecificImageEventHandlerTie.h>
-// #include <pylon/private/DeviceSpecificCameraEventHandlerTie.h>
-
-/** Macro for defining a custom instant camera class. */
-// #define PYLON_DEFINE_INSTANT_CAMERA(ClassName, BaseClass)
-//     class ClassName : public BaseClass
-//     {
-//     public:
-//         /*!
-//            \copybrief CInstantCamera::CInstantCamera()
-//            \copydetails CInstantCamera::CInstantCamera()
-//        */
-//         ClassName() {}
-//         /*!
-//            \copybrief CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
-//            \copydetails CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
-//        */
-//         ClassName(IPylonDevice* pDevice, ECleanup cleanupProcedure = Cleanup_Delete)
-//             : BaseClass(pDevice, cleanupProcedure) {}
-//         /*!
-//            \copybrief CInstantCamera::~CInstantCamera
-//            \copydetails CInstantCamera::~CInstantCamera
-//        */
-//         ~ClassName()
-//         {
-//             Attach( NULL);
-//             InternalShutdownEventHandlers();
-//         }
-//     protected:
-//         /*Create device specific grab result data. This is subject to change without notice*/
-//         virtual CGrabResultData* CreateDeviceSpecificGrabResultData()
-//         {
-//             return new GrabResultData_t();
-//         }
-//     };
-    /**
-    \class  CDeviceSpecificInstantCameraT
-    \brief  Implementation Detail: Header only implementation class for creating device specific Instant Camera classes.
-    */
-
-
-
-
-
-
-    // Implementation ----------------------------------------------------------
-
-    
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-
-    
-
-
-    
-
-
-
-    
-
-    
-
-
-    
-
-    
-
-
-    
-
-    
-
-
-    
-
-    
-
-    
-
-    
-
- // namespace Pylon
-
-// #endif /* INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266 */
-
-
 // Parsed from <pylon/usb/_UsbEventParams.h>
 
 
@@ -17843,6 +17562,333 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
 
 // #undef GENAPI_DEPRECATED_FEATURE
 // #endif // Basler_UsbEventParams_PARAMS_H
+
+
+// Parsed from <pylon/usb/_UsbStreamParams.h>
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  (c) 2004-2008 by Basler Vision Technologies
+//  Section: Vision Components
+//  Project: GenApi
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Interface to the PylonUsb Stream Grabber parameters
+*/
+
+//-----------------------------------------------------------------------------
+//  This file is generated automatically
+//  Do not modify!
+//-----------------------------------------------------------------------------
+
+
+
+// #ifndef Basler_UsbStreamParams_PARAMS_H
+// #define Basler_UsbStreamParams_PARAMS_H
+
+// #ifdef __GNUC__
+// #define GENAPI_DEPRECATED_FEATURE __attribute__((deprecated))
+// #elif defined(_MSC_VER)
+// #define GENAPI_DEPRECATED_FEATURE __declspec(deprecated)
+// #else
+// #define GENAPI_DEPRECATED_FEATURE
+// #endif
+
+// #include <GenApi/IEnumerationT.h>
+// #include <GenApi/NodeMapRef.h>
+// #include <GenApi/DLLLoad.h>
+
+
+// common node types
+// #include <GenApi/IBoolean.h>
+// #include <GenApi/ICategory.h>
+// #include <GenApi/ICommand.h>
+// #include <GenApi/IEnumeration.h>
+// #include <GenApi/IEnumEntry.h>
+// #include <GenApi/IFloat.h>
+// #include <GenApi/IInteger.h>
+// #include <GenApi/IString.h>
+// #include <GenApi/IRegister.h>
+
+
+/** The namespace containing the device's control interface and related enumeration types */
+
+    //**************************************************************************************************
+    // Enumerations
+    //**************************************************************************************************
+    
+    /** Valid values for Status */
+    
+
+
+    //**************************************************************************************************
+    // Parameter class
+    //**************************************************************************************************
+    
+
+    /** Interface to the PylonUsb Stream Grabber parameters */
+    @Namespace("Basler_UsbStreamParams") @NoOffset public static class CUsbStreamParams_Params extends Pointer {
+        static { Loader.load(); }
+        /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+        public CUsbStreamParams_Params(Pointer p) { super(p); }
+    
+        
+    /** \name Root - Interface to the USB-specific stream parameters. */
+    //@{
+    /**
+        \brief The maximum number of buffers that can be used simultaneously.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger MaxNumBuffer(); public native CUsbStreamParams_Params MaxNumBuffer(IInteger MaxNumBuffer);
+    
+    //@}
+    
+
+    /** \name Root - Interface to the USB-specific stream parameters. */
+    //@{
+    /**
+        \brief The maximum buffer size in bytes that can be registered.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger MaxBufferSize(); public native CUsbStreamParams_Params MaxBufferSize(IInteger MaxBufferSize);
+    
+    //@}
+    
+
+    /** \name Root - Interface to the USB-specific stream parameters. */
+    //@{
+    /**
+        \brief The maximum number of requests to be enqueued to the driver.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger NumMaxQueuedUrbs(); public native CUsbStreamParams_Params NumMaxQueuedUrbs(IInteger NumMaxQueuedUrbs);
+    
+    //@}
+    
+
+    /** \name Root - Interface to the USB-specific stream parameters. */
+    //@{
+    /**
+        \brief Controls the maximum size of USB transfers.
+        
+        
+        <p>
+        
+        
+        The default value is appropriate for most applications. 
+        Reducing the value may cause a higher CPU load. USB host adapter drivers may require 
+        to decrease the value in case the application fails to receive the image stream. The maximum value 
+        for the Maximum Transfer Size depends on the operating system version and may be limited by the host adapter drivers.
+        
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger MaxTransferSize(); public native CUsbStreamParams_Params MaxTransferSize(IInteger MaxTransferSize);
+    
+    //@}
+    
+
+    /** \name Root - Interface to the USB-specific stream parameters. */
+    //@{
+    /**
+        \brief The priority of the thread that handles USB requests of the stream interface.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger TransferLoopThreadPriority(); public native CUsbStreamParams_Params TransferLoopThreadPriority(IInteger TransferLoopThreadPriority);
+    
+    //@}
+    
+
+    /** \name Root - Interface to the USB-specific stream parameters. */
+    //@{
+    /**
+        \brief Timeout for payload and trailer transfers.
+        
+    <p>
+        
+    Timeout for payload and trailer transfers.
+    
+    
+        \b Visibility = Invisible
+    
+    */
+    public native @ByRef IInteger TransferTimeout(); public native CUsbStreamParams_Params TransferTimeout(IInteger TransferTimeout);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The total count of processed buffers.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Total_Buffer_Count(); public native CUsbStreamParams_Params Statistic_Total_Buffer_Count(IInteger Statistic_Total_Buffer_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The count of buffers that returned with an error status.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Failed_Buffer_Count(); public native CUsbStreamParams_Params Statistic_Failed_Buffer_Count(IInteger Statistic_Failed_Buffer_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The count of bad or missed frames between successfully grabbed images.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Missed_Frame_Count(); public native CUsbStreamParams_Params Statistic_Missed_Frame_Count(IInteger Statistic_Missed_Frame_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The count of stream resynchronizations.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Resynchronization_Count(); public native CUsbStreamParams_Params Statistic_Resynchronization_Count(IInteger Statistic_Resynchronization_Count);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The last grabbed block ID.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Last_Block_Id(); public native CUsbStreamParams_Params Statistic_Last_Block_Id(IInteger Statistic_Last_Block_Id);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The status code of the last failed buffer.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger Statistic_Last_Failed_Buffer_Status(); public native CUsbStreamParams_Params Statistic_Last_Failed_Buffer_Status(IInteger Statistic_Last_Failed_Buffer_Status);
+    
+    //@}
+    
+
+    /** \name Statistic - Statistical data. */
+    //@{
+    /**
+        \brief The message text of the status code of the last failed buffer.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IString Statistic_Last_Failed_Buffer_Status_Text(); public native CUsbStreamParams_Params Statistic_Last_Failed_Buffer_Status_Text(IString Statistic_Last_Failed_Buffer_Status_Text);
+    }
+
+
+    //**************************************************************************************************
+    // Parameter class implementation
+    //**************************************************************************************************
+
+    /** \cond HIDE_CLASS_METHODS */
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /** \endcond */
+
+ // namespace Basler_UsbStreamParams
+
+// #undef GENAPI_DEPRECATED_FEATURE
+// #endif // Basler_UsbStreamParams_PARAMS_H
 
 
 // Parsed from <pylon/usb/_UsbTLParams.h>
@@ -18057,6 +18103,205 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
 
 // #undef GENAPI_DEPRECATED_FEATURE
 // #endif // Basler_UsbTLParams_PARAMS_H
+
+
+// Parsed from <pylon/private/DeviceSpecificConfigurationEventHandlerTie.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains an adapter class for device specific configuration event handlers.
+*/
+
+// #ifndef INCLUDED_DEVICESPECIFICCONFIGURATIONEVENTHANDLERTIE_H_5249532
+// #define INCLUDED_DEVICESPECIFICCONFIGURATIONEVENTHANDLERTIE_H_5249532
+
+// #include <pylon/ConfigurationEventHandler.h>
+// #include <pylon/stdinclude.h>
+    /**
+    \class  CDeviceSpecificConfigurationEventHandlerTie
+    \brief  Implementation Detail: Adapter for device specific configuration event handlers.
+    */
+
+
+// #endif /* INCLUDED_DEVICESPECIFICCONFIGURATIONEVENTHANDLERTIE_H_5249532 */
+
+
+// Parsed from <pylon/private/DeviceSpecificImageEventHandlerTie.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains an adapter class for device specific image event handlers.
+*/
+
+// #ifndef INCLUDED_DEVICESPECIFICIMAGEEVENTHANDLERTIE_H_009136379
+// #define INCLUDED_DEVICESPECIFICIMAGEEVENTHANDLERTIE_H_009136379
+
+// #include <pylon/ImageEventHandler.h>
+// #include <pylon/stdinclude.h>
+    /**
+    \class  CDeviceSpecificImageEventHandlerTie
+    \brief  Implementation Detail: Adapter for device specific image event handlers.
+    */
+
+
+// #endif /* INCLUDED_DEVICESPECIFICIMAGEEVENTHANDLERTIE_H_009136379 */
+
+
+// Parsed from <pylon/private/DeviceSpecificCameraEventHandlerTie.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Contains an adapter class for device specific camera event handlers.
+*/
+
+// #ifndef INCLUDED_DEVICESPECIFICCAMERAEVENTHANDLERTIE_H_4759899
+// #define INCLUDED_DEVICESPECIFICCAMERAEVENTHANDLERTIE_H_4759899
+
+// #include <pylon/CameraEventHandler.h>
+// #include <pylon/stdinclude.h>
+    /**
+    \class  CDeviceSpecificCameraEventHandlerTie
+    \brief  Implementation Detail: Adapter for device specific camera event handlers.
+    */
+
+
+// #endif /* INCLUDED_DEVICESPECIFICCAMERAEVENTHANDLERTIE_H_4759899 */
+
+
+// Parsed from <pylon/private/DeviceSpecificInstantCamera.h>
+
+//-----------------------------------------------------------------------------
+//  Basler pylon SDK
+//  Copyright (c) 2010-2015 Basler AG
+//  http://www.baslerweb.com
+//  Author:  Andreas Gau
+//-----------------------------------------------------------------------------
+/**
+\file
+\brief Template for device specific instant camera class.
+*/
+
+// #ifndef INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266
+// #define INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266
+
+// #include <pylon/stdinclude.h>
+// #include <pylon/InstantCamera.h>
+// #include <pylon/private/DeviceSpecificConfigurationEventHandlerTie.h>
+// #include <pylon/private/DeviceSpecificImageEventHandlerTie.h>
+// #include <pylon/private/DeviceSpecificCameraEventHandlerTie.h>
+
+/** Macro for defining a custom instant camera class. */
+// #define PYLON_DEFINE_INSTANT_CAMERA(ClassName, BaseClass)
+//     class ClassName : public BaseClass
+//     {
+//     public:
+//         /*!
+//            \copybrief CInstantCamera::CInstantCamera()
+//            \copydetails CInstantCamera::CInstantCamera()
+//        */
+//         ClassName() {}
+//         /*!
+//            \copybrief CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+//            \copydetails CInstantCamera::CInstantCamera( IPylonDevice* , ECleanup )
+//        */
+//         ClassName(IPylonDevice* pDevice, ECleanup cleanupProcedure = Cleanup_Delete)
+//             : BaseClass(pDevice, cleanupProcedure) {}
+//         /*!
+//            \copybrief CInstantCamera::~CInstantCamera
+//            \copydetails CInstantCamera::~CInstantCamera
+//        */
+//         ~ClassName()
+//         {
+//             Attach( NULL);
+//             InternalShutdownEventHandlers();
+//         }
+//     protected:
+//         /*Create device specific grab result data. This is subject to change without notice*/
+//         virtual CGrabResultData* CreateDeviceSpecificGrabResultData()
+//         {
+//             return new GrabResultData_t();
+//         }
+//     };
+    /**
+    \class  CDeviceSpecificInstantCameraT
+    \brief  Implementation Detail: Header only implementation class for creating device specific Instant Camera classes.
+    */
+
+
+
+
+
+
+    // Implementation ----------------------------------------------------------
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+
+
+    
+
+
+
+    
+
+    
+
+
+    
+
+    
+
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+ // namespace Pylon
+
+// #endif /* INCLUDED_DEVICESPECIFICINSTANTCAMERA_H_4510266 */
 
 
 }

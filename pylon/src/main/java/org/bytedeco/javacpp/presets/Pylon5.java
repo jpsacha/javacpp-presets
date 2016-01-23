@@ -85,8 +85,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/NodeMapProxy.h>",
 
                         // USB camera
-                        // Ignore <pylon/usb/_UsbStreamParams.h> to avoid clash with expanded enum constants name the same as in <pylon/usb/_BaslerUsbCameraParams.h>
-//                        "<pylon/usb/_UsbChunkData.h>",
+                        "<pylon/usb/_UsbChunkData.h>",
                         "<pylon/usb/_BaslerUsbCameraParams.h>",
                         "<GenApi/IEnumerationT.h>",
                         "<pylon/usb/BaslerUsbDeviceInfo.h>",
@@ -96,11 +95,13 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<pylon/usb/BaslerUsbGrabResultPtr.h>",
                         "<pylon/usb/BaslerUsbImageEventHandler.h>",
                         "<pylon/usb/BaslerUsbCameraEventHandler.h>",
-                        "<pylon/private/DeviceSpecificInstantCamera.h>",
                         "<pylon/usb/_UsbEventParams.h>",
-                        // Ignore <pylon/usb/_UsbStreamParams.h> to avoid clash with expanded enum constants name the same as in <pylon/usb/_UsbEventParams.h>
-//                        "<pylon/usb/_UsbStreamParams.h>",
+                        "<pylon/usb/_UsbStreamParams.h>",
                         "<pylon/usb/_UsbTLParams.h>",
+                        "<pylon/private/DeviceSpecificConfigurationEventHandlerTie.h>",
+                        "<pylon/private/DeviceSpecificImageEventHandlerTie.h>",
+                        "<pylon/private/DeviceSpecificCameraEventHandlerTie.h>",
+                        "<pylon/private/DeviceSpecificInstantCamera.h>",
 //                        "<pylon/usb/BaslerUsbInstantCamera.h>",
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
@@ -140,11 +141,11 @@ public class Pylon5 implements InfoMapper {
 //                .put(new Info("PYLONBASE_EXPORT_TEMPLATE").define())
 //                .put(new Info("Pylon::TList::iterator").skip())
 //                .put(new Info("Pylon::TList::const_iterator").skip())
-                .put(new Info("Pylon::TList<Pylon::CDeviceInfo>").pointerTypes("TListCDeviceInfo"))
-                .put(new Info("Pylon::TList<Pylon::CTlInfo>").pointerTypes("TListCTlInfo"))
-                .put(new Info("Pylon::TList<Pylon::CInterfaceInfo>").pointerTypes("TListCInterfaceInfo"))
+                .put(new Info("Pylon::TList<Pylon::CDeviceInfo>").pointerTypes("TList_CDeviceInfo"))
+                .put(new Info("Pylon::TList<Pylon::CTlInfo>").pointerTypes("TList_CTlInfo"))
+                .put(new Info("Pylon::TList<Pylon::CInterfaceInfo>").pointerTypes("TList_CInterfaceInfo"))
                 /* "<pylon/DeviceAccessMode.h>" */
-                .put(new Info("std::bitset<Pylon::_NumModes>").pointerTypes("BitSetNumModes").define())
+                .put(new Info("std::bitset<Pylon::_NumModes>").pointerTypes("BitSet__NumModes").define())
 //                /* ignore to avoid problem with "std::bitset<Pylon::_NumModes>" */
 //                .put(new Info("Pylon::CTlFactory::IsDeviceAccessible").skip())
 //
@@ -172,17 +173,21 @@ public class Pylon5 implements InfoMapper {
                 /* EventHandlers intended for subclassing */
                 .put(new Info("Pylon::CConfigurationEventHandler").purify().virtualize());
 
-        /* Workaround for not being able to parse <pylon/usb/_UsbChunkData.h> due to duplicate enums*/
-        // TODO: report javacpp problems with enum leading to this issue
-        infoMap.put(new Info("Basler_UsbChunkData::CUsbChunkData_Params").cast().pointerTypes("Pointer"));
 
-//        // <pylon/usb/_UsbChunkData.h>
-//        final String[] usbChunkDataEnums = {
-//                "ChunkGainSelectorEnums", "ChunkCounterSelectorEnums",
-//        };
+        //
+        // <pylon/usb/_UsbChunkData.h>
+        //
+//        final String[] usbChunkDataEnums = {"ChunkGainSelectorEnums", "ChunkCounterSelectorEnums",};
 //        for (String e : usbChunkDataEnums) {
-//            infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbChunkData::" + e + ">").pointerTypes("IEnumerationT_" + e).define());
+//            infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbChunkData::" + e + ">")
+//                    .pointerTypes("IEnumerationT_" + e).define());
 //        }
+        // Ignore enums that conflict with names of enums from _BaslerUsbCameraParams.h
+        infoMap.put(new Info("Basler_UsbChunkData::ChunkGainSelectorEnums").skip());
+        infoMap.put(new Info("Basler_UsbChunkData::ChunkCounterSelectorEnums").skip());
+        // Also ignore methods that use skipped enums.
+        infoMap.put(new Info("Basler_UsbChunkData::CUsbChunkData_Params::ChunkGainSelector").skip());
+        infoMap.put(new Info("Basler_UsbChunkData::CUsbChunkData_Params::ChunkCounterSelector").skip());
 
 
         /* <pylon/usb/_BaslerUsbCameraParams.h> */
@@ -211,9 +216,9 @@ public class Pylon5 implements InfoMapper {
                 "AutoFunctionAOISelectorEnums",
         };
         for (String e : usbCameraParamsEnums) {
-            infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::" + e + ">").pointerTypes("IEnumerationT_" + e).define());
+            infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::" + e + ">")
+                    .pointerTypes("IEnumerationT_" + e).define());
         }
-
 
         // <pylon/usb/BaslerUsbDeviceInfo.h> ignore incorrectly generated "const char* const"
         // TODO: report javacpp problems leading to this issue
@@ -223,21 +228,19 @@ public class Pylon5 implements InfoMapper {
                 "TransferModeKey"};
         for (String k : keys) infoMap.put(new Info("Pylon::Key::" + k).skip());
 
-        // <pylon/usb/BaslerUsbImageEventHandler.h>
-        // Skip due to not parsing <pylon/usb/BaslerUsbGrabResultPtr.h>
-        infoMap.put(new Info("Pylon::CBaslerUsbImageEventHandler::OnImageGrabbed").skip());
-
-        /* Workaround for not being able to parse <pylon/private/DeviceSpecificInstantCamera.h>*/
-//        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT").cast().pointerTypes("Pointer"));
         infoMap.put(new Info("Pylon::CDeviceSpecificGrabResultPtr<Pylon::CBaslerUsbGrabResultData>").pointerTypes("CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData").define());
 
+        // Ignore enum `Basler_UsbStreamParams::StatusEnums` to avoid conflict with one in `Basler_UsbEventParams`,
+        // both have the same named entries. JavaCPP would generate `int` constants with the same names, resulting in compilation error.
+        infoMap.put(new Info("Basler_UsbStreamParams::StatusEnums").skip());
+
+/*
 //        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>").pointerTypes("CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits").define());
 
 //        // <pylon/usb/BaslerUsbInstantCamera.h> Workaround for missing typedefs
 //        // typedef CBaslerUsbInstantCamera InstantCamera_t;
 //        // typedef Basler_UsbCameraParams::CUsbCameraParams_Params CameraParams_t;
-//        infoMap.put(new Info("Pylon::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
-//        infoMap.put(new Info("CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+//        infoMap.put(new Info("Pylon::CBaslerUsbInstantCameraTraits::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
 //
 //        // typedef IPylonDevice IPylonDevice_t;
 //        // typedef Pylon::CBaslerUsbDeviceInfo DeviceInfo_t;
@@ -251,7 +254,46 @@ public class Pylon5 implements InfoMapper {
 //        // typedef CBaslerUsbGrabResultPtr GrabResultPtr_t;
 
         // Workaround lack of virtual destructor definitions in sub-classes
-        infoMap.put(new Info("Basler_InstantCameraParams::CInstantCameraParams_Params").flatten());
-        infoMap.put(new Info("Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params").flatten());
+//        infoMap.put(new Info("Basler_InstantCameraParams::CInstantCameraParams_Params").flatten());
+//        infoMap.put(new Info("Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params").flatten());
+//        infoMap.put(new Info("Basler_UsbCameraParams::CUsbCameraParams_Params").flatten());
+
+        final String[][] templateInstantiations = {
+//                {"Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>",
+//                        "CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits"},
+                {"Pylon::CNodeMapProxyT<Basler_UsbTLParams::CUsbTLParams_Params>",
+                        "CNodeMapProxyT_UsbTLParams_Params"},
+                {"Pylon::CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params>",
+                        "CNodeMapProxyT_CUsbStreamParams_Params"},
+                {"Pylon::CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params>",
+                        "CNodeMapProxyT_CUsbEventParams_Params"}
+        };
+        for (String[] t : templateInstantiations) {
+            infoMap.put(new Info(t[0]).pointerTypes(t[1]).define());
+        }
+
+//        infoMap.put(new Info("Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>").flatten());
+//        infoMap.put(new Info("CDeviceSpecificGrabResultPtr_CBaslerUsbGrabResultData").flatten());
+        // `Pylon::CBaslerUsbInstantCameraTraits` is using typedefs that are not expanded by JavaCPP when instantiating template
+        // `Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>`
+        // Make equivalent of those typedefs here,
+        // `CameraTraitsT` is the name of the template parameter of `CDeviceSpecificInstantCameraT`
+        infoMap.put(new Info("CameraTraitsT::InstantCamera_t").pointerTypes("CBaslerUsbInstantCamera"));
+        // FIXME: Info for CameraTraitsT::CameraParams_t is not correct
+//        infoMap.put(new Info("CameraTraitsT::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+        infoMap.put(new Info("CameraTraitsT::CameraParams_t").pointerTypes("CUsbCameraParams_Params").cast().cppTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
+        infoMap.put(new Info("CameraTraitsT::IPylonDevice_t").pointerTypes("IPylonDevice"));
+        infoMap.put(new Info("CameraTraitsT::DeviceInfo_t").pointerTypes("CBaslerUsbDeviceInfo")); //Pylon::CBaslerUsbDeviceInfo
+        infoMap.put(new Info("CameraTraitsT::TlParams_t").pointerTypes("CNodeMapProxyT_UsbTLParams_Params"));
+        infoMap.put(new Info("CameraTraitsT::StreamGrabberParams_t").pointerTypes("CNodeMapProxyT_CUsbStreamParams_Params"));
+        infoMap.put(new Info("CameraTraitsT::EventGrabberParams_t").pointerTypes("CNodeMapProxyT_CUsbEventParams_Params"));
+        infoMap.put(new Info("CameraTraitsT::ConfigurationEventHandler_t").pointerTypes("CBaslerUsbConfigurationEventHandler"));
+        infoMap.put(new Info("CameraTraitsT::ImageEventHandler_t").pointerTypes("CBaslerUsbImageEventHandler"));
+        infoMap.put(new Info("CameraTraitsT::CameraEventHandler_t").pointerTypes("CBaslerUsbCameraEventHandler"));
+        infoMap.put(new Info("CameraTraitsT::GrabResultData_t").pointerTypes("CBaslerUsbGrabResultData"));
+        infoMap.put(new Info("CameraTraitsT::GrabResultPtr_t").pointerTypes("CBaslerUsbGrabResultPtr"));
+*/
+
+
     }
 }

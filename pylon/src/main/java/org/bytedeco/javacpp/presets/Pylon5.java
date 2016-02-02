@@ -225,11 +225,18 @@ public class Pylon5 implements InfoMapper {
 
 
         // Workaround lack of virtual destructor definitions in sub-classes
-//        infoMap.put(new Info("Basler_InstantCameraParams::CInstantCameraParams_Params").flatten());
-//        infoMap.put(new Info("Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params").flatten());
-//        infoMap.put(new Info("Basler_UsbCameraParams::CUsbCameraParams_Params").flatten());
+        final String[] classesToFlatten = {
+                "Basler_InstantCameraParams::CInstantCameraParams_Params",
+                "Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params",
+                "Basler_UsbCameraParams::CUsbCameraParams_Params",
+                "Basler_UsbTLParams::CUsbTLParams_Param",
+                "Basler_UsbStreamParams::CUsbStreamParams_Params",
+                "Basler_UsbEventParams::CUsbEventParams_Params"
+        };
+        for (String c : classesToFlatten) infoMap.put(new Info(c).flatten());
 
-        final String[][] templateInstantiations = {
+
+        instantiateTemplates(infoMap, "", "", new String[][]{
                 {"Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>",
                         "CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits"},
                 {"Pylon::CNodeMapProxyT<Basler_UsbTLParams::CUsbTLParams_Params>",
@@ -238,29 +245,35 @@ public class Pylon5 implements InfoMapper {
                         "CNodeMapProxyT_CUsbStreamParams_Params"},
                 {"Pylon::CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params>",
                         "CNodeMapProxyT_CUsbEventParams_Params"}
-        };
-        for (String[] t : templateInstantiations) {
-            infoMap.put(new Info(t[0]).pointerTypes(t[1]).define());
-        }
+        });
 
         // `Pylon::CBaslerUsbInstantCameraTraits` is using typedefs that are not expanded by JavaCPP when instantiating template
         // `Pylon::CDeviceSpecificInstantCameraT<Pylon::CBaslerUsbInstantCameraTraits>`
         // Make equivalent of those typedefs here,
-        // `CameraTraitsT` is the name of the template parameter of `CDeviceSpecificInstantCameraT`
-        infoMap.put(new Info("CameraTraitsT::InstantCamera_t").pointerTypes("CBaslerUsbInstantCamera"));
-        // FIXME: Info for CameraTraitsT::CameraParams_t is not correct ?
-//        infoMap.put(new Info("CameraTraitsT::CameraParams_t").cast().valueTypes("Pointer").pointerTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
-//        infoMap.put(new Info("CameraTraitsT::CameraParams_t").pointerTypes("CUsbCameraParams_Params").cast().cppTypes("Basler_UsbCameraParams::CUsbCameraParams_Params"));
-        infoMap.put(new Info("CameraTraitsT::CameraParams_t").pointerTypes("CUsbCameraParams_Params"));
-        infoMap.put(new Info("CameraTraitsT::IPylonDevice_t").pointerTypes("IPylonDevice"));
-        infoMap.put(new Info("CameraTraitsT::DeviceInfo_t").pointerTypes("CBaslerUsbDeviceInfo")); //Pylon::CBaslerUsbDeviceInfo
-        infoMap.put(new Info("CameraTraitsT::TlParams_t").pointerTypes("CNodeMapProxyT_UsbTLParams_Params"));
-        infoMap.put(new Info("CameraTraitsT::StreamGrabberParams_t").pointerTypes("CNodeMapProxyT_CUsbStreamParams_Params"));
-        infoMap.put(new Info("CameraTraitsT::EventGrabberParams_t").pointerTypes("CNodeMapProxyT_CUsbEventParams_Params"));
-        infoMap.put(new Info("CameraTraitsT::ConfigurationEventHandler_t").pointerTypes("CBaslerUsbConfigurationEventHandler"));
-        infoMap.put(new Info("CameraTraitsT::ImageEventHandler_t").pointerTypes("CBaslerUsbImageEventHandler"));
-        infoMap.put(new Info("CameraTraitsT::CameraEventHandler_t").pointerTypes("CBaslerUsbCameraEventHandler"));
-        infoMap.put(new Info("CameraTraitsT::GrabResultData_t").pointerTypes("CBaslerUsbGrabResultData"));
-        infoMap.put(new Info("CameraTraitsT::GrabResultPtr_t").pointerTypes("CBaslerUsbGrabResultPtr"));
+        typeDefs(infoMap, "Pylon::CBaslerUsbInstantCameraTraits::", new String[][]{
+                {"CameraParams_t", "CUsbCameraParams_Params"},
+                {"IPylonDevice_t", "IPylonDevice"},
+                {"DeviceInfo_t", "CBaslerUsbDeviceInfo"}, //Pylon::CBaslerUsbDeviceInfo
+                {"TlParams_t", "CNodeMapProxyT_UsbTLParams_Params"},
+                {"StreamGrabberParams_t", "CNodeMapProxyT_CUsbStreamParams_Params"},
+                {"EventGrabberParams_t", "CNodeMapProxyT_CUsbEventParams_Params"},
+                {"ConfigurationEventHandler_t", "CBaslerUsbConfigurationEventHandler"},
+                {"ImageEventHandler_t", "CBaslerUsbImageEventHandler"},
+                {"CameraEventHandler_t", "CBaslerUsbCameraEventHandler"},
+                {"GrabResultData_t", "CBaslerUsbGrabResultData"},
+                {"GrabResultPtr_t", "CBaslerUsbGrabResultPtr"},
+        });
+    }
+
+    private void instantiateTemplates(InfoMap infoMap, String prefix, String postfix, String[][] pairs) {
+        for (String[] p : pairs) {
+            infoMap.put(new Info(prefix + p[0]).pointerTypes(p[1] + postfix).define());
+        }
+    }
+
+    private void typeDefs(InfoMap infoMap, String prefix, String[][] pairs) {
+        for (String[] p : pairs) {
+            infoMap.put(new Info(prefix + p[0]).pointerTypes(p[1]));
+        }
     }
 }

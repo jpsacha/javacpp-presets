@@ -4656,7 +4656,7 @@ public static final int PIXEL_COLOR = 0x02000000;
     <li> The Instant Camera class is extensible using derivation or by registering event handler objects.
     </ul>
     */
-    @Namespace("Pylon") @NoOffset public static class CInstantCamera extends CInstantCameraParams_Params {
+    @Namespace("Pylon") @NoOffset public static class CInstantCamera extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CInstantCamera(Pointer p) { super(p); }
@@ -4666,6 +4666,305 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CInstantCamera position(int position) {
             return (CInstantCamera)super.position(position);
         }
+        public CInstantCameraParams_Params asCInstantCameraParams_Params() { return asCInstantCameraParams_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_InstantCameraParams::CInstantCameraParams_Params*>") CInstantCameraParams_Params asCInstantCameraParams_Params(CInstantCamera pointer);
+            
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The maximum number of buffers that are allocated and used for grabbing.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger MaxNumBuffer(); public native CInstantCamera MaxNumBuffer(IInteger MaxNumBuffer);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The maximum number of buffers that are queued in the stream grabber input queue.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger MaxNumQueuedBuffer(); public native CInstantCamera MaxNumQueuedBuffer(IInteger MaxNumQueuedBuffer);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The maximum number of grab results available at any time during a grab session. This value can be limited to save resources. Furthermore, it can be used to check that the grab results are returned correctly.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger MaxNumGrabResults(); public native CInstantCamera MaxNumGrabResults(IInteger MaxNumGrabResults);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief Enables/disables the use of a chunk node map for each grab result. Grab result chunk node maps can be disabled to save resources.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IBoolean ChunkNodeMapsEnable(); public native CInstantCamera ChunkNodeMapsEnable(IBoolean ChunkNodeMapsEnable);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief If larger than 0, a static chunk node map pool is used instead of dynamic chunk node map creation.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger StaticChunkNodeMapPoolSize(); public native CInstantCamera StaticChunkNodeMapPoolSize(IInteger StaticChunkNodeMapPoolSize);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief Enables/disables the grabbing of camera events while images are grabbed. Is writable when the camera object is closed.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IBoolean GrabCameraEvents(); public native CInstantCamera GrabCameraEvents(IBoolean GrabCameraEvents);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The camera object is set to monitor mode when enabled, e.g. when using the GigE multicast feature. Is writable when the camera object is closed.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IBoolean MonitorModeActive(); public native CInstantCamera MonitorModeActive(IBoolean MonitorModeActive);
+    
+    //@}
+    
+
+    /** \name InternalGrabEngineThread - Parameters of the internal grab engine thread. */
+    //@{
+    /**
+        \brief If enabled, the user can set a custom priority for the internal grab engine thread operating the stream grabber. Otherwise the priority defaults to 25.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IBoolean InternalGrabEngineThreadPriorityOverride(); public native CInstantCamera InternalGrabEngineThreadPriorityOverride(IBoolean InternalGrabEngineThreadPriorityOverride);
+    
+    //@}
+    
+
+    /** \name InternalGrabEngineThread - Parameters of the internal grab engine thread. */
+    //@{
+    /**
+        \brief The internal grab engine thread priority.
+        <p>
+        This value sets the absolute thread priority for the internal grab engine thread operating the stream grabber.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger InternalGrabEngineThreadPriority(); public native CInstantCamera InternalGrabEngineThreadPriority(IInteger InternalGrabEngineThreadPriority);
+    
+    //@}
+    
+
+    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
+    //@{
+    /**
+        \brief If enabled, the user can set a custom timeout for the grab loop thread's call to RetrieveResult. RetrieveResult is configured to throw an exception on timeout, which will stop the grab session.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IBoolean GrabLoopThreadUseTimeout(); public native CInstantCamera GrabLoopThreadUseTimeout(IBoolean GrabLoopThreadUseTimeout);
+    
+    //@}
+    
+
+    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
+    //@{
+    /**
+        \brief A custom timeout for the grab loop thread's call to RetrieveResult. RetrieveResult is configured to throw an exception on timeout, which will stop the grab session.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger GrabLoopThreadTimeout(); public native CInstantCamera GrabLoopThreadTimeout(IInteger GrabLoopThreadTimeout);
+    
+    //@}
+    
+
+    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
+    //@{
+    /**
+        \brief If enabled, the user can set a custom priority for the grab loop thread. Otherwise, the priority of the newly created thread is not changed.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IBoolean GrabLoopThreadPriorityOverride(); public native CInstantCamera GrabLoopThreadPriorityOverride(IBoolean GrabLoopThreadPriorityOverride);
+    
+    //@}
+    
+
+    /** \name GrabLoopThread - Parameters of the optional grab loop  thread. */
+    //@{
+    /**
+        \brief The grab loop thread priority.
+        <p>
+        This value sets the absolute thread priority for the grab loop thread.
+    
+        \b Visibility = Guru
+    
+    */
+    public native @ByRef IInteger GrabLoopThreadPriority(); public native CInstantCamera GrabLoopThreadPriority(IInteger GrabLoopThreadPriority);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The number of buffers queued at Low Level API stream grabber.
+        
+        
+            <p>
+        
+        
+            This is the number of buffers that are queued for grabbing in the stream grabber.
+            The number is influenced by the number of available free buffers and the
+            maximum number of buffers that can be queued.
+            See also the MaxNumBuffer and MaxNumQueuedBuffer parameters.
+            <p>
+            This parameter can be used to check whether the number of buffers ready for grabbing
+            is stable, which means that the image processing is fast enough to keep up with the
+            rate of incoming images when using the GrabStrategy_OneByOne grab strategy.
+        
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger NumQueuedBuffers(); public native CInstantCamera NumQueuedBuffers(IInteger NumQueuedBuffers);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The number of grab result buffers in the output queue that are ready for retrieval.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger NumReadyBuffers(); public native CInstantCamera NumReadyBuffers(IInteger NumReadyBuffers);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The number of empty buffers that are not used for grabbing yet.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger NumEmptyBuffers(); public native CInstantCamera NumEmptyBuffers(IInteger NumEmptyBuffers);
+    
+    //@}
+    
+
+    /** \name Root - Instant camera parameters. */
+    //@{
+    /**
+        \brief The size of the grab result buffer output queue.
+        
+    
+        <p>
+        
+    
+        \b Visibility = Expert
+    
+    */
+    public native @ByRef IInteger OutputQueueSize(); public native CInstantCamera OutputQueueSize(IInteger OutputQueueSize);
     
         //Creation and life time------------------------------------------------
 
@@ -7542,7 +7841,7 @@ public static final int PIXEL_COLOR = 0x02000000;
     \threading
         The CImageFormatConverter class is not thread-safe.
     */
-    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends CImageFormatConverterParams_Params {
+    @Namespace("Pylon") @NoOffset public static class CImageFormatConverter extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CImageFormatConverter(Pointer p) { super(p); }
@@ -7552,6 +7851,117 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CImageFormatConverter position(int position) {
             return (CImageFormatConverter)super.position(position);
         }
+        public CImageFormatConverterParams_Params asCImageFormatConverterParams_Params() { return asCImageFormatConverterParams_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_ImageFormatConverterParams::CImageFormatConverterParams_Params*>") CImageFormatConverterParams_Params asCImageFormatConverterParams_Params(CImageFormatConverter pointer);
+            
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the conversion method for monochrome images.
+        <p>
+        Sets the conversion method for monochrome images.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_MonoConversionMethodEnums MonoConversionMethod(); public native CImageFormatConverter MonoConversionMethod(IEnumerationT_MonoConversionMethodEnums MonoConversionMethod);
+    
+    //@}
+    
+
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the gamma value for converting monochrome images.
+        <p>
+        Sets the gamma value for converting monochrome images.	The image data is converted using a lookup table. The values of the lookup table are computed using the following formula: valueOut = min((((valueIn ^ Gamma) / (valueInMax ^ Gamma)) * valueOutMax), valueOutMax).
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IFloat Gamma(); public native CImageFormatConverter Gamma(IFloat Gamma);
+    
+    //@}
+    
+
+    /** \name MonoConversion - Parameters for converting monochrome images. */
+    //@{
+    /**
+        \brief Sets the value for additional shifting when converting monochrome images in Truncate mode.
+        <p>
+        Sets the value for additional shifting when converting monochrome images in Truncate mode. The image data is converted using a lookup table if the parameter value differs from zero. Shifted values exceeding the maximum output value boundary are set to the maximum allowed value. Negative values are treated as right shifted values.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger AdditionalLeftShift(); public native CImageFormatConverter AdditionalLeftShift(IInteger AdditionalLeftShift);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief The number of additional data bytes at the end of each line.
+        <p>
+        The number of additional data bytes at the end of each line. These bytes are set to zero during the conversion.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IInteger OutputPaddingX(); public native CImageFormatConverter OutputPaddingX(IInteger OutputPaddingX);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief Defines the vertical orientation of the output image in memory.
+        <p>
+        Defines the vertical orientation of the output image in memory.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_OutputOrientationEnums OutputOrientation(); public native CImageFormatConverter OutputOrientation(IEnumerationT_OutputOrientationEnums OutputOrientation);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief Sets the handling for rows and columns that cannot be converted.
+        <p>
+        Sets the handling for rows and columns that cannot be converted.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_InconvertibleEdgeHandlingEnums InconvertibleEdgeHandling(); public native CImageFormatConverter InconvertibleEdgeHandling(IEnumerationT_InconvertibleEdgeHandlingEnums InconvertibleEdgeHandling);
+    
+    //@}
+    
+
+    /** \name Root - Image Format Converter parameters. */
+    //@{
+    /**
+        \brief Controls the alignment of the bits in the target pixel type.
+        <p>
+        Controls the alignment of the bits in the target pixel type if the target value has more bits than the source value.
+    
+        \b Visibility = Beginner
+        
+    
+    */
+    public native @ByRef IEnumerationT_OutputBitAlignmentEnums OutputBitAlignment(); public native CImageFormatConverter OutputBitAlignment(IEnumerationT_OutputBitAlignmentEnums OutputBitAlignment);
     
 
         /**
@@ -8022,7 +8432,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         */
         public native void Poll( @Cast("int64_t") long ElapsedTime );
     }
-    @Name("Pylon::CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params>") @NoOffset public static class CNodeMapProxyT_CUsbStreamParams_Params extends CUsbStreamParams_Params {
+    @Name("Pylon::CNodeMapProxyT<Basler_UsbStreamParams::CUsbStreamParams_Params>") @NoOffset public static class CNodeMapProxyT_CUsbStreamParams_Params extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CNodeMapProxyT_CUsbStreamParams_Params(Pointer p) { super(p); }
@@ -8032,6 +8442,8 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CNodeMapProxyT_CUsbStreamParams_Params position(int position) {
             return (CNodeMapProxyT_CUsbStreamParams_Params)super.position(position);
         }
+        public CUsbStreamParams_Params asCUsbStreamParams_Params() { return asCUsbStreamParams_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_UsbStreamParams::CUsbStreamParams_Params*>") CUsbStreamParams_Params asCUsbStreamParams_Params(CNodeMapProxyT_CUsbStreamParams_Params pointer);
     
         /** \name Construction */
         // \{
@@ -8084,7 +8496,7 @@ public static final int PIXEL_COLOR = 0x02000000;
         */
         public native void Poll( @Cast("int64_t") long ElapsedTime );
     }
-    @Name("Pylon::CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params>") @NoOffset public static class CNodeMapProxyT_CUsbEventParams_Params extends CUsbEventParams_Params {
+    @Name("Pylon::CNodeMapProxyT<Basler_UsbEventParams::CUsbEventParams_Params>") @NoOffset public static class CNodeMapProxyT_CUsbEventParams_Params extends Pointer {
         static { Loader.load(); }
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public CNodeMapProxyT_CUsbEventParams_Params(Pointer p) { super(p); }
@@ -8094,6 +8506,8 @@ public static final int PIXEL_COLOR = 0x02000000;
         @Override public CNodeMapProxyT_CUsbEventParams_Params position(int position) {
             return (CNodeMapProxyT_CUsbEventParams_Params)super.position(position);
         }
+        public CUsbEventParams_Params asCUsbEventParams_Params() { return asCUsbEventParams_Params(this); }
+        @Namespace public static native @Name("static_cast<Basler_UsbEventParams::CUsbEventParams_Params*>") CUsbEventParams_Params asCUsbEventParams_Params(CNodeMapProxyT_CUsbEventParams_Params pointer);
     
         /** \name Construction */
         // \{
@@ -18436,7 +18850,7 @@ private native void allocate( @Const @ByRef CBaslerUsbGrabResultPtr rhs);
             return (CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits)super.position(position);
         }
         public CUsbCameraParams_Params asCUsbCameraParams_Params() { return asCUsbCameraParams_Params(this); }
-        @Namespace public static native @Name("static_cast<CameraTraitsT::CameraParams_t*>") CUsbCameraParams_Params asCUsbCameraParams_Params(CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits pointer);
+        @Namespace public static native @Name("static_cast<Pylon::CBaslerUsbInstantCameraTraits::CameraParams_t*>") CUsbCameraParams_Params asCUsbCameraParams_Params(CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits pointer);
         public CBaslerUsbInstantCameraTraits asCBaslerUsbInstantCameraTraits() { return asCBaslerUsbInstantCameraTraits(this); }
         @Namespace public static native @Name("static_cast<Pylon::CBaslerUsbInstantCameraTraits*>") CBaslerUsbInstantCameraTraits asCBaslerUsbInstantCameraTraits(CDeviceSpecificInstantCameraT_CBaslerUsbInstantCameraTraits pointer);
     

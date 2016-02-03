@@ -106,16 +106,23 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 }),
                 @Platform(value = "linux", link = "pylon@.5", includepath = "/usr/include/pylon/"),
                 @Platform(value = "windows",
+                        define = {
+                                // Use GenICam-specific exception instead of std:exception
+                                "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
                         link = {"PylonBase_MD_VC120_v5_0", "PylonGUI_MD_VC120_v5_0", "PylonUtility_MD_VC120_v5_0"},
                         includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
                 @Platform(
                         value = "windows-x86",
-                        define = {"WIN32", "GC_W64 1"},
+                        define = {"WIN32", "GC_W64 1",
+                                // Use GenICam-specific exception instead of std:exception
+                                "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
                         linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/Win32/",
                         preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
                 @Platform(
                         value = "windows-x86_64",
-                        define = {"WIN64", "GC_W64 1"},
+                        define = {"WIN64", "GC_W64 1",
+                                // Use GenICam-specific exception instead of std:exception
+                                "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
                         linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/x64/",
                         preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/x64/"
                 )})
@@ -206,7 +213,7 @@ public class Pylon5 implements InfoMapper {
         };
         for (String e : usbCameraParamsEnums) {
             infoMap.put(new Info("GenApi_3_0_Basler_pylon_v5_0::IEnumerationT<Basler_UsbCameraParams::" + e + ">")
-                    .pointerTypes("IEnumerationT_" + e).define());
+                    .pointerTypes("IEnumerationT_" + e));
         }
 
         // <pylon/usb/BaslerUsbDeviceInfo.h> ignore incorrectly generated "const char* const"

@@ -68,7 +68,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "<GenApi/IEnumeration.h>",
                 "<GenApi/IEnumerationT.h>",
         }),
-        @Platform(value = "linux", link = "genicam@.3", includepath = "/usr/include/pylon/genicam"),
+        @Platform(value = "linux",
+                link = "genicam@.3",
+                define = {
+                        // Use GenICam-specific exception instead of std:exception
+                        "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
+                includepath = "/usr/include/pylon/genicam"),
         @Platform(value = "windows",
                 link = {/* GeniCam */
                         "GenApi_MD_VC120_v3_0_Basler_pylon_v5_0",
@@ -77,11 +82,16 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 includepath = "C:/Program Files/Basler/pylon 5/Development/include/"),
         @Platform(
                 value = "windows-x86",
+                define = {"WIN32", "GC_W64 1",
+                        // Use GenICam-specific exception instead of std:exception
+                        "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
                 linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/Win32/",
                 preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
         @Platform(
                 value = "windows-x86_64",
-                define = {"WIN32", "GC_W64 1"},
+                define = {"WIN64", "GC_W64 1",
+                        // Use GenICam-specific exception instead of std:exception
+                        "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
                 linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/x64/",
                 preloadpath = "C:/Program Files/Basler/pylon 5/Runtime/x64/"
         )})

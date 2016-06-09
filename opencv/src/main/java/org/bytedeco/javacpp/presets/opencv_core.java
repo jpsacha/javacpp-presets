@@ -41,7 +41,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  */
 @Properties(value = {
     @Platform(include = {"<opencv2/core/hal/interface.h>", "<opencv2/core/cvdef.h>", "<opencv2/core/hal/hal.hpp>", "<opencv2/core/fast_math.hpp>",
-        "<opencv2/core/saturate.hpp>", "<opencv2/core/version.hpp>", "<opencv2/core/base.hpp>", "<opencv2/core/cvstd.hpp>",
+        "<algorithm>", "<opencv2/core/saturate.hpp>", "<opencv2/core/version.hpp>", "<opencv2/core/base.hpp>", "<opencv2/core/cvstd.hpp>",
         "<opencv2/core/utility.hpp>", "<opencv2/core/types_c.h>", "<opencv2/core/core_c.h>", "<opencv2/core/types.hpp>",
         "<opencv2/core.hpp>", "<opencv2/core/operations.hpp>", "<opencv2/core/bufferpool.hpp>", "<opencv2/core/mat.hpp>",
         "<opencv2/core/persistence.hpp>", "<opencv2/core/optim.hpp>", "opencv_adapters.h"}, link = {"opencv_core@.3.1", "opencv_imgproc@.3.1"}),
@@ -51,7 +51,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         target = "org.bytedeco.javacpp.opencv_core", helper = "org.bytedeco.javacpp.helper.opencv_core")
 public class opencv_core implements InfoMapper {
     public void map(InfoMap infoMap) {
-        infoMap.put(new Info("opencv_adapters.h").skip())
+        infoMap.put(new Info("algorithm", "opencv_adapters.h").skip())
                .put(new Info("__cplusplus", "CV_StaticAssert").define())
                .put(new Info("defined __ICL", "defined __ICC", "defined __ECL", "defined __ECC", "defined __INTEL_COMPILER",
                              "defined WIN32 || defined _WIN32", "defined(__clang__)", "defined(__GNUC__)", "defined(_MSC_VER)",
@@ -124,28 +124,29 @@ public class opencv_core implements InfoMapper {
                .put(new Info("cvDrawPolyLine").cppTypes("void", "CvArr*", "CvPoint**", "int*", "int", "int", "CvScalar", "int", "int", "int"))
                .put(new Info("__CV_BEGIN__", "__CV_END__", "__CV_EXIT__").cppTypes())
 
-               .put(new Info("std::vector<std::vector<char> >", "std::vector<std::vector<unsigned char> >").cast().pointerTypes("ByteVectorVector").define())
+               .put(new Info("uchar").cast().valueTypes("byte").pointerTypes("BytePointer", "ByteBuffer", "byte[]"))
+               .put(new Info("std::vector<std::vector<char> >", "std::vector<std::vector<uchar> >").cast().pointerTypes("ByteVectorVector").define())
                .put(new Info("std::vector<std::vector<int> >").pointerTypes("IntVectorVector").define())
                .put(new Info("std::vector<cv::String>").pointerTypes("StringVector").define())
-               .put(new Info("std::vector<cv::Point_<int> >").pointerTypes("PointVector").define())
-               .put(new Info("std::vector<cv::Point_<float> >").pointerTypes("Point2fVector").define())
-               .put(new Info("std::vector<cv::Point_<double> >").pointerTypes("Point2dVector").define())
-               .put(new Info("std::vector<cv::Size_<int> >").pointerTypes("SizeVector").define())
-               .put(new Info("std::vector<cv::Rect_<int> >").pointerTypes("RectVector").define())
+               .put(new Info("std::vector<cv::Point>").pointerTypes("PointVector").define())
+               .put(new Info("std::vector<cv::Point2f>").pointerTypes("Point2fVector").define())
+               .put(new Info("std::vector<cv::Point2d>").pointerTypes("Point2dVector").define())
+               .put(new Info("std::vector<cv::Size>").pointerTypes("SizeVector").define())
+               .put(new Info("std::vector<cv::Rect>").pointerTypes("RectVector").define())
                .put(new Info("std::vector<cv::KeyPoint>").pointerTypes("KeyPointVector").define())
                .put(new Info("std::vector<cv::DMatch>").pointerTypes("DMatchVector").define())
-               .put(new Info("std::vector<std::vector<cv::Point_<int> > >").pointerTypes("PointVectorVector").define())
-               .put(new Info("std::vector<std::vector<cv::Point_<float> > >").pointerTypes("Point2fVectorVector").define())
-               .put(new Info("std::vector<std::vector<cv::Point_<double> > >").pointerTypes("Point2dVectorVector").define())
-               .put(new Info("std::vector<std::vector<cv::Rect_<int> > >").pointerTypes("RectVectorVector").define())
+               .put(new Info("std::vector<std::vector<cv::Point> >").pointerTypes("PointVectorVector").define())
+               .put(new Info("std::vector<std::vector<cv::Point2f> >").pointerTypes("Point2fVectorVector").define())
+               .put(new Info("std::vector<std::vector<cv::Point2d> >").pointerTypes("Point2dVectorVector").define())
+               .put(new Info("std::vector<std::vector<cv::Rect> >").pointerTypes("RectVectorVector").define())
                .put(new Info("std::vector<std::vector<cv::KeyPoint> >").pointerTypes("KeyPointVectorVector").define())
                .put(new Info("std::vector<std::vector<cv::DMatch> >").pointerTypes("DMatchVectorVector").define())
                .put(new Info("std::vector<cv::Mat>").pointerTypes("MatVector").define())
                .put(new Info("std::vector<cv::UMat>").pointerTypes("UMatVector").define())
                .put(new Info("std::pair<int,int>").pointerTypes("IntIntPair").define())
                .put(new Info("std::vector<std::pair<int,int> >").pointerTypes("IntIntPairVector").define())
-               .put(new Info("std::vector<std::pair<cv::Mat,unsigned char> >").pointerTypes("MatBytePairVector").define())
-               .put(new Info("std::vector<std::pair<cv::UMat,unsigned char> >").pointerTypes("UMatBytePairVector").define())
+               .put(new Info("std::vector<std::pair<cv::Mat,uchar> >").pointerTypes("MatBytePairVector").define())
+               .put(new Info("std::vector<std::pair<cv::UMat,uchar> >").pointerTypes("UMatBytePairVector").define())
                .put(new Info("cv::randu<int>").javaNames("intRand"))
                .put(new Info("cv::randu<float>").javaNames("floatRand"))
                .put(new Info("cv::randu<double>").javaNames("doubleRand"))
@@ -168,6 +169,7 @@ public class opencv_core implements InfoMapper {
                      + "private native void allocate(int rows, int cols, int type, Pointer data, @Cast(\"size_t\") long step/*=AUTO_STEP*/);\n"
                      + "private Pointer data; // a reference to prevent deallocation\n"
                      + "public Mat(int rows, int cols, int type, Pointer data) { this(rows, cols, type, data, AUTO_STEP); }\n"
+                     + "public Mat(CvArr arr) { super(cvarrToMat(arr)); this.data = arr; }\n"
                      + "public Mat(byte ... b) { this(b, false); }\n"
                      + "public Mat(byte[] b, boolean signed) { this(new BytePointer(b), signed); }\n"
                      + "public Mat(short ... s) { this(s, true); }\n"
@@ -175,7 +177,10 @@ public class opencv_core implements InfoMapper {
                      + "public Mat(int ... n) { this(new IntPointer(n)); }\n"
                      + "public Mat(double ... d) { this(new DoublePointer(d)); }\n"
                      + "public Mat(float ... f) { this(new FloatPointer(f)); }\n"
+                     + "private Mat(long rows, long cols, int type, Pointer data) { this((int)Math.min(rows, Integer.MAX_VALUE), (int)Math.min(cols, Integer.MAX_VALUE), type, data, AUTO_STEP); }\n"
+                     + "public Mat(BytePointer p) { this(p, false); }\n"
                      + "public Mat(BytePointer p, boolean signed) { this(p.limit - p.position, 1, signed ? CV_8SC1 : CV_8UC1, p); }\n"
+                     + "public Mat(ShortPointer p) { this(p, false); }\n"
                      + "public Mat(ShortPointer p, boolean signed) { this(p.limit - p.position, 1, signed ? CV_16SC1 : CV_16UC1, p); }\n"
                      + "public Mat(IntPointer p) { this(p.limit - p.position, 1, CV_32SC1, p); }\n"
                      + "public Mat(FloatPointer p) { this(p.limit - p.position, 1, CV_32FC1, p); }\n"
@@ -244,7 +249,7 @@ public class opencv_core implements InfoMapper {
 
     @Documented @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.METHOD, ElementType.PARAMETER})
-    @Cast({"cv::Ptr", "&"}) @Adapter("PtrAdapter") public @interface Ptr {
+    @Cast({"cv::Ptr"}) @Adapter("PtrAdapter") public @interface Ptr {
         /** @return template type */
         String value() default "";
     }

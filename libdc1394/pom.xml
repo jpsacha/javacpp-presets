@@ -6,17 +6,17 @@
   <parent>
     <groupId>org.bytedeco</groupId>
     <artifactId>javacpp-presets</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
   </parent>
 
   <groupId>org.bytedeco.javacpp-presets</groupId>
   <artifactId>libdc1394</artifactId>
-  <version>2.2.3-${project.parent.version}</version>
+  <version>2.2.4-${project.parent.version}</version>
   <packaging>jar</packaging>
   <name>JavaCPP Presets for libdc1394</name>
 
   <properties>
-    <platform.oldcompiler>${platform.compiler}</platform.oldcompiler>
+    <javacpp.platform.oldcompiler>${javacpp.platform.compiler}</javacpp.platform.oldcompiler>
   </properties>
 
   <dependencies>
@@ -28,6 +28,10 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+      </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
       </plugin>
@@ -41,11 +45,11 @@
           <propertyKeysAndValues>
             <property>
               <name>platform.root</name>
-              <value>${platform.root}</value>
+              <value>${javacpp.platform.root}</value>
             </property>
             <property>
               <name>platform.compiler</name>
-              <value>${platform.oldcompiler}</value>
+              <value>${javacpp.platform.oldcompiler}</value>
             </property>
           </propertyKeysAndValues>
         </configuration>
@@ -64,5 +68,35 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>mingw</id>
+      <activation>
+        <os><family>windows</family></os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <configuration>
+              <properties>${javacpp.platform}-mingw</properties>
+              <compilerOptions>
+                <compilerOption>-static-libgcc</compilerOption>
+                <compilerOption>-static-libstdc++</compilerOption>
+                <compilerOption>-Wl,-Bstatic</compilerOption>
+                <compilerOption>-lstdc++</compilerOption>
+                <compilerOption>-lgcc</compilerOption>
+                <compilerOption>-lgcc_eh</compilerOption>
+                <compilerOption>-lpthread</compilerOption>
+                <compilerOption>-Wl,-Bdynamic</compilerOption>
+              </compilerOptions>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

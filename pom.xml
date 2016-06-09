@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.bytedeco</groupId>
   <artifactId>javacpp-presets</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <packaging>pom</packaging>
 
   <name>JavaCPP Presets</name>
@@ -53,12 +53,13 @@
     <module>tesseract</module>
     <module>caffe</module>
     <module>cuda</module>
+    <module>mxnet</module>
     <module>tensorflow</module>
     <module>pylon</module>
   </modules>
 
   <prerequisites>
-    <maven>3.0.4</maven>
+    <maven>3.0</maven>
   </prerequisites>
 
   <scm>
@@ -82,12 +83,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <generate-sources.skip>false</generate-sources.skip> <!-- To skip header file parsing phase: -Dgenerate-sources.skip=true  -->
-    <process-classes.skip> false</process-classes.skip>  <!-- To skip native compilation phase: -Dprocess-classes.skip=true    -->
-    <platform>${os.name}-${os.arch}</platform> <!-- For Android: -Dplatform=android-arm                                        -->
-    <platform.root></platform.root>            <!--              -Dplatform.root=/path/to/android-ndk/                         -->
-    <platform.compiler></platform.compiler>    <!--              -Dplatform.compiler=/path/to/arm-linux-androideabi-g++        -->
-    <platform.properties>${platform}</platform.properties>
+    <javacpp.cppbuild.skip>false</javacpp.cppbuild.skip> <!-- To skip execution of cppbuild.sh: -Djavacpp.cppbuild.skip=true -->
+    <javacpp.parser.skip>false</javacpp.parser.skip>     <!-- To skip header file parsing phase: -Djavacpp.parser.skip=true  -->
+    <javacpp.compiler.skip>false</javacpp.compiler.skip> <!-- To skip native compilation phase: -Djavacpp.compiler.skip=true -->
   </properties>
 
   <dependencyManagement>
@@ -109,7 +107,7 @@
         <version>2.7</version>
         <executions>
           <execution>
-            <id>generate-sources</id>
+            <id>javacpp.parser</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>resources</goal>
@@ -126,13 +124,21 @@
         </configuration>
         <executions>
           <execution>
-            <id>generate-sources</id>
+            <id>default-compile</id>
+            <configuration>
+              <includes>
+                <include>org/bytedeco/javacpp/*.java</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>javacpp.parser</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>compile</goal>
             </goals>
             <configuration>
-              <skipMain>${generate-sources.skip}</skipMain>
+              <skipMain>${javacpp.parser.skip}</skipMain>
               <includes>
                 <include>org/bytedeco/javacpp/presets/*.java</include>
               </includes>
@@ -145,43 +151,43 @@
         <artifactId>javacpp</artifactId>
         <version>${project.parent.version}</version>
         <configuration>
-          <properties>${platform.properties}</properties>
+          <properties>${javacpp.platform}</properties>
           <propertyKeysAndValues>
             <property>
               <name>platform.root</name>
-              <value>${platform.root}</value>
+              <value>${javacpp.platform.root}</value>
             </property>
             <property>
               <name>platform.compiler</name>
-              <value>${platform.compiler}</value>
+              <value>${javacpp.platform.compiler}</value>
             </property>
           </propertyKeysAndValues>
           <classPath>${project.build.outputDirectory}</classPath>
-          <includePath>${basedir}/cppbuild/${platform}/include/</includePath>
-          <linkPath>${basedir}/cppbuild/${platform}/lib/</linkPath>
-          <preloadPath>${basedir}/cppbuild/${platform}/bin/</preloadPath>
+          <includePath>${basedir}/cppbuild/${javacpp.platform}/include/</includePath>
+          <linkPath>${basedir}/cppbuild/${javacpp.platform}/lib/</linkPath>
+          <preloadPath>${basedir}/cppbuild/${javacpp.platform}/bin/</preloadPath>
         </configuration>
         <executions>
           <execution>
-            <id>generate-sources</id>
+            <id>javacpp.parser</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>build</goal>
             </goals>
             <configuration>
-              <skip>${generate-sources.skip}</skip>
+              <skip>${javacpp.parser.skip}</skip>
               <outputDirectory>${project.build.sourceDirectory}</outputDirectory>
               <classOrPackageName>org.bytedeco.javacpp.presets.*</classOrPackageName>
             </configuration>
           </execution>
           <execution>
-            <id>process-classes</id>
+            <id>javacpp.compiler</id>
             <phase>process-classes</phase>
             <goals>
               <goal>build</goal>
             </goals>
             <configuration>
-              <skip>${process-classes.skip}</skip>
+              <skip>${javacpp.compiler.skip}</skip>
               <classOrPackageName>org.bytedeco.javacpp.*</classOrPackageName>
               <copyLibs>true</copyLibs>
             </configuration>
@@ -205,7 +211,7 @@
                 </manifest>
                 <manifestEntries>
                   <!-- <addClasspath/> is broken: http://jira.codehaus.org/browse/MJAR-61 -->
-                  <Class-Path>./ javacpp.jar ${project.artifactId}-linux-arm.jar ${project.artifactId}-linux-x86.jar ${project.artifactId}-linux-x86_64.jar ${project.artifactId}-macosx-x86.jar ${project.artifactId}-macosx-x86_64.jar ${project.artifactId}-windows-x86.jar ${project.artifactId}-windows-x86_64.jar</Class-Path>
+                  <Class-Path>. javacpp.jar ${project.artifactId}-linux-arm.jar ${project.artifactId}-linux-x86.jar ${project.artifactId}-linux-x86_64.jar ${project.artifactId}-macosx-x86.jar ${project.artifactId}-macosx-x86_64.jar ${project.artifactId}-windows-x86.jar ${project.artifactId}-windows-x86_64.jar</Class-Path>
                   <Name>org/bytedeco/javacpp/presets/</Name>
                   <Implementation-Title>${project.name}</Implementation-Title>
                   <Implementation-Vendor>Bytedeco</Implementation-Vendor>
@@ -225,23 +231,28 @@
                 <exclude>org/bytedeco/javacpp/linux-*/</exclude>
                 <exclude>org/bytedeco/javacpp/macosx-*/</exclude>
                 <exclude>org/bytedeco/javacpp/windows-*/</exclude>
-                <exclude>org/bytedeco/javacpp/${platform}/</exclude>
+                <exclude>org/bytedeco/javacpp/${javacpp.platform}/</exclude>
               </excludes>
             </configuration>
           </execution>
           <execution>
-            <id>${platform}</id>
+            <id>${javacpp.platform}</id>
             <phase>package</phase>
             <goals>
               <goal>jar</goal>
             </goals>
             <configuration>
-              <classifier>${platform}</classifier>
+              <classifier>${javacpp.platform}</classifier>
               <skipIfEmpty>true</skipIfEmpty>
               <includes>
-                <include>${platform.library.path}/</include>
-                <include>org/bytedeco/javacpp/${platform}/</include>
+                <include>${javacpp.platform.library.path}/</include>
+                <include>org/bytedeco/javacpp/${javacpp.platform}/</include>
               </includes>
+              <excludes>
+                <exclude>**/*.exp</exclude>
+                <exclude>**/*.lib</exclude>
+                <exclude>**/*.obj</exclude>
+              </excludes>
             </configuration>
           </execution>
         </executions>
@@ -280,7 +291,7 @@
                   <groupId>${project.groupId}</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
-                  <classifier>${platform}</classifier>
+                  <classifier>${javacpp.platform}</classifier>
                   <type>jar</type>
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.parent.build.directory}</outputDirectory>
@@ -323,6 +334,48 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <executions>
+          <execution>
+            <id>javacpp.cppbuild.install</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>			
+            <configuration>
+              <arguments>
+                <argument>${project.basedir}/../cppbuild.sh</argument>
+                <argument>install</argument>
+                <argument>${project.artifactId}</argument>
+                <argument>-platform</argument>
+                <argument>${javacpp.platform}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>javacpp.cppbuild.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>			
+            <configuration>
+              <arguments>
+                <argument>${project.basedir}/../cppbuild.sh</argument>
+                <argument>clean</argument>
+                <argument>${project.artifactId}</argument>
+              </arguments>
+            </configuration>
+          </execution>		  
+        </executions>
+        <configuration>
+          <skip>${javacpp.cppbuild.skip}</skip>
+          <workingDirectory>${project.basedir}/..</workingDirectory>
+          <executable>bash</executable>			
+        </configuration>
       </plugin>
     </plugins>
     </pluginManagement>
@@ -432,50 +485,65 @@
       </build>
     </profile>
 
-    <!-- Provide convenient profiles to set commonly used paths for Android -->
     <profile>
-      <id>android-arm</id>
+      <id>javacpp-platform-default</id>
       <activation>
         <property>
-          <name>platform</name>
+          <name>!javacpp.platform</name>
+        </property>
+      </activation>
+      <properties>
+        <javacpp.platform>${os.name}-${os.arch}</javacpp.platform>
+      </properties>
+    </profile>
+
+    <!-- Provide convenient profiles to set commonly used paths for Android -->
+    <profile>
+      <id>android-arm-default</id>
+      <activation>
+        <property>
+          <name>javacpp.platform</name>
           <value>android-arm</value>
         </property>
       </activation>
       <properties>
-        <platform>android-arm</platform>
-        <platform.root>${user.home}/Android/android-ndk/</platform.root>
-        <platform.compiler>toolchains/arm-linux-androideabi-4.9/prebuilt/${os.name}-${os.arch}/bin/arm-linux-androideabi-g++</platform.compiler>
+        <javacpp.platform>android-arm</javacpp.platform>
+        <javacpp.platform.root>${user.home}/Android/android-ndk/</javacpp.platform.root>
+        <javacpp.platform.compiler>toolchains/arm-linux-androideabi-4.9/prebuilt/${os.name}-${os.arch}/bin/arm-linux-androideabi-g++</javacpp.platform.compiler>
       </properties>
     </profile>
     <profile>
-      <id>android-x86</id>
+      <id>android-x86-default</id>
       <activation>
         <property>
-          <name>platform</name>
+          <name>javacpp.platform</name>
           <value>android-x86</value>
         </property>
       </activation>
       <properties>
-        <platform>android-x86</platform>
-        <platform.root>${user.home}/Android/android-ndk/</platform.root>
-        <platform.compiler>toolchains/x86-4.9/prebuilt/${os.name}-${os.arch}/bin/i686-linux-android-g++</platform.compiler>
+        <javacpp.platform>android-x86</javacpp.platform>
+        <javacpp.platform.root>${user.home}/Android/android-ndk/</javacpp.platform.root>
+        <javacpp.platform.compiler>toolchains/x86-4.9/prebuilt/${os.name}-${os.arch}/bin/i686-linux-android-g++</javacpp.platform.compiler>
       </properties>
     </profile>
 
-    <!-- Include platform dependency by default for modules without a C++ build script file -->
+    <!-- Include platform dependency by default for modules without a C++ build script file, but can be disabled with -Djavacpp.platform.dependency=false -->
     <profile>
       <id>platform-dependency-default</id>
       <activation>
         <file>
           <missing>${user.dir}/cppbuild.sh</missing>
         </file>
+        <property>
+          <name>!javacpp.platform.dependency</name>
+        </property>
       </activation>
       <dependencies>
         <dependency>
           <groupId>${project.groupId}</groupId>
           <artifactId>${project.artifactId}</artifactId>
           <version>${project.version}</version>
-          <classifier>${platform}</classifier>
+          <classifier>${javacpp.platform}</classifier>
         </dependency>
       </dependencies>
     </profile>
@@ -484,7 +552,8 @@
       <id>platform-dependency</id>
       <activation>
         <property>
-          <name>platform.dependency</name>
+          <name>javacpp.platform.dependency</name>
+          <value>true</value>
         </property>
       </activation>
       <dependencies>
@@ -492,7 +561,7 @@
           <groupId>${project.groupId}</groupId>
           <artifactId>${project.artifactId}</artifactId>
           <version>${project.version}</version>
-          <classifier>${platform}</classifier>
+          <classifier>${javacpp.platform}</classifier>
         </dependency>
       </dependencies>
     </profile>
@@ -501,7 +570,8 @@
       <id>platform-dependencies</id>
       <activation>
         <property>
-          <name>platform.dependencies</name>
+          <name>javacpp.platform.dependencies</name>
+          <value>true</value>
         </property>
       </activation>
       <dependencies>
@@ -509,7 +579,7 @@
           <groupId>${project.groupId}</groupId>
           <artifactId>${project.artifactId}</artifactId>
           <version>${project.version}</version>
-          <classifier>${platform}</classifier>
+          <classifier>${javacpp.platform}</classifier>
         </dependency>
         <dependency>
           <groupId>${project.groupId}</groupId>

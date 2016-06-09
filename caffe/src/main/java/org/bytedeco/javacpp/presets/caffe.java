@@ -37,7 +37,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  * @author Samuel Audet
  */
 @Properties(inherit = opencv_highgui.class, target = "org.bytedeco.javacpp.caffe", value = {
-    @Platform(value = {"linux", "macosx"}, define = {"CPU_ONLY", "SHARED_PTR_NAMESPACE boost", "USE_LEVELDB", "USE_LMDB", "USE_OPENCV"}, include = {"caffe/caffe.hpp", "caffe/util/device_alternate.hpp",
+    @Platform(value = {"linux", "macosx"}, define = {"NDEBUG", "CPU_ONLY", "SHARED_PTR_NAMESPACE boost", "USE_LEVELDB", "USE_LMDB", "USE_OPENCV"}, include = {"caffe/caffe.hpp",
+        "caffe/util/device_alternate.hpp", "google/protobuf/stubs/common.h", "google/protobuf/descriptor.h", "google/protobuf/message_lite.h", "google/protobuf/message.h",
         "caffe/common.hpp", "caffe/proto/caffe.pb.h", "caffe/util/blocking_queue.hpp", "caffe/data_reader.hpp", "caffe/util/math_functions.hpp", "caffe/syncedmem.hpp",
         "caffe/blob.hpp", "caffe/data_transformer.hpp", "caffe/filler.hpp", "caffe/internal_thread.hpp", "caffe/util/hdf5.hpp", "caffe/layers/base_data_layer.hpp", "caffe/layers/data_layer.hpp",
         "caffe/layers/dummy_data_layer.hpp", "caffe/layers/hdf5_data_layer.hpp", "caffe/layers/hdf5_output_layer.hpp", "caffe/layers/image_data_layer.hpp", "caffe/layers/memory_data_layer.hpp",
@@ -54,17 +55,20 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         "caffe/layers/cudnn_conv_layer.hpp", "caffe/layers/im2col_layer.hpp", "caffe/layers/lrn_layer.hpp", "caffe/layers/cudnn_lrn_layer.hpp", "caffe/layers/cudnn_lcn_layer.hpp",
         "caffe/layers/pooling_layer.hpp", "caffe/layers/cudnn_pooling_layer.hpp", "caffe/layers/spp_layer.hpp", "caffe/util/benchmark.hpp", "caffe/util/db.hpp", "caffe/util/db_leveldb.hpp",
         "caffe/util/db_lmdb.hpp", "caffe/util/io.hpp", "caffe/util/rng.hpp", "caffe/util/im2col.hpp", "caffe/util/insert_splits.hpp", "caffe/util/mkl_alternate.hpp",
-        "caffe/util/upgrade_proto.hpp", "caffe/util/cudnn.hpp"}, link = "caffe", includepath = {"/usr/local/cuda/include/",
-        "/System/Library/Frameworks/vecLib.framework/", "/System/Library/Frameworks/Accelerate.framework/"}, linkpath = "/usr/local/cuda/lib/") })
+        "caffe/util/upgrade_proto.hpp", "caffe/util/cudnn.hpp"}, link = "caffe@.1.0.0-rc3", includepath = {"/usr/local/cuda/include/",
+        "/System/Library/Frameworks/vecLib.framework/", "/System/Library/Frameworks/Accelerate.framework/"}, linkpath = "/usr/local/cuda/lib/"),
+    @Platform(value = {"linux-x86_64", "macosx-x86_64"}, define = {"SHARED_PTR_NAMESPACE boost", "USE_LEVELDB", "USE_LMDB", "USE_OPENCV"}) })
 public class caffe implements InfoMapper {
     public void map(InfoMap infoMap) {
-        infoMap.put(new Info("NOT_IMPLEMENTED", "NO_GPU", "CUDA_POST_KERNEL_CHECK").cppTypes().annotations())
-               .put(new Info("CPU_ONLY", "GFLAGS_GFLAGS_H_", "SWIG").define())
-               .put(new Info("USE_CUDNN").define(false))
+        infoMap.put(new Info("LIBPROTOBUF_EXPORT", "LIBPROTOC_EXPORT", "GOOGLE_PROTOBUF_VERIFY_VERSION", "GOOGLE_ATTRIBUTE_ALWAYS_INLINE", "GOOGLE_ATTRIBUTE_DEPRECATED",
+                             "GOOGLE_DLOG", "NOT_IMPLEMENTED", "NO_GPU", "CUDA_POST_KERNEL_CHECK").cppTypes().annotations())
+               .put(new Info("NDEBUG", "CPU_ONLY", "GFLAGS_GFLAGS_H_", "SWIG").define())
+               .put(new Info("USE_CUDNN", "defined(_WIN32) && defined(GetMessage)").define(false))
                .put(new Info("cublasHandle_t", "curandGenerator_t").cast().valueTypes("Pointer"))
                .put(new Info("CBLAS_TRANSPOSE", "cublasStatus_t", "curandStatus_t", "hid_t").cast().valueTypes("int"))
                .put(new Info("std::string").annotations("@StdString").valueTypes("BytePointer", "String").pointerTypes("@Cast({\"char*\", \"std::string*\"}) BytePointer"))
                .put(new Info("std::vector<std::string>").pointerTypes("StringVector").define())
+               .put(new Info("std::vector<const google::protobuf::FieldDescriptor*>").pointerTypes("FieldDescriptorVector").define())
                .put(new Info("std::vector<caffe::Datum>").pointerTypes("DatumVector").define())
                .put(new Info("caffe::BlockingQueue<caffe::Datum*>").pointerTypes("DatumBlockingQueue"))
 
@@ -72,10 +76,10 @@ public class caffe implements InfoMapper {
                .put(new Info("google::protobuf::int16", "google::protobuf::uint16").cast().valueTypes("short").pointerTypes("ShortPointer", "ShortBuffer", "short[]"))
                .put(new Info("google::protobuf::int32", "google::protobuf::uint32").cast().valueTypes("int").pointerTypes("IntPointer", "IntBuffer", "int[]"))
                .put(new Info("google::protobuf::int64", "google::protobuf::uint64").cast().valueTypes("long").pointerTypes("LongPointer", "LongBuffer", "long[]"))
-               .put(new Info("google::protobuf::Descriptor", "google::protobuf::EnumDescriptor", "google::protobuf::Message", "google::protobuf::Metadata",
-                             "google::protobuf::UnknownFieldSet", "google::protobuf::io::CodedInputStream", "google::protobuf::io::CodedOutputStream",
-                             "leveldb::Iterator", "leveldb::DB", "MDB_txn", "MDB_cursor", "MDB_dbi", "boost::mt19937").cast().pointerTypes("Pointer"))
-               .put(new Info("google::protobuf::RepeatedField", "google::protobuf::RepeatedPtrField").skip());
+               .put(new Info("leveldb::Iterator", "leveldb::DB", "MDB_txn", "MDB_cursor", "MDB_dbi", "boost::mt19937").cast().pointerTypes("Pointer"))
+               .put(new Info("google::protobuf::internal::CompileAssert", "google::protobuf::MessageFactory::InternalRegisterGeneratedFile",
+                             "google::protobuf::internal::LogMessage", "google::protobuf::internal::LogFinisher", "google::protobuf::LogHandler",
+                             "google::protobuf::RepeatedField", "google::protobuf::RepeatedPtrField", "boost::mutex").skip());
 
         String[] functionTemplates = { "caffe_cpu_gemm", "caffe_cpu_gemv", "caffe_axpy", "caffe_cpu_axpby", "caffe_copy", "caffe_set", "caffe_add_scalar",
                 "caffe_scal", "caffe_sqr", "caffe_add", "caffe_sub", "caffe_mul", "caffe_div", "caffe_powx", "caffe_nextafter", "caffe_rng_uniform",
@@ -102,7 +106,7 @@ public class caffe implements InfoMapper {
                 /* "SPPLayer", "CuDNNReLULayer", "CuDNNSigmoidLayer", "CuDNNTanHLayer", "CuDNNSoftmaxLayer", "CuDNNConvolutionLayer", "CuDNNPoolingLayer" */ };
         for (String t : classTemplates) {
             boolean purify = t.equals("BaseDataLayer") || t.equals("LossLayer") || t.equals("NeuronLayer");
-            boolean virtualize = t.endsWith("Layer");
+            boolean virtualize = t.endsWith("Layer") || t.endsWith("Solver");
             infoMap.put(new Info("caffe::" + t + "<float>").pointerTypes("Float" + t).purify(purify).virtualize(virtualize))
                    .put(new Info("caffe::" + t + "<double>").pointerTypes("Double" + t).purify(purify).virtualize(virtualize));
         }

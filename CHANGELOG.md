@@ -1,8 +1,28 @@
 
- * Fix Android build of FFmpeg under Mac OS X causing preprocessor errors on `configure` ([issue #45](https://github.com/bytedeco/javacpp-presets/issues/45))
+### May 15, 2016 version 1.2
+ * Build libdc1394 for the Windows platform as well ([issue bytedeco/procamcalib#4](https://github.com/bytedeco/procamcalib/issues/4))
+ * Lower Maven prerequisite in the `pom.xml` file to 3.0 ([issue bytedeco/javacpp#93](https://github.com/bytedeco/javacpp/issues/93))
+ * Include the `Descriptor` and `Message` APIs in the presets for Caffe ([issue #196](https://github.com/bytedeco/javacpp-presets/issues/196))
+ * Prevent creating text relocations for shared libraries on Android ([issue bytedeco/javacv#245](https://github.com/bytedeco/javacv/issues/245))
+ * Make sure to include only native libraries in platform specific JAR files ([pull bytedeco/javacpp#89](https://github.com/bytedeco/javacpp/pull/89))
+ * Execute the `cppbuild.sh` scripts within the Maven build lifecycle, can be skipped with `-Djavacpp.cppbuild.skip` ([pull #175](https://github.com/bytedeco/javacpp-presets/pull/175))
+ * Fix Caffe crashing in GPU mode: Do not define `CPU_ONLY` ([issue #147](https://github.com/bytedeco/javacpp-presets/issues/147))
+ * Make OpenBLAS build for Caffe more generic ([issue #154](https://github.com/bytedeco/javacpp-presets/issues/154))
+ * Include missing `graph_constructor.h` header file from the `tensorflow` module ([issue #165](https://github.com/bytedeco/javacpp-presets/issues/165))
+ * Add missing `GraphDefBuilder.Options.WithAttr()` methods from the `tensorflow` module ([issue #160](https://github.com/bytedeco/javacpp-presets/issues/160))
+ * Add `linux-armhf` platform to the `cppbuild.sh` scripts of OpenCV, FFmpeg, etc ([pull #177](https://github.com/bytedeco/javacpp-presets/pull/177))
+ * Add support for Motion JPEG to the minimal configuration proposed for FFmpeg in the `cppbuild.sh` file
+ * Make `mvn -Djavacpp.platform=...` and `mvn -Djavacpp.platform.dependency=...` commands work correctly
+ * Add presets for the `dnn` module of OpenCV 3.1 ([issue #145](https://github.com/bytedeco/javacpp-presets/issues/145))
+ * Prepend "javacpp." to all properties associated with Maven in the `pom.xml` files to avoid name clashes
+ * Add a `Mat(CvArr arr)` constructor for convenience ([issue bytedeco/javacv#317](https://github.com/bytedeco/javacv/issues/317))
+ * Fix loading issue with `opencv_stitching` and `opencv_xfeatures2d` ([issue bytedeco/javacv#316](https://github.com/bytedeco/javacv/issues/316), [issue bytedeco/javacv#336](https://github.com/bytedeco/javacv/issues/336))
+ * Virtualize all `Solver` classes from Caffe ([issue #143](https://github.com/bytedeco/javacpp-presets/issues/143))
+ * Work around GSL not loading on Android ([issue bytedeco/javacpp#55](https://github.com/bytedeco/javacpp/issues/55))
+ * Fix Android builds of FFmpeg, FFTW, GSL, Leptonica, and Tesseract causing errors under Mac OS X ([issue #45](https://github.com/bytedeco/javacpp-presets/issues/45))
  * Avoid versioning of FFTW and GSL libraries, preventing them from working on Android ([issue #127](https://github.com/bytedeco/javacpp-presets/issues/127))
- * Upgrade presets for OpenCV 3.1.0, FFmpeg 2.8.4, GSL 2.1, and Caffe, including the latest versions of their dependencies ([issue bytedeco/javacpp#55](https://github.com/bytedeco/javacpp/issues/55))
- * Add presets for TensorFlow ([issue #111](https://github.com/bytedeco/javacpp-presets/issues/111))
+ * Upgrade presets for OpenCV 3.1.0, FFmpeg 3.0.2, OpenSSL 1.0.2h, x265 1.9, FlyCapture 2.9.3.43, libdc1394 2.2.4, videoInput, GSL 2.1, LLVM 3.8.0, Leptonica 1.73, Tesseract 3.04.01, cuDNN 5, and Caffe rc3, including the latest versions of their dependencies ([issue bytedeco/javacpp#55](https://github.com/bytedeco/javacpp/issues/55))
+ * Add presets for MXNet and TensorFlow 0.8.0 ([issue #111](https://github.com/bytedeco/javacpp-presets/issues/111))
  * Virtualize `opencv_videostab.IFrameSource` to let us implement it in Java ([issue bytedeco/javacv#277](https://github.com/bytedeco/javacv/issues/277))
  * Fix MinGW-w64 builds with recent versions of GCC 5.x and potential issue with using "w32threads" for FFmpeg
  * Add missing `StatModel.loadXXX()` methods in the `opencv_ml` module ([issue #109](https://github.com/bytedeco/javacpp-presets/issues/109))

@@ -32,6 +32,8 @@
 /caffe/target/
 /cuda/cppbuild/
 /cuda/target/
+/mxnet/cppbuild/
+/mxnet/target/
 /tensorflow/cppbuild/
 /tensorflow/target/
 /pylon/cppbuild/
@@ -47,4 +49,4 @@
 
 # IntelliJ
 *.iml
-
+.idea

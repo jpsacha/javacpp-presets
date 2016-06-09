@@ -34,11 +34,11 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  */
 @Properties(target="org.bytedeco.javacpp.lept", value={
     @Platform(include={"leptonica/alltypes.h", "leptonica/environ.h", "leptonica/array.h", "leptonica/bbuffer.h", "leptonica/heap.h", "leptonica/list.h",
-        "leptonica/ptra.h", "leptonica/queue.h", "leptonica/stack.h", "leptonica/arrayaccess.h", "leptonica/bmf.h", "leptonica/ccbord.h",
+        "leptonica/ptra.h", "leptonica/queue.h", "leptonica/rbtree.h", "leptonica/stack.h", "leptonica/arrayaccess.h", "leptonica/bmf.h", "leptonica/ccbord.h",
         "leptonica/dewarp.h", "leptonica/gplot.h", "leptonica/imageio.h", "leptonica/jbclass.h", "leptonica/morph.h", "leptonica/pix.h",
-        "leptonica/recog.h", "leptonica/regutils.h", "leptonica/stringcode.h", "leptonica/sudoku.h", "leptonica/watershed.h", "leptonica/allheaders.h"}, link="lept@.4"),
+        "leptonica/recog.h", "leptonica/regutils.h", "leptonica/stringcode.h", "leptonica/sudoku.h", "leptonica/watershed.h", "leptonica/allheaders.h"}, link="lept@.5"),
     @Platform(value="android", link="lept"),
-    @Platform(value="windows", link="liblept", preload={"libwinpthread-1", "libgcc_s_dw2-1", "libgcc_s_seh-1", "libstdc++-6", "liblept-4"}),
+    @Platform(value="windows", link="liblept", preload={"libwinpthread-1", "libgcc_s_dw2-1", "libgcc_s_seh-1", "libstdc++-6", "liblept-5"}),
     @Platform(value="windows-x86", preloadpath="C:/msys64/mingw32/bin/"),
     @Platform(value="windows-x86_64", preloadpath="C:/msys64/mingw64/bin/") })
 public class lept implements InfoMapper {
@@ -51,14 +51,19 @@ public class lept implements InfoMapper {
                .put(new Info("NumaHash").pointerTypes("NUMAHASH"))
                .put(new Info("L_Dna").pointerTypes("L_DNA"))
                .put(new Info("L_Dnaa").pointerTypes("L_DNAA"))
+               .put(new Info("L_DnaHash").pointerTypes("L_DNAHASH"))
                .put(new Info("Sarray").pointerTypes("SARRAY"))
                .put(new Info("L_Bytea").pointerTypes("L_BYTEA"))
                .put(new Info("ByteBuffer").pointerTypes("BBUFFER"))
+               .put(new Info("L_ByteBuffer").pointerTypes("L_BBUFFER"))
                .put(new Info("L_Heap").pointerTypes("L_HEAP"))
                .put(new Info("DoubleLinkedList").pointerTypes("DLLIST"))
                .put(new Info("L_Ptra").pointerTypes("L_PTRA"))
                .put(new Info("L_Ptraa").pointerTypes("L_PTRAA"))
                .put(new Info("L_Queue").pointerTypes("L_QUEUE"))
+               .put(new Info("Rb_Type").pointerTypes("RB_TYPE"))
+               .put(new Info("L_Rbtree").pointerTypes("L_RBTREE"))
+               .put(new Info("L_Rbtree_Node").pointerTypes("L_RBTREE_NODE"))
                .put(new Info("L_Stack").pointerTypes("L_STACK"))
                .put(new Info("L_Bmf").pointerTypes("L_BMF"))
                .put(new Info("CCBord").pointerTypes("CCBORD"))

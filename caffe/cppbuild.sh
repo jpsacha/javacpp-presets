@@ -46,11 +46,11 @@ GFLAGS=2.1.2
 PROTO=2.6.1
 LEVELDB=1.18
 SNAPPY=1.1.3
-LMDB=0.9.17
+LMDB=0.9.18
 BOOST=1_59_0
 HDF5=1.8.16
-OPENBLAS=0.2.15
-CAFFE_VERSION=master
+OPENBLAS=0.2.18
+CAFFE_VERSION=rc3
 
 download https://github.com/google/glog/archive/v$GLOG.tar.gz glog-$GLOG.tar.gz
 download https://github.com/gflags/gflags/archive/v$GFLAGS.tar.gz gflags-$GFLAGS.tar.gz
@@ -136,10 +136,10 @@ make install
 cd ..
 
 # OSX has Accelerate
-if [[ $PLATFORM != macosx-* ]]; then
+if [[ $BLAS == "open" ]]; then
     # blas (requires fortran, e.g. sudo yum install gcc-gfortran)
     cd OpenBLAS-$OPENBLAS
-    make -j $MAKEJ "CC=$CC" "FC=$FC" BINARY=$BINARY NO_SHARED=1
+    make -j $MAKEJ "CC=$CC" "FC=$FC" BINARY=$BINARY NO_SHARED=1 TARGET=GENERIC
     make install "PREFIX=$INSTALL_PATH" NO_SHARED=1
     cd ..
 fi
@@ -150,11 +150,11 @@ export PATH=../bin:$PATH
 export CXXFLAGS="-I../include -I$OPENCV_PATH/include"
 export NVCCFLAGS="-I../include -I$OPENCV_PATH/include"
 export LINKFLAGS="-L../lib -L$OPENCV_PATH/lib"
-make -j $MAKEJ BLAS=$BLAS DISTRIBUTE_DIR=.. lib
+make -j $MAKEJ BLAS=$BLAS OPENCV_VERSION=3 DISTRIBUTE_DIR=.. lib
 # Manual deploy to avoid Caffe's python build
 mkdir -p ../include/caffe/proto
 cp -a include/caffe/* ../include/caffe/
 cp -a build/src/caffe/proto/caffe.pb.h ../include/caffe/proto
-cp -a build/lib/libcaffe.so ../lib
+cp -a build/lib/libcaffe.so* ../lib
 
 cd ../..

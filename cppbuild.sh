@@ -60,7 +60,7 @@ while [[ $# > 0 ]]; do
     esac
     shift
 done
-echo "Targeting platform \"$PLATFORM\""
+echo "Building for platform \"$PLATFORM\""
 
 if [[ -z ${OPERATION:-} ]]; then
     echo "Usage: ANDROID_NDK=/path/to/android-ndk/ bash cppbuild.sh [-platform <name>] <install | clean> [projects]"
@@ -96,7 +96,7 @@ function download {
 }
 
 if [[ -z ${PROJECTS:-} ]]; then
-    PROJECTS=(opencv ffmpeg flycapture libdc1394 libfreenect videoinput artoolkitplus chilitags flandmark fftw gsl llvm leptonica tesseract caffe cuda)
+    PROJECTS=(opencv ffmpeg flycapture libdc1394 libfreenect videoinput artoolkitplus chilitags flandmark fftw gsl llvm leptonica tesseract caffe cuda mxnet tensorflow)
 fi
 
 for PROJECT in ${PROJECTS[@]}; do

@@ -6,12 +6,12 @@
   <parent>
     <groupId>org.bytedeco</groupId>
     <artifactId>javacpp-presets</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
   </parent>
 
   <groupId>org.bytedeco.javacpp-presets</groupId>
   <artifactId>llvm</artifactId>
-  <version>3.7.0-${project.parent.version}</version>
+  <version>3.8.0-${project.parent.version}</version>
   <packaging>jar</packaging>
   <name>JavaCPP Presets for LLVM</name>
 
@@ -24,6 +24,10 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+      </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
       </plugin>

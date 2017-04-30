@@ -7,14 +7,16 @@ if [[ -z "$PLATFORM" ]]; then
     exit
 fi
 
-TESSERACT_VERSION=3.04.01
+TESSERACT_VERSION=3.05.00
 download https://github.com/tesseract-ocr/tesseract/archive/$TESSERACT_VERSION.tar.gz tesseract-$TESSERACT_VERSION.tar.gz
 
 mkdir -p $PLATFORM
 cd $PLATFORM
 INSTALL_PATH=`pwd`
-tar -xzvf ../tesseract-$TESSERACT_VERSION.tar.gz
+echo "Decompressing archives..."
+tar --totals -xzf ../tesseract-$TESSERACT_VERSION.tar.gz
 cd tesseract-$TESSERACT_VERSION
+bash autogen.sh
 
 case $PLATFORM in
     android-arm)
@@ -34,16 +36,31 @@ case $PLATFORM in
         make install-strip
         ;;
     linux-x86)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-linux.patch
         ./configure --prefix=$INSTALL_PATH CC="$OLDCC -m32" CXX="$OLDCXX -m32" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
         make -j $MAKEJ
         make install-strip
         ;;
+    linux-armhf)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-linux.patch
+        ./configure --prefix=$INSTALL_PATH --host=arm-linux-gnueabihf CC="arm-linux-gnueabihf-gcc" CXX="arm-linux-gnueabihf-g++" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
+        make -j $MAKEJ
+        make install-strip
+        ;;
+    linux-arm64)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-linux.patch
+        ./configure --prefix=$INSTALL_PATH --host=aarch64-linux-gnu CC="aarch64-linux-gnu-gcc" CXX="aarch64-linux-gnu-g++" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
+        make -j $MAKEJ
+        make install-strip
+        ;;
     linux-x86_64)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-linux.patch
         ./configure --prefix=$INSTALL_PATH CC="$OLDCC -m64" CXX="$OLDCXX -m64" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
         make -j $MAKEJ
         make install-strip
         ;;
     linux-ppc64le)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-linux.patch
         ./configure --prefix=$INSTALL_PATH CC="$OLDCC -m64" CXX="$OLDCXX -m64" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
         make -j $MAKEJ
         make install-strip
@@ -55,12 +72,14 @@ case $PLATFORM in
         make install-strip
         ;;
     windows-x86)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-windows.patch
         cp vs2010/port/* ccutil/
         ./configure --prefix=$INSTALL_PATH --host="i686-w64-mingw32" CC="gcc -m32" CXX="g++ -m32 -fpermissive" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
         make -j $MAKEJ
         make install-strip
         ;;
     windows-x86_64)
+        patch -Np1 < ../../../tesseract-$TESSERACT_VERSION-windows.patch
         cp vs2010/port/* ccutil/
         ./configure --prefix=$INSTALL_PATH --host="x86_64-w64-mingw32" CC="gcc -m64" CXX="g++ -m64 -fpermissive" LIBLEPT_HEADERSDIR="$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" CPPFLAGS="-I$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/include/" LDFLAGS="-L$INSTALL_PATH/../../../leptonica/cppbuild/$PLATFORM/lib/"
         make -j $MAKEJ

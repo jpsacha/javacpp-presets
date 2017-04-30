@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Samuel Audet
+ * Copyright (C) 2015-2016 Samuel Audet
  *
  * Licensed either under the Apache License, Version 2.0, or (at your option)
  * under the terms of the GNU General Public License as published by
@@ -33,11 +33,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  * @author Samuel Audet
  */
 @Properties(inherit = cuda.class, value = {
-    @Platform(include = "<curand.h>", link = "curand@.7.5")},
+    @Platform(include = "<curand.h>", link = "curand@.8.0")},
         target = "org.bytedeco.javacpp.curand")
 public class curand implements InfoMapper {
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("CURANDAPI").cppTypes().annotations().cppText(""))
+               .put(new Info("curandGenerateBinomial", "curandGenerateBinomialMethod").skip())
                .put(new Info("curandGenerator_t").valueTypes("curandGenerator_st").pointerTypes("@ByPtrPtr curandGenerator_st"))
                .put(new Info("curandDistribution_t").valueTypes("curandDistribution_st").pointerTypes("@ByPtrPtr curandDistribution_st"))
                .put(new Info("curandDistributionM2Shift_t").valueTypes("curandDistributionM2Shift_st").pointerTypes("@ByPtrPtr curandDistributionM2Shift_st"))

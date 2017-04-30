@@ -35,7 +35,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 @Properties(target="org.bytedeco.javacpp.tesseract", inherit=lept.class, value={
     @Platform(define="TESS_CAPI_INCLUDE_BASEAPI", include={"tesseract/platform.h", "tesseract/apitypes.h", "tesseract/unichar.h", "tesseract/host.h",
         "tesseract/tesscallback.h", "tesseract/publictypes.h", "tesseract/thresholder.h", "tesseract/pageiterator.h", "tesseract/ltrresultiterator.h",
-        "tesseract/resultiterator.h", "tesseract/strngs.h", "tesseract/genericvector.h", "tesseract/baseapi.h", "tesseract/capi.h"}, link="tesseract@.3"),
+        "tesseract/resultiterator.h", "tesseract/strngs.h", "tesseract/genericvector.h", "tesseract/baseapi.h", "tesseract/capi.h"},
+        link="tesseract@.3", resource = {"include", "lib"}),
     @Platform(value="android", link="tesseract"),
     @Platform(value="windows", link="libtesseract", preload="libtesseract-3") })
 public class tesseract implements InfoMapper {
@@ -78,6 +79,8 @@ public class tesseract implements InfoMapper {
 
                .put(new Info("GenericVector<char>::delete_data_pointers", "GenericVector<char>::SerializeClasses", "GenericVector<char>::DeSerializeClasses",
                              "GenericVector<int>::delete_data_pointers", "GenericVector<int>::SerializeClasses", "GenericVector<int>::DeSerializeClasses",
+                             "GenericVector<char>::SkipDeSerialize", "GenericVector<char>::SkipDeSerializeClasses",
+                             "GenericVector<int>::SkipDeSerialize", "GenericVector<int>::SkipDeSerializeClasses",
                              "GenericVector<STRING>::contains_index", "GenericVector<STRING>::delete_data_pointers", "GenericVector<STRING>::binary_search",
                              "GenericVector<STRING>::bool_binary_search", "GenericVector<STRING>::choose_nth_item", "GenericVector<STRING>::dot_product",
                              "GenericVector<STRING>::sort", "GenericVectorEqEq<int>::GenericVectorEqEq<int>(int)").skip())

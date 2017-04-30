@@ -12,7 +12,8 @@ download https://launchpad.net/artoolkitplus/trunk/$ARTOOLKITPLUS_VERSION/+downl
 
 mkdir -p $PLATFORM
 cd $PLATFORM
-tar -xjvf ../ARToolKitPlus-$ARTOOLKITPLUS_VERSION.tar.bz2 --exclude="*/id-markers/*"
+echo "Decompressing archives..."
+tar --totals -xjf ../ARToolKitPlus-$ARTOOLKITPLUS_VERSION.tar.bz2 --exclude="*/id-markers/*"
 cd ARToolKitPlus-$ARTOOLKITPLUS_VERSION
 patch --binary -Np1 < ../../../ARToolKitPlus-$ARTOOLKITPLUS_VERSION.patch || true
 
@@ -39,6 +40,11 @@ case $PLATFORM in
         ;;
     linux-armhf)
         CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=..
+        make -j4
+        make install
+        ;;
+    linux-ppc64le)
+        CC="$OLDCC -m64" CXX="$OLDCXX -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=..
         make -j4
         make install
         ;;

@@ -12,6 +12,7 @@ download https://github.com/OpenKinect/libfreenect/archive/v$LIBFREENECT_VERSION
 
 mkdir -p $PLATFORM
 cd $PLATFORM
+INSTALL_PATH=`pwd`
 mkdir -p include lib bin
 unzip -o ../libfreenect-$LIBFREENECT_VERSION.zip
 
@@ -25,9 +26,9 @@ if [[ $PLATFORM == windows* ]]; then
 fi
 
 if [[ $PLATFORM == linux-armhf ]]; then
-    INSTALL_PATH=`pwd`
     download http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-1.0.19/libusb-1.0.19.tar.bz2/download libusb-1.0.19.tar.bz2
-    tar xvjf libusb-1.0.19.tar.bz2
+    echo "Decompressing archives..."
+    tar --totals -xjf libusb-1.0.19.tar.bz2
     cd libusb-1.0.19
     CFLAGS="-march=armv6 -marm -mfpu=vfp -mfloat-abi=hard" CXXFLAGS="-march=armv6 -marm -mfpu=vfp -mfloat-abi=hard" CPPFLAGS="-march=armv6 -marm -mfpu=vfp -mfloat-abi=hard" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=arm-linux-gnueabihf --disable-udev
     make
@@ -49,7 +50,12 @@ case $PLATFORM in
         make install
         ;;
     linux-armhf)
-         CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ $CMAKE -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_FAKENECT=OFF -DCMAKE_INSTALL_PREFIX=..
+        CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ $CMAKE -DENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_FAKENECT=OFF -DCMAKE_INSTALL_PREFIX=.. -DLIBUSB_1_INCLUDE_DIR=$INSTALL_PATH/include/libusb-1.0/ -DLIBUSB_1_LIBRARY=$INSTALL_PATH/lib/
+        make -j4
+        make install
+        ;;
+    linux-ppc64le)
+        CC="$OLDCC -m64" CXX="$OLDCXX -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_FAKENECT=OFF -DCMAKE_INSTALL_PREFIX=..
         make -j4
         make install
         ;;

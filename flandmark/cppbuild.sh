@@ -21,13 +21,13 @@ OPENCV_PATH=$INSTALL_PATH/../../../opencv/cppbuild/$PLATFORM/
 
 case $PLATFORM in
     android-arm)
-        $CMAKE -DCMAKE_TOOLCHAIN_FILE=$INSTALL_PATH/../../android-arm.cmake -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH/sdk/native/jni/ -DANDROID_NDK_ABI_NAME=armeabi_v7a
+        $CMAKE -DCMAKE_TOOLCHAIN_FILE=$INSTALL_PATH/../../android-arm.cmake -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH/sdk/native/jni/abi-armeabi-v7a/
         make -j4 flandmark_static
         cp libflandmark/*.h ../include
         cp libflandmark/*.a ../lib
         ;;
     android-x86)
-        $CMAKE -DCMAKE_TOOLCHAIN_FILE=$INSTALL_PATH/../../android-x86.cmake -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH/sdk/native/jni/ -DANDROID_NDK_ABI_NAME=x86
+        $CMAKE -DCMAKE_TOOLCHAIN_FILE=$INSTALL_PATH/../../android-x86.cmake -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH/sdk/native/jni/abi-x86/ 
         make -j4 flandmark_static
         cp libflandmark/*.h ../include
         cp libflandmark/*.a ../lib
@@ -50,6 +50,12 @@ case $PLATFORM in
         cp libflandmark/*.h ../include
         cp libflandmark/*.a ../lib
         ;;
+    linux-ppc64le)
+        CC="$OLDCC -m64" CXX="$OLDCXX -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH/share/OpenCV/
+        make -j4 flandmark_static
+        cp libflandmark/*.h ../include
+        cp libflandmark/*.a ../lib
+        ;;
     macosx-*)
         CXX="g++ -fpermissive" $CMAKE -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH/share/OpenCV/
         make -j4 flandmark_static
@@ -57,12 +63,14 @@ case $PLATFORM in
         cp libflandmark/*.a ../lib
         ;;
     windows-x86)
+        patch -Np1 < ../../../flandmark-$FLANDMARK_VERSION-windows.patch
         "$CMAKE" -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH
         nmake flandmark_static
         cp libflandmark/*.h ../include
         cp libflandmark/*.lib ../lib
         ;;
     windows-x86_64)
+        patch -Np1 < ../../../flandmark-$FLANDMARK_VERSION-windows.patch
         "$CMAKE" -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOpenCV_DIR=$OPENCV_PATH
         nmake flandmark_static
         cp libflandmark/*.h ../include

@@ -34,15 +34,15 @@ We can use [Maven 3](http://maven.apache.org/) to download and install automatic
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bytedeco.javacpp-presets.chilitags</groupId>
     <artifactId>detectlive</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <properties>
         <exec.mainClass>DetectLive</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.bytedeco.javacpp-presets</groupId>
-            <artifactId>chilitags</artifactId>
-            <version>master-1.2</version>
+            <artifactId>chilitags-platform</artifactId>
+            <version>master-1.3</version>
         </dependency>
     </dependencies>
 </project>
@@ -159,7 +159,7 @@ public class DetectLive {
                 int id = tag.first();
                 // We wrap the corner matrix into a datastructure that allows an
                 // easy access to the coordinates
-                FloatIndexer corners = FloatIndexer.create(tag.second().capacity(8), new int[] { 4 }, new int[] { 2 });
+                FloatIndexer corners = FloatIndexer.create(tag.second().capacity(8), new long[] { 4 }, new long[] { 2 });
 
                 // We start by drawing the borders of the tag
                 for (int i = 0; i < 4; i++) {

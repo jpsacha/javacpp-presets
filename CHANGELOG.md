@@ -1,4 +1,40 @@
 
+ * Let presets pick up `include` or `link` paths from cached resources ([pull #101](https://github.com/bytedeco/javacpp-presets/pull/101))
+ * Update presets for Visual Studio 2015 ([issue #298](https://github.com/bytedeco/javacpp-presets/issues/298))
+ * Reuse the presets for HDF5 with Caffe
+ * Replace the `exec-maven-plugin` with the `javacpp` plugin itself to execute the `cppbuild.sh` script files
+ * Link TensorFlow statically with `cudart` to avoid dependency on CUDA ([issue #396](https://github.com/bytedeco/javacpp-presets/issues/396))
+ * Add missing call to `Loader.load()` in helper class for `opencv_ml` ([issue bytedeco/javacv#638](https://github.com/bytedeco/javacv/issues/638))
+ * Work around issues with TensorFlow on some versions of Mac OS X ([issue #335](https://github.com/bytedeco/javacpp-presets/issues/335))
+ * Upgrade presets for OpenCV 3.2.0, FFmpeg 3.2.4, FlyCapture 2.10.3.266 ([pull #400](https://github.com/bytedeco/javacpp-presets/pull/400)), libdc1394 2.2.5, GSL 2.3, LLVM 4.0.0 ([pull #404](https://github.com/bytedeco/javacpp-presets/pull/404)), Leptonica 1.74.1, Tesseract 3.05.00, cuDNN 6.0, TensorFlow 1.0.1, and their dependencies
+ * Add presets for libfreenect2 ([pull #340](https://github.com/bytedeco/javacpp-presets/pull/340)), MKL ([issue #112](https://github.com/bytedeco/javacpp-presets/issues/112)), and LiquidFun ([pull #356](https://github.com/bytedeco/javacpp-presets/pull/356))
+ * Fix the `FlyCapture2` module for some versions on Windows ([issue #337](https://github.com/bytedeco/javacpp-presets/issues/337))
+ * Add functions missing from the presets of MXNet ([issue #332](https://github.com/bytedeco/javacpp-presets/issues/332))
+ * Add presets for the `text` module of OpenCV 3.x ([pull #333](https://github.com/bytedeco/javacpp-presets/pull/333))
+
+### December 7, 2016 version 1.3
+ * Fix FFmpeg builds on ARM when not using a cross compiler ([issue #322](https://github.com/bytedeco/javacpp-presets/issues/322))
+ * Add `blas_extra.h` to presets for OpenBLAS, containing `blas_set_num_threads()` and `blas_get_vendor()` functions
+ * Introduce platform artifacts that depend on binaries for all available platforms and work with any build system (sbt, Gradle, M2Eclipse, etc)
+ * Map more functions of the OpenCV Transparent API with `UMat` and `UMatVector` parameters ([issue bytedeco/javacv#518](https://github.com/bytedeco/javacv/issues/518))
+ * Add support for `android-arm` and `android-x86` platforms to TensorFlow presets ([pull #297](https://github.com/bytedeco/javacpp-presets/pull/297))
+ * Keep a reference of `tensorflow.SessionOptions` in `AbstractSession` to prevent premature deallocation ([pull #297](https://github.com/bytedeco/javacpp-presets/pull/297))
+ * Enable CUDA in `cppbuild.sh` script for TensorFlow ([issue #294](https://github.com/bytedeco/javacpp-presets/issues/294))
+ * Bundle `libgomp.so.1` in JAR files of OpenCV for the sake of some Linux distributions ([issue bytedeco/javacv#436](https://github.com/bytedeco/javacv/issues/436))
+ * Fix `linux-armhf` and `linux-ppc64le` builds for all presets ([pull #279](https://github.com/bytedeco/javacpp-presets/pull/279))
+ * Fix `libdc1394` not properly linking with `libusb-1.0` on Mac OS X ([issue bytedeco/javacv#501](https://github.com/bytedeco/javacv/issues/501))
+ * Add presets for the `bioinspired` module of OpenCV 3.1 ([pull #282](https://github.com/bytedeco/javacpp-presets/pull/282))
+ * Include `tensorflow/core/graph/dot.h` header file from TensorFlow ([pull #272](https://github.com/bytedeco/javacpp-presets/pull/272))
+ * Add presets for librealsense, HDF5, and OpenBLAS/MKL ([issue #112](https://github.com/bytedeco/javacpp-presets/issues/112))
+ * Make Caffe work on CPU-only machines ([issue #219](https://github.com/bytedeco/javacpp-presets/issues/219))
+ * Fix loading issue with `opencv_face` ([issue bytedeco/javacv#470](https://github.com/bytedeco/javacv/issues/470))
+ * Fix presets for CUDA on the `linux-ppc64le` platform
+ * Upgrade presets for FFmpeg 3.2.1, FFTW 3.3.5, GSL 2.2.1, LLVM 3.9.0, CUDA 8.0, cuDNN 5.1, Caffe, MXNet, TensorFlow 0.11.0, and their dependencies
+ * Set default options in `tensorflow/cppbuild.sh` to prevent console reads during build
+ * Add `Tensor.createStringArray()` method to access `DT_STRING` data ([issue #249](https://github.com/bytedeco/javacpp-presets/issues/249))
+ * Fix Javadoc links for externally referenced classes
+ * Work around build issues for TensorFlow on some Linux distributions ([issue bazelbuild/bazel#1322](https://github.com/bazelbuild/bazel/issues/1322))
+ * Fix `cppbuild.sh` script to build properly FFmpeg from source on Windows
  * Stop using Zeranoe FFmpeg builds, often not available for release versions ([issue #225](https://github.com/bytedeco/javacpp-presets/issues/225))
  * Add `linux-ppc64le` to `cppbuild.sh` scripts of OpenCV, FFmpeg, Leptonica, and Tesseract
 

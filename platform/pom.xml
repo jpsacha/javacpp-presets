@@ -39,6 +39,7 @@
     <module>../mxnet/platform</module>
     <module>../tensorflow/platform</module>
     <module>../liquidfun/platform</module>
+    <module>../skia/platform</module>
   </modules>
 
   <dependencies>
@@ -151,7 +152,7 @@
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>cuda-platform</artifactId>
-      <version>8.0.61-${project.version}</version>
+      <version>8.0-6.0-${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
@@ -161,12 +162,17 @@
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>tensorflow-platform</artifactId>
-      <version>1.0.1-${project.version}</version>
+      <version>1.1.0-${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>liquidfun-platform</artifactId>
       <version>20150401-0708ce1-${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco.javacpp-presets</groupId>
+      <artifactId>skia-platform</artifactId>
+      <version>20170511-53d6729-${project.version}</version>
     </dependency>
   </dependencies>
 

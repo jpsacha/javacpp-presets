@@ -5,7 +5,7 @@ Introduction
 ------------
 This directory contains the JavaCPP Presets module for:
 
- * Pylon 5.0.0  http://www.baslerweb.com/en/support/downloads
+ * Pylon 5.0.5  http://www.baslerweb.com/en/support/downloads
 
 Please refer to the parent README.md file for more detailed information about the JavaCPP Presets.
 
@@ -15,10 +15,10 @@ The wrappers are currently used development and were tested only on Windows 7 64
 Building Pylon Presets
 ----------------------
 
-To build Pylon presets follow normal javacpp-presets setup. You will need to install [Pylon 5.0.0](http://www.baslerweb.com/en/support/downloads) in default location. You do not need `buildcpp` as the installed Pylon binaries are used. Tu build presets run:
+To build Pylon presets follow normal javacpp-presets setup. You will need to install [Pylon 5.0.5](http://www.baslerweb.com/en/support/downloads) in default location. You do not need `buildcpp` as the installed Pylon binaries are used. Tu build presets run:
 
 ```
-mvn install --projects .,pylon
+mvn -Djavacpp.cppbuild.skip=true install --projects .,pylon
 ```
 
 Examples of Use

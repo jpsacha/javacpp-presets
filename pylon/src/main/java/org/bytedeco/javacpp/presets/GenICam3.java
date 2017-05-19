@@ -86,7 +86,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         // Use GenICam-specific exception instead of std:exception
                         "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
                 linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/Win32/",
-                preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
+                preloadpath = "C:/Program Files/Basler/pylon 5/Runtime/Win32/"),
         @Platform(
                 value = "windows-x86_64",
                 define = {"WIN64", "GC_W64 1",

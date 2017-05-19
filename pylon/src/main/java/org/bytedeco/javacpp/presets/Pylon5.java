@@ -116,15 +116,15 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         define = {"WIN32", "GC_W64 1",
                                 // Use GenICam-specific exception instead of std:exception
                                 "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
-                        linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/Win32/",
-                        preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/Win32/"),
+                        linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/Win32/",
+                        preloadpath = "C:/Program Files/Basler/pylon 5/Runtime/Win32/"),
                 @Platform(
                         value = "windows-x86_64",
                         define = {"WIN64", "GC_W64 1",
                                 // Use GenICam-specific exception instead of std:exception
                                 "GENERIC_EXCEPTION_CLASS GenICam::GenericException"},
-                        linkpath = "C:/Program Files/Basler/pylon 4/Development/lib/x64/",
-                        preloadpath = "C:/Program Files/Basler/pylon 4/Runtime/x64/"
+                        linkpath = "C:/Program Files/Basler/pylon 5/Development/lib/x64/",
+                        preloadpath = "C:/Program Files/Basler/pylon 5/Runtime/x64/"
                 )})
 public class Pylon5 implements InfoMapper {
     public void map(InfoMap infoMap) {

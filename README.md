@@ -39,6 +39,13 @@ We can also have everything downloaded and installed automatically with:
   }
 ```
 
+ * Leiningen (inside the `project.clj` file)
+```clojure
+  :dependencies [
+    [~(symbol (str "org.bytedeco.javacpp-presets/" moduleName "-platform")) ~(str moduleVersion "-1.4.1")]
+  ]
+```
+
  * sbt (inside the `build.sbt` file)
 ```scala
   libraryDependencies += "org.bytedeco.javacpp-presets" % moduleName + "-platform" % moduleVersion + "-1.4.1"
@@ -103,8 +110,8 @@ The JavaCPP Presets depend on Maven, a powerful build system for Java, so before
 
 Each child module in turn relies by default on the included [`cppbuild.sh` scripts](#the-cppbuildsh-scripts), explained below, to install its corresponding native libraries in the `cppbuild` subdirectory. To use native libraries already installed somewhere else on the system, other installation directories than `cppbuild` can also be specified either in the `pom.xml` files or in the `.java` configuration files. The following versions are supported:
 
- * OpenCV 3.4.1  https://opencv.org/releases.html
- * FFmpeg 3.4.x  http://ffmpeg.org/download.html
+ * OpenCV 3.4.2  https://opencv.org/releases.html
+ * FFmpeg 4.0.x  http://ffmpeg.org/download.html
  * FlyCapture 2.11.x  http://www.ptgrey.com/flycapture-sdk
  * Spinnaker 1.10.x https://www.ptgrey.com/spinnaker-sdk
  * libdc1394 2.1.x or 2.2.x  http://sourceforge.net/projects/libdc1394/files/
@@ -116,21 +123,22 @@ Each child module in turn relies by default on the included [`cppbuild.sh` scrip
  * Chilitags  https://github.com/chili-epfl/chilitags
  * flandmark 1.07  http://cmp.felk.cvut.cz/~uricamic/flandmark/#download
  * HDF5 1.10.2  https://support.hdfgroup.org/HDF5/
- * MKL 2018.1  https://software.intel.com/intel-mkl
- * OpenBLAS 0.2.20  http://www.openblas.net/
- * ARPACK-NG  https://github.com/opencollab/arpack-ng
+ * MKL 2018.3  https://software.intel.com/intel-mkl
+ * MKL-DNN 0.15  https://github.com/intel/mkl-dnn
+ * OpenBLAS 0.3.0  http://www.openblas.net/
+ * ARPACK-NG 3.6.1  https://github.com/opencollab/arpack-ng
  * CMINPACK 1.3.6  https://github.com/devernay/cminpack
- * FFTW 3.3.7  http://www.fftw.org/download.html
- * GSL 2.4  http://www.gnu.org/software/gsl/#downloading
- * LLVM 6.0.0  http://llvm.org/releases/download.html
+ * FFTW 3.3.8  http://www.fftw.org/download.html
+ * GSL 2.5  http://www.gnu.org/software/gsl/#downloading
+ * LLVM 6.0.1  http://llvm.org/releases/download.html
  * libpostal 1.1-alpha  https://github.com/openvenues/libpostal
- * Leptonica 1.75.3  http://www.leptonica.org/download.html
- * Tesseract 4.0.0-beta.1  https://github.com/tesseract-ocr/tesseract
+ * Leptonica 1.76.0  http://www.leptonica.org/download.html
+ * Tesseract 4.0.0-beta.3  https://github.com/tesseract-ocr/tesseract
  * Caffe 1.0  https://github.com/BVLC/caffe
- * CUDA 9.1  https://developer.nvidia.com/cuda-downloads
+ * CUDA 9.2  https://developer.nvidia.com/cuda-downloads
    * cuDNN 7.1  https://developer.nvidia.com/cudnn
- * MXnet 1.1.0  https://github.com/dmlc/mxnet
- * TensorFlow 1.7.0  https://github.com/tensorflow/tensorflow
+ * MXNet 1.2.0  https://github.com/dmlc/mxnet
+ * TensorFlow 1.9.0  https://github.com/tensorflow/tensorflow
  * TensorRT 4.0  https://developer.nvidia.com/tensorrt
  * The Arcade Learning Environment 0.6.0  https://github.com/mgbellemare/Arcade-Learning-Environment
  * LiquidFun  http://google.github.io/liquidfun/

@@ -44,6 +44,15 @@ We can use [Maven 3](http://maven.apache.org/) to download and install automatic
             <artifactId>tensorrt-platform</artifactId>
             <version>4.0-1.4.2-SNAPSHOT</version>
         </dependency>
+
+        <!-- Additional dependencies to use bundled CUDA and cuDNN -->
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>cuda</artifactId>
+            <version>9.2-7.1-1.4.2-SNAPSHOT</version>
+            <classifier>linux-x86_64-redist</classifier>
+        </dependency>
+
     </dependencies>
 </project>
 ```
@@ -73,12 +82,7 @@ public class SampleGoogleNet {
     {
         @Override public void log(Severity severity, String msg)
         {
-            for (Severity s : Severity.values()) {
-                if (s.value == severity.value) {
-                    severity = s;
-                    break;
-                }
-            }
+            severity = severity.intern();
 
             // suppress info-level messages
             if (severity == Severity.kINFO) return;

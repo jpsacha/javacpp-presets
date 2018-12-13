@@ -654,3 +654,12 @@ public class Acquisition_C {
 ### Additional Examples of Using the Spinnaker Wrapper.
 
 You can find demo illustrating use of the presets in the [JavaCV Examples](https://github.com/bytedeco/javacv-examples) project under `Spinnaker-demo` (initial development is on branch `spinnaker`).
+
+Change Log
+----------
+
+### v.1.19.0.22
+* Spinnaker version v.1.19.0.22
+* Added QuickSpinC module 
+* Added SpinVideoC module
+* Added TransportLayer*C modules

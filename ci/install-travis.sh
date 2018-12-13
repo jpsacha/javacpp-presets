@@ -100,13 +100,13 @@ if [[ "$OS" == "linux-x86" ]] || [[ "$OS" == "linux-x86_64" ]] || [[ "$OS" =~ an
   fi 
   if [[ "$PROJ" =~ spinnaker ]]; then
     if [ "$OS" == "linux-x86_64" ]; then
-        if [[ $(find $HOME/downloads/spinnaker_local_v.1.15.0.63.tar.gz -type f -size +1000000c 2>/dev/null) ]]; then
+        if [[ $(find $HOME/downloads/spinnaker_local_v.1.19.0.22.tar.gz -type f -size +1000000c 2>/dev/null) ]]; then
           echo "Found spinnaker in cache and size seems ok"
         else
           echo "Downloading spinnaker as not found in cache or too small"
-          python $TRAVIS_BUILD_DIR/ci/gDownload.py 1IYtvqzpNHJgZK-TPztW_WDYuDEyo56D_ $HOME/downloads/spinnaker_local_v.1.15.0.63.tar.gz
+          python $TRAVIS_BUILD_DIR/ci/gDownload.py 1IYtvqzpNHJgZK-TPztW_WDYuDEyo56D_ $HOME/downloads/spinnaker_local_v.1.19.0.22.tar.gz
         fi
-        docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "tar xvf $HOME/downloads/spinnaker_local_v.1.15.0.63.tar.gz -C /"
+        docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "tar xvf $HOME/downloads/spinnaker_local_v.1.19.0.22.tar.gz -C /"
     fi
   fi
   if [[ "$PROJ" == "mkl" ]] && [[ "$OS" =~ linux ]]; then

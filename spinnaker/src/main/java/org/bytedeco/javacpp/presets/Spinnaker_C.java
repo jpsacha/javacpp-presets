@@ -67,6 +67,8 @@ public class Spinnaker_C implements InfoMapper {
                 .put(new Info("spinRegisterSetEx").skip())
                 // Skip deprecation macro, as it is causing parsing error in javacpp
                 .put(new Info("SPINNAKERC_API_DEPRECATED").skip())
+                // Avoid: jniSpinnaker_C.obj : error LNK2001: unresolved external symbol __imp_spinCameraForceIP
+                .put(new Info("spinCameraForceIP").skip())
         ;
     }
 }

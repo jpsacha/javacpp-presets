@@ -51,7 +51,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "<TransportLayerInterfaceC.h>",
                         "<TransportLayerStreamC.h>",
                 },
-                link = {"Spinnaker_C", "SpinVideo_C"}, includepath = "/usr/include/spinnaker/spinc/"),
+                link = {"SpinVideo_C", "Spinnaker_C"}, includepath = "/usr/include/spinnaker/spinc/"),
         @Platform(value = "windows", link = {"SpinnakerC_v140", "Spinnaker_v140", "SpinVideoC_v140", "SpinVideo_v140"},
                 includepath = "C:/Program Files/Point Grey Research/Spinnaker/include/spinc/"),
         @Platform(value = "windows-x86",

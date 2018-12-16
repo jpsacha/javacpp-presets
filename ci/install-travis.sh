@@ -113,6 +113,8 @@ if [[ "$OS" == "linux-x86" ]] || [[ "$OS" == "linux-x86_64" ]] || [[ "$OS" =~ an
 	    ls ${TRAVIS_BUILD_DIR}/../${SPIN_DOWNLOAD_XDIR}/*.deb | while read fName; do ar vx ${fName}; tar -xvf data.tar.xz; done;
 	    mv usr ${TRAVIS_BUILD_DIR}/../
 	    docker exec -ti ${DOCKER_CONTAINER_ID} /bin/bash -xec "cp -pr ${HOME}/build/usr/* /usr/"
+	    # For debugging linker errors
+	    docker exec -ti ${DOCKER_CONTAINER_ID} /bin/bash -xec "ls -F /usr/lib"
     fi
   fi
   if [[ "$PROJ" == "mkl" ]] && [[ "$OS" =~ linux ]]; then

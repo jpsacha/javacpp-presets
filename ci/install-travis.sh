@@ -99,20 +99,20 @@ if [[ "$OS" == "linux-x86" ]] || [[ "$OS" == "linux-x86_64" ]] || [[ "$OS" =~ an
     fi 
   fi 
   if [[ "$PROJ" =~ spinnaker ]]; then
-    if [ "$OS" == "linux-x86_64" ]; then
+    if [[ "$OS" == "linux-x86_64" ]]; then
         SPIN_DOWNLOAD_XDIR="spinnaker-1.19.0.22-amd64"
         SPIN_DOWNLOAD_NAME="spinnaker-1.19.0.22-amd64-pkg.tar.gz"
         SPIN_DOWNLOAD_LINK="1Qe9mzN17h1z6oXNxmRg0-xkcnBTL8rTK"
-        if [[ $(find $HOME/downloads/${SPIN_DOWNLOAD_NAME} -type f -size +1000000c 2>/dev/null) ]]; then
+        if [[ $(find ${HOME}/downloads/${SPIN_DOWNLOAD_NAME} -type f -size +1000000c 2>/dev/null) ]]; then
           echo "Found spinnaker in cache and size seems ok"
         else
           echo "Downloading spinnaker as not found in cache or too small"
-          python $TRAVIS_BUILD_DIR/ci/gDownload.py ${SPIN_DOWNLOAD_LINK} $HOME/downloads/${SPIN_DOWNLOAD_NAME}
+          python $TRAVIS_BUILD_DIR/ci/gDownload.py ${SPIN_DOWNLOAD_LINK} ${HOME}/downloads/${SPIN_DOWNLOAD_NAME}
         fi
-        tar xzvf $HOME/downloads/${SPIN_DOWNLOAD_NAME} -C $TRAVIS_BUILD_DIR/../
-	    ls $TRAVIS_BUILD_DIR/../${SPIN_DOWNLOAD_XDIR}/*.deb | while read fName; do ar vx $fName; tar -xvf data.tar.xz; done;
-	    mv usr $TRAVIS_BUILD_DIR/../
-	    docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "cp -pr $HOME/build/usr/* /usr/"
+        tar xzvf ${HOME}/downloads/${SPIN_DOWNLOAD_NAME} -C ${TRAVIS_BUILD_DIR}/../
+	    ls ${TRAVIS_BUILD_DIR}/../${SPIN_DOWNLOAD_XDIR}/*.deb | while read fName; do ar vx ${fName}; tar -xvf data.tar.xz; done;
+	    mv usr ${TRAVIS_BUILD_DIR}/../
+	    docker exec -ti ${DOCKER_CONTAINER_ID} /bin/bash -xec "cp -pr ${HOME}/build/usr/* /usr/"
     fi
   fi
   if [[ "$PROJ" == "mkl" ]] && [[ "$OS" =~ linux ]]; then

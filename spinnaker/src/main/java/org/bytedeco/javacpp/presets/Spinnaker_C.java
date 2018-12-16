@@ -35,7 +35,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
  * @author Jarek Sacha
  */
 @Properties(target = "org.bytedeco.javacpp.Spinnaker_C", value = {
-        @Platform(value = {"linux-x86", "linux-arm", "windows"},
+        @Platform(value = {"linux-x86_64", "linux-arm64", "windows"},
                 include = {"<SpinnakerPlatformC.h>",
                         "<SpinnakerDefsC.h>",
                         "<CameraDefsC.h>",

@@ -114,7 +114,7 @@ if [[ "$OS" == "linux-x86" ]] || [[ "$OS" == "linux-x86_64" ]] || [[ "$OS" =~ an
 	    mv usr ${TRAVIS_BUILD_DIR}/../
 	    docker exec -ti ${DOCKER_CONTAINER_ID} /bin/bash -xec "cp -pr ${HOME}/build/usr/* /usr/"
 	    # For debugging linker errors
-	    docker exec -ti ${DOCKER_CONTAINER_ID} /bin/bash -xec "ls -F /usr/lib"
+	    docker exec -ti ${DOCKER_CONTAINER_ID} /bin/bash -xec "ls -alF /usr/lib"
     fi
   fi
   if [[ "$PROJ" == "mkl" ]] && [[ "$OS" =~ linux ]]; then

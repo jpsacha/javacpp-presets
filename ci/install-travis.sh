@@ -75,7 +75,7 @@ if [[ "$OS" == "linux-x86" ]] || [[ "$OS" == "linux-x86_64" ]] || [[ "$OS" =~ an
       docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "ln -sf $HOME/.m2 /root/.m2"
       docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "ln -sf $HOME/.cache /root/.cache"
       docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "ln -sf $HOME/.ccache /root/.ccache"
-      docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "apt-get install -y maven"
+      docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "apt-get install -y maven default-jdk-headless"
       docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec "mvn -version"
       #
       echo "Running install for $PROJ"
